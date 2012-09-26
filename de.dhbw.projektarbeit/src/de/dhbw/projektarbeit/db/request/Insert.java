@@ -63,7 +63,7 @@ public class Insert {
 
 	public void insertCustomer(String firstName, String lastName, int zip_code,
 			String city, String street, String streetNo, String email,
-			String telefone, Date birthdate) throws Exception {
+			String telefone, java.util.Date birthdate) throws Exception {
 
 		try {
 			// Alle Einfuege-Operationen sollen als eine Transaktion und mittels
