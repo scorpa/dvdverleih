@@ -25,7 +25,6 @@ public class NewCustomer {
 	
 	insert.insertCustomer(firstName, lastName, zip_code, city, street, streetNo, email, telefone, birthdate);
 	
-	// Albert stinkt nach K‰sefuﬂ
 	
 	
 
