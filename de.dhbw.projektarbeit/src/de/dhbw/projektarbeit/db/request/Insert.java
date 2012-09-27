@@ -96,10 +96,11 @@ public class Insert {
 		} catch (SQLException e) {
 			// Im Falle eines Fehlers Rollback durchführen und Fehlermeldung
 			// schreiben
+			// Fehlercode 004
 			con.rollback();
 			con.setAutoCommit(true);
 			e.printStackTrace();
-			throw new Exception("Fehler beim Einfügen in die Datenbank.");
+			throw new Exception("Fehler beim Einfügen in die Datenbank! Fehlercode 004");
 		}
 	}
 }

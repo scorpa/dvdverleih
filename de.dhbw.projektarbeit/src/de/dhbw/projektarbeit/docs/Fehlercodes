@@ -1,0 +1,7 @@
+Fehlercodes:
+
+001: NewCustomer.java			Bei der Übertragung des Geburtstags ist ein Fehler aufgetreten! Fehlercode: 001
+002: NewCustomer.java			Bei der Uebertragung der Parameter ist ein Fehler aufgetreten! Fehlercode: 002
+003: DateConverter				Bei der Umwandlung des Datums ist ein Fehler aufgetreten! Fehlercode 003
+004: Insert.java				Fehler beim Einfügen in die Datenbank! Fehlercode 004
+005: Birthdate.java				Es wurde ein Problem bei der Umwandlung des Datums festgestellt! Fehlercode 005

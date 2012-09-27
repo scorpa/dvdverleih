@@ -18,6 +18,10 @@ import de.dhbw.projektarbeit.customer.NewCustomer;
  */
 public class GUI extends javax.swing.JFrame {
 
+	private String firstName, lastName, city, street, streetNo, email,
+			telefone, birthdate;
+	private int zip_code;
+
 	/**
 	 * Creates new form GUI
 	 */
@@ -97,7 +101,7 @@ public class GUI extends javax.swing.JFrame {
 		jMenu1 = new javax.swing.JMenu();
 		jMenuItem1 = new javax.swing.JMenuItem();
 		jMenu2 = new javax.swing.JMenu();
-		NewCustomer cnw = new NewCustomer();
+		final NewCustomer cnw = new NewCustomer();
 
 		jDialog1.setResizable(false);
 
@@ -125,20 +129,33 @@ public class GUI extends javax.swing.JFrame {
 				"13", "14", "15", "16", "17", "18", "19", "20", "21", "22",
 				"23", "24", "25", "26", "27", "28", "29", "30", "31" }));
 		jComboBox4.addActionListener(new java.awt.event.ActionListener() {
-
+			// Combofield Auswahl Tag in String umwandeln
 			public void actionPerformed(ActionEvent evt) {
-				String date = (String) jComboBox4.getSelectedItem();
+				String day = (String) jComboBox4.getSelectedItem();
 
 			}
 
 		});
 
 		jComboBox5.setModel(new javax.swing.DefaultComboBoxModel(new String[] {
-				"Januar", "Februar", "MŠrz", "April", "Mai", "Juni", "Juli",
+				"Januar", "Februar", "Maerz", "April", "Mai", "Juni", "Juli",
 				"August", "September", "Oktober", "November", "Dezember" }));
+		jComboBox5.addActionListener(new java.awt.event.ActionListener() {
+			// Combofield Auswahl Monat in String umwandeln
+			public void actionPerformed(ActionEvent evt) {
+				String month = (String) jComboBox5.getSelectedItem();
+			}
+		});
 
 		jComboBox6.setModel(new javax.swing.DefaultComboBoxModel(new String[] {
 				"1900", "1901", "1902", "2000", "2001", "2002", " " }));
+		jComboBox5.addActionListener(new java.awt.event.ActionListener() {
+			// Combofield Auswahl Monat in String umwandeln
+			public void actionPerformed(ActionEvent evt) {
+				String year = (String) jComboBox6.getSelectedItem();
+			}
+
+		});
 
 		org.jdesktop.layout.GroupLayout jPanel7Layout = new org.jdesktop.layout.GroupLayout(
 				jPanel7);
@@ -357,8 +374,25 @@ public class GUI extends javax.swing.JFrame {
 		jButton7.setToolTipText("Kunden anlegen");
 		jButton7.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
+
+				// Daten aus der Neukundenanlage werden aus den Textfeldern
+				// gelesen und der Methode "CreateNewCustomer" übergeben
 				jButton7ActionPerformed(evt);
-				cnw.CreateNewCustomer();
+				firstName = jTextField1.getText();
+				lastName = jTextField10.getText();
+				zip_code = Integer.parseInt(jTextField11.getText());
+				city = jTextField12.getText();
+				street = jTextField9.getText();
+				streetNo = jTextField3.getText();
+				email = jTextField13.getText();
+				telefone = jTextField14.getText();
+				birthdate = birthdate;
+				try {
+					cnw.CreateNewCustomer(firstName, lastName, zip_code, city,
+							street, streetNo, email, telefone, birthdate);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 			}
 		});
 
@@ -883,7 +917,8 @@ public class GUI extends javax.swing.JFrame {
 	}
 
 	private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {
-		// TODO add your handling code here:
+		jDialog1.setSize(600, 600);
+		jDialog1.setVisible(true);
 
 	}
 

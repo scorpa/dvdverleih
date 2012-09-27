@@ -20,8 +20,9 @@ public class DateConverter {
 			return sdf.parse(date);
 		} catch (ParseException ex1) {
 			ex1.printStackTrace();
+			// Fehlercode 003
 			throw new Exception(
-					"Bei der Umwandlung des Datums ist ein Fehler aufgetreten!");
+					"Bei der Umwandlung des Datums ist ein Fehler aufgetreten! Fehlercode 003");
 		}
 
 	}
