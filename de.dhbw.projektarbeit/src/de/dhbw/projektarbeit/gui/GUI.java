@@ -4,10 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.text.ParseException;
-
 import de.dhbw.projektarbeit.customer.*;
-
-import de.dhbw.projektarbeit.customer.NewCustomer;
 
 /*
  * To change this template, choose Tools | Templates
@@ -19,10 +16,14 @@ import de.dhbw.projektarbeit.customer.NewCustomer;
  * @author Albert
  */
 public class GUI extends javax.swing.JFrame {
-
+	
+	// Variablendeklarationen
 	private String firstName, lastName, city, street, streetNo, email,
 			telefone, birthdate;
 	private int zip_code;
+	
+	// Instantiierungen
+	private Birthdate birthday = new Birthdate();
 
 	/**
 	 * Creates new form GUI
@@ -362,14 +363,14 @@ public class GUI extends javax.swing.JFrame {
 				jButton7ActionPerformed(evt);
 				
 				// Geburstag generieren
-				try { 
-					String bday =  (String) jComboBox4.getSelectedItem() + (String) jComboBox5.getSelectedItem() + (String) jComboBox6.getSelectedItem();
-				} catch (ClassCastException e1) {
+				try {
+					birthday.generateBirthday((String) jComboBox4.getSelectedItem(), (String) jComboBox5.getSelectedItem(), (String) jComboBox6.getSelectedItem());
+				} catch (ClassCastException e2) {
 					// TODO Auto-generated catch block
-					e1.printStackTrace();
+					e2.printStackTrace();
 					System.out.println("Beim Erstellen des Geburstags ist ein Fehler aufgetreten! Fehlercode 006");
 				}
-				
+								
 				try {
 					cnw.CreateNewCustomer(firstName = jTextField1.getText(), lastName = jTextField10.getText(), zip_code = Integer.parseInt(jTextField11.getText()),
 							city = jTextField12.getText(), street = jTextField9.getText(), streetNo = jTextField3.getText(), email = jTextField13.getText(),

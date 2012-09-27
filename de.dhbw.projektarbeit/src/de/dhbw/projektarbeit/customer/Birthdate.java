@@ -5,21 +5,27 @@ import de.dhbw.projektarbeit.gui.*;
 public class Birthdate {
 
 	private GUI gui = new GUI();
+	
 
 	private String birthday;
 	private int day, month, year;
-	private boolean bday, bmonth, byear;
-
-	public void getDay(String day) {
-		this.day = Integer.parseInt(day);
-		bday = true;
-	}
-
-	public void getMonth(String month) throws Exception {
+	private boolean schaltjahr, tage;
+	
+	public String generateBirthday(String day, String month, String year) throws Exception{
+		
+		// Parsen des Jahrs von String nach int und Abfrage nach Schaltjahr. tage = true ist ein Monat mit 31 Tagen
+		this.year = Integer.parseInt(year);
+		if (this.year % 4 == 0 && (this.year % 100 != 0 || this.year % 400 == 0)) {
+			schaltjahr = true;
+		}
+		
+		// Umwandlung des Monatsstring in eine int 
+		
 		switch (month) {
 
 		case "Januar":
 			this.month = 1;
+			tage = true;
 			break;
 
 		case "Februar":
@@ -28,6 +34,7 @@ public class Birthdate {
 
 		case "Maerz":
 			this.month = 3;
+			tage = true;
 			break;
 
 		case "April":
@@ -36,6 +43,7 @@ public class Birthdate {
 
 		case "Mai":
 			this.month = 5;
+			tage = true;
 			break;
 
 		case "Juni":
@@ -44,10 +52,12 @@ public class Birthdate {
 
 		case "Juli":
 			this.month = 7;
+			tage = true;
 			break;
 
 		case "August":
 			this.month = 8;
+			tage = true;
 			break;
 
 		case "September":
@@ -56,6 +66,7 @@ public class Birthdate {
 
 		case "Oktober":
 			this.month = 10;
+			tage = true;
 			break;
 
 		case "November":
@@ -64,6 +75,7 @@ public class Birthdate {
 
 		case "Dezember":
 			this.month = 12;
+			tage = true;
 			break;
 
 		default:
@@ -71,24 +83,20 @@ public class Birthdate {
 			throw new Exception(
 					"Es wurde ein Problem bei der Umwandlung des Datums festgestellt! Fehlercode 005");
 		}
-
-		bmonth = true;
-
+		
+		// Parsen des Tages von String nach int, Überprüfung, ob Schaltjahr = true und Februar mit falschen Datum ausgewählt ist bzw. der Monat nur 30 Tage hat.
+			this.day = Integer.parseInt(day);
+			if (this.day == 31 && tage == false){
+				this.day = 30;
+				throw new Exception("ew");
+			}
+			
+		
+		
+		return(birthday);
+		
 	}
 
-	public void getYear(String year) {
-		this.year = Integer.parseInt(year);
-		byear = true;
-	}
 	
-	{
-	
-		year = Integer.parseInt(birthday.substring(6));
-
-		if (year % 4 == 0 && (year % 100 != 0 || year % 400 == 0)) {
-
-		}
-
-	}
 
 }
