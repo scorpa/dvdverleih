@@ -5,3 +5,4 @@ Fehlercodes:
 003: DateConverter				Bei der Umwandlung des Datums ist ein Fehler aufgetreten! Fehlercode 003
 004: Insert.java				Fehler beim Einfügen in die Datenbank! Fehlercode 004
 005: Birthdate.java				Es wurde ein Problem bei der Umwandlung des Datums festgestellt! Fehlercode 005
+006: GUI.java					Beim Erstellen des Geburstags ist ein Fehler aufgetreten! Fehlercode 006

@@ -3,6 +3,8 @@ package de.dhbw.projektarbeit.gui;
 import java.awt.event.ActionEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.text.ParseException;
+
 import de.dhbw.projektarbeit.customer.*;
 
 import de.dhbw.projektarbeit.customer.NewCustomer;
@@ -128,34 +130,14 @@ public class GUI extends javax.swing.JFrame {
 				"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12",
 				"13", "14", "15", "16", "17", "18", "19", "20", "21", "22",
 				"23", "24", "25", "26", "27", "28", "29", "30", "31" }));
-		jComboBox4.addActionListener(new java.awt.event.ActionListener() {
-			// Combofield Auswahl Tag in String umwandeln
-			public void actionPerformed(ActionEvent evt) {
-				String day = (String) jComboBox4.getSelectedItem();
-
-			}
-
-		});
 
 		jComboBox5.setModel(new javax.swing.DefaultComboBoxModel(new String[] {
 				"Januar", "Februar", "Maerz", "April", "Mai", "Juni", "Juli",
 				"August", "September", "Oktober", "November", "Dezember" }));
-		jComboBox5.addActionListener(new java.awt.event.ActionListener() {
-			// Combofield Auswahl Monat in String umwandeln
-			public void actionPerformed(ActionEvent evt) {
-				String month = (String) jComboBox5.getSelectedItem();
-			}
-		});
 
 		jComboBox6.setModel(new javax.swing.DefaultComboBoxModel(new String[] {
 				"1900", "1901", "1902", "2000", "2001", "2002", " " }));
-		jComboBox5.addActionListener(new java.awt.event.ActionListener() {
-			// Combofield Auswahl Monat in String umwandeln
-			public void actionPerformed(ActionEvent evt) {
-				String year = (String) jComboBox6.getSelectedItem();
-			}
-
-		});
+		
 
 		org.jdesktop.layout.GroupLayout jPanel7Layout = new org.jdesktop.layout.GroupLayout(
 				jPanel7);
@@ -376,20 +358,22 @@ public class GUI extends javax.swing.JFrame {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 
 				// Daten aus der Neukundenanlage werden aus den Textfeldern
-				// gelesen und der Methode "CreateNewCustomer" übergeben
+				// gelesen, das Geburtsdatum als String generiert und der Methode "CreateNewCustomer" übergeben.
 				jButton7ActionPerformed(evt);
-				firstName = jTextField1.getText();
-				lastName = jTextField10.getText();
-				zip_code = Integer.parseInt(jTextField11.getText());
-				city = jTextField12.getText();
-				street = jTextField9.getText();
-				streetNo = jTextField3.getText();
-				email = jTextField13.getText();
-				telefone = jTextField14.getText();
-				birthdate = birthdate;
+				
+				// Geburstag generieren
+				try { 
+					String bday =  (String) jComboBox4.getSelectedItem() + (String) jComboBox5.getSelectedItem() + (String) jComboBox6.getSelectedItem();
+				} catch (ClassCastException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+					System.out.println("Beim Erstellen des Geburstags ist ein Fehler aufgetreten! Fehlercode 006");
+				}
+				
 				try {
-					cnw.CreateNewCustomer(firstName, lastName, zip_code, city,
-							street, streetNo, email, telefone, birthdate);
+					cnw.CreateNewCustomer(firstName = jTextField1.getText(), lastName = jTextField10.getText(), zip_code = Integer.parseInt(jTextField11.getText()),
+							city = jTextField12.getText(), street = jTextField9.getText(), streetNo = jTextField3.getText(), email = jTextField13.getText(),
+									telefone = jTextField14.getText(), birthdate);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
