@@ -11,6 +11,10 @@ public class Birthdate {
 	private int day, month, year;
 	private boolean schaltjahr, tage;
 	
+	public enum enuMonth {
+		Januar, Februar, Maerz, April, Mai, Juni, Juli, August, September, Oktober, November, Dezember
+	}
+	
 	public String generateBirthday(String day, String month, String year) throws Exception{
 		
 		// Parsen des Jahrs von String nach int und Abfrage nach Schaltjahr. tage = true ist ein Monat mit 31 Tagen
@@ -18,6 +22,8 @@ public class Birthdate {
 		if (this.year % 4 == 0 && (this.year % 100 != 0 || this.year % 400 == 0)) {
 			schaltjahr = true;
 		}
+		
+		
 		
 		// Umwandlung des Monatsstring in eine int 
 		
