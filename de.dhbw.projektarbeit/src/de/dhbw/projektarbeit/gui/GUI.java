@@ -365,7 +365,6 @@ public class GUI extends javax.swing.JFrame {
 				try {
 					birthday.generateBirthday((String) jComboBox4.getSelectedItem(), (String) jComboBox5.getSelectedItem(), (String) jComboBox6.getSelectedItem());
 				} catch (Exception e2) {
-					// TODO Auto-generated catch block
 					e2.printStackTrace();
 					System.out.println("Beim Erstellen des Geburstags ist ein Fehler aufgetreten! Fehlercode 006");
 				}
