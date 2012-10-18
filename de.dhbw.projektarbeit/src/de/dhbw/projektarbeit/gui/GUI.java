@@ -5,6 +5,7 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.text.ParseException;
 import de.dhbw.projektarbeit.customer.*;
+import de.dhbw.projektarbeit.gui.Dialogs.NewCustomer;
 
 /*
  * To change this template, choose Tools | Templates
@@ -912,7 +913,7 @@ public class GUI extends javax.swing.JFrame {
 	/**
 	 * @param args
 	 *            the command line arguments
-	 */
+	
 	public static void main(String args[]) {
 		/* Set the Nimbus look and feel */
 		// <editor-fold defaultstate="collapsed"
@@ -922,7 +923,7 @@ public class GUI extends javax.swing.JFrame {
 		 * default look and feel. For details see
 		 * http://download.oracle.com/javase
 		 * /tutorial/uiswing/lookandfeel/plaf.html
-		 */
+		 
 		try {
 			for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager
 					.getInstalledLookAndFeels()) {
@@ -945,15 +946,15 @@ public class GUI extends javax.swing.JFrame {
 					java.util.logging.Level.SEVERE, null, ex);
 		}
 		// </editor-fold>
-
-		/* Create and display the form */
+		*/
+		/* Create and display the form 
 		java.awt.EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				new GUI().setVisible(true);
 			}
 		});
 	}
-
+*/
 	// Variables declaration - do not modify
 	private javax.swing.JButton jButton1;
 	private javax.swing.JButton jButton2;

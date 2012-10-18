@@ -10,6 +10,9 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.LayoutStyle.ComponentPlacement;
 
+import de.dhbw.projektarbeit.gui.Dialogs.NewCustomer;
+import de.dhbw.projektarbeit.gui.Dialogs.NewDVD;
+
 public class TopPanel extends JPanel {
 	public TopPanel() {
 		setSize(new Dimension(800, 25));

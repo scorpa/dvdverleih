@@ -1,4 +1,4 @@
-package de.dhbw.projektarbeit.gui;
+package de.dhbw.projektarbeit.gui.Dialogs;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
