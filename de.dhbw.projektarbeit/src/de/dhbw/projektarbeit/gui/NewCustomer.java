@@ -31,6 +31,8 @@ public class NewCustomer extends JDialog {
 	private JTextField txtStreet;
 	private JTextField txtStreetno;
 	private JTextField txtTelefone;
+	private JButton okButton;
+	private JButton cancelButton;
 
 	/**
 	 * Launch the application.
@@ -49,12 +51,12 @@ public class NewCustomer extends JDialog {
 	 * Create the dialog.
 	 */
 	public NewCustomer() {
+		setModal(true);
 		setResizable(false);
 		setMaximumSize(new Dimension(600, 275));
 		setMinimumSize(new Dimension(600, 275));
 		setLocation(new Point(50, 50));
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-		setAlwaysOnTop(true);
 		setTitle("Neuen Kunden anlegen");
 		setBounds(100, 100, 600, 275);
 		getContentPane().setLayout(new BorderLayout());
@@ -193,19 +195,39 @@ public class NewCustomer extends JDialog {
 		contentPanel.setLayout(gl_contentPanel);
 		{
 			JPanel buttonPane = new JPanel();
-			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
-				JButton okButton = new JButton("OK");
+				okButton = new JButton("OK");
 				okButton.setActionCommand("OK");
-				buttonPane.add(okButton);
 				getRootPane().setDefaultButton(okButton);
 			}
 			{
-				JButton cancelButton = new JButton("Cancel");
+				cancelButton = new JButton("Cancel");
 				cancelButton.setActionCommand("Cancel");
-				buttonPane.add(cancelButton);
 			}
+			
+			JButton btnAddcustomer = new JButton("+");
+			GroupLayout gl_buttonPane = new GroupLayout(buttonPane);
+			gl_buttonPane.setHorizontalGroup(
+				gl_buttonPane.createParallelGroup(Alignment.LEADING)
+					.addGroup(Alignment.TRAILING, gl_buttonPane.createSequentialGroup()
+						.addComponent(btnAddcustomer, GroupLayout.PREFERRED_SIZE, 43, GroupLayout.PREFERRED_SIZE)
+						.addPreferredGap(ComponentPlacement.RELATED, 390, Short.MAX_VALUE)
+						.addComponent(okButton)
+						.addPreferredGap(ComponentPlacement.RELATED)
+						.addComponent(cancelButton))
+			);
+			gl_buttonPane.setVerticalGroup(
+				gl_buttonPane.createParallelGroup(Alignment.LEADING)
+					.addGroup(gl_buttonPane.createSequentialGroup()
+						.addGap(5)
+						.addGroup(gl_buttonPane.createParallelGroup(Alignment.BASELINE)
+							.addComponent(cancelButton)
+							.addComponent(okButton)
+							.addComponent(btnAddcustomer))
+						.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+			);
+			buttonPane.setLayout(gl_buttonPane);
 		}
 	}
 }
