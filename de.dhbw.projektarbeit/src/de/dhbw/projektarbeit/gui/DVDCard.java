@@ -10,8 +10,10 @@ import javax.swing.GroupLayout.Alignment;
 import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.JTable;
 
 public class DVDCard extends JPanel {
+	private JTable tbDVD;
 
 	/**
 	 * Create the panel.
@@ -23,9 +25,6 @@ public class DVDCard extends JPanel {
 		splitPane.setOrientation(JSplitPane.VERTICAL_SPLIT);
 		splitPane.setDividerSize(4);
 		add(splitPane, "name_1350571039219144000");
-		
-		JXTable tbDVD = new JXTable();
-		splitPane.setLeftComponent(tbDVD);
 		
 		JPanel panel = new JPanel();
 		panel.setBackground(Color.GRAY);
@@ -153,6 +152,9 @@ public class DVDCard extends JPanel {
 					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
 		);
 		panel.setLayout(gl_panel);
+		
+		tbDVD = new JTable();
+		splitPane.setLeftComponent(tbDVD);
 		splitPane.setDividerLocation(200);
 
 	}
