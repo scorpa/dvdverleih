@@ -15,7 +15,6 @@ public class CreateCustomer {
 	 */
 
 	private MysqlAccess access;
-	private java.util.Date bdate;
 	private Insert insert;
 	private String firstName, lastName, city, street, streetNo, email,
 			telefone;

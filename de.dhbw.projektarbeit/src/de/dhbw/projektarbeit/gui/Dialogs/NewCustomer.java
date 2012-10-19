@@ -37,6 +37,7 @@ public class NewCustomer extends JDialog {
 	private JTextField txtStreetno;
 	private JTextField txtTelefone;
 	private JButton cancelButton;
+	private String FuckYou;
 
 	/**
 	 * Launch the application.
