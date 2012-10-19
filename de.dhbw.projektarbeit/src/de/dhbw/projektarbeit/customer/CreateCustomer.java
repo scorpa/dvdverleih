@@ -2,14 +2,9 @@ package de.dhbw.projektarbeit.customer;
 
 import java.security.InvalidParameterException;
 import java.sql.Date;
-import java.text.ParseException;
 
-import javax.swing.JDialog;
-
-import de.dhbw.projektarbeit.db.date.DateConverter;
 import de.dhbw.projektarbeit.db.mysql.MysqlAccess;
 import de.dhbw.projektarbeit.db.request.Insert;
-import de.dhbw.projektarbeit.gui.*;
 
 public class CreateCustomer {
 

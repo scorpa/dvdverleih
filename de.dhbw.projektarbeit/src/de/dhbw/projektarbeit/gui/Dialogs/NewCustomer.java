@@ -35,7 +35,6 @@ public class NewCustomer extends JDialog {
 	private JTextField txtStreet;
 	private JTextField txtStreetno;
 	private JTextField txtTelefone;
-	private JButton okButton;
 	private JButton cancelButton;
 
 	/**
@@ -119,7 +118,7 @@ public class NewCustomer extends JDialog {
 		sdf.applyPattern("yyyy-MM-dd");
 
 		final JXDatePicker dpBirthdate = new JXDatePicker();
-		dpBirthdate.setFormats(new String[] { "EEEE dd.MM.yyyy" });
+		dpBirthdate.setFormats(new String[] { "dd.MM.yyyy" });
 		dpBirthdate.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				// Überfürung des JXDates in die Datevariable
@@ -361,82 +360,137 @@ public class NewCustomer extends JDialog {
 			JPanel buttonPane = new JPanel();
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
-				okButton = new JButton("OK");
-				okButton.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent e) {
-						okButtonActionPerfomed(e);
+				cancelButton = new JButton("Cancel");
+				cancelButton.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent arg0) {
+						cancelButtonActionPerfomred(arg0);
 					}
 
 
 				});
-				okButton.setActionCommand("OK");
-				getRootPane().setDefaultButton(okButton);
-			}
-			{
-				cancelButton = new JButton("Cancel");
 				cancelButton.setActionCommand("Cancel");
 			}
 
-			JButton btnAddcustomer = new JButton("+");
+			JButton btnAddcustomer = new JButton("Hinzuf\u00FCgen");
 			btnAddcustomer.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
-					btnAddcustomerActionPerformed(arg0);
+					try {
+						btnAddcustomerActionPerformed(arg0);
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 				}
 
 			});
 			GroupLayout gl_buttonPane = new GroupLayout(buttonPane);
-			gl_buttonPane.setHorizontalGroup(gl_buttonPane.createParallelGroup(
-					Alignment.LEADING).addGroup(
-					Alignment.TRAILING,
-					gl_buttonPane
-							.createSequentialGroup()
-							.addComponent(btnAddcustomer,
-									GroupLayout.PREFERRED_SIZE, 43,
-									GroupLayout.PREFERRED_SIZE)
-							.addPreferredGap(ComponentPlacement.RELATED, 390,
-									Short.MAX_VALUE).addComponent(okButton)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(cancelButton)));
-			gl_buttonPane.setVerticalGroup(gl_buttonPane.createParallelGroup(
-					Alignment.LEADING).addGroup(
-					gl_buttonPane
-							.createSequentialGroup()
-							.addGap(5)
-							.addGroup(
-									gl_buttonPane
-											.createParallelGroup(
-													Alignment.BASELINE)
-											.addComponent(cancelButton)
-											.addComponent(okButton)
-											.addComponent(btnAddcustomer))
-							.addContainerGap(GroupLayout.DEFAULT_SIZE,
-									Short.MAX_VALUE)));
+			gl_buttonPane.setHorizontalGroup(
+				gl_buttonPane.createParallelGroup(Alignment.TRAILING)
+					.addGroup(gl_buttonPane.createSequentialGroup()
+						.addContainerGap(428, Short.MAX_VALUE)
+						.addComponent(btnAddcustomer)
+						.addPreferredGap(ComponentPlacement.UNRELATED)
+						.addComponent(cancelButton)
+						.addGap(4))
+			);
+			gl_buttonPane.setVerticalGroup(
+				gl_buttonPane.createParallelGroup(Alignment.LEADING)
+					.addGroup(gl_buttonPane.createSequentialGroup()
+						.addGap(5)
+						.addGroup(gl_buttonPane.createParallelGroup(Alignment.BASELINE)
+							.addComponent(cancelButton)
+							.addComponent(btnAddcustomer))
+						.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+			);
 			buttonPane.setLayout(gl_buttonPane);
 		}
 	}
-	
-	private void okButtonActionPerfomed(ActionEvent e) {
-		// Checken, ob die Felder in der Eingabemaske befüllt sind
-		
-		// Noch hinzu fügen!
-		
-		//
-		//
-		
-		
-	}
 
-	private void btnAddcustomerActionPerformed(ActionEvent arg0) {
-		// Aufrufen der Methode CreateCustomer
 
-		CreateCustomer cc = new CreateCustomer();
+	private void btnAddcustomerActionPerformed(ActionEvent arg0)
+			throws Exception {
+		// Check, ob alle Felder ausgefüllt sind
+		String firstName = "", lastName = "", city = "", street = "", streetNo = "", email = "", telefone = "";
+		int zip_code = 0, index = -1;
+		String isEmpty[] = new String[9];
+		boolean go = true;
+
+		// Übergabe der Inputs
+		firstName = txtFirstname.getText();
+		lastName = txtLastname.getText();
+		city = txtCity.getText();
+		street = txtStreet.getText();
+		streetNo = txtStreetno.getText();
+		email = txtEmail.getText();
+		telefone = txtTelefone.getText();
+
+		// Überprüfung auf Parsefehler bei der Postleitzahl mit entsprechender
+		// Fehlermeldung
 		try {
-			cc.CreateNewCustomer(txtFirstname.getText(), txtLastname.getText(),
-					Integer.parseInt(txtZipcode.getText()), txtCity.getText(),
-					txtStreet.getText(), txtStreetno.getText(),
-					txtEmail.getText(), txtTelefone.getText(), dateBirthdate);
-		} catch (Exception e) {
+			zip_code = Integer.parseInt(txtZipcode.getText());
+		} catch (NumberFormatException e) {
+			// Fehlercode 003
 			e.printStackTrace();
+			throw new Exception(
+					"Bitte geben Sie eine gütlige Postleitzahl ein! Fehlercode 003");
 		}
+
+		// Auf leere Pflichtfelder überprüfen
+		if (firstName == null) {
+			index++;
+			isEmpty[index] = "Vorname";
+			go = false;
+		} else if (lastName == "") {
+			index++;
+			isEmpty[index] = "Nachname";
+			go = false;
+		} else if (zip_code == 0 || zip_code > 99999) {
+			index++;
+			isEmpty[index] = "Postleitzahl";
+			go = false;
+		} else if (city == "") {
+			index++;
+			isEmpty[index] = "Ort";
+			go = false;
+		} else if (street == "") {
+			index++;
+			isEmpty[index] = "Strasse";
+			go = false;
+		} else if (streetNo == "") {
+			index++;
+			isEmpty[index] = "Hausnummer";
+			go = false;
+		} else if (email == "") {
+			index++;
+			isEmpty[index] = "Email";
+			go = false;
+		} else if (telefone == "") {
+			index++;
+			isEmpty[index] = "Telefonnummer";
+			go = false;
+		} else if (dateBirthdate == null) {
+			index++;
+			isEmpty[index] = "Geburtsdatum";
+			go = false;
+		}
+
+		// Aufrufen der Methode CreateCustomer
+		if (go = true) {
+			CreateCustomer cc = new CreateCustomer();
+			try {
+				cc.CreateNewCustomer(firstName, lastName, zip_code, city,
+						street, streetNo, email, telefone, dateBirthdate);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+
 	}
+	
+	private void cancelButtonActionPerfomred(ActionEvent arg0) {
+		// Canclebutton gedrückt
+		dispose();
+		
+	}
+
 }
