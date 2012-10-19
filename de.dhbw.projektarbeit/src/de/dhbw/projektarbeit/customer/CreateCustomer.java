@@ -2,6 +2,9 @@ package de.dhbw.projektarbeit.customer;
 
 import java.security.InvalidParameterException;
 import java.sql.Date;
+import java.sql.DriverManager;
+
+import java.sql.Connection;
 
 import de.dhbw.projektarbeit.db.mysql.MysqlAccess;
 import de.dhbw.projektarbeit.db.request.Insert;
@@ -20,6 +23,7 @@ public class CreateCustomer {
 			telefone;
 	private Date dateBirthdate;
 	private int zip_code;
+	private Connection con;
 
 	/**
 	 * CREATE NEW CUSTOMER ** *********************** Methode, die das
@@ -50,8 +54,11 @@ public class CreateCustomer {
 
 	public void CreateNewCustomer(String firstName, String lastName,
 			int zip_code, String city, String street, String streetNo,
-			String email, String telefone, Date dateBirthdate) throws Exception {
-
+			String email, String telefone, java.sql.Date dateBirthdate) throws Exception {
+		
+		con = DriverManager.getConnection("jdbc:mysql://localhost/dvd_verleih?user=root");
+		
+		insert = new Insert("dvd_verleih",con);
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.zip_code = zip_code;

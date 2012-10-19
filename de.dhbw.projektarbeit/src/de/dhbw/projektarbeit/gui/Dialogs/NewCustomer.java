@@ -37,7 +37,6 @@ public class NewCustomer extends JDialog {
 	private JTextField txtStreetno;
 	private JTextField txtTelefone;
 	private JButton cancelButton;
-	private String FuckYou;
 
 	/**
 	 * Launch the application.
@@ -65,7 +64,7 @@ public class NewCustomer extends JDialog {
 		setTitle("Neuen Kunden anlegen");
 		setBounds(100, 100, 600, 275);
 		getContentPane().setLayout(new BorderLayout());
-		contentPanel.setToolTipText("Format dd.mm.yyyy");
+		contentPanel.setToolTipText("");
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 
@@ -123,13 +122,14 @@ public class NewCustomer extends JDialog {
 		dpBirthdate.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				// Überfürung des JXDates in die Datevariable
-				
 				try {
-					dateBirthdate = Date.valueOf(sdf.format(dpBirthdate.getDate()));
-				} catch (Exception e) {
+					dateBirthdate = (Date.valueOf(sdf.format(dpBirthdate.getDate())));
+					
+				} catch (IllegalArgumentException e) {
 					// Bei der Übertragung des Geburtstags ist ein Fehler aufgetreten! Fehlercode: 001
 					e.printStackTrace();
 				}
+				
 			}
 
 		});
@@ -377,7 +377,7 @@ public class NewCustomer extends JDialog {
 				cancelButton.setActionCommand("Cancel");
 			}
 
-			JButton btnAddcustomer = new JButton("Hinzuf\u00FCgen");
+			JButton btnAddcustomer = new JButton("Hinzufügen");
 			btnAddcustomer.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
 					try {
@@ -415,6 +415,10 @@ public class NewCustomer extends JDialog {
 		}
 	}
 
+	/**
+	 * @param arg0
+	 * @throws Exception
+	 */
 	private void btnAddcustomerActionPerformed(ActionEvent arg0)
 			throws Exception {
 		// Check, ob alle Felder ausgefüllt sind
@@ -450,31 +454,30 @@ public class NewCustomer extends JDialog {
 
 		// Auf leere Pflichtfelder überprüfen
 		if (firstName.replaceAll(" ", "").equals("")) {
-			go = false;
-		} else if (lastName.replaceAll(" ", "").equals("")) {
-			go = false;
-		} else if (zip_code == 0 || (zip_code >= 10000 && zip_code <= 99999)) {
-			go = false;
-		} else if (city.replaceAll(" ", "").equals("")) {
-			go = false;
-		} else if (street.replaceAll(" ", "").equals("")) {
-			go = false;
-		} else if (streetNo.replaceAll(" ", "").equals("")) {
-			go = false;
-		} else if (email.replaceAll(" ", "").equals("")) {
-			go = false;
-		} else if (telefone.replaceAll(" ", "").equals("")) {
-			go = false;
-		} else if (dateBirthdate == null) {
-			go = false;
-		}
+			   go = false;
+			  } else if (lastName.replaceAll(" ", "").equals("")) {
+			   go = false;
+			  } else if (zip_code == 0 || (zip_code >= 10000 && zip_code <= 99999)) {
+			   go = false;
+			  } else if (city.replaceAll(" ", "").equals("")) {
+			   go = false;
+			  } else if (street.replaceAll(" ", "").equals("")) {
+			   go = false;
+			  } else if (streetNo.replaceAll(" ", "").equals("")) {
+			   go = false;
+			  } else if (email.replaceAll(" ", "").equals("")) {
+			   go = false;
+			  } else if (telefone.replaceAll(" ", "").equals("")) {
+			   go = false;
+			  } else if (dateBirthdate == null) {
+			   go = false;
+			  }
 
 		// Aufrufen der Methode CreateCustomer
 		if (go == true) {
 			CreateCustomer cc = new CreateCustomer();
 			try {
-				cc.CreateNewCustomer(firstName, lastName, zip_code, city,
-						street, streetNo, email, telefone, dateBirthdate);
+				cc.CreateNewCustomer(firstName, lastName, zip_code, city, street, streetNo, email, telefone, dateBirthdate);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -494,5 +497,7 @@ public class NewCustomer extends JDialog {
 		dispose();
 
 	}
+	
+	
 
 }

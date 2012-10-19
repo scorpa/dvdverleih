@@ -63,7 +63,7 @@ public class Insert {
 
 	public void insertCustomer(String firstName, String lastName, int zip_code,
 			String city, String street, String streetNo, String email,
-			String telefone, java.util.Date birthdate) throws Exception {
+			String telefone, java.sql.Date birthdate) throws Exception {
 
 		try {
 			// Alle Einfuege-Operationen sollen als eine Transaktion und mittels
@@ -85,7 +85,8 @@ public class Insert {
 			customer.append("INSERT INTO ");
 			customer.append(schema);
 			customer.append(".customer (FirstName, LastName, ZIP_Code, City, Street, StreetNo, Email, Telefone, Birthdate) "
-					+ "VALUES (?,?,?,?,?,?,?,?,?)");
+					+ "VALUES (" + firstName + "," + lastName + "," + zip_code + "," + city + "," + street + "," + streetNo + "," + email + "," + telefone + "," 
+					+ birthdate + ")");
 
 			stmt.executeUpdate(customer.toString());
 
