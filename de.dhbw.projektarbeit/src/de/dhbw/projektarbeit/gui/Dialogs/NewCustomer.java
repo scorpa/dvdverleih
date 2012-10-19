@@ -37,6 +37,7 @@ public class NewCustomer extends JDialog {
 	private JTextField txtStreetno;
 	private JTextField txtTelefone;
 	private JButton cancelButton;
+	private JXDatePicker dpBirthdate; 
 
 	/**
 	 * Launch the application.
@@ -117,7 +118,8 @@ public class NewCustomer extends JDialog {
 		sdf = new SimpleDateFormat();
 		sdf.applyPattern("yyyy-MM-dd");
 
-		final JXDatePicker dpBirthdate = new JXDatePicker();
+		dpBirthdate = new JXDatePicker(new Date(System.currentTimeMillis()));
+		dpBirthdate.getEditor().setEditable(false);
 		dpBirthdate.setFormats(new String[] { "dd.MM.yyyy" });
 		dpBirthdate.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -377,7 +379,7 @@ public class NewCustomer extends JDialog {
 				cancelButton.setActionCommand("Cancel");
 			}
 
-			JButton btnAddcustomer = new JButton("Hinzufügen");
+			JButton btnAddcustomer = new JButton("Hinzufuegen");
 			btnAddcustomer.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
 					try {
