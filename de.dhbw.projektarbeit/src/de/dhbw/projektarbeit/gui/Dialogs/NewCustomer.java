@@ -375,12 +375,13 @@ public class NewCustomer extends JDialog {
 			JButton btnAddcustomer = new JButton("Hinzuf\u00FCgen");
 			btnAddcustomer.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
-					try {
-						btnAddcustomerActionPerformed(arg0);
-					} catch (Exception e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
+						try {
+							btnAddcustomerActionPerformed(arg0);
+						} catch (Exception e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+
 				}
 
 			});
@@ -411,7 +412,7 @@ public class NewCustomer extends JDialog {
 	private void btnAddcustomerActionPerformed(ActionEvent arg0)
 			throws Exception {
 		// Check, ob alle Felder ausgefüllt sind
-		String firstName = "", lastName = "", city = "", street = "", streetNo = "", email = "", telefone = "";
+		String firstName = "", lastName = "", city = "", street = "", streetNo = "", email = "", telefone = "", zipCode = null;
 		int zip_code = 0, index = -1;
 		String isEmpty[] = new String[9];
 		boolean go = true;
@@ -424,24 +425,32 @@ public class NewCustomer extends JDialog {
 		streetNo = txtStreetno.getText();
 		email = txtEmail.getText();
 		telefone = txtTelefone.getText();
+		zipCode = txtZipcode.getText();
 
 		// Überprüfung auf Parsefehler bei der Postleitzahl mit entsprechender
-		// Fehlermeldung
+		// Fehlermeldung && zipCode.replaceAll(" ", "") == ""
+		if (zipCode == null ){
+			zip_code = 0;
+			return;
+		}
+		else{
 		try {
+			
 			zip_code = Integer.parseInt(txtZipcode.getText());
-		} catch (NumberFormatException e) {
+			} catch (NumberFormatException e) {
 			// Fehlercode 003
 			e.printStackTrace();
 			throw new Exception(
 					"Bitte geben Sie eine gütlige Postleitzahl ein! Fehlercode 003");
 		}
+		}
 
 		// Auf leere Pflichtfelder überprüfen
-		if (firstName == null) {
+		if (firstName == null || firstName.replaceAll(" ", "") == "") {
 			index++;
 			isEmpty[index] = "Vorname";
 			go = false;
-		} else if (lastName == "") {
+		} else if (lastName == null || lastName.replaceAll(" ", "") == "") {
 			index++;
 			isEmpty[index] = "Nachname";
 			go = false;
@@ -449,23 +458,23 @@ public class NewCustomer extends JDialog {
 			index++;
 			isEmpty[index] = "Postleitzahl";
 			go = false;
-		} else if (city == "") {
+		} else if (city == null || city.replaceAll(" ", "") == "") {
 			index++;
 			isEmpty[index] = "Ort";
 			go = false;
-		} else if (street == "") {
+		} else if (street == null || street.replaceAll(" ", "") == "") {
 			index++;
 			isEmpty[index] = "Strasse";
 			go = false;
-		} else if (streetNo == "") {
+		} else if (streetNo == null || streetNo.replaceAll(" ", "") == "") {
 			index++;
 			isEmpty[index] = "Hausnummer";
 			go = false;
-		} else if (email == "") {
+		} else if (email == null || email.replaceAll(" ", "") == "") {
 			index++;
 			isEmpty[index] = "Email";
 			go = false;
-		} else if (telefone == "") {
+		} else if (telefone == null || telefone.replaceAll(" ", "") == "") {
 			index++;
 			isEmpty[index] = "Telefonnummer";
 			go = false;
