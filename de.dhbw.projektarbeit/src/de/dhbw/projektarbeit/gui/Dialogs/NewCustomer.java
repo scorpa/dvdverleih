@@ -470,7 +470,7 @@ public class NewCustomer extends JDialog {
 		}
 
 		// Aufrufen der Methode CreateCustomer
-		if (go = true) {
+		if (go == true) {
 			CreateCustomer cc = new CreateCustomer();
 			try {
 				cc.CreateNewCustomer(firstName, lastName, zip_code, city,
@@ -483,7 +483,7 @@ public class NewCustomer extends JDialog {
 					.showMessageDialog(
 							null,
 							"Sie haben ein Pflichtfeld nicht ausgefüllt! Bitte überprüfen Sie ihre Angaben in den Feldern",
-							"Kundenerstellung", ERROR);
+							"Kundenerstellung", JOptionPane.ERROR_MESSAGE);
 
 		}
 
