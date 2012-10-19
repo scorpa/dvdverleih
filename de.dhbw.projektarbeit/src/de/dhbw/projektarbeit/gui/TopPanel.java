@@ -10,6 +10,8 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.LayoutStyle.ComponentPlacement;
 
+import de.dhbw.projektarbeit.gui.Dialogs.EditCustomer;
+import de.dhbw.projektarbeit.gui.Dialogs.EditDVD;
 import de.dhbw.projektarbeit.gui.Dialogs.NewCustomer;
 import de.dhbw.projektarbeit.gui.Dialogs.NewDVD;
 
@@ -91,6 +93,7 @@ public class TopPanel extends JPanel {
 		setLayout(groupLayout);
 	}
 	
+	
 	/**
 	 * ActionListener zum Aufruf des Dialogs um neuen Kunden zu erstellen
 	 * 
@@ -128,7 +131,7 @@ public class TopPanel extends JPanel {
 	private void btnKundeBearbeitenActionPerformed(
 			java.awt.event.ActionEvent e) {
 		// Dialog NewDVD aufrufen
-		NewDVD dialog = new NewDVD();
+		EditCustomer dialog = new EditCustomer();
 		dialog.setVisible(true);
 		
 	}
@@ -142,7 +145,7 @@ public class TopPanel extends JPanel {
 	private void btnDvdBearbeitenActionPerformed(
 			java.awt.event.ActionEvent e) {
 		// Dialog NewDVD aufrufen
-		NewDVD dialog = new NewDVD();
+		EditDVD dialog = new EditDVD();
 		dialog.setVisible(true);
 		
 	}
