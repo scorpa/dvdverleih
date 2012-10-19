@@ -13,6 +13,7 @@ import javax.swing.GroupLayout.Alignment;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
@@ -483,6 +484,11 @@ public class NewCustomer extends JDialog {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
+		}
+		else {
+			JOptionPane.showMessageDialog(null, "Sie haben ein Pflichtfeld nicht ausgefüllt! Bitte überprüfen Sie ihre Angaben in den Feldern"  
+					, "Kundenerstellung", ERROR);
+			
 		}
 
 	}
