@@ -37,7 +37,6 @@ public class NewCustomer extends JDialog {
 	private JTextField txtStreetno;
 	private JTextField txtTelefone;
 	private JButton cancelButton;
-	private String Albert;
 
 	/**
 	 * Launch the application.
@@ -84,7 +83,6 @@ public class NewCustomer extends JDialog {
 		JLabel lblPostleitzahl = new JLabel("Postleitzahl");
 
 		txtZipcode = new JTextField();
-		txtZipcode.setText("ZipCode");
 		txtZipcode.setColumns(5);
 
 		txtCity = new JTextField();
@@ -124,7 +122,13 @@ public class NewCustomer extends JDialog {
 		dpBirthdate.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				// Überfürung des JXDates in die Datevariable
-				dateBirthdate = Date.valueOf(sdf.format(dpBirthdate.getDate()));
+				
+				try {
+					dateBirthdate = Date.valueOf(sdf.format(dpBirthdate.getDate()));
+				} catch (Exception e) {
+					// Bei der Übertragung des Geburtstags ist ein Fehler aufgetreten! Fehlercode: 001
+					e.printStackTrace();
+				}
 			}
 
 		});
@@ -368,7 +372,6 @@ public class NewCustomer extends JDialog {
 						cancelButtonActionPerfomred(arg0);
 					}
 
-
 				});
 				cancelButton.setActionCommand("Cancel");
 			}
@@ -376,46 +379,46 @@ public class NewCustomer extends JDialog {
 			JButton btnAddcustomer = new JButton("Hinzuf\u00FCgen");
 			btnAddcustomer.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
-						try {
-							btnAddcustomerActionPerformed(arg0);
-						} catch (Exception e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
+					try {
+						btnAddcustomerActionPerformed(arg0);
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 
 				}
 
 			});
 			GroupLayout gl_buttonPane = new GroupLayout(buttonPane);
-			gl_buttonPane.setHorizontalGroup(
-				gl_buttonPane.createParallelGroup(Alignment.TRAILING)
-					.addGroup(gl_buttonPane.createSequentialGroup()
-						.addContainerGap(428, Short.MAX_VALUE)
-						.addComponent(btnAddcustomer)
-						.addPreferredGap(ComponentPlacement.UNRELATED)
-						.addComponent(cancelButton)
-						.addGap(4))
-			);
-			gl_buttonPane.setVerticalGroup(
-				gl_buttonPane.createParallelGroup(Alignment.LEADING)
-					.addGroup(gl_buttonPane.createSequentialGroup()
-						.addGap(5)
-						.addGroup(gl_buttonPane.createParallelGroup(Alignment.BASELINE)
-							.addComponent(cancelButton)
-							.addComponent(btnAddcustomer))
-						.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-			);
+			gl_buttonPane.setHorizontalGroup(gl_buttonPane.createParallelGroup(
+					Alignment.TRAILING).addGroup(
+					gl_buttonPane.createSequentialGroup()
+							.addContainerGap(428, Short.MAX_VALUE)
+							.addComponent(btnAddcustomer)
+							.addPreferredGap(ComponentPlacement.UNRELATED)
+							.addComponent(cancelButton).addGap(4)));
+			gl_buttonPane.setVerticalGroup(gl_buttonPane.createParallelGroup(
+					Alignment.LEADING).addGroup(
+					gl_buttonPane
+							.createSequentialGroup()
+							.addGap(5)
+							.addGroup(
+									gl_buttonPane
+											.createParallelGroup(
+													Alignment.BASELINE)
+											.addComponent(cancelButton)
+											.addComponent(btnAddcustomer))
+							.addContainerGap(GroupLayout.DEFAULT_SIZE,
+									Short.MAX_VALUE)));
 			buttonPane.setLayout(gl_buttonPane);
 		}
 	}
 
-
 	private void btnAddcustomerActionPerformed(ActionEvent arg0)
 			throws Exception {
 		// Check, ob alle Felder ausgefüllt sind
-		String firstName = "", lastName = "", city = "", street = "", streetNo = "", email = "", telefone = "", zipCode = null;
-		int zip_code = 0, index = -1;
-		String isEmpty[] = new String[9];
+		String firstName = null, lastName = null, city = null, street = null, streetNo = null, email = null, telefone = null, zipCode = null;
+		int zip_code = 0;
 		boolean go = true;
 
 		// Übergabe der Inputs
@@ -430,58 +433,38 @@ public class NewCustomer extends JDialog {
 
 		// Überprüfung auf Parsefehler bei der Postleitzahl mit entsprechender
 		// Fehlermeldung && zipCode.replaceAll(" ", "") == ""
-		if (zipCode == null ){
+		if (zipCode.replaceAll(" ", "").equals("")) {
 			zip_code = 0;
-			return;
-		}
-		else{
-		try {
-			
-			zip_code = Integer.parseInt(txtZipcode.getText());
+		} else {
+			try {
+
+				zip_code = Integer.parseInt(txtZipcode.getText());
 			} catch (NumberFormatException e) {
-			// Fehlercode 003
-			e.printStackTrace();
-			throw new Exception(
-					"Bitte geben Sie eine gütlige Postleitzahl ein! Fehlercode 003");
-		}
+				// Fehlercode 003
+				e.printStackTrace();
+				throw new Exception(
+						"Bitte geben Sie eine gütlige Postleitzahl ein! Fehlercode 003");
+			}
 		}
 
 		// Auf leere Pflichtfelder überprüfen
-		if (firstName == null || firstName.replaceAll(" ", "") == "") {
-			index++;
-			isEmpty[index] = "Vorname";
+		if (firstName.replaceAll(" ", "").equals("")) {
 			go = false;
-		} else if (lastName == null || lastName.replaceAll(" ", "") == "") {
-			index++;
-			isEmpty[index] = "Nachname";
+		} else if (lastName.replaceAll(" ", "").equals("")) {
 			go = false;
-		} else if (zip_code == 0 || zip_code > 99999) {
-			index++;
-			isEmpty[index] = "Postleitzahl";
+		} else if (zip_code == 0 || (zip_code >= 10000 && zip_code <= 99999)) {
 			go = false;
-		} else if (city == null || city.replaceAll(" ", "") == "") {
-			index++;
-			isEmpty[index] = "Ort";
+		} else if (city.replaceAll(" ", "").equals("")) {
 			go = false;
-		} else if (street == null || street.replaceAll(" ", "") == "") {
-			index++;
-			isEmpty[index] = "Strasse";
+		} else if (street.replaceAll(" ", "").equals("")) {
 			go = false;
-		} else if (streetNo == null || streetNo.replaceAll(" ", "") == "") {
-			index++;
-			isEmpty[index] = "Hausnummer";
+		} else if (streetNo.replaceAll(" ", "").equals("")) {
 			go = false;
-		} else if (email == null || email.replaceAll(" ", "") == "") {
-			index++;
-			isEmpty[index] = "Email";
+		} else if (email.replaceAll(" ", "").equals("")) {
 			go = false;
-		} else if (telefone == null || telefone.replaceAll(" ", "") == "") {
-			index++;
-			isEmpty[index] = "Telefonnummer";
+		} else if (telefone.replaceAll(" ", "").equals("")) {
 			go = false;
 		} else if (dateBirthdate == null) {
-			index++;
-			isEmpty[index] = "Geburtsdatum";
 			go = false;
 		}
 
@@ -494,19 +477,21 @@ public class NewCustomer extends JDialog {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-		}
-		else {
-			JOptionPane.showMessageDialog(null, "Sie haben ein Pflichtfeld nicht ausgefüllt! Bitte überprüfen Sie ihre Angaben in den Feldern"  
-					, "Kundenerstellung", ERROR);
-			
+		} else {
+			JOptionPane
+					.showMessageDialog(
+							null,
+							"Sie haben ein Pflichtfeld nicht ausgefüllt! Bitte überprüfen Sie ihre Angaben in den Feldern",
+							"Kundenerstellung", ERROR);
+
 		}
 
 	}
-	
+
 	private void cancelButtonActionPerfomred(ActionEvent arg0) {
 		// Canclebutton gedrückt
 		dispose();
-		
+
 	}
 
 }
