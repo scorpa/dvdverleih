@@ -19,6 +19,8 @@ import javax.swing.SpinnerModel;
 import java.awt.Dimension;
 import javax.swing.JSpinner;
 import org.jdesktop.swingx.JXDatePicker;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class NewDVD extends JDialog {
 
@@ -27,7 +29,7 @@ public class NewDVD extends JDialog {
 	private JTextField txtOriginaltitle;
 	private JTextField txtEancode;
 	private JTextField txtGenre;
-	private JButton okButton;
+	private JButton addButton;
 	private JButton cancelButton;
 
 	/**
@@ -51,7 +53,7 @@ public class NewDVD extends JDialog {
 		setModal(true);
 		setTitle("Neue DVD anlegen");
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 610, 380);
+		setBounds(100, 100, 610, 343);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
@@ -78,7 +80,7 @@ public class NewDVD extends JDialog {
 		JLabel lblAltersbeschrnkung = new JLabel("Altersbeschr\u00E4nkung");
 		
 		JComboBox cbFSK = new JComboBox();
-		cbFSK.setModel(new DefaultComboBoxModel(new String[] {"ab 0 Jahre", "ab 6 Jahre", "ab 12 Jahre", "ab 16 Jahre", "ab 18 Jahre"}));
+		cbFSK.setModel(new DefaultComboBoxModel(new String[] {"ab 0 Jahre", "ab 6 Jahre", "ab 12 Jahre", "ab 16 Jahre", "ab 18 Jahre", "indiziert"}));
 		
 		JComboBox cbProdCountry = new JComboBox();
 		cbProdCountry.setModel(new DefaultComboBoxModel(new String[] {"Australien", "Deutschland", "Frankreich", "Gro\u00DFbritannien", "Hong Kong", "Indien", "Italien", "Kanada", "Niederlande", "Russland", "Spanien", "USA"}));
@@ -123,12 +125,6 @@ public class NewDVD extends JDialog {
 		
 		JLabel lblAnzahl = new JLabel("Anzahl der DVDs");
 		
-		JComboBox cbStockLocation = new JComboBox();
-		
-		JButton btnAddStockLocation = new JButton("+");
-		
-		JLabel lblLagerort = new JLabel("Lagerort");
-		
 		
 		GroupLayout gl_contentPanel = new GroupLayout(contentPanel);
 		gl_contentPanel.setHorizontalGroup(
@@ -162,33 +158,26 @@ public class NewDVD extends JDialog {
 								.addComponent(spCountDVD, GroupLayout.PREFERRED_SIZE, 114, GroupLayout.PREFERRED_SIZE)
 								.addComponent(lblAnzahl))))
 					.addGap(18)
-					.addGroup(gl_contentPanel.createParallelGroup(Alignment.LEADING)
-						.addGroup(gl_contentPanel.createParallelGroup(Alignment.LEADING, false)
+					.addGroup(gl_contentPanel.createParallelGroup(Alignment.TRAILING)
+						.addGroup(gl_contentPanel.createParallelGroup(Alignment.TRAILING, false)
+							.addComponent(txtEancode, Alignment.LEADING, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 							.addGroup(gl_contentPanel.createSequentialGroup()
-								.addComponent(cbStockLocation, GroupLayout.PREFERRED_SIZE, 235, GroupLayout.PREFERRED_SIZE)
-								.addPreferredGap(ComponentPlacement.RELATED)
-								.addComponent(btnAddStockLocation, GroupLayout.PREFERRED_SIZE, 41, GroupLayout.PREFERRED_SIZE))
-							.addGroup(gl_contentPanel.createParallelGroup(Alignment.TRAILING)
-								.addGroup(gl_contentPanel.createParallelGroup(Alignment.TRAILING, false)
-									.addComponent(txtEancode, Alignment.LEADING, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-									.addGroup(gl_contentPanel.createSequentialGroup()
-										.addGroup(gl_contentPanel.createParallelGroup(Alignment.LEADING, false)
-											.addComponent(lblProduktionsjahr, GroupLayout.PREFERRED_SIZE, 114, GroupLayout.PREFERRED_SIZE)
-											.addComponent(spProductionYear, GroupLayout.PREFERRED_SIZE, 114, GroupLayout.PREFERRED_SIZE)
-											.addComponent(lblProduzent))
-										.addPreferredGap(ComponentPlacement.UNRELATED)
-										.addGroup(gl_contentPanel.createParallelGroup(Alignment.LEADING, false)
-											.addComponent(dpRelease, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-											.addComponent(lblVerffentlichungsdatum, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-									.addComponent(txtGenre, Alignment.LEADING, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-									.addComponent(lblEanCode, Alignment.LEADING)
-									.addComponent(lblGenre, Alignment.LEADING))
-								.addGroup(gl_contentPanel.createSequentialGroup()
-									.addComponent(cbProducent, 0, 235, Short.MAX_VALUE)
-									.addPreferredGap(ComponentPlacement.RELATED)
-									.addComponent(btnNewProducent, GroupLayout.PREFERRED_SIZE, 41, GroupLayout.PREFERRED_SIZE))))
-						.addComponent(lblLagerort))
-					.addContainerGap(16, Short.MAX_VALUE))
+								.addGroup(gl_contentPanel.createParallelGroup(Alignment.LEADING)
+									.addComponent(lblProduktionsjahr, GroupLayout.PREFERRED_SIZE, 114, GroupLayout.PREFERRED_SIZE)
+									.addComponent(lblProduzent)
+									.addComponent(spProductionYear, GroupLayout.PREFERRED_SIZE, 114, GroupLayout.PREFERRED_SIZE))
+								.addPreferredGap(ComponentPlacement.UNRELATED)
+								.addGroup(gl_contentPanel.createParallelGroup(Alignment.LEADING, false)
+									.addComponent(dpRelease, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+									.addComponent(lblVerffentlichungsdatum, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+							.addComponent(txtGenre, Alignment.LEADING, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+							.addComponent(lblEanCode, Alignment.LEADING)
+							.addComponent(lblGenre, Alignment.LEADING))
+						.addGroup(gl_contentPanel.createSequentialGroup()
+							.addComponent(cbProducent, 0, 235, Short.MAX_VALUE)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(btnNewProducent, GroupLayout.PREFERRED_SIZE, 41, GroupLayout.PREFERRED_SIZE)))
+					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
 		);
 		gl_contentPanel.setVerticalGroup(
 			gl_contentPanel.createParallelGroup(Alignment.LEADING)
@@ -214,13 +203,13 @@ public class NewDVD extends JDialog {
 						.addComponent(lblAltersbeschrnkung)
 						.addComponent(lblVerffentlichungsdatum)
 						.addComponent(lblProduktionsjahr))
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addGroup(gl_contentPanel.createParallelGroup(Alignment.TRAILING)
+					.addGap(12)
+					.addGroup(gl_contentPanel.createParallelGroup(Alignment.TRAILING, false)
 						.addGroup(gl_contentPanel.createParallelGroup(Alignment.BASELINE)
 							.addComponent(cbFSK, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 							.addComponent(cbProdCountry, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-						.addComponent(spProductionYear, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(dpRelease, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+						.addComponent(dpRelease, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+						.addComponent(spProductionYear, 0, 0, Short.MAX_VALUE))
 					.addPreferredGap(ComponentPlacement.UNRELATED)
 					.addGroup(gl_contentPanel.createParallelGroup(Alignment.BASELINE)
 						.addComponent(lblRegisseur)
@@ -234,39 +223,39 @@ public class NewDVD extends JDialog {
 					.addPreferredGap(ComponentPlacement.UNRELATED)
 					.addGroup(gl_contentPanel.createParallelGroup(Alignment.BASELINE)
 						.addComponent(lblDauer)
-						.addComponent(lblAnzahl)
-						.addComponent(lblLagerort))
+						.addComponent(lblAnzahl))
 					.addPreferredGap(ComponentPlacement.RELATED)
-					.addGroup(gl_contentPanel.createParallelGroup(Alignment.LEADING)
-						.addComponent(spDuration, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(spCountDVD, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addGroup(gl_contentPanel.createParallelGroup(Alignment.BASELINE)
-							.addComponent(cbStockLocation, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-							.addComponent(btnAddStockLocation, GroupLayout.PREFERRED_SIZE, 28, GroupLayout.PREFERRED_SIZE)))
-					.addContainerGap(10, Short.MAX_VALUE))
+					.addGroup(gl_contentPanel.createParallelGroup(Alignment.TRAILING, false)
+						.addComponent(spCountDVD, Alignment.LEADING, 0, 0, Short.MAX_VALUE)
+						.addComponent(spDuration, Alignment.LEADING))
+					.addContainerGap(43, Short.MAX_VALUE))
 		);
 		contentPanel.setLayout(gl_contentPanel);
 		{
 			JPanel buttonPane = new JPanel();
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
-				okButton = new JButton("OK");
-				okButton.setActionCommand("OK");
-				getRootPane().setDefaultButton(okButton);
+				addButton = new JButton("Hinzuf\u00FCgen");
+				addButton.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent arg0) {
+						addActionPerformed(arg0);
+					}
+
+
+				});
+				addButton.setActionCommand("add");
+				getRootPane().setDefaultButton(addButton);
 			}
 			{
 				cancelButton = new JButton("Cancel");
 				cancelButton.setActionCommand("Cancel");
 			}
-			
-			JButton btnAdddvd = new JButton("+");
 			GroupLayout gl_buttonPane = new GroupLayout(buttonPane);
 			gl_buttonPane.setHorizontalGroup(
-				gl_buttonPane.createParallelGroup(Alignment.LEADING)
-					.addGroup(Alignment.TRAILING, gl_buttonPane.createSequentialGroup()
-						.addComponent(btnAdddvd, GroupLayout.PREFERRED_SIZE, 46, GroupLayout.PREFERRED_SIZE)
-						.addPreferredGap(ComponentPlacement.RELATED, 387, Short.MAX_VALUE)
-						.addComponent(okButton)
+				gl_buttonPane.createParallelGroup(Alignment.TRAILING)
+					.addGroup(gl_buttonPane.createSequentialGroup()
+						.addContainerGap(446, Short.MAX_VALUE)
+						.addComponent(addButton)
 						.addPreferredGap(ComponentPlacement.RELATED)
 						.addComponent(cancelButton))
 			);
@@ -276,11 +265,24 @@ public class NewDVD extends JDialog {
 						.addGap(5)
 						.addGroup(gl_buttonPane.createParallelGroup(Alignment.BASELINE)
 							.addComponent(cancelButton)
-							.addComponent(okButton)
-							.addComponent(btnAdddvd))
+							.addComponent(addButton))
 						.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
 			);
 			buttonPane.setLayout(gl_buttonPane);
 		}
+	}
+	
+	private void addActionPerformed(ActionEvent arg0) {
+		// Hinzufügen Button gedrückt
+		String title, originalTitle, eanCode, genre, fsk, prodCountry, prodYear, release, regie, production;
+		int duration, quanitity;
+		
+		// Übergabe der Inputs
+		
+		title = txtTitle.getText();
+		originalTitle = txtOriginaltitle.getText();
+		eanCode = txtEancode.getText();
+		genre = txtGenre.getText();
+		fsk = (String) cbFSK.getSelectedItem();
 	}
 }

@@ -1,6 +1,7 @@
 package de.dhbw.projektarbeit.gui.Dialogs;
 
 import java.awt.BorderLayout;
+import java.awt.Dialog;
 import java.awt.Dimension;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
@@ -22,6 +23,7 @@ import javax.swing.border.EmptyBorder;
 import org.jdesktop.swingx.JXDatePicker;
 
 import de.dhbw.projektarbeit.customer.CreateCustomer;
+import de.dhbw.projektarbeit.logic.Main;
 
 public class NewCustomer extends JDialog {
 
@@ -50,6 +52,7 @@ public class NewCustomer extends JDialog {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		
 	}
 
 	/**
@@ -119,7 +122,6 @@ public class NewCustomer extends JDialog {
 		sdf.applyPattern("yyyy-MM-dd");
 
 		dpBirthdate = new JXDatePicker();
-		dpBirthdate.getEditor().setEditable(false);
 		
 		dpBirthdate.setFormats(new String[] { "dd.MM.yyyy" });
 		dpBirthdate.addActionListener(new ActionListener() {
@@ -417,10 +419,7 @@ public class NewCustomer extends JDialog {
 		}
 	}
 
-	/**
-	 * @param arg0
-	 * @throws Exception
-	 */
+
 	private void btnAddcustomerActionPerformed(ActionEvent arg0)
 			throws Exception {
 		// Check, ob alle Felder ausgefüllt sind
@@ -497,7 +496,32 @@ public class NewCustomer extends JDialog {
 	private void cancelButtonActionPerfomred(ActionEvent arg0) {
 		// Canclebutton gedrückt
 		dispose();
+		
 
+	}
+	
+	/**
+	 * @param firstName = Vorname des neuen Kunden
+	 * @param lastName = Nachname des neuen Kunden
+	 */
+	public void customerAdded(String firstName, String lastName){
+		// Wenn Benutzer erfolgreich hinzu gefügt wurde, die mitteilen und neues, leeres Eingabefenster öffnen.
+		dispose();
+		JOptionPane.showMessageDialog(null, ("Der Benutzer" + firstName + " " + lastName + "wurde erfolgreich angelegt!"), "Vorgang erfolgreich", JOptionPane.INFORMATION_MESSAGE);
+		/* txtFirstname.setText("");
+		txtLastname.setText("");
+		txtZipcode.setText("");
+		txtCity.setText("");
+		txtStreet.setText("");
+		txtStreetno.setText("");
+		txtEmail.setText("");
+		txtTelefone.setText("");
+		dpBirthdate.setDate(null); */
+		
+		NewCustomer dialog = new NewCustomer();
+		dialog.setVisible(true);
+
+		
 	}
 	
 	

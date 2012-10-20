@@ -1,9 +1,12 @@
 package de.dhbw.projektarbeit.db.request;
 
+import java.security.InvalidParameterException;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.sql.Statement;
+
+import de.dhbw.projektarbeit.gui.Dialogs.NewCustomer;
 
 /**
  * Mit Hilfe dieser Klasse lassen sich neu erfasst Buchungen in die DB
@@ -79,7 +82,7 @@ public class Insert {
 			 * Hinzufügen der neuen erfassten Kundendaten für die Tabelle
 			 * "customer" "Insert into dvd_verleih.customer (FirstName,
 			 * Lastname, ZIP_Code, City, Street, StreetNo, Email, Telefone,
-			 * Birthdate) VALUES (?,?,?,?,?,?,?,?,?)"
+			 * Birthdate) VALUES (firstName,lastName,zip_code,city,street,streetNo,email,telefone,birthdate)"
 			 */
 
 			customer.append("INSERT INTO ");
@@ -102,7 +105,21 @@ public class Insert {
 			con.setAutoCommit(true);
 			e.printStackTrace();
 			throw new Exception("Fehler beim Einfügen in die Datenbank! Fehlercode 004");
+			
+			
 		}
+		
+		// Aufruf bei erfolgreicher Kundenneuanlage
+		NewCustomer nc = new NewCustomer();
+		
+		try {
+			nc.customerAdded(firstName, lastName);
+		} catch (InvalidParameterException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			throw new Exception ("Ein Fehler beim Abschluss der Kundenneuerstellung ist aufgetreten! Fehlercode: 001");
+		}
+		
 	}
 }
 

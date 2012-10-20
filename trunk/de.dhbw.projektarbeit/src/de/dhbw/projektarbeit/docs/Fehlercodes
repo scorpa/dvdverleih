@@ -1,6 +1,6 @@
 Fehlercodes:
 
-// 001: NewCustomer.java		Bei der Übertragung des Geburtstags ist ein Fehler aufgetreten! Fehlercode: 001
+001: Insert.java				Ein Fehler beim Abschluss der Kundenneuerstellung ist aufgetreten! Fehlercode: 001
 002: CreateCustomer.java		Bei der Uebertragung der Parameter ist ein Fehler aufgetreten! Fehlercode: 002
 003: CreateCustomer.java		Bitte geben Sie eine gütlige Postleitzahl ein! Fehlercode 003
 004: Insert.java				Fehler beim Einfügen in die Datenbank! Fehlercode 004
