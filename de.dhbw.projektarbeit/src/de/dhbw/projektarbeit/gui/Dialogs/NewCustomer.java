@@ -118,15 +118,15 @@ public class NewCustomer extends JDialog {
 		sdf = new SimpleDateFormat();
 		sdf.applyPattern("yyyy-MM-dd");
 
-		dpBirthdate = new JXDatePicker(new Date(System.currentTimeMillis()));
+		dpBirthdate = new JXDatePicker();
 		dpBirthdate.getEditor().setEditable(false);
+		
 		dpBirthdate.setFormats(new String[] { "dd.MM.yyyy" });
 		dpBirthdate.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				// Überfürung des JXDates in die Datevariable
 				try {
 					dateBirthdate = (Date.valueOf(sdf.format(dpBirthdate.getDate())));
-					
 				} catch (IllegalArgumentException e) {
 					// Bei der Übertragung des Geburtstags ist ein Fehler aufgetreten! Fehlercode: 001
 					e.printStackTrace();
