@@ -130,7 +130,6 @@ public class NewCustomer extends JDialog {
 				try {
 					dateBirthdate = (Date.valueOf(sdf.format(dpBirthdate.getDate())));
 				} catch (IllegalArgumentException e) {
-					// Bei der Übertragung des Geburtstags ist ein Fehler aufgetreten! Fehlercode: 001
 					e.printStackTrace();
 				}
 				
@@ -438,7 +437,7 @@ public class NewCustomer extends JDialog {
 		zipCode = txtZipcode.getText();
 
 		// Überprüfung auf Parsefehler bei der Postleitzahl mit entsprechender
-		// Fehlermeldung && zipCode.replaceAll(" ", "") == ""
+		// Fehlermeldung 
 		if (zipCode.replaceAll(" ", "").equals("")) {
 			zip_code = 0;
 		} else {
