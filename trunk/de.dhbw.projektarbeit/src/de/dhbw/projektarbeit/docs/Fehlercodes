@@ -4,4 +4,5 @@ Fehlercodes:
 002: CreateCustomer.java		Bei der Uebertragung der Parameter ist ein Fehler aufgetreten! Fehlercode: 002
 003: CreateCustomer.java		Bitte geben Sie eine gütlige Postleitzahl ein! Fehlercode 003
 004: Insert.java				Fehler beim Einfügen in die Datenbank! Fehlercode 004
+005: CreateRegisseur.java		Verbindung zum SQL Server fehlgeschlagen. Fehlercode 005
 

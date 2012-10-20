@@ -152,7 +152,7 @@ CREATE TABLE `dvd` (
   CONSTRAINT `fk_dvd_author` FOREIGN KEY (`Author_ID`) REFERENCES `author` (`Author_ID`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_dvd_camera` FOREIGN KEY (`Camera_ID`) REFERENCES `camera` (`Camera_ID`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_dvd_production` FOREIGN KEY (`Production_ID`) REFERENCES `production` (`Production_ID`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_dvd_regiseur` FOREIGN KEY (`Regie_ID`) REFERENCES `regiseur` (`Regie_ID`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  CONSTRAINT `fk_dvd_regiseur` FOREIGN KEY (`Regie_ID`) REFERENCES `regisseur` (`Regie_ID`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 PACK_KEYS=1 COMMENT='DVD Information';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -212,27 +212,28 @@ LOCK TABLES `production` WRITE;
 UNLOCK TABLES;
 
 --
--- Table structure for table `regiseur`
+-- Table structure for table `regisseur`
 --
 
-DROP TABLE IF EXISTS `regiseur`;
+DROP TABLE IF EXISTS `regisseur`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `regiseur` (
+CREATE TABLE `regisseur` (
   `Regie_ID` int(11) NOT NULL AUTO_INCREMENT,
   `FirstName` text,
   `LastName` text,
   PRIMARY KEY (`Regie_ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `regiseur`
+-- Dumping data for table `regisseur`
 --
 
-LOCK TABLES `regiseur` WRITE;
-/*!40000 ALTER TABLE `regiseur` DISABLE KEYS */;
-/*!40000 ALTER TABLE `regiseur` ENABLE KEYS */;
+LOCK TABLES `regisseur` WRITE;
+/*!40000 ALTER TABLE `regisseur` DISABLE KEYS */;
+INSERT INTO `regisseur` VALUES (8,'Steven','Spielberg'),(9,'Mel','Gibson'),(10,'Chris','Columbus');
+/*!40000 ALTER TABLE `regisseur` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -363,4 +364,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2012-10-20 16:18:34
+-- Dump completed on 2012-10-20 22:45:43
