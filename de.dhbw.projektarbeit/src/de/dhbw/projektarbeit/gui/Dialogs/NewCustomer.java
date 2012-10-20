@@ -459,7 +459,7 @@ public class NewCustomer extends JDialog {
 			   go = false;
 			  } else if (lastName.replaceAll(" ", "").equals("")) {
 			   go = false;
-			  } else if (zip_code == 0 || (zip_code >= 10000 && zip_code <= 99999)) {
+			  } else if (zip_code == 0 || (zip_code <= 00001 && zip_code >= 99999)) {
 			   go = false;
 			  } else if (city.replaceAll(" ", "").equals("")) {
 			   go = false;

@@ -85,8 +85,8 @@ public class Insert {
 			customer.append("INSERT INTO ");
 			customer.append(schema);
 			customer.append(".customer (FirstName, LastName, ZIP_Code, City, Street, StreetNo, Email, Telefone, Birthdate) "
-					+ "VALUES (" + firstName + "," + lastName + "," + zip_code + "," + city + "," + street + "," + streetNo + "," + email + "," + telefone + "," 
-					+ birthdate + ")");
+					+ "VALUES (\"" + firstName + "\",\"" + lastName + "\",\"" + zip_code + "\",\"" + city + "\",\"" + street + "\",\"" + streetNo + "\",\"" + email + "\",\"" + telefone + "\",\"" 
+					+ birthdate + "\")");
 
 			stmt.executeUpdate(customer.toString());
 
