@@ -46,8 +46,10 @@ public class NewDVD extends JDialog {
 	private SimpleDateFormat sdf;
 	private Date release;
 	private int duration, quantity;
-	private JComboBox cbRegisseur;
+	private JComboBox cbRegisseur, cbFSK, cbProdCountry, cbProducent;
 	private Vector<String> dbRegisseur = new Vector();
+	private JXDatePicker dpRelease;
+	private JSpinner spDuration, spCountDVD;
 
 	/**
 	 * Launch the application.
@@ -98,7 +100,7 @@ public class NewDVD extends JDialog {
 		JLabel lblAltersbeschrnkung = new JLabel("Altersbeschr\u00E4nkung");
 
 		// Auslesen des Combofields
-		final JComboBox cbFSK = new JComboBox();
+		cbFSK = new JComboBox();
 		cbFSK.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				fsk = (String) cbFSK.getSelectedItem();
@@ -110,10 +112,10 @@ public class NewDVD extends JDialog {
 				"indiziert" }));
 
 		// Auslesen des Combofields
-		final JComboBox cbProdCountry = new JComboBox();
+		cbProdCountry = new JComboBox();
 		cbProdCountry.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				prodCountry = (String) cbProdCountry.getSelectedItem();
+				
 			}
 		});
 		cbProdCountry.setModel(new DefaultComboBoxModel(new String[] {
@@ -137,15 +139,10 @@ public class NewDVD extends JDialog {
 
 		JLabel lblProduktionsjahr = new JLabel("Produktionsjahr");
 
-		final JXDatePicker dpRelease = new JXDatePicker();
+		dpRelease = new JXDatePicker();
 		dpRelease.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// Überfürung des JXDates in die Datevariable
-				try {
-					release = (Date.valueOf(sdf.format(dpRelease.getDate())));
-				} catch (IllegalArgumentException i) {
-					i.printStackTrace();
-				}
+
 			}
 		});
 		dpRelease.setFormats(new String[] { "DD.MM.YYYY" });
@@ -159,9 +156,6 @@ public class NewDVD extends JDialog {
 		Filling fill = new Filling();
 		
 		// Instantiierung von Combofield Variablen
-		vAuswahlRegisseur = new Vector();
-		cAuswahlRegisseur = new DefaultComboBoxModel(vAuswahlRegisseur);
-		
 		// ArrayList mit DB Daten von Regisseuren füllen
 		try {
 			dbRegisseur = fill.fillCbRegisseur();
@@ -169,14 +163,12 @@ public class NewDVD extends JDialog {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-		
-		cbRegisseur = new JComboBox(dbRegisseur);
-		//cbRegisseur.setModel(cAuswahlRegisseur);
+		cAuswahlRegisseur = new DefaultComboBoxModel(dbRegisseur);
+		cbRegisseur = new JComboBox();
+		cbRegisseur.setModel(cAuswahlRegisseur);
 		cbRegisseur.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//cAuswahlRegisseur.addElement(vAuswahlRegisseur);
-				// Auslesen des Combofields
-				regie = (String) cbRegisseur.getSelectedItem();
+
 			}
 		});
 
@@ -193,7 +185,7 @@ public class NewDVD extends JDialog {
 		JButton btnNewProducent = new JButton("+");
 
 		// Auslesen des Combofields
-		final JComboBox cbProducent = new JComboBox();
+		cbProducent = new JComboBox();
 		cbProducent.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				production = (String) cbProducent.getSelectedItem();
@@ -202,10 +194,10 @@ public class NewDVD extends JDialog {
 
 		JLabel lblDauer = new JLabel("Dauer in Min.");
 
-		final JSpinner spDuration = new JSpinner();
+		spDuration = new JSpinner();
 		spDuration.setModel(new javax.swing.SpinnerNumberModel(1, 1, 10000, 1));
 
-		final JSpinner spCountDVD = new JSpinner();
+		spCountDVD = new JSpinner();
 		spCountDVD.setPreferredSize(new Dimension(40, 28));
 		spCountDVD.setModel(new javax.swing.SpinnerNumberModel(1, 1, 1000, 1));
 		spCountDVD.setEditor(new JSpinner.NumberEditor(spCountDVD, "0"));
@@ -605,13 +597,6 @@ public class NewDVD extends JDialog {
 		}
 	}
 
-	private void cbFSKActionPerformed(ActionEvent arg0) {
-		// Auswahl Combobox FSK
-		JComboBox cb = (JComboBox) arg0.getSource();
-		String fsk = (String) cb.getSelectedItem();
-
-	}
-
 	private void addActionPerformed(ActionEvent arg0) {
 		// Hinzufügen Button gedrückt
 		String title, originalTitle, eanCode, genre;
@@ -623,6 +608,18 @@ public class NewDVD extends JDialog {
 		eanCode = txtEancode.getText();
 		genre = txtGenre.getText();
 
+		// Auslesen der Combofields
+		regie = (String) cbRegisseur.getSelectedItem();
+		prodCountry = (String) cbProdCountry.getSelectedItem();
+		fsk = (String) cbFSK.getSelectedItem();
+		
+		// Überfürung des JXDates in die Datevariable
+		try {
+			release = (Date.valueOf(sdf.format(dpRelease.getDate())));
+		} catch (IllegalArgumentException i) {
+			i.printStackTrace();
+		}
+		
 		// Auf leere Pflichtfelder überprüfen
 		if (title.replaceAll(" ", "").equals("")) {
 			go = false;
