@@ -43,7 +43,8 @@ public class Insert {
 
 	/**
 	 * Fügt einen neuen Datensatz in die DB ein.
-	 * 
+	 * @param nc 
+	 * 			  Fenstereigenschafen
 	 * @param vorname
 	 *            Vorname des neuen Kunden
 	 * @param nachname
@@ -66,7 +67,7 @@ public class Insert {
 	 *             Fehlerhandling
 	 */
 
-	public void insertCustomer(String firstName, String lastName, int zip_code,
+	public void insertCustomer(NewCustomer nc, String firstName, String lastName, int zip_code,
 			String city, String street, String streetNo, String email,
 			String telefone, java.sql.Date birthdate) throws Exception {
 
@@ -130,7 +131,6 @@ public class Insert {
 		}
 
 		// Aufruf bei erfolgreicher Kundenneuanlage
-		NewCustomer nc = new NewCustomer();
 
 		try {
 			nc.customerAdded(firstName, lastName);

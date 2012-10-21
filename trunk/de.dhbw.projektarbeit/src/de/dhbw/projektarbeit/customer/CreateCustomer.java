@@ -8,6 +8,7 @@ import java.sql.Connection;
 
 import de.dhbw.projektarbeit.db.mysql.MysqlAccess;
 import de.dhbw.projektarbeit.db.request.Insert;
+import de.dhbw.projektarbeit.gui.Dialogs.NewCustomer;
 
 public class CreateCustomer {
 
@@ -24,12 +25,15 @@ public class CreateCustomer {
 	private Date dateBirthdate;
 	private int zip_code;
 	private Connection con;
+	private NewCustomer nc;
 
 	/**
 	 * CREATE NEW CUSTOMER ** *********************** Methode, die das
 	 * Uebernehmen der eingegebenen Daten uebernimmt, das Datum in ein
 	 * Dateformat parset und die mySQL DB schreibt.
 	 * 
+	 * @param nc 
+	 * 			--> Übergabe der Fensterparameter
 	 * @param firstName
 	 *            --> Vorname
 	 * @param lastName
@@ -52,13 +56,15 @@ public class CreateCustomer {
 	 *             --> Exeptionhandling
 	 */
 
-	public void CreateNewCustomer(String firstName, String lastName,
+	public void CreateNewCustomer(NewCustomer nc, String firstName, String lastName,
 			int zip_code, String city, String street, String streetNo,
 			String email, String telefone, java.sql.Date dateBirthdate) throws Exception {
 		
 		con = DriverManager.getConnection("jdbc:mysql://localhost/dvd_verleih?user=root");
 		
 		insert = new Insert("dvd_verleih",con);
+		
+		this.nc=nc;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.zip_code = zip_code;
@@ -72,7 +78,7 @@ public class CreateCustomer {
 
 		// Ruft die Methode zum Übertragen und Speichern in die mySQL DB auf
 		try {
-			insert.insertCustomer(firstName, lastName, zip_code, city, street,
+			insert.insertCustomer(this.nc, firstName, lastName, zip_code, city, street,
 					streetNo, email, telefone, dateBirthdate);
 		} catch (InvalidParameterException e) {
 			// Fehlercode 002

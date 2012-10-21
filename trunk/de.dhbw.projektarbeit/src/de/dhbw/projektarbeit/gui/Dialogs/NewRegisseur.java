@@ -215,16 +215,8 @@ public class NewRegisseur extends JDialog {
 		JOptionPane.showMessageDialog(null, ("Der Regisseur " + firstName + " " + lastName + " wurde erfolgreich angelegt!"), "Vorgang erfolgreich", JOptionPane.INFORMATION_MESSAGE);
 		this.setVisible(false);
 		this.dispose();
-		/* txtFirstname.setText("");
-		txtLastname.setText("");
-		txtZipcode.setText("");
-		txtCity.setText("");
-		txtStreet.setText("");
-		txtStreetno.setText("");
-		txtEmail.setText("");
-		txtTelefone.setText("");
-		dpBirthdate.setDate(null); */
 		
+		// Neues, leeres Erstellungsfenster instantiieren
 		NewRegisseur dialog = new NewRegisseur();
 		dialog.setVisible(true);
 

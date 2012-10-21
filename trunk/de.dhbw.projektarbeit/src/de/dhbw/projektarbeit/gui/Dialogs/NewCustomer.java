@@ -477,7 +477,7 @@ public class NewCustomer extends JDialog {
 		if (go == true) {
 			CreateCustomer cc = new CreateCustomer();
 			try {
-				cc.CreateNewCustomer(firstName, lastName, zip_code, city, street, streetNo, email, telefone, dateBirthdate);
+				cc.CreateNewCustomer(this, firstName, lastName, zip_code, city, street, streetNo, email, telefone, dateBirthdate);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -506,17 +506,11 @@ public class NewCustomer extends JDialog {
 	public void customerAdded(String firstName, String lastName){
 		// Wenn Benutzer erfolgreich hinzu gefügt wurde, die mitteilen und neues, leeres Eingabefenster öffnen.
 		dispose();
-		JOptionPane.showMessageDialog(null, ("Der Benutzer" + firstName + " " + lastName + "wurde erfolgreich angelegt!"), "Vorgang erfolgreich", JOptionPane.INFORMATION_MESSAGE);
-		/* txtFirstname.setText("");
-		txtLastname.setText("");
-		txtZipcode.setText("");
-		txtCity.setText("");
-		txtStreet.setText("");
-		txtStreetno.setText("");
-		txtEmail.setText("");
-		txtTelefone.setText("");
-		dpBirthdate.setDate(null); */
-		
+		JOptionPane.showMessageDialog(null, ("Der Benutzer " + firstName + " " + lastName + " wurde erfolgreich angelegt!"), "Vorgang erfolgreich", JOptionPane.INFORMATION_MESSAGE);
+		this.setVisible(false);
+		this.dispose();
+
+		// Neues, leeres Erstellungsfenster instantiieren
 		NewCustomer dialog = new NewCustomer();
 		dialog.setVisible(true);
 
