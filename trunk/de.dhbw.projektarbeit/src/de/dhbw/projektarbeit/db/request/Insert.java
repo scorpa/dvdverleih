@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 import de.dhbw.projektarbeit.gui.Dialogs.NewCustomer;
+import de.dhbw.projektarbeit.gui.Dialogs.NewDVD;
 import de.dhbw.projektarbeit.gui.Dialogs.NewRegisseur;
 
 /**
@@ -152,7 +153,7 @@ public class Insert {
 	 * @throws Exception
 	 *             --> Exceptionhandling auf der SQL DB
 	 */
-	public void insertRegisseur(String firstName, String lastName)
+	public void insertRegisseur(NewRegisseur nr,String firstName, String lastName)
 			throws Exception {
 		try {
 
@@ -164,7 +165,12 @@ public class Insert {
 			stmt = con.createStatement();
 
 			StringBuffer regisseur = new StringBuffer();
-
+			
+			/*
+			 * Hinzufügen eines neuen Regisseurs
+			 * "Insert into dvd_verleih.regisseur (FirstName, LastName) VALUES
+			 * (firstName, lastName)"
+			 */
 			regisseur.append("INSERT INTO ");
 			regisseur.append(schema);
 			regisseur.append(".regisseur (FirstName, LastName) " + "VALUES (\""
@@ -186,15 +192,23 @@ public class Insert {
 			throw new Exception(
 					"Fehler beim Einfügen in die Datenbank! Fehlercode 004");
 		}
-		// Aufruf bei erfolgreicher Kundenneuanlage
-		NewRegisseur nr = new NewRegisseur();
+		// Aufruf bei erfolgreicher Regisseuranlage
+		NewDVD dvd = new NewDVD();
 		
+		// Update der Regisseurcombobox in der DVD Erstellung durchführen
+		// Rückmeldung an Regisseurerstellung
 		try {
+			dvd.updateComboboxRegisseur(firstName.concat(" " + lastName));
 			nr.regisseurAdded(firstName, lastName);
+			
+			
+			
 		} catch (InvalidParameterException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
+		
 
 	}
 }

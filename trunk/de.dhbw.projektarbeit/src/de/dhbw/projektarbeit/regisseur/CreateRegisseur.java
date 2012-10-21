@@ -7,6 +7,7 @@ import java.sql.SQLException;
 
 import de.dhbw.projektarbeit.db.mysql.MysqlAccess;
 import de.dhbw.projektarbeit.db.request.Insert;
+import de.dhbw.projektarbeit.gui.Dialogs.NewRegisseur;
 
 /**
  * Klasse erstellt beim Klick auf Hinzufügen im Dialog "Neuer Regisseur" einen
@@ -22,6 +23,7 @@ public class CreateRegisseur {
 	private Insert insert;
 	private Connection con;
 	private String firstName, lastName;
+	private NewRegisseur nr;
 
 	/**
 	 * createRegiseur Methode zum Anlegen eines Regisseurs auf der SQL DB
@@ -33,8 +35,9 @@ public class CreateRegisseur {
 	 * @throws Exception
 	 *             --> Exceptionhandling
 	 */
-	public void createRegiseur(String firstName, String lastName)
+	public void createRegiseur(NewRegisseur nr,String firstName, String lastName)
 			throws Exception {
+		this.nr=nr;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		// Verbindung zum SQL Server aufbauen
@@ -50,7 +53,7 @@ public class CreateRegisseur {
 		insert = new Insert("dvd_verleih",con);
 
 		try {
-			insert.insertRegisseur(this.firstName, this.lastName);
+			insert.insertRegisseur(this.nr,this.firstName, this.lastName);
 
 		} catch (InvalidParameterException e) {
 			// Fehlercode 002

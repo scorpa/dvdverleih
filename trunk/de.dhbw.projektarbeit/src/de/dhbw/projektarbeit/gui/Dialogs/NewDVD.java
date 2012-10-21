@@ -7,6 +7,8 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.event.ListDataListener;
+import javax.swing.ComboBoxModel;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JLabel;
@@ -19,10 +21,15 @@ import javax.swing.SpinnerModel;
 import java.awt.Dimension;
 import javax.swing.JSpinner;
 import org.jdesktop.swingx.JXDatePicker;
+
+import de.dhbw.projektarbeit.db.request.Filling;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Vector;
 
 public class NewDVD extends JDialog {
 
@@ -34,9 +41,13 @@ public class NewDVD extends JDialog {
 	private JButton addButton;
 	private JButton cancelButton;
 	private String fsk, prodCountry, regie, production;
+	private DefaultComboBoxModel cAuswahlRegisseur;
+	private Vector<String> vAuswahlRegisseur;
 	private SimpleDateFormat sdf;
 	private Date release;
 	private int duration, quantity;
+	private JComboBox cbRegisseur;
+	private Vector<String> dbRegisseur = new Vector();
 
 	/**
 	 * Launch the application.
@@ -53,13 +64,14 @@ public class NewDVD extends JDialog {
 
 	/**
 	 * Create the dialog.
+	 * @throws Exception 
 	 */
-	public NewDVD() {
+	public NewDVD() throws Exception {
 		setResizable(false);
 		setModal(true);
 		setTitle("Neue DVD anlegen");
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 610, 343);
+		setBounds(100, 100, 612, 365);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
@@ -143,15 +155,38 @@ public class NewDVD extends JDialog {
 
 		JLabel lblRegisseur = new JLabel("Regisseur");
 
-		// Auslesen des Combofields
-		final JComboBox cbRegisseur = new JComboBox();
+		//Instantiierung von der Fillmethode für das Combofield
+		Filling fill = new Filling();
+		
+		// Instantiierung von Combofield Variablen
+		vAuswahlRegisseur = new Vector();
+		cAuswahlRegisseur = new DefaultComboBoxModel(vAuswahlRegisseur);
+		
+		// ArrayList mit DB Daten von Regisseuren füllen
+		try {
+			dbRegisseur = fill.fillCbRegisseur();
+		} catch (IllegalArgumentException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
+		cbRegisseur = new JComboBox(dbRegisseur);
+		//cbRegisseur.setModel(cAuswahlRegisseur);
 		cbRegisseur.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				//cAuswahlRegisseur.addElement(vAuswahlRegisseur);
+				// Auslesen des Combofields
 				regie = (String) cbRegisseur.getSelectedItem();
 			}
 		});
 
 		JButton btnNewRegisseur = new JButton("+");
+		btnNewRegisseur.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				NewRegisseur nr = new NewRegisseur();
+				nr.setVisible(true);
+			}
+		});
 
 		JLabel lblProduzent = new JLabel("Produzent");
 
@@ -540,29 +575,32 @@ public class NewDVD extends JDialog {
 			}
 			{
 				cancelButton = new JButton("Cancel");
+				cancelButton.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						dispose();
+					}
+				});
 				cancelButton.setActionCommand("Cancel");
 			}
 			GroupLayout gl_buttonPane = new GroupLayout(buttonPane);
-			gl_buttonPane.setHorizontalGroup(gl_buttonPane.createParallelGroup(
-					Alignment.TRAILING).addGroup(
-					gl_buttonPane.createSequentialGroup()
-							.addContainerGap(446, Short.MAX_VALUE)
-							.addComponent(addButton)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(cancelButton)));
-			gl_buttonPane.setVerticalGroup(gl_buttonPane.createParallelGroup(
-					Alignment.LEADING).addGroup(
-					gl_buttonPane
-							.createSequentialGroup()
-							.addGap(5)
-							.addGroup(
-									gl_buttonPane
-											.createParallelGroup(
-													Alignment.BASELINE)
-											.addComponent(cancelButton)
-											.addComponent(addButton))
-							.addContainerGap(GroupLayout.DEFAULT_SIZE,
-									Short.MAX_VALUE)));
+			gl_buttonPane.setHorizontalGroup(
+				gl_buttonPane.createParallelGroup(Alignment.TRAILING)
+					.addGroup(gl_buttonPane.createSequentialGroup()
+						.addContainerGap(436, Short.MAX_VALUE)
+						.addComponent(addButton)
+						.addPreferredGap(ComponentPlacement.RELATED)
+						.addComponent(cancelButton)
+						.addContainerGap())
+			);
+			gl_buttonPane.setVerticalGroup(
+				gl_buttonPane.createParallelGroup(Alignment.LEADING)
+					.addGroup(Alignment.TRAILING, gl_buttonPane.createSequentialGroup()
+						.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+						.addGroup(gl_buttonPane.createParallelGroup(Alignment.BASELINE)
+							.addComponent(cancelButton)
+							.addComponent(addButton))
+						.addContainerGap())
+			);
 			buttonPane.setLayout(gl_buttonPane);
 		}
 	}
@@ -602,5 +640,16 @@ public class NewDVD extends JDialog {
 			go = false;
 		}
 
+	}
+	
+	public void updateComboboxRegisseur(String regisseur){
+		dbRegisseur.add(regisseur);
+		
+	}
+	
+	public void fillRegisseur(){
+		
+		
+		
 	}
 }

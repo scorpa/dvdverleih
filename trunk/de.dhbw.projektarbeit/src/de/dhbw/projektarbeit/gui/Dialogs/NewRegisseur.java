@@ -193,7 +193,7 @@ public class NewRegisseur extends JDialog {
 		if (go == true) {
 			CreateRegisseur cr = new CreateRegisseur();
 			try {
-				cr.createRegiseur(firstName, lastName);
+				cr.createRegiseur(this,firstName, lastName);
 			} catch (InvalidParameterException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -211,8 +211,10 @@ public class NewRegisseur extends JDialog {
 	
 	public void regisseurAdded(String firstName, String lastName){
 		// Wenn Benutzer erfolgreich hinzu gefügt wurde, die mitteilen und neues, leeres Eingabefenster öffnen.
-		dispose();
-		JOptionPane.showMessageDialog(null, ("Der Regisseur" + firstName + " " + lastName + "wurde erfolgreich angelegt!"), "Vorgang erfolgreich", JOptionPane.INFORMATION_MESSAGE);
+		
+		JOptionPane.showMessageDialog(null, ("Der Regisseur " + firstName + " " + lastName + " wurde erfolgreich angelegt!"), "Vorgang erfolgreich", JOptionPane.INFORMATION_MESSAGE);
+		this.setVisible(false);
+		this.dispose();
 		/* txtFirstname.setText("");
 		txtLastname.setText("");
 		txtZipcode.setText("");
@@ -228,5 +230,7 @@ public class NewRegisseur extends JDialog {
 
 		
 	}
+	
+
 	
 }
