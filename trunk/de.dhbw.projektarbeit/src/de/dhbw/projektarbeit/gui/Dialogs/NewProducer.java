@@ -5,6 +5,7 @@ import java.awt.FlowLayout;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.GroupLayout;
@@ -12,14 +13,28 @@ import javax.swing.GroupLayout.Alignment;
 import javax.swing.JTextField;
 import javax.swing.JLabel;
 import javax.swing.LayoutStyle.ComponentPlacement;
+
+import de.dhbw.projektarbeit.db.mysql.MysqlAccess;
+import de.dhbw.projektarbeit.db.request.Insert;
+import de.dhbw.projektarbeit.regisseur.CreateRegisseur;
+
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import java.security.InvalidParameterException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 
 public class NewProducer extends JDialog {
-	private JTextField textField;
-	private JTextField textField_1;
-	private JButton okButton;
+	private JTextField txtFirstName;
+	private JTextField txtLastName;
+	private JButton addButton;
 	private JButton cancelButton;
+	private MysqlAccess access;
+	private Insert insert;
+	private Connection con;
 
 	/**
 	 * Launch the application.
@@ -42,41 +57,53 @@ public class NewProducer extends JDialog {
 		setModal(true);
 		setResizable(false);
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 610, 155);
+		setBounds(100, 100, 500, 155);
 		getContentPane().setLayout(new BorderLayout());
 		{
 			JPanel buttonPane = new JPanel();
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
-				okButton = new JButton("OK");
-				okButton.setActionCommand("OK");
-				getRootPane().setDefaultButton(okButton);
+				addButton = new JButton("Hinzuf\u00FCgen");
+				addButton.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent arg0) {
+						try {
+							addButtonActionPerformed(arg0);
+						} catch (Exception e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
+				});
+				addButton.setActionCommand("OK");
+				getRootPane().setDefaultButton(addButton);
 			}
 			{
 				cancelButton = new JButton("Cancel");
+				cancelButton.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent arg0) {
+						dispose();
+					}
+				});
 				cancelButton.setActionCommand("Cancel");
 			}
-			
-			JButton btnAddproducer = new JButton("+");
 			GroupLayout gl_buttonPane = new GroupLayout(buttonPane);
 			gl_buttonPane.setHorizontalGroup(
-				gl_buttonPane.createParallelGroup(Alignment.LEADING)
-					.addGroup(Alignment.TRAILING, gl_buttonPane.createSequentialGroup()
-						.addComponent(btnAddproducer, GroupLayout.PREFERRED_SIZE, 44, GroupLayout.PREFERRED_SIZE)
-						.addPreferredGap(ComponentPlacement.RELATED, 319, Short.MAX_VALUE)
-						.addComponent(okButton)
+				gl_buttonPane.createParallelGroup(Alignment.TRAILING)
+					.addGroup(gl_buttonPane.createSequentialGroup()
+						.addContainerGap(326, Short.MAX_VALUE)
+						.addComponent(addButton)
 						.addPreferredGap(ComponentPlacement.RELATED)
-						.addComponent(cancelButton))
+						.addComponent(cancelButton)
+						.addContainerGap())
 			);
 			gl_buttonPane.setVerticalGroup(
-				gl_buttonPane.createParallelGroup(Alignment.LEADING)
+				gl_buttonPane.createParallelGroup(Alignment.TRAILING)
 					.addGroup(gl_buttonPane.createSequentialGroup()
-						.addGap(5)
+						.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 						.addGroup(gl_buttonPane.createParallelGroup(Alignment.BASELINE)
-							.addComponent(cancelButton)
-							.addComponent(okButton)
-							.addComponent(btnAddproducer))
-						.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+							.addComponent(addButton)
+							.addComponent(cancelButton))
+						.addContainerGap())
 			);
 			buttonPane.setLayout(gl_buttonPane);
 		}
@@ -85,37 +112,30 @@ public class NewProducer extends JDialog {
 		panel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(panel, BorderLayout.CENTER);
 		
-		textField = new JTextField();
-		textField.setText("FirstName");
-		textField.setColumns(22);
+		txtFirstName = new JTextField();
+		txtFirstName.setText("FirstName");
+		txtFirstName.setColumns(22);
 		
 		JLabel label = new JLabel("Vorname");
 		
 		JLabel label_1 = new JLabel("Nachname");
 		
-		textField_1 = new JTextField();
-		textField_1.setText("LastName");
-		textField_1.setColumns(22);
+		txtLastName = new JTextField();
+		txtLastName.setText("LastName");
+		txtLastName.setColumns(22);
 		GroupLayout gl_panel = new GroupLayout(panel);
 		gl_panel.setHorizontalGroup(
-			gl_panel.createParallelGroup(Alignment.LEADING)
-				.addGroup(Alignment.TRAILING, gl_panel.createSequentialGroup()
+			gl_panel.createParallelGroup(Alignment.TRAILING)
+				.addGroup(gl_panel.createSequentialGroup()
+					.addContainerGap()
 					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
-						.addGroup(Alignment.TRAILING, gl_panel.createSequentialGroup()
-							.addContainerGap()
-							.addComponent(textField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-							.addGap(18))
-						.addGroup(gl_panel.createSequentialGroup()
-							.addContainerGap()
-							.addComponent(label)
-							.addGap(241)))
-					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING, false)
-						.addGroup(gl_panel.createSequentialGroup()
-							.addComponent(label_1)
-							.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-						.addGroup(Alignment.TRAILING, gl_panel.createSequentialGroup()
-							.addComponent(textField_1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-							.addGap(20))))
+						.addComponent(label)
+						.addComponent(txtFirstName, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+					.addGap(101)
+					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
+						.addComponent(label_1)
+						.addComponent(txtLastName, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+					.addContainerGap(20, Short.MAX_VALUE))
 		);
 		gl_panel.setVerticalGroup(
 			gl_panel.createParallelGroup(Alignment.LEADING)
@@ -125,10 +145,72 @@ public class NewProducer extends JDialog {
 						.addComponent(label_1))
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
-						.addComponent(textField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(textField_1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-					.addContainerGap(33, Short.MAX_VALUE))
+						.addComponent(txtFirstName, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(txtLastName, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+					.addContainerGap(32, Short.MAX_VALUE))
 		);
 		panel.setLayout(gl_panel);
+	}
+
+	private void addButtonActionPerformed(ActionEvent arg0) throws Exception {
+		// Hinzufügen Button gedrückt
+		String firstName, lastName;
+		boolean go = true;
+		firstName = txtFirstName.getText();
+		lastName = txtLastName.getText();
+		
+		// Auf leere Pflichtfelder überprüfen
+		if (firstName.replaceAll(" ", "").equals("")) {
+			go = false;
+		} else if (lastName.replaceAll(" ", "").equals("")) {
+			go = false;
+		}
+
+		// Aufrufen der Methode CreateRegisseur
+		if (go == true) {
+			// Verbindung zum SQL Server aufbauen
+			try {
+				con = DriverManager
+						.getConnection("jdbc:mysql://localhost/dvd_verleih?user=root");
+			} catch (SQLException e) {
+				// Verbindung zum SQL Server fehlgeschlagen. Fehlercode 005
+				e.printStackTrace();
+				throw new Exception(
+						"Verbindung zum SQL Server fehlgeschlagen. Fehlercode 005");
+			}
+			insert = new Insert("dvd_verleih",con);
+
+			try {
+				insert.insertProducer(this,firstName,lastName);
+
+			} catch (InvalidParameterException e) {
+				// Fehlercode 002
+				e.printStackTrace();
+				throw new Exception(
+						"Bei der Uebertragung der Parameter ist ein Fehler aufgetreten! Fehlercode: 002");
+			}
+		} else {
+			JOptionPane
+					.showMessageDialog(
+							null,
+							"Sie haben ein Pflichtfeld nicht ausgefüllt! Bitte überprüfen Sie ihre Angaben in den Feldern",
+							"Regisseurerstellung", JOptionPane.ERROR_MESSAGE);
+
+		}
+		
+	}
+	
+	public void productionAdded(String firstName, String lastName){
+		// Wenn Benutzer erfolgreich hinzu gefügt wurde, die mitteilen und neues, leeres Eingabefenster öffnen.
+		
+		JOptionPane.showMessageDialog(null, ("Der Produzent " + firstName + " " + lastName + " wurde erfolgreich angelegt!"), "Vorgang erfolgreich", JOptionPane.INFORMATION_MESSAGE);
+		this.setVisible(false);
+		this.dispose();
+		
+		// Neues, leeres Erstellungsfenster instantiieren
+		NewRegisseur dialog = new NewRegisseur();
+		dialog.setVisible(true);
+
+		
 	}
 }

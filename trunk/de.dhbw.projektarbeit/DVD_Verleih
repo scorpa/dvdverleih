@@ -108,7 +108,7 @@ CREATE TABLE `customer` (
   `Telefone` varchar(45) DEFAULT NULL,
   `Birthdate` date DEFAULT NULL,
   PRIMARY KEY (`Customer_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8 COMMENT='Customer Data';
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COMMENT='Customer Data';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -197,9 +197,10 @@ DROP TABLE IF EXISTS `production`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `production` (
   `Production_ID` int(11) NOT NULL AUTO_INCREMENT,
-  `Name` varchar(45) DEFAULT NULL,
+  `FirstName` varchar(45) DEFAULT NULL,
+  `LastName` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`Production_ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -208,6 +209,7 @@ CREATE TABLE `production` (
 
 LOCK TABLES `production` WRITE;
 /*!40000 ALTER TABLE `production` DISABLE KEYS */;
+INSERT INTO `production` VALUES (2,'James','Cameron');
 /*!40000 ALTER TABLE `production` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -223,7 +225,7 @@ CREATE TABLE `regisseur` (
   `FirstName` text,
   `LastName` text,
   PRIMARY KEY (`Regie_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=42 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -232,7 +234,7 @@ CREATE TABLE `regisseur` (
 
 LOCK TABLES `regisseur` WRITE;
 /*!40000 ALTER TABLE `regisseur` DISABLE KEYS */;
-INSERT INTO `regisseur` VALUES (8,'Steven','Spielberg'),(9,'Mel','Gibson'),(10,'Chris','Columbus');
+INSERT INTO `regisseur` VALUES (11,'Steven ','Spielberg');
 /*!40000 ALTER TABLE `regisseur` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -364,4 +366,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2012-10-20 22:45:43
+-- Dump completed on 2012-10-22 16:21:20

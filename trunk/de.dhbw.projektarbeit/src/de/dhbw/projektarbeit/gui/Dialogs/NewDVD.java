@@ -183,6 +183,12 @@ public class NewDVD extends JDialog {
 		JLabel lblProduzent = new JLabel("Produzent");
 
 		JButton btnNewProducent = new JButton("+");
+		btnNewProducent.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				NewProducer np = new NewProducer();
+				np.setVisible(true);
+			}
+		});
 
 		// Auslesen des Combofields
 		cbProducent = new JComboBox();
