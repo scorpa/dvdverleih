@@ -426,7 +426,9 @@ public class NewDVD extends JDialog {
 		} else if (release == null) {
 			go = false;
 		}
-
+		
+		// Aufrufen der Methode zum Anlegen einer DVD
+		
 	}
 
 	public void updateComboboxRegisseur(String regisseur) {

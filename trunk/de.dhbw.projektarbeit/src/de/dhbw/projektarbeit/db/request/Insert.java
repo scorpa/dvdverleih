@@ -82,7 +82,7 @@ public class Insert {
 
 			StringBuffer customer = new StringBuffer();
 
-			/*
+			/**
 			 * Hinzufügen der neuen erfassten Kundendaten für die Tabelle
 			 * "customer" "Insert into dvd_verleih.customer (FirstName,
 			 * Lastname, ZIP_Code, City, Street, StreetNo, Email, Telefone,
@@ -277,9 +277,119 @@ public class Insert {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		
+	}
+	
+	public void insertDVD(NewDVD dvd, String eanCode, String regisseur, String production, String camera,
+			String author, String title, String genre, String fsk,
+			java.sql.Date prod_year, java.sql.Date release, int duration, String prodCountry, String originalTitle, int quantity) throws Exception {
 
+		try {
+			// Alle Einfuege-Operationen sollen als eine Transaktion und mittels
+			// Stringbuffer ausgefuehrt
+			// werden.
+			con.setAutoCommit(false);
+
+			stmt = con.createStatement();
+
+			StringBuffer bufferDVD = new StringBuffer();
+			
+			// ID des Regisseurs abfragen
+			int regisseurID = getID("regisseur", regisseur);
+			
+			
+			
+			/**
+			 * Hinzufügen der neuen erfassten Kundendaten für die Tabelle
+			 * "customer" "Insert into dvd_verleih.customer (FirstName,
+			 * Lastname, ZIP_Code, City, Street, StreetNo, Email, Telefone,
+			 * Birthdate) VALUES
+			 * (firstName,lastName,zip_code,city,street,streetNo
+			 * ,email,telefone,birthdate)"
+			 */
+
+			customer.append("INSERT INTO ");
+			customer.append(schema);
+			customer.append(".customer (FirstName, LastName, ZIP_Code, City, Street, StreetNo, Email, Telefone, Birthdate) "
+					+ "VALUES (\""
+					+ firstName
+					+ "\",\""
+					+ lastName
+					+ "\",\""
+					+ zip_code
+					+ "\",\""
+					+ city
+					+ "\",\""
+					+ street
+					+ "\",\""
+					+ streetNo
+					+ "\",\""
+					+ email
+					+ "\",\""
+					+ telefone
+					+ "\",\""
+					+ birthdate + "\")");
+
+			stmt.executeUpdate(customer.toString());
+
+			// Neuerfasste Daten auf DB schreiben
+			con.commit();
+			con.setAutoCommit(true);
+
+		} catch (SQLException e) {
+			// Im Falle eines Fehlers Rollback durchführen und Fehlermeldung
+			// schreiben
+			// Fehlercode 004
+			con.rollback();
+			con.setAutoCommit(true);
+			e.printStackTrace();
+			throw new Exception(
+					"Fehler beim Einfügen in die Datenbank! Fehlercode 004");
+
+		}
+
+		// Aufruf bei erfolgreicher Kundenneuanlage
+
+		try {
+			nc.customerAdded(firstName, lastName);
+		} catch (InvalidParameterException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			throw new Exception(
+					"Ein Fehler beim Abschluss der Kundenneuerstellung ist aufgetreten! Fehlercode: 001");
+		}
+
+	}
+
+	/**
+	 * Get Methode zum finden der IDs für Camera, Author, Production, Regisseur
+	 * @param table --> Tabelle, die in der SQL DB durchsucht werden soll
+	 * @param searchContent --> Konkadinierter String des entsprechenden Namen
+	 * @return --> ID des entsprechenden Eintrags
+	 * @throws SQLException --> Exceptionhandling
+	 */
+	private int getID(String table, String searchContent) throws SQLException {
+		String searchString, firstName, lastName;
+		searchString = searchContent;
+		
+		// Trennen des Vornamen und Nachnamen
+		firstName = searchString.substring(0, searchString.indexOf(" "));
+		lastName = searchString.substring(searchString.indexOf("")+1);
+		
+		// Alle Einfuege-Operationen sollen als eine Transaktion und mittels
+		// Stringbuffer ausgefuehrt
+		// werden.
+		con.setAutoCommit(false);
+
+		stmt = con.createStatement("SELECT * FROM ");
+		
+		StringBuffer searchID = new StringBuffer();
+		
+		searchID.append();
+		
+			
+		
+		
+		return 0;
 	}
 }
 
