@@ -29,7 +29,12 @@ public class TopPanel extends JPanel {
 		JButton btnNeueDvd = new JButton("Neue DVD");
 		btnNeueDvd.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				btnNeueDvdActionPerformed(e);
+				try {
+					btnNeueDvdActionPerformed(e);
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			}
 		});
 		
@@ -50,14 +55,24 @@ public class TopPanel extends JPanel {
 		JButton btnDvdVerleihen = new JButton("DVD verleihen");
 		btnDvdVerleihen.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				btnDvdVerleihActionPerformed(e);
+				try {
+					btnDvdVerleihActionPerformed(e);
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			}
 		});
 		
 		JButton btnDvdZurueck = new JButton("DVD zur\u00FCck");
 		btnDvdZurueck.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				btnDvdZurueckActionPerformed(e);
+				try {
+					btnDvdZurueckActionPerformed(e);
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			}
 		});
 		GroupLayout groupLayout = new GroupLayout(this);
@@ -113,9 +128,10 @@ public class TopPanel extends JPanel {
 	 * 
 	 * @param evt
 	 *            Clickevent
+	 * @throws Exception 
 	 */
 	private void btnNeueDvdActionPerformed(
-			java.awt.event.ActionEvent e) {
+			java.awt.event.ActionEvent e) throws Exception {
 		// Dialog NewDVD aufrufen
 		NewDVD dialog = new NewDVD();
 		dialog.setVisible(true);
@@ -155,9 +171,10 @@ public class TopPanel extends JPanel {
 	 * 
 	 * @param evt
 	 *            Clickevent
+	 * @throws Exception 
 	 */
 	private void btnDvdVerleihActionPerformed(
-			java.awt.event.ActionEvent e) {
+			java.awt.event.ActionEvent e) throws Exception {
 		// Dialog NewDVD aufrufen
 		NewDVD dialog = new NewDVD();
 		dialog.setVisible(true);
@@ -169,9 +186,10 @@ public class TopPanel extends JPanel {
 	 * 
 	 * @param evt
 	 *            Clickevent
+	 * @throws Exception 
 	 */
 	private void btnDvdZurueckActionPerformed(
-			java.awt.event.ActionEvent e) {
+			java.awt.event.ActionEvent e) throws Exception {
 		// Dialog NewDVD aufrufen
 		NewDVD dialog = new NewDVD();
 		dialog.setVisible(true);
