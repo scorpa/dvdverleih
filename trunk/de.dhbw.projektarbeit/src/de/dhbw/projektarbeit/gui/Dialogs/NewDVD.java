@@ -41,13 +41,14 @@ public class NewDVD extends JDialog {
 	private JButton addButton;
 	private JButton cancelButton;
 	private String fsk, prodCountry, regie, production;
-	private DefaultComboBoxModel cAuswahlRegisseur;
+	private DefaultComboBoxModel cAuswahlRegisseur, cAuswahlProduction;
 	private Vector<String> vAuswahlRegisseur;
 	private SimpleDateFormat sdf;
 	private Date release;
 	private int duration, quantity;
 	private JComboBox cbRegisseur, cbFSK, cbProdCountry, cbProducent;
 	private Vector<String> dbRegisseur = new Vector();
+	private Vector<String> dbProduction = new Vector();
 	private JXDatePicker dpRelease;
 	private JSpinner spDuration, spCountDVD;
 
@@ -66,7 +67,8 @@ public class NewDVD extends JDialog {
 
 	/**
 	 * Create the dialog.
-	 * @throws Exception 
+	 * 
+	 * @throws Exception
 	 */
 	public NewDVD() throws Exception {
 		setResizable(false);
@@ -115,7 +117,7 @@ public class NewDVD extends JDialog {
 		cbProdCountry = new JComboBox();
 		cbProdCountry.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+
 			}
 		});
 		cbProdCountry.setModel(new DefaultComboBoxModel(new String[] {
@@ -152,9 +154,9 @@ public class NewDVD extends JDialog {
 
 		JLabel lblRegisseur = new JLabel("Regisseur");
 
-		//Instantiierung von der Fillmethode für das Combofield
+		// Instantiierung von der Fillmethode für das Combofield
 		Filling fill = new Filling();
-		
+
 		// Instantiierung von Combofield Variablen
 		// ArrayList mit DB Daten von Regisseuren füllen
 		try {
@@ -190,10 +192,20 @@ public class NewDVD extends JDialog {
 			}
 		});
 
-		// Auslesen des Combofields
+		// Instantiierung von Combofield Variablen
+		// ArrayList mit DB Daten von Regisseuren füllen
+		try {
+			dbProduction = fill.fillCbProduction();
+		} catch (IllegalArgumentException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		cAuswahlProduction = new DefaultComboBoxModel(dbProduction);
 		cbProducent = new JComboBox();
+		cbProducent.setModel(cAuswahlProduction);
 		cbProducent.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				// Auslesen des Combofields
 				production = (String) cbProducent.getSelectedItem();
 			}
 		});
@@ -211,340 +223,109 @@ public class NewDVD extends JDialog {
 		JLabel lblAnzahl = new JLabel("Anzahl der DVDs");
 
 		GroupLayout gl_contentPanel = new GroupLayout(contentPanel);
-		gl_contentPanel
-				.setHorizontalGroup(gl_contentPanel
-						.createParallelGroup(Alignment.LEADING)
-						.addGroup(
-								gl_contentPanel
-										.createSequentialGroup()
-										.addContainerGap()
-										.addGroup(
-												gl_contentPanel
-														.createParallelGroup(
-																Alignment.LEADING)
-														.addComponent(
-																txtOriginaltitle,
-																GroupLayout.PREFERRED_SIZE,
-																GroupLayout.DEFAULT_SIZE,
-																GroupLayout.PREFERRED_SIZE)
-														.addComponent(
-																lblOriginaltitel)
-														.addGroup(
-																gl_contentPanel
-																		.createSequentialGroup()
-																		.addComponent(
-																				cbRegisseur,
-																				GroupLayout.PREFERRED_SIZE,
-																				232,
-																				GroupLayout.PREFERRED_SIZE)
-																		.addPreferredGap(
-																				ComponentPlacement.RELATED)
-																		.addComponent(
-																				btnNewRegisseur,
-																				GroupLayout.PREFERRED_SIZE,
-																				40,
-																				GroupLayout.PREFERRED_SIZE))
-														.addGroup(
-																gl_contentPanel
-																		.createSequentialGroup()
-																		.addGroup(
-																				gl_contentPanel
-																						.createParallelGroup(
-																								Alignment.LEADING,
-																								false)
-																						.addComponent(
-																								cbFSK,
-																								GroupLayout.PREFERRED_SIZE,
-																								129,
-																								GroupLayout.PREFERRED_SIZE)
-																						.addComponent(
-																								lblAltersbeschrnkung))
-																		.addPreferredGap(
-																				ComponentPlacement.RELATED)
-																		.addGroup(
-																				gl_contentPanel
-																						.createParallelGroup(
-																								Alignment.LEADING)
-																						.addComponent(
-																								lblHerstellungsland)
-																						.addComponent(
-																								cbProdCountry,
-																								GroupLayout.PREFERRED_SIZE,
-																								140,
-																								GroupLayout.PREFERRED_SIZE)))
-														.addComponent(
-																lblRegisseur)
-														.addComponent(
-																txtTitle,
-																GroupLayout.PREFERRED_SIZE,
-																GroupLayout.DEFAULT_SIZE,
-																GroupLayout.PREFERRED_SIZE)
-														.addComponent(lblTitel)
-														.addGroup(
-																gl_contentPanel
-																		.createSequentialGroup()
-																		.addGroup(
-																				gl_contentPanel
-																						.createParallelGroup(
-																								Alignment.LEADING)
-																						.addComponent(
-																								lblDauer)
-																						.addComponent(
-																								spDuration,
-																								GroupLayout.PREFERRED_SIZE,
-																								73,
-																								GroupLayout.PREFERRED_SIZE))
-																		.addGap(18)
-																		.addGroup(
-																				gl_contentPanel
-																						.createParallelGroup(
-																								Alignment.LEADING)
-																						.addComponent(
-																								spCountDVD,
-																								GroupLayout.PREFERRED_SIZE,
-																								114,
-																								GroupLayout.PREFERRED_SIZE)
-																						.addComponent(
-																								lblAnzahl))))
-										.addGap(18)
-										.addGroup(
-												gl_contentPanel
-														.createParallelGroup(
-																Alignment.TRAILING)
-														.addGroup(
-																gl_contentPanel
-																		.createParallelGroup(
-																				Alignment.TRAILING,
-																				false)
-																		.addComponent(
-																				txtEancode,
-																				Alignment.LEADING,
-																				GroupLayout.PREFERRED_SIZE,
-																				GroupLayout.DEFAULT_SIZE,
-																				GroupLayout.PREFERRED_SIZE)
-																		.addGroup(
-																				gl_contentPanel
-																						.createSequentialGroup()
-																						.addGroup(
-																								gl_contentPanel
-																										.createParallelGroup(
-																												Alignment.LEADING)
-																										.addComponent(
-																												lblProduktionsjahr,
-																												GroupLayout.PREFERRED_SIZE,
-																												114,
-																												GroupLayout.PREFERRED_SIZE)
-																										.addComponent(
-																												lblProduzent)
-																										.addComponent(
-																												spProductionYear,
-																												GroupLayout.PREFERRED_SIZE,
-																												114,
-																												GroupLayout.PREFERRED_SIZE))
-																						.addPreferredGap(
-																								ComponentPlacement.UNRELATED)
-																						.addGroup(
-																								gl_contentPanel
-																										.createParallelGroup(
-																												Alignment.LEADING,
-																												false)
-																										.addComponent(
-																												dpRelease,
-																												GroupLayout.DEFAULT_SIZE,
-																												GroupLayout.DEFAULT_SIZE,
-																												Short.MAX_VALUE)
-																										.addComponent(
-																												lblVerffentlichungsdatum,
-																												GroupLayout.DEFAULT_SIZE,
-																												GroupLayout.DEFAULT_SIZE,
-																												Short.MAX_VALUE)))
-																		.addComponent(
-																				txtGenre,
-																				Alignment.LEADING,
-																				GroupLayout.PREFERRED_SIZE,
-																				GroupLayout.DEFAULT_SIZE,
-																				GroupLayout.PREFERRED_SIZE)
-																		.addComponent(
-																				lblEanCode,
-																				Alignment.LEADING)
-																		.addComponent(
-																				lblGenre,
-																				Alignment.LEADING))
-														.addGroup(
-																gl_contentPanel
-																		.createSequentialGroup()
-																		.addComponent(
-																				cbProducent,
-																				0,
-																				235,
-																				Short.MAX_VALUE)
-																		.addPreferredGap(
-																				ComponentPlacement.RELATED)
-																		.addComponent(
-																				btnNewProducent,
-																				GroupLayout.PREFERRED_SIZE,
-																				41,
-																				GroupLayout.PREFERRED_SIZE)))
-										.addContainerGap(
-												GroupLayout.DEFAULT_SIZE,
-												Short.MAX_VALUE)));
-		gl_contentPanel
-				.setVerticalGroup(gl_contentPanel
-						.createParallelGroup(Alignment.LEADING)
-						.addGroup(
-								gl_contentPanel
-										.createSequentialGroup()
-										.addGroup(
-												gl_contentPanel
-														.createParallelGroup(
-																Alignment.BASELINE)
-														.addComponent(lblTitel)
-														.addComponent(
-																lblEanCode))
-										.addPreferredGap(
-												ComponentPlacement.RELATED)
-										.addGroup(
-												gl_contentPanel
-														.createParallelGroup(
-																Alignment.BASELINE)
-														.addComponent(
-																txtEancode,
-																GroupLayout.PREFERRED_SIZE,
-																GroupLayout.DEFAULT_SIZE,
-																GroupLayout.PREFERRED_SIZE)
-														.addComponent(
-																txtTitle,
-																GroupLayout.PREFERRED_SIZE,
-																GroupLayout.DEFAULT_SIZE,
-																GroupLayout.PREFERRED_SIZE))
-										.addPreferredGap(
-												ComponentPlacement.UNRELATED)
-										.addGroup(
-												gl_contentPanel
-														.createParallelGroup(
-																Alignment.BASELINE)
-														.addComponent(
-																lblOriginaltitel)
-														.addComponent(lblGenre))
-										.addPreferredGap(
-												ComponentPlacement.RELATED)
-										.addGroup(
-												gl_contentPanel
-														.createParallelGroup(
-																Alignment.BASELINE)
-														.addComponent(
-																txtOriginaltitle,
-																GroupLayout.PREFERRED_SIZE,
-																GroupLayout.DEFAULT_SIZE,
-																GroupLayout.PREFERRED_SIZE)
-														.addComponent(
-																txtGenre,
-																GroupLayout.PREFERRED_SIZE,
-																GroupLayout.DEFAULT_SIZE,
-																GroupLayout.PREFERRED_SIZE))
-										.addPreferredGap(
-												ComponentPlacement.UNRELATED)
-										.addGroup(
-												gl_contentPanel
-														.createParallelGroup(
-																Alignment.BASELINE)
-														.addComponent(
-																lblHerstellungsland)
-														.addComponent(
-																lblAltersbeschrnkung)
-														.addComponent(
-																lblVerffentlichungsdatum)
-														.addComponent(
-																lblProduktionsjahr))
-										.addGap(12)
-										.addGroup(
-												gl_contentPanel
-														.createParallelGroup(
-																Alignment.TRAILING,
-																false)
-														.addGroup(
-																gl_contentPanel
-																		.createParallelGroup(
-																				Alignment.BASELINE)
-																		.addComponent(
-																				cbFSK,
-																				GroupLayout.PREFERRED_SIZE,
-																				GroupLayout.DEFAULT_SIZE,
-																				GroupLayout.PREFERRED_SIZE)
-																		.addComponent(
-																				cbProdCountry,
-																				GroupLayout.PREFERRED_SIZE,
-																				GroupLayout.DEFAULT_SIZE,
-																				GroupLayout.PREFERRED_SIZE))
-														.addComponent(
-																dpRelease,
-																GroupLayout.DEFAULT_SIZE,
-																GroupLayout.DEFAULT_SIZE,
-																Short.MAX_VALUE)
-														.addComponent(
-																spProductionYear,
-																0, 0,
-																Short.MAX_VALUE))
-										.addPreferredGap(
-												ComponentPlacement.UNRELATED)
-										.addGroup(
-												gl_contentPanel
-														.createParallelGroup(
-																Alignment.BASELINE)
-														.addComponent(
-																lblRegisseur)
-														.addComponent(
-																lblProduzent))
-										.addPreferredGap(
-												ComponentPlacement.RELATED)
-										.addGroup(
-												gl_contentPanel
-														.createParallelGroup(
-																Alignment.BASELINE)
-														.addComponent(
-																cbRegisseur,
-																GroupLayout.PREFERRED_SIZE,
-																GroupLayout.DEFAULT_SIZE,
-																GroupLayout.PREFERRED_SIZE)
-														.addComponent(
-																btnNewRegisseur,
-																GroupLayout.PREFERRED_SIZE,
-																28,
-																GroupLayout.PREFERRED_SIZE)
-														.addComponent(
-																cbProducent,
-																GroupLayout.PREFERRED_SIZE,
-																GroupLayout.DEFAULT_SIZE,
-																GroupLayout.PREFERRED_SIZE)
-														.addComponent(
-																btnNewProducent,
-																GroupLayout.PREFERRED_SIZE,
-																28,
-																GroupLayout.PREFERRED_SIZE))
-										.addPreferredGap(
-												ComponentPlacement.UNRELATED)
-										.addGroup(
-												gl_contentPanel
-														.createParallelGroup(
-																Alignment.BASELINE)
-														.addComponent(lblDauer)
-														.addComponent(lblAnzahl))
-										.addPreferredGap(
-												ComponentPlacement.RELATED)
-										.addGroup(
-												gl_contentPanel
-														.createParallelGroup(
-																Alignment.TRAILING,
-																false)
-														.addComponent(
-																spCountDVD,
-																Alignment.LEADING,
-																0, 0,
-																Short.MAX_VALUE)
-														.addComponent(
-																spDuration,
-																Alignment.LEADING))
-										.addContainerGap(43, Short.MAX_VALUE)));
+		gl_contentPanel.setHorizontalGroup(
+			gl_contentPanel.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_contentPanel.createSequentialGroup()
+					.addContainerGap()
+					.addGroup(gl_contentPanel.createParallelGroup(Alignment.LEADING)
+						.addComponent(txtOriginaltitle, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(lblOriginaltitel)
+						.addGroup(gl_contentPanel.createSequentialGroup()
+							.addComponent(cbRegisseur, GroupLayout.PREFERRED_SIZE, 232, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(btnNewRegisseur, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+						.addGroup(gl_contentPanel.createSequentialGroup()
+							.addGroup(gl_contentPanel.createParallelGroup(Alignment.LEADING, false)
+								.addComponent(cbFSK, GroupLayout.PREFERRED_SIZE, 129, GroupLayout.PREFERRED_SIZE)
+								.addComponent(lblAltersbeschrnkung))
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addGroup(gl_contentPanel.createParallelGroup(Alignment.LEADING)
+								.addComponent(lblHerstellungsland)
+								.addComponent(cbProdCountry, GroupLayout.PREFERRED_SIZE, 140, GroupLayout.PREFERRED_SIZE)))
+						.addComponent(lblRegisseur)
+						.addComponent(txtTitle, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(lblTitel)
+						.addGroup(gl_contentPanel.createSequentialGroup()
+							.addGroup(gl_contentPanel.createParallelGroup(Alignment.LEADING)
+								.addComponent(lblDauer)
+								.addComponent(spDuration, GroupLayout.PREFERRED_SIZE, 73, GroupLayout.PREFERRED_SIZE))
+							.addGap(18)
+							.addGroup(gl_contentPanel.createParallelGroup(Alignment.LEADING)
+								.addComponent(spCountDVD, GroupLayout.PREFERRED_SIZE, 114, GroupLayout.PREFERRED_SIZE)
+								.addComponent(lblAnzahl))))
+					.addPreferredGap(ComponentPlacement.RELATED, 59, Short.MAX_VALUE)
+					.addGroup(gl_contentPanel.createParallelGroup(Alignment.TRAILING, false)
+						.addGroup(gl_contentPanel.createParallelGroup(Alignment.TRAILING, false)
+							.addComponent(txtEancode, Alignment.LEADING, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+							.addGroup(gl_contentPanel.createSequentialGroup()
+								.addGroup(gl_contentPanel.createParallelGroup(Alignment.LEADING)
+									.addComponent(lblProduktionsjahr, GroupLayout.PREFERRED_SIZE, 114, GroupLayout.PREFERRED_SIZE)
+									.addComponent(lblProduzent)
+									.addComponent(spProductionYear, GroupLayout.PREFERRED_SIZE, 114, GroupLayout.PREFERRED_SIZE))
+								.addPreferredGap(ComponentPlacement.UNRELATED)
+								.addGroup(gl_contentPanel.createParallelGroup(Alignment.LEADING, false)
+									.addComponent(dpRelease, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+									.addComponent(lblVerffentlichungsdatum, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+							.addComponent(txtGenre, Alignment.LEADING, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+							.addComponent(lblEanCode, Alignment.LEADING)
+							.addComponent(lblGenre, Alignment.LEADING))
+						.addGroup(gl_contentPanel.createSequentialGroup()
+							.addComponent(cbProducent, 0, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(btnNewProducent, GroupLayout.PREFERRED_SIZE, 41, GroupLayout.PREFERRED_SIZE)))
+					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+		);
+		gl_contentPanel.setVerticalGroup(
+			gl_contentPanel.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_contentPanel.createSequentialGroup()
+					.addGroup(gl_contentPanel.createParallelGroup(Alignment.BASELINE)
+						.addComponent(lblTitel)
+						.addComponent(lblEanCode))
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addGroup(gl_contentPanel.createParallelGroup(Alignment.BASELINE)
+						.addComponent(txtEancode, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(txtTitle, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+					.addPreferredGap(ComponentPlacement.UNRELATED)
+					.addGroup(gl_contentPanel.createParallelGroup(Alignment.BASELINE)
+						.addComponent(lblOriginaltitel)
+						.addComponent(lblGenre))
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addGroup(gl_contentPanel.createParallelGroup(Alignment.BASELINE)
+						.addComponent(txtOriginaltitle, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(txtGenre, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+					.addPreferredGap(ComponentPlacement.UNRELATED)
+					.addGroup(gl_contentPanel.createParallelGroup(Alignment.BASELINE)
+						.addComponent(lblHerstellungsland)
+						.addComponent(lblAltersbeschrnkung)
+						.addComponent(lblVerffentlichungsdatum)
+						.addComponent(lblProduktionsjahr))
+					.addGap(12)
+					.addGroup(gl_contentPanel.createParallelGroup(Alignment.TRAILING, false)
+						.addGroup(gl_contentPanel.createParallelGroup(Alignment.BASELINE)
+							.addComponent(cbFSK, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+							.addComponent(cbProdCountry, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+						.addComponent(dpRelease, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+						.addComponent(spProductionYear, 0, 0, Short.MAX_VALUE))
+					.addPreferredGap(ComponentPlacement.UNRELATED)
+					.addGroup(gl_contentPanel.createParallelGroup(Alignment.BASELINE)
+						.addComponent(lblRegisseur)
+						.addComponent(lblProduzent))
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addGroup(gl_contentPanel.createParallelGroup(Alignment.BASELINE)
+						.addComponent(cbRegisseur, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(cbProducent, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(btnNewProducent, GroupLayout.PREFERRED_SIZE, 28, GroupLayout.PREFERRED_SIZE)
+						.addComponent(btnNewRegisseur, GroupLayout.PREFERRED_SIZE, 28, GroupLayout.PREFERRED_SIZE))
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addGroup(gl_contentPanel.createParallelGroup(Alignment.BASELINE)
+						.addComponent(lblDauer)
+						.addComponent(lblAnzahl))
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addGroup(gl_contentPanel.createParallelGroup(Alignment.TRAILING, false)
+						.addComponent(spCountDVD, Alignment.LEADING, 0, 0, Short.MAX_VALUE)
+						.addComponent(spDuration, Alignment.LEADING, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+					.addContainerGap(27, Short.MAX_VALUE))
+		);
 		contentPanel.setLayout(gl_contentPanel);
 		{
 			JPanel buttonPane = new JPanel();
@@ -581,24 +362,27 @@ public class NewDVD extends JDialog {
 				cancelButton.setActionCommand("Cancel");
 			}
 			GroupLayout gl_buttonPane = new GroupLayout(buttonPane);
-			gl_buttonPane.setHorizontalGroup(
-				gl_buttonPane.createParallelGroup(Alignment.TRAILING)
-					.addGroup(gl_buttonPane.createSequentialGroup()
-						.addContainerGap(436, Short.MAX_VALUE)
-						.addComponent(addButton)
-						.addPreferredGap(ComponentPlacement.RELATED)
-						.addComponent(cancelButton)
-						.addContainerGap())
-			);
-			gl_buttonPane.setVerticalGroup(
-				gl_buttonPane.createParallelGroup(Alignment.LEADING)
-					.addGroup(Alignment.TRAILING, gl_buttonPane.createSequentialGroup()
-						.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-						.addGroup(gl_buttonPane.createParallelGroup(Alignment.BASELINE)
-							.addComponent(cancelButton)
-							.addComponent(addButton))
-						.addContainerGap())
-			);
+			gl_buttonPane.setHorizontalGroup(gl_buttonPane.createParallelGroup(
+					Alignment.TRAILING).addGroup(
+					gl_buttonPane.createSequentialGroup()
+							.addContainerGap(436, Short.MAX_VALUE)
+							.addComponent(addButton)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(cancelButton).addContainerGap()));
+			gl_buttonPane.setVerticalGroup(gl_buttonPane.createParallelGroup(
+					Alignment.LEADING).addGroup(
+					Alignment.TRAILING,
+					gl_buttonPane
+							.createSequentialGroup()
+							.addContainerGap(GroupLayout.DEFAULT_SIZE,
+									Short.MAX_VALUE)
+							.addGroup(
+									gl_buttonPane
+											.createParallelGroup(
+													Alignment.BASELINE)
+											.addComponent(cancelButton)
+											.addComponent(addButton))
+							.addContainerGap()));
 			buttonPane.setLayout(gl_buttonPane);
 		}
 	}
@@ -618,14 +402,14 @@ public class NewDVD extends JDialog {
 		regie = (String) cbRegisseur.getSelectedItem();
 		prodCountry = (String) cbProdCountry.getSelectedItem();
 		fsk = (String) cbFSK.getSelectedItem();
-		
+
 		// Überfürung des JXDates in die Datevariable
 		try {
 			release = (Date.valueOf(sdf.format(dpRelease.getDate())));
 		} catch (IllegalArgumentException i) {
 			i.printStackTrace();
 		}
-		
+
 		// Auf leere Pflichtfelder überprüfen
 		if (title.replaceAll(" ", "").equals("")) {
 			go = false;
@@ -644,17 +428,15 @@ public class NewDVD extends JDialog {
 		}
 
 	}
-	
-	public void updateComboboxRegisseur(String regisseur){
+
+	public void updateComboboxRegisseur(String regisseur) {
 		dbRegisseur.add(regisseur);
-		cAuswahlRegisseur=new DefaultComboBoxModel<String>(dbRegisseur);
+		cAuswahlRegisseur = new DefaultComboBoxModel<String>(dbRegisseur);
 		cbRegisseur.setModel(cAuswahlRegisseur);
-		
+
 	}
-	
-	public void fillRegisseur(){
-		
-		
-		
+
+	public void fillRegisseur() {
+
 	}
 }
