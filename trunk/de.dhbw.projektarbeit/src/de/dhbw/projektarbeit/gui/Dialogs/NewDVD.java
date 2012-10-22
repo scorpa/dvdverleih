@@ -641,6 +641,8 @@ public class NewDVD extends JDialog {
 	
 	public void updateComboboxRegisseur(String regisseur){
 		dbRegisseur.add(regisseur);
+		cAuswahlRegisseur=new DefaultComboBoxModel<String>(dbRegisseur);
+		cbRegisseur.setModel(cAuswahlRegisseur);
 		
 	}
 	
