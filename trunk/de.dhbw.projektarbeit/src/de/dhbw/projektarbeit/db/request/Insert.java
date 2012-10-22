@@ -21,7 +21,6 @@ import de.dhbw.projektarbeit.gui.Dialogs.NewRegisseur;
 public class Insert {
 
 	private String schema;
-
 	private Connection con;
 	private Statement stmt;
 
@@ -288,13 +287,12 @@ public class Insert {
 			// Stringbuffer ausgefuehrt
 			// werden.
 			con.setAutoCommit(false);
-
 			stmt = con.createStatement();
-
+			String schema = "dvd_verleih";
 			StringBuffer bufferDVD = new StringBuffer();
 			
 			// ID des Regisseurs abfragen
-			int regisseurID = getID("regisseur", regisseur);
+			int regisseurID = getID(schema, "regisseur", regisseur);
 			
 			
 			
@@ -367,27 +365,33 @@ public class Insert {
 	 * @return --> ID des entsprechenden Eintrags
 	 * @throws SQLException --> Exceptionhandling
 	 */
-	private int getID(String table, String searchContent) throws SQLException {
-		String searchString, firstName, lastName;
+	private int getID(String schema, String table, String searchContent) throws SQLException {
+		String searchString, firstName, lastName, ID;
 		searchString = searchContent;
 		
 		// Trennen des Vornamen und Nachnamen
 		firstName = searchString.substring(0, searchString.indexOf(" "));
 		lastName = searchString.substring(searchString.indexOf("")+1);
 		
+		// ID Begriff erstellen
+		ID = schema.substring(0,1).toUpperCase() + schema.substring(1);
+		
 		// Alle Einfuege-Operationen sollen als eine Transaktion und mittels
 		// Stringbuffer ausgefuehrt
 		// werden.
 		con.setAutoCommit(false);
 
-		stmt = con.createStatement("SELECT * FROM ");
+		stmt = con.createStatement();
 		
 		StringBuffer searchID = new StringBuffer();
 		
-		searchID.append();
-		
-			
-		
+		searchID.append("SELECT ");
+		searchID.append(ID);
+		searchID.append(" FROM ");
+		searchID.append(schema + "." + table);
+		searchID.append("WHERE FirstName = \"");
+		searchID.append(firstName + "\" AND LastName = \""); 
+		searchID.append(lastName);
 		
 		return 0;
 	}
