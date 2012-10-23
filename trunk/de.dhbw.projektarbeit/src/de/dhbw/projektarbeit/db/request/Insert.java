@@ -666,7 +666,7 @@ public class Insert {
 		// Update der Regisseurcombobox in der DVD Erstellung durchführen
 		// Rückmeldung an Regisseurerstellung
 		try {
-			newDVD.updateComboboxProduction(firstName.concat(" " + lastName));
+			newDVD.updateComboboxAuthor(firstName.concat(" " + lastName));
 			na.authorAdded(firstName, lastName);
 
 		} catch (InvalidParameterException e) {
