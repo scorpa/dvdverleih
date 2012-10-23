@@ -458,7 +458,7 @@ public class Insert {
 			/*
 			 * Hinzufügen der neu erfassten DVD für die Tabelle "dvd" "Insert
 			 * into dvd_verleih.dvd (Barcode, Regie_ID, Production_ID,
-			 * Camera_ID, Author_ID, Title, Genre, FSK, Prod_Year, Release,
+			 * Camera_ID, Author_ID, Title, Genre, FSK, Prod_Year, Rel_Date,
 			 * Duration, Prod_Country, Original_Title, Quantity) VALUES
 			 * (eanCode, regisseurID, productionID, cameraID, authorID, title,
 			 * genre, fsk, prod_year, release, duration, prodCountry,
@@ -468,7 +468,7 @@ public class Insert {
 			bufferDVD.append("INSERT INTO ");
 			bufferDVD.append(schema);
 			bufferDVD
-					.append(".dvd (Barcode, Regie_ID, Production_ID, Camera_ID, Author_ID, Title, Genre, FSK, Prod_Year, Release, Duration, Prod_Country, "
+					.append(".dvd (Barcode, Regie_ID, Production_ID, Camera_ID, Author_ID, Title, Genre, FSK, Prod_Year, Rel_Date, Duration, Prod_Country, "
 							+ "Original_Title, Quantity) " + "VALUES (\""
 							+ eanCode
 							+ "\",\""
