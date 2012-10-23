@@ -123,7 +123,110 @@ public class Filling {
 					"Fehler bei der Datenbankabfrage! Fehlercode 006");
 		}
 	}
+	
+	public Vector<String> fillCbAuthor() throws Exception {
 
+		// Verbindung zum SQL Server aufbauen
+		try {
+			con = DriverManager
+					.getConnection("jdbc:mysql://localhost/dvd_verleih?user=root");
+		} catch (SQLException e) {
+			// Verbindung zum SQL Server fehlgeschlagen. Fehlercode 005
+			e.printStackTrace();
+			throw new Exception(
+					"Verbindung zum SQL Server fehlgeschlagen. Fehlercode 005");
+		}
+
+		try {
+
+			// Erstelle Statement und Stringbuffer
+			stmt = con.createStatement();
+			StringBuffer fillCbAuthor = new StringBuffer();
+
+			/*
+			 * Befüllen der Combobox Regisseur mit den Werten aus der DB
+			 * "Select * from dvd_verleih.regisseur"
+			 */
+			fillCbAuthor.append("Select * from ");
+			fillCbAuthor.append(schema);
+			fillCbAuthor.append(".author");
+
+			// Abfrage ausführen
+			rset = stmt.executeQuery(fillCbAuthor.toString());
+
+			// ArrayList für Abfragestrings erstellen
+			Vector<String> results = new Vector();
+
+			// Ergebnisse speichern
+			while (rset.next()) {
+				results.add(rset.getString("FirstName").concat(
+						" " + rset.getString("LastName")));
+			}
+
+			return results;
+
+		} catch (SQLException e) {
+			// Im Falle eines Fehlers Rollback durchführen und Fehlermeldung
+			// schreiben
+			// Fehlercode 004
+			e.printStackTrace();
+			throw new Exception(
+					"Fehler bei der Datenbankabfrage! Fehlercode 006");
+		}
+	}
+
+	public Vector<String> fillCbCamera() throws Exception {
+
+		// Verbindung zum SQL Server aufbauen
+		try {
+			con = DriverManager
+					.getConnection("jdbc:mysql://localhost/dvd_verleih?user=root");
+		} catch (SQLException e) {
+			// Verbindung zum SQL Server fehlgeschlagen. Fehlercode 005
+			e.printStackTrace();
+			throw new Exception(
+					"Verbindung zum SQL Server fehlgeschlagen. Fehlercode 005");
+		}
+
+		try {
+
+			// Erstelle Statement und Stringbuffer
+			stmt = con.createStatement();
+			StringBuffer fillCbCamera = new StringBuffer();
+
+			/*
+			 * Befüllen der Combobox Regisseur mit den Werten aus der DB
+			 * "Select * from dvd_verleih.regisseur"
+			 */
+			fillCbCamera.append("Select * from ");
+			fillCbCamera.append(schema);
+			fillCbCamera.append(".camera");
+
+			// Abfrage ausführen
+			rset = stmt.executeQuery(fillCbCamera.toString());
+
+			// ArrayList für Abfragestrings erstellen
+			Vector<String> results = new Vector();
+
+			// Ergebnisse speichern
+			while (rset.next()) {
+				results.add(rset.getString("FirstName").concat(
+						" " + rset.getString("LastName")));
+			}
+
+			return results;
+
+		} catch (SQLException e) {
+			// Im Falle eines Fehlers Rollback durchführen und Fehlermeldung
+			// schreiben
+			// Fehlercode 004
+			e.printStackTrace();
+			throw new Exception(
+					"Fehler bei der Datenbankabfrage! Fehlercode 006");
+		}
+	}
+
+	
 	/**
 	 * Methode zur Listenfüllung 
 	 * @return --> Returnwert in Form eines Objektarrays für die Tabellensicht
