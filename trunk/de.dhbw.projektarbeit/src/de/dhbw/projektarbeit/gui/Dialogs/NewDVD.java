@@ -417,7 +417,7 @@ public class NewDVD extends JDialog {
 							duration = (Integer) spDuration.getValue();
 							quantity = (Integer) spCountDVD.getValue();
 						} catch (NumberFormatException e) {
-							// TODO Auto-generated catch block
+							// Auto-generated catch block
 							e.printStackTrace();
 						}
 
