@@ -165,7 +165,7 @@ public class NewDVD extends JDialog {
 
 			}
 		});
-		dpRelease.setFormats(new String[] { "DD.MM.YYYY" });
+		
 
 		JLabel lblVerffentlichungsdatum = new JLabel(
 				"Ver\u00F6ffentlichungsdatum");
