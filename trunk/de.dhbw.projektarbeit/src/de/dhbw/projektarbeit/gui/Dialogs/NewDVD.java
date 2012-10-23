@@ -223,8 +223,6 @@ public class NewDVD extends JDialog {
 		cbProducent.setModel(cAuswahlProduction);
 		cbProducent.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// Auslesen des Combofields
-				production = (String) cbProducent.getSelectedItem();
 			}
 		});
 		// SpinnerNumberModel smCount setzen
@@ -847,6 +845,7 @@ public class NewDVD extends JDialog {
 		fsk = (String) cbFSK.getSelectedItem();
 		camera = (String) cbCamera.getSelectedItem();
 		author = (String) cbAuthor.getSelectedItem();
+		production = (String) cbProducent.getSelectedItem();
 
 		// Überfürung des JXDates in die Datevariable
 		try {

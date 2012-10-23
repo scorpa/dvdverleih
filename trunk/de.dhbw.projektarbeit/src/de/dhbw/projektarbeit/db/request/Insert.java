@@ -742,7 +742,7 @@ public class Insert {
 			 * Hinzufügen der neu erfassten DVD für die Tabelle "dvd" "Insert
 			 * into dvd_verleih.dvd (Quantity, Title, Original_Title, Genre,
 			 * Prod_Country, Prod_Year, Rel_Date, Duration, FSK, String
-			 * Regie_ID, Author_ID, Production_ID, Camera_ID, Barcode) VALUES
+			 * Regisseur_ID, Author_ID, Production_ID, Camera_ID, Barcode) VALUES
 			 * (eanCode, regisseurID, productionID, cameraID, authorID, title,
 			 * genre, fsk, prod_year, release, duration, prodCountry,
 			 * originalTitle, quantity)"
@@ -751,7 +751,7 @@ public class Insert {
 			bufferDVD.append("INSERT INTO ");
 			bufferDVD.append(schema);
 			bufferDVD
-					.append(".dvd (Quantity, Title, Original_Title, Genre, Prod_Country, Prod_Year, Rel_Date, Duration, FSK, Regie_ID, Author_ID, Production_ID, "
+					.append(".dvd (Quantity, Title, Original_Title, Genre, Prod_Country, Prod_Year, Rel_Date, Duration, FSK, Regisseur_ID, Author_ID, Production_ID, "
 							+ "Camera_ID, Barcode) " + "VALUES (\""
 							+ quantity
 							+ "\",\""
@@ -831,11 +831,12 @@ public class Insert {
 
 		// Trennen des Vornamen und Nachnamen
 		firstName = searchString.substring(0, searchString.indexOf(" "));
-		lastName = searchString.substring(searchString.indexOf("") + 1);
+		lastName = searchString.substring(searchString.indexOf(" ")+1);
+		lastName.replaceAll(" ","");
 
 		// ID Begriff erstellen
-		FieldID = schema.substring(0, 1).toUpperCase() + schema.substring(1)
-				+ FieldID.concat("_ID");
+		FieldID = table.substring(0, 1).toUpperCase() + table.substring(1);
+		FieldID.concat("_ID");
 
 		// Alle Einfuege-Operationen sollen als eine Transaktion und mittels
 		// Stringbuffer ausgefuehrt
@@ -850,7 +851,7 @@ public class Insert {
 		searchID.append(FieldID);
 		searchID.append(" FROM ");
 		searchID.append(schema + "." + table);
-		searchID.append("WHERE FirstName = \"");
+		searchID.append(" WHERE FirstName = \"");
 		searchID.append(firstName + "\" AND LastName = \"");
 		searchID.append(lastName);
 		searchID.append("\"");
