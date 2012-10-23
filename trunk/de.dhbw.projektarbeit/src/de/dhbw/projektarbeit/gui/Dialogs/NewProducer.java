@@ -1,38 +1,32 @@
 package de.dhbw.projektarbeit.gui.Dialogs;
 
 import java.awt.BorderLayout;
-import java.awt.FlowLayout;
-
-import javax.swing.JButton;
-import javax.swing.JDialog;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import javax.swing.GroupLayout;
-import javax.swing.GroupLayout.Alignment;
-import javax.swing.JTextField;
-import javax.swing.JLabel;
-import javax.swing.LayoutStyle.ComponentPlacement;
-
-import de.dhbw.projektarbeit.db.mysql.MysqlAccess;
-import de.dhbw.projektarbeit.db.request.Insert;
-import de.dhbw.projektarbeit.regisseur.CreateRegisseur;
-
-import java.awt.GridBagLayout;
-import java.awt.GridBagConstraints;
-import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.security.InvalidParameterException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
+import javax.swing.JButton;
+import javax.swing.JDialog;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.border.EmptyBorder;
+
+import de.dhbw.projektarbeit.db.mysql.MysqlAccess;
+import de.dhbw.projektarbeit.db.request.Insert;
 
 public class NewProducer extends JDialog {
 	private JTextField txtFirstName;
 	private JTextField txtLastName;
 	private JButton addButton;
 	private JButton cancelButton;
-	private MysqlAccess access;
 	private Insert insert;
 	private Connection con;
 
