@@ -4,6 +4,7 @@ import javax.swing.JPanel;
 import org.jdesktop.swingx.JXTable;
 
 import de.dhbw.projektarbeit.db.request.Filling;
+import de.dhbw.projektarbeit.gui.Dialogs.JTableNotEditable;
 
 import java.awt.CardLayout;
 import javax.swing.JSplitPane;
@@ -44,16 +45,12 @@ public class DVDCard extends JPanel {
 
 		Object[][] dvdData = null;
 		try {
-			dvdData = fill.getDVD();
+			dvdData = fill.getTable("dvd");
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
-		;
-		/*
-		 * { { "2", "A1", "A2", "A3" ,"A4","A5"}, { "34","B1", "B2", "B3"
-		 * ,"B4","B5"}, };
-		 */
+		};
+
 
 		DefaultTableModel model = new DefaultTableModel(dvdData, columnNames);
 		tbDVD = new JTableNotEditable(model,columnNames);
@@ -65,33 +62,4 @@ public class DVDCard extends JPanel {
 
 	}
 
-	/**
-	 * Ableitung der Klasse JTable, die verwendet wird, um eine nicht
-	 * editierbare Tabelle zu erstellen.
-	 * 
-	 * 
-	 */
-	// Subklasse von JTable, deren Zellen nicht editierbar sind.
-	class JTableNotEditable extends JTable {
-
-		/**
-		 * @param accountListing
-		 *            Objectarray mit den aus der Tabelle abgefragten
-		 *            Datensätzen
-		 * @param strings
-		 *            Stringarray mit den Titeln der Tabellenspalten
-		 */
-		public JTableNotEditable(DefaultTableModel model, String[] strings) {
-			super(model);
-		}
-
-		/*
-		 * (non-Javadoc)
-		 * 
-		 * @see javax.swing.JTable#isCellEditable(int, int)
-		 */
-		public boolean isCellEditable(int row, int col) {
-			return false;
-		}
-	}
 }

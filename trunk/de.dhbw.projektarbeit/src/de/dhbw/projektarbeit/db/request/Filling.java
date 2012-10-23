@@ -125,14 +125,13 @@ public class Filling {
 	}
 
 	/**
-	 * Methode zur Listenfüllung des Mainfensters. Es werden alle DVDs mit Infos
-	 * geladen
-	 * @return 
-	 * 
+	 * Methode zur Listenfüllung 
+	 * @return --> Returnwert in Form eines Objektarrays für die Tabellensicht
+	 * @tabelle --> Tabelle, die gefüllt werden soll
 	 * @throws Exception
 	 *             --> Exceptionhandling
 	 */
-	public Object[][] getDVD() throws Exception {
+	public Object[][] getTable(String tabelle) throws Exception {
 
 		// Verbindung zum SQL Server aufbauen
 		try {
@@ -152,12 +151,13 @@ public class Filling {
 			StringBuffer getDVD = new StringBuffer();
 
 			/*
-			 * Abruf der DVD Daten aus der SQL DB
-			 * "SELECT * FROM dvd_verleih.dvd"
+			 * Abruf der Tabellen Daten aus der SQL DB
+			 * "SELECT * FROM dvd_verleih.<tabelle>"
 			 */
 			getDVD.append("SELECT * FROM ");
 			getDVD.append(schema);
-			getDVD.append(".dvd");
+			getDVD.append(".");
+			getDVD.append(tabelle);
 
 			// Abfrage ausführen
 			rset = stmt.executeQuery(getDVD.toString());
@@ -196,4 +196,5 @@ public class Filling {
 		}
 		
 	}
+	
 }

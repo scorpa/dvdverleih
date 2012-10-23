@@ -1,23 +1,23 @@
 package de.dhbw.projektarbeit.gui.Dialogs;
 
 import java.awt.BorderLayout;
-import java.awt.FlowLayout;
-
-import javax.swing.JButton;
-import javax.swing.JDialog;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import java.awt.GridBagLayout;
-import javax.swing.JSplitPane;
 import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import de.dhbw.projektarbeit.gui.Dialogs.JTableNotEditable;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
+import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JSplitPane;
+import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
-import org.jdesktop.swingx.JXTable;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
+import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableModel;
+import de.dhbw.projektarbeit.db.request.Filling;
 
 public class EditRegisseur extends JDialog {
 
@@ -42,9 +42,34 @@ public class EditRegisseur extends JDialog {
 	}
 
 	/**
-	 * Create the dialog.
+	 * Standardkonsturktor
 	 */
 	public EditRegisseur() {
+		setWindo();
+	}
+
+	/**
+	 * Methode zur Dialogerstellung
+	 */
+	private void setWindo() {
+
+		// Spaltenüberschriften
+		String[] columnNames = { "ID","Vorname", "Nachname" };
+
+		Filling fill = new Filling();
+
+		Object[][] regisseurData = null;
+		try {
+			regisseurData = fill.getTable("regisseur");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		;
+
+		DefaultTableModel model = new DefaultTableModel(regisseurData,
+				columnNames);
+
 		setModal(true);
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		setAlwaysOnTop(true);
@@ -55,10 +80,10 @@ public class EditRegisseur extends JDialog {
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		GridBagLayout gbl_contentPanel = new GridBagLayout();
-		gbl_contentPanel.columnWidths = new int[]{0, 0};
-		gbl_contentPanel.rowHeights = new int[]{0, 0};
-		gbl_contentPanel.columnWeights = new double[]{1.0, Double.MIN_VALUE};
-		gbl_contentPanel.rowWeights = new double[]{1.0, Double.MIN_VALUE};
+		gbl_contentPanel.columnWidths = new int[] { 0, 0 };
+		gbl_contentPanel.rowHeights = new int[] { 0, 0 };
+		gbl_contentPanel.columnWeights = new double[] { 1.0, Double.MIN_VALUE };
+		gbl_contentPanel.rowWeights = new double[] { 1.0, Double.MIN_VALUE };
 		contentPanel.setLayout(gbl_contentPanel);
 		{
 			JSplitPane splitPane = new JSplitPane();
@@ -82,38 +107,66 @@ public class EditRegisseur extends JDialog {
 				txtLastName.setColumns(22);
 				JLabel label_1 = new JLabel("Nachname");
 				GroupLayout gl_panel = new GroupLayout(panel);
-				gl_panel.setHorizontalGroup(
-					gl_panel.createParallelGroup(Alignment.LEADING)
-						.addGroup(gl_panel.createSequentialGroup()
-							.addContainerGap()
-							.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
-								.addComponent(txtFirstName, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-								.addComponent(label))
-							.addGap(18)
-							.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
-								.addComponent(txtLastName, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-								.addComponent(label_1))
-							.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-				);
-				gl_panel.setVerticalGroup(
-					gl_panel.createParallelGroup(Alignment.LEADING)
-						.addGroup(gl_panel.createSequentialGroup()
-							.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
-								.addComponent(label)
-								.addComponent(label_1))
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
-								.addComponent(txtFirstName, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-								.addComponent(txtLastName, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-							.addContainerGap(42, Short.MAX_VALUE))
-				);
+				gl_panel.setHorizontalGroup(gl_panel
+						.createParallelGroup(Alignment.LEADING)
+						.addGroup(
+								gl_panel.createSequentialGroup()
+										.addContainerGap()
+										.addGroup(
+												gl_panel.createParallelGroup(
+														Alignment.LEADING)
+														.addComponent(
+																txtFirstName,
+																GroupLayout.PREFERRED_SIZE,
+																GroupLayout.DEFAULT_SIZE,
+																GroupLayout.PREFERRED_SIZE)
+														.addComponent(label))
+										.addGap(18)
+										.addGroup(
+												gl_panel.createParallelGroup(
+														Alignment.LEADING)
+														.addComponent(
+																txtLastName,
+																GroupLayout.PREFERRED_SIZE,
+																GroupLayout.DEFAULT_SIZE,
+																GroupLayout.PREFERRED_SIZE)
+														.addComponent(label_1))
+										.addContainerGap(
+												GroupLayout.DEFAULT_SIZE,
+												Short.MAX_VALUE)));
+				gl_panel.setVerticalGroup(gl_panel
+						.createParallelGroup(Alignment.LEADING)
+						.addGroup(
+								gl_panel.createSequentialGroup()
+										.addGroup(
+												gl_panel.createParallelGroup(
+														Alignment.BASELINE)
+														.addComponent(label)
+														.addComponent(label_1))
+										.addPreferredGap(
+												ComponentPlacement.RELATED)
+										.addGroup(
+												gl_panel.createParallelGroup(
+														Alignment.BASELINE)
+														.addComponent(
+																txtFirstName,
+																GroupLayout.PREFERRED_SIZE,
+																GroupLayout.DEFAULT_SIZE,
+																GroupLayout.PREFERRED_SIZE)
+														.addComponent(
+																txtLastName,
+																GroupLayout.PREFERRED_SIZE,
+																GroupLayout.DEFAULT_SIZE,
+																GroupLayout.PREFERRED_SIZE))
+										.addContainerGap(42, Short.MAX_VALUE)));
 				panel.setLayout(gl_panel);
 			}
-			
+
 			JScrollPane scrollPane = new JScrollPane();
 			splitPane.setLeftComponent(scrollPane);
-			
-			tbRegisseur = new JTable();
+
+			tbRegisseur = new JTableNotEditable(model,columnNames);
+			tbRegisseur.setModel(model);
 			scrollPane.setViewportView(tbRegisseur);
 			splitPane.setDividerLocation(280);
 		}
@@ -129,30 +182,35 @@ public class EditRegisseur extends JDialog {
 				cancelButton = new JButton("Cancel");
 				cancelButton.setActionCommand("Cancel");
 			}
-			
+
 			JButton btnDelete = new JButton("L\u00F6schen");
 			GroupLayout gl_buttonPane = new GroupLayout(buttonPane);
-			gl_buttonPane.setHorizontalGroup(
-				gl_buttonPane.createParallelGroup(Alignment.LEADING)
-					.addGroup(Alignment.TRAILING, gl_buttonPane.createSequentialGroup()
-						.addContainerGap()
-						.addComponent(btnDelete, GroupLayout.PREFERRED_SIZE, 96, GroupLayout.PREFERRED_SIZE)
-						.addPreferredGap(ComponentPlacement.RELATED, 371, Short.MAX_VALUE)
-						.addComponent(okButton)
-						.addGap(5)
-						.addComponent(cancelButton)
-						.addContainerGap())
-			);
-			gl_buttonPane.setVerticalGroup(
-				gl_buttonPane.createParallelGroup(Alignment.LEADING)
-					.addGroup(gl_buttonPane.createSequentialGroup()
-						.addGap(5)
-						.addGroup(gl_buttonPane.createParallelGroup(Alignment.LEADING)
-							.addComponent(btnDelete)
-							.addComponent(okButton)
-							.addComponent(cancelButton))
-						.addContainerGap())
-			);
+			gl_buttonPane.setHorizontalGroup(gl_buttonPane.createParallelGroup(
+					Alignment.LEADING).addGroup(
+					Alignment.TRAILING,
+					gl_buttonPane
+							.createSequentialGroup()
+							.addContainerGap()
+							.addComponent(btnDelete,
+									GroupLayout.PREFERRED_SIZE, 96,
+									GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED, 371,
+									Short.MAX_VALUE).addComponent(okButton)
+							.addGap(5).addComponent(cancelButton)
+							.addContainerGap()));
+			gl_buttonPane.setVerticalGroup(gl_buttonPane.createParallelGroup(
+					Alignment.LEADING).addGroup(
+					gl_buttonPane
+							.createSequentialGroup()
+							.addGap(5)
+							.addGroup(
+									gl_buttonPane
+											.createParallelGroup(
+													Alignment.LEADING)
+											.addComponent(btnDelete)
+											.addComponent(okButton)
+											.addComponent(cancelButton))
+							.addContainerGap()));
 			buttonPane.setLayout(gl_buttonPane);
 		}
 	}
