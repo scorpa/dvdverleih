@@ -26,15 +26,6 @@ public class MenuBar extends JMenuBar {
 		});
 		mnDatei.add(mntmBeenden);
 
-		JMenu mnAnsicht = new JMenu("Ansicht");
-		add(mnAnsicht);
-
-		JMenuItem mntmKundenliste = new JMenuItem("Kundenliste");
-		mnAnsicht.add(mntmKundenliste);
-
-		JMenuItem mntmDvdListe = new JMenuItem("DVD Liste");
-		mnAnsicht.add(mntmDvdListe);
-
 		JMenu mnDialoge = new JMenu("Dialoge");
 		add(mnDialoge);
 
