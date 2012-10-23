@@ -50,8 +50,8 @@ DROP TABLE IF EXISTS `author`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `author` (
   `Author_ID` int(11) NOT NULL AUTO_INCREMENT,
-  `FirstName` text,
-  `LastName` text,
+  `FirstName` varchar(45) DEFAULT NULL,
+  `LastName` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`Author_ID`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -75,8 +75,8 @@ DROP TABLE IF EXISTS `camera`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `camera` (
   `Camera_ID` int(11) NOT NULL AUTO_INCREMENT,
-  `FistName` text,
-  `LastName` text,
+  `FirstName` varchar(45) DEFAULT NULL,
+  `LastName` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`Camera_ID`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -368,4 +368,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2012-10-23 18:10:34
+-- Dump completed on 2012-10-23 18:32:58

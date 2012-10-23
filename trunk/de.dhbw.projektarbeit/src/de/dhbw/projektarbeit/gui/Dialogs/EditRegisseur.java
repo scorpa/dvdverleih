@@ -16,6 +16,8 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import org.jdesktop.swingx.JXTable;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
 
 public class EditRegisseur extends JDialog {
 
@@ -24,6 +26,7 @@ public class EditRegisseur extends JDialog {
 	private JTextField txtLastName;
 	private JButton okButton;
 	private JButton cancelButton;
+	private JTable tbRegisseur;
 
 	/**
 	 * Launch the application.
@@ -107,8 +110,11 @@ public class EditRegisseur extends JDialog {
 				panel.setLayout(gl_panel);
 			}
 			
-			JXTable tbRegisseur = new JXTable();
-			splitPane.setLeftComponent(tbRegisseur);
+			JScrollPane scrollPane = new JScrollPane();
+			splitPane.setLeftComponent(scrollPane);
+			
+			tbRegisseur = new JTable();
+			scrollPane.setViewportView(tbRegisseur);
 			splitPane.setDividerLocation(280);
 		}
 		{
@@ -124,31 +130,27 @@ public class EditRegisseur extends JDialog {
 				cancelButton.setActionCommand("Cancel");
 			}
 			
-			JButton btnAdd = new JButton("+");
-			
-			JButton btnDelete = new JButton("-");
+			JButton btnDelete = new JButton("L\u00F6schen");
 			GroupLayout gl_buttonPane = new GroupLayout(buttonPane);
 			gl_buttonPane.setHorizontalGroup(
 				gl_buttonPane.createParallelGroup(Alignment.LEADING)
-					.addGroup(gl_buttonPane.createSequentialGroup()
-						.addComponent(btnAdd, GroupLayout.PREFERRED_SIZE, 45, GroupLayout.PREFERRED_SIZE)
-						.addPreferredGap(ComponentPlacement.RELATED)
-						.addComponent(btnDelete, GroupLayout.PREFERRED_SIZE, 45, GroupLayout.PREFERRED_SIZE)
-						.addPreferredGap(ComponentPlacement.RELATED, 278, Short.MAX_VALUE)
+					.addGroup(Alignment.TRAILING, gl_buttonPane.createSequentialGroup()
+						.addContainerGap()
+						.addComponent(btnDelete, GroupLayout.PREFERRED_SIZE, 96, GroupLayout.PREFERRED_SIZE)
+						.addPreferredGap(ComponentPlacement.RELATED, 371, Short.MAX_VALUE)
 						.addComponent(okButton)
 						.addGap(5)
-						.addComponent(cancelButton))
+						.addComponent(cancelButton)
+						.addContainerGap())
 			);
 			gl_buttonPane.setVerticalGroup(
 				gl_buttonPane.createParallelGroup(Alignment.LEADING)
 					.addGroup(gl_buttonPane.createSequentialGroup()
 						.addGap(5)
 						.addGroup(gl_buttonPane.createParallelGroup(Alignment.LEADING)
+							.addComponent(btnDelete)
 							.addComponent(okButton)
-							.addComponent(cancelButton)
-							.addGroup(gl_buttonPane.createParallelGroup(Alignment.BASELINE)
-								.addComponent(btnAdd)
-								.addComponent(btnDelete)))
+							.addComponent(cancelButton))
 						.addContainerGap())
 			);
 			buttonPane.setLayout(gl_buttonPane);
