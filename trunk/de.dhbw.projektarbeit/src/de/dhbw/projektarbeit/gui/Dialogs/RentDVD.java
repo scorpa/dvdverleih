@@ -23,8 +23,8 @@ import de.dhbw.projektarbeit.gui.DVDCard;
 public class RentDVD extends JDialog {
 
 	private final JPanel contentPanel = new JPanel();
-	private JTextField txtFilter;
-	private JTextField textField;
+	private JTextField txtFilterCustomer;
+	private JTextField txtFilterDVD;
 
 	/**
 	 * Launch the application.
@@ -55,8 +55,8 @@ public class RentDVD extends JDialog {
 		
 		JLabel lblFilter = new JLabel("Filter");
 		
-		txtFilter = new JTextField();
-		txtFilter.setColumns(10);
+		txtFilterCustomer = new JTextField();
+		txtFilterCustomer.setColumns(10);
 		
 		JPanel panel_1 = new JPanel();
 		GroupLayout gl_fistPanel = new GroupLayout(fistPanel);
@@ -66,7 +66,7 @@ public class RentDVD extends JDialog {
 					.addContainerGap()
 					.addComponent(lblFilter)
 					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(txtFilter, GroupLayout.DEFAULT_SIZE, 386, Short.MAX_VALUE))
+					.addComponent(txtFilterCustomer, GroupLayout.DEFAULT_SIZE, 386, Short.MAX_VALUE))
 				.addComponent(panel_1, GroupLayout.DEFAULT_SIZE, 424, Short.MAX_VALUE)
 		);
 		gl_fistPanel.setVerticalGroup(
@@ -75,7 +75,7 @@ public class RentDVD extends JDialog {
 					.addContainerGap()
 					.addGroup(gl_fistPanel.createParallelGroup(Alignment.BASELINE)
 						.addComponent(lblFilter)
-						.addComponent(txtFilter, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+						.addComponent(txtFilterCustomer, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(panel_1, GroupLayout.DEFAULT_SIZE, 182, Short.MAX_VALUE))
 		);
@@ -100,8 +100,8 @@ public class RentDVD extends JDialog {
 		
 		JLabel label = new JLabel("Filter");
 		
-		textField = new JTextField();
-		textField.setColumns(10);
+		txtFilterDVD = new JTextField();
+		txtFilterDVD.setColumns(10);
 		
 		JPanel panel = new JPanel();
 		GroupLayout gl_secondPanel = new GroupLayout(secondPanel);
@@ -111,7 +111,7 @@ public class RentDVD extends JDialog {
 					.addContainerGap()
 					.addComponent(label)
 					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(textField, GroupLayout.DEFAULT_SIZE, 390, Short.MAX_VALUE)
+					.addComponent(txtFilterDVD, GroupLayout.DEFAULT_SIZE, 390, Short.MAX_VALUE)
 					.addContainerGap())
 				.addComponent(panel, GroupLayout.DEFAULT_SIZE, 440, Short.MAX_VALUE)
 		);
@@ -121,7 +121,7 @@ public class RentDVD extends JDialog {
 					.addGap(5)
 					.addGroup(gl_secondPanel.createParallelGroup(Alignment.BASELINE)
 						.addComponent(label)
-						.addComponent(textField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+						.addComponent(txtFilterDVD, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(panel, GroupLayout.DEFAULT_SIZE, 184, Short.MAX_VALUE)
 					.addContainerGap())
