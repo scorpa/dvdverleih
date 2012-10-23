@@ -16,26 +16,32 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.JTable;
 import javax.swing.JScrollPane;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.ScrollPaneConstants;
 
 public class DVDCard extends JPanel {
+
+	private JTable tbDVD;
 
 	/**
 	 * Create the panel.
 	 */
 	public DVDCard() {
 		getTables();
-		
+
 	}
-		private void getTables() {
+
+	private void getTables() {
 		// TODO Auto-generated method stub
 		setLayout(new CardLayout(0, 0));
-		
-		JTable tbDVD = new JTable();
-		//Spaltenüberschriften
-		String[] columnNames = {"Menge","Titel", "Originaltitel", "Genre", "Produktionsland","Produktionsjahr","Erscheinungsdatum","Länge","Altersfreigabe","Regie","Autor","Produkiton","Kamera","EAN Code"};
-		
+
+		// Spaltenüberschriften
+		String[] columnNames = { "Menge", "Titel", "Originaltitel", "Genre",
+				"Produktionsland", "Produktionsjahr", "Erscheinungsdatum",
+				"Länge", "Altersfreigabe", "Regie", "Autor", "Produkiton",
+				"Kamera", "EAN Code" };
+
 		Filling fill = new Filling();
-		
+
 		Object[][] dvdData = null;
 		try {
 			dvdData = fill.getDVD();
@@ -43,21 +49,49 @@ public class DVDCard extends JPanel {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-			;
-/*			{
-				{ "2", "A1", "A2", "A3" ,"A4","A5"},
-				{ "34","B1", "B2", "B3" ,"B4","B5"},
-		};*/
-		
-		DefaultTableModel model = new DefaultTableModel(dvdData,columnNames);
-		
+		;
+		/*
+		 * { { "2", "A1", "A2", "A3" ,"A4","A5"}, { "34","B1", "B2", "B3"
+		 * ,"B4","B5"}, };
+		 */
+
+		DefaultTableModel model = new DefaultTableModel(dvdData, columnNames);
+		tbDVD = new JTableNotEditable(model,columnNames);
 		tbDVD.setModel(model);
-		
-		
+
 		JScrollPane scrollPane = new JScrollPane(tbDVD);
 		scrollPane.setName("scrollDVD");
 		add(scrollPane, "name_25881698244854");
 
 	}
 
+	/**
+	 * Ableitung der Klasse JTable, die verwendet wird, um eine nicht
+	 * editierbare Tabelle zu erstellen.
+	 * 
+	 * 
+	 */
+	// Subklasse von JTable, deren Zellen nicht editierbar sind.
+	class JTableNotEditable extends JTable {
+
+		/**
+		 * @param accountListing
+		 *            Objectarray mit den aus der Tabelle abgefragten
+		 *            Datensätzen
+		 * @param strings
+		 *            Stringarray mit den Titeln der Tabellenspalten
+		 */
+		public JTableNotEditable(DefaultTableModel model, String[] strings) {
+			super(model);
+		}
+
+		/*
+		 * (non-Javadoc)
+		 * 
+		 * @see javax.swing.JTable#isCellEditable(int, int)
+		 */
+		public boolean isCellEditable(int row, int col) {
+			return false;
+		}
+	}
 }

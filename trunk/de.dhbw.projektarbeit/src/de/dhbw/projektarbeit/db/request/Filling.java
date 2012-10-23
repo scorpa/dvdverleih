@@ -155,7 +155,7 @@ public class Filling {
 			 * Abruf der DVD Daten aus der SQL DB
 			 * "SELECT * FROM dvd_verleih.dvd"
 			 */
-			getDVD.append("SELECT * FROM");
+			getDVD.append("SELECT * FROM ");
 			getDVD.append(schema);
 			getDVD.append(".dvd");
 
