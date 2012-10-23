@@ -160,6 +160,8 @@ public class Insert {
 	/**
 	 * Methode zum Erstellen eines DB Eintrages für einen neuen Regisseur
 	 * 
+	 * @param nr --> Klasseninformationen NewRegisseur
+	 * 
 	 * @param firstName
 	 *            --> Vorname Regisseur
 	 * @param lastName
@@ -207,12 +209,75 @@ public class Insert {
 					"Fehler beim Einfügen in die Datenbank! Fehlercode 004");
 		}
 		// Aufruf bei erfolgreicher Regisseuranlage
-		NewDVD dvd = new NewDVD();
+		// Rückmeldung an Regisseurerstellung
+		try {
+			nr.regisseurAdded(firstName, lastName);
 
+		} catch (InvalidParameterException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
+	
+	/**
+	 * Methode zum Erstellen eines DB Eintrages für einen neuen Regisseur vom Fenster newDVD aus
+	 * 
+	 * @param newDVD --> Klasseninformationen newDVD
+	 * 
+	 * @param nr --> Klasseninformationen NewRegisseur
+	 * 
+	 * @param firstName
+	 *            --> Vorname Regisseur
+	 * @param lastName
+	 *            --> Nachname Regisseur
+	 * @throws Exception
+	 *             --> Exceptionhandling auf der SQL DB
+	 */
+	public void insertRegisseur(NewDVD newDVD, NewRegisseur nr, String firstName,
+			String lastName) throws Exception {
+		try {
+
+			// Alle Einfuege-Operationen sollen als eine Transaktion und mittels
+			// Stringbuffer ausgefuehrt
+			// werden.
+			con.setAutoCommit(false);
+
+			stmt = con.createStatement();
+
+			StringBuffer regisseur = new StringBuffer();
+
+			/*
+			 * Hinzufügen eines neuen Regisseurs "Insert into
+			 * dvd_verleih.regisseur (FirstName, LastName) VALUES (firstName,
+			 * lastName)"
+			 */
+			regisseur.append("INSERT INTO ");
+			regisseur.append(schema);
+			regisseur.append(".regisseur (FirstName, LastName) " + "VALUES (\""
+					+ firstName + "\",\"" + lastName + "\")");
+
+			stmt.executeUpdate(regisseur.toString());
+
+			// Neuerfasste Daten auf DB schreiben
+			con.commit();
+			con.setAutoCommit(true);
+
+		} catch (SQLException e) {
+			// Im Falle eines Fehlers Rollback durchführen und Fehlermeldung
+			// schreiben
+			// Fehlercode 004
+			con.rollback();
+			con.setAutoCommit(true);
+			e.printStackTrace();
+			throw new Exception(
+					"Fehler beim Einfügen in die Datenbank! Fehlercode 004");
+		}
+		// Aufruf bei erfolgreicher Regisseuranlage
 		// Update der Regisseurcombobox in der DVD Erstellung durchführen
 		// Rückmeldung an Regisseurerstellung
 		try {
-			dvd.updateComboboxRegisseur(firstName.concat(" " + lastName));
+			newDVD.updateComboboxRegisseur(firstName.concat(" " + lastName));
 			nr.regisseurAdded(firstName, lastName);
 
 		} catch (InvalidParameterException e) {
@@ -224,6 +289,8 @@ public class Insert {
 
 	/**
 	 * Methode zum Erstellen eines DB Eintrages für einen neuen Produzenten
+	 * 
+	 * @parm np --> Klasseninformationen aus NewProducer
 	 * 
 	 * @param firstName
 	 *            --> Vorname Produzent
@@ -272,12 +339,75 @@ public class Insert {
 					"Fehler beim Einfügen in die Datenbank! Fehlercode 004");
 		}
 		// Aufruf bei erfolgreicher Regisseuranlage
-		// NewDVD dvd = new NewDVD();
-
-		// Update der Regisseurcombobox in der DVD Erstellung durchführen
 		// Rückmeldung an Regisseurerstellung
 		try {
 			// dvd.updateComboboxRegisseur(firstName.concat(" " + lastName));
+			np.productionAdded(firstName, lastName);
+
+		} catch (InvalidParameterException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	/**
+	 * Methode zum Erstellen eines DB Eintrages für einen neuen Produzenten
+	 * 
+	 * @parm newDVD --> Klasseninformationen aus dem Dialog NewDVD
+	 * 
+	 * @parm np --> Klasseninformationen aus NewProducer
+	 * 
+	 * @param firstName
+	 *            --> Vorname Produzent
+	 * @param lastName
+	 *            --> Nachname Produzent
+	 * @throws Exception
+	 *             --> Exceptionhandling auf der SQL DB
+	 */
+	public void insertProducer(NewDVD newDVD, NewProducer np, String firstName, String lastName)
+			throws Exception {
+		try {
+
+			// Alle Einfuege-Operationen sollen als eine Transaktion und mittels
+			// Stringbuffer ausgefuehrt
+			// werden.
+			con.setAutoCommit(false);
+
+			stmt = con.createStatement();
+
+			StringBuffer produzent = new StringBuffer();
+
+			/*
+			 * Hinzufügen eines neuen Regisseurs "Insert into
+			 * dvd_verleih.regisseur (FirstName, LastName) VALUES (firstName,
+			 * lastName)"
+			 */
+			produzent.append("INSERT INTO ");
+			produzent.append(schema);
+			produzent.append(".production (FirstName, LastName) "
+					+ "VALUES (\"" + firstName + "\",\"" + lastName + "\")");
+
+			stmt.executeUpdate(produzent.toString());
+
+			// Neuerfasste Daten auf DB schreiben
+			con.commit();
+			con.setAutoCommit(true);
+
+		} catch (SQLException e) {
+			// Im Falle eines Fehlers Rollback durchführen und Fehlermeldung
+			// schreiben
+			// Fehlercode 004
+			con.rollback();
+			con.setAutoCommit(true);
+			e.printStackTrace();
+			throw new Exception(
+					"Fehler beim Einfügen in die Datenbank! Fehlercode 004");
+		}
+		// Aufruf bei erfolgreicher Regisseuranlage
+		// Update der Regisseurcombobox in der DVD Erstellung durchführen
+		// Rückmeldung an Regisseurerstellung
+		try {
+			newDVD.updateComboboxProduction(firstName.concat(" " + lastName));
 			np.productionAdded(firstName, lastName);
 
 		} catch (InvalidParameterException e) {

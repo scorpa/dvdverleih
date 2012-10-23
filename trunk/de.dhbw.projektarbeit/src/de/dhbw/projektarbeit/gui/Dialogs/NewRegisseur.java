@@ -1,25 +1,25 @@
 package de.dhbw.projektarbeit.gui.Dialogs;
 
 import java.awt.BorderLayout;
-import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.security.InvalidParameterException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 
-import javax.swing.JButton;
-import javax.swing.JDialog;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
+import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.border.EmptyBorder;
 
-import de.dhbw.projektarbeit.customer.CreateCustomer;
-import de.dhbw.projektarbeit.regisseur.CreateRegisseur;
-
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import java.security.InvalidParameterException;
+import de.dhbw.projektarbeit.db.request.Insert;
 
 public class NewRegisseur extends JDialog {
 
@@ -28,6 +28,10 @@ public class NewRegisseur extends JDialog {
 	private JTextField txtLastname;
 	private JButton addButton;
 	private JButton cancelButton;
+	private boolean fromNewDVD = false;
+	private Insert insert;
+	private Connection con;
+	private NewDVD newDVD;
 
 	/**
 	 * Launch the application.
@@ -43,9 +47,27 @@ public class NewRegisseur extends JDialog {
 	}
 
 	/**
-	 * Create the dialog.
+	 * Standardkonstruktor
 	 */
 	public NewRegisseur() {
+		setWindow();
+	}
+
+	/**
+	 * Konstruktor für den Aufruf aus dem newDVD Dialog
+	 * @param newDVD --> Klasseninformationen
+	 */
+	public NewRegisseur(NewDVD newDVD) {
+		this.newDVD = newDVD;
+		fromNewDVD = true;
+		setWindow();
+	}
+
+	/**
+	 * Generiert den JDialog
+	 */
+	private void setWindow() {
+
 		setAlwaysOnTop(true);
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		setModal(true);
@@ -152,27 +174,29 @@ public class NewRegisseur extends JDialog {
 				cancelButton.setActionCommand("Cancel");
 			}
 			GroupLayout gl_buttonPane = new GroupLayout(buttonPane);
-			gl_buttonPane.setHorizontalGroup(
-				gl_buttonPane.createParallelGroup(Alignment.TRAILING)
-					.addGroup(gl_buttonPane.createSequentialGroup()
-						.addContainerGap(436, Short.MAX_VALUE)
-						.addComponent(addButton)
-						.addPreferredGap(ComponentPlacement.RELATED)
-						.addComponent(cancelButton)
-						.addContainerGap())
-			);
-			gl_buttonPane.setVerticalGroup(
-				gl_buttonPane.createParallelGroup(Alignment.LEADING)
-					.addGroup(Alignment.TRAILING, gl_buttonPane.createSequentialGroup()
-						.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-						.addGroup(gl_buttonPane.createParallelGroup(Alignment.BASELINE)
-							.addComponent(cancelButton)
-							.addComponent(addButton))
-						.addContainerGap())
-			);
+			gl_buttonPane.setHorizontalGroup(gl_buttonPane.createParallelGroup(
+					Alignment.TRAILING).addGroup(
+					gl_buttonPane.createSequentialGroup()
+							.addContainerGap(436, Short.MAX_VALUE)
+							.addComponent(addButton)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(cancelButton).addContainerGap()));
+			gl_buttonPane.setVerticalGroup(gl_buttonPane.createParallelGroup(
+					Alignment.LEADING).addGroup(
+					Alignment.TRAILING,
+					gl_buttonPane
+							.createSequentialGroup()
+							.addContainerGap(GroupLayout.DEFAULT_SIZE,
+									Short.MAX_VALUE)
+							.addGroup(
+									gl_buttonPane
+											.createParallelGroup(
+													Alignment.BASELINE)
+											.addComponent(cancelButton)
+											.addComponent(addButton))
+							.addContainerGap()));
 			buttonPane.setLayout(gl_buttonPane);
 		}
-
 	}
 
 	private void addButtonActionPerforemd(ActionEvent arg0) throws Exception {
@@ -188,15 +212,45 @@ public class NewRegisseur extends JDialog {
 		} else if (lastName.replaceAll(" ", "").equals("")) {
 			go = false;
 		}
-
+		
 		// Aufrufen der Methode CreateRegisseur
 		if (go == true) {
-			CreateRegisseur cr = new CreateRegisseur();
+			
+			
 			try {
-				cr.createRegiseur(this,firstName, lastName);
-			} catch (InvalidParameterException e) {
-				// TODO Auto-generated catch block
+				con = DriverManager
+						.getConnection("jdbc:mysql://localhost/dvd_verleih?user=root");
+			} catch (SQLException e) {
+				// Verbindung zum SQL Server fehlgeschlagen. Fehlercode 005
 				e.printStackTrace();
+				throw new Exception(
+						"Verbindung zum SQL Server fehlgeschlagen. Fehlercode 005");
+			}
+			insert = new Insert("dvd_verleih",con);
+			
+			// Auf Aufruf aus dem NewDVD Dialog prüfen
+			if (fromNewDVD = false){
+
+			try {
+				insert.insertRegisseur(this,firstName, lastName);
+
+			} catch (InvalidParameterException e) {
+				// Fehlercode 002
+				e.printStackTrace();
+				throw new Exception(
+						"Bei der Uebertragung der Parameter ist ein Fehler aufgetreten! Fehlercode: 002");
+			}
+			}
+			else if (fromNewDVD = true){
+				try {
+					insert.insertRegisseur(newDVD,this,firstName, lastName);
+
+				} catch (InvalidParameterException e) {
+					// Fehlercode 002
+					e.printStackTrace();
+					throw new Exception(
+							"Bei der Uebertragung der Parameter ist ein Fehler aufgetreten! Fehlercode: 002");
+				}
 			}
 		} else {
 			JOptionPane
@@ -208,21 +262,21 @@ public class NewRegisseur extends JDialog {
 		}
 
 	}
-	
-	public void regisseurAdded(String firstName, String lastName){
-		// Wenn Benutzer erfolgreich hinzu gefügt wurde, die mitteilen und neues, leeres Eingabefenster öffnen.
-		
-		JOptionPane.showMessageDialog(null, ("Der Regisseur " + firstName + " " + lastName + " wurde erfolgreich angelegt!"), "Vorgang erfolgreich", JOptionPane.INFORMATION_MESSAGE);
+
+	public void regisseurAdded(String firstName, String lastName) {
+		// Wenn Benutzer erfolgreich hinzu gefügt wurde, die mitteilen und
+		// neues, leeres Eingabefenster öffnen.
+
+		JOptionPane.showMessageDialog(null, ("Der Regisseur " + firstName + " "
+				+ lastName + " wurde erfolgreich angelegt!"),
+				"Vorgang erfolgreich", JOptionPane.INFORMATION_MESSAGE);
 		this.setVisible(false);
 		this.dispose();
-		
+
 		// Neues, leeres Erstellungsfenster instantiieren
 		NewRegisseur dialog = new NewRegisseur();
 		dialog.setVisible(true);
 
-		
 	}
-	
 
-	
 }

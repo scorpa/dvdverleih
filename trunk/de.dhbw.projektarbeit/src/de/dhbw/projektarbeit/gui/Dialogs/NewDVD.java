@@ -38,6 +38,11 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Vector;
 
+/**
+ * JDialog zum Einpflegen neuer DVDs
+ * @author Julian Brunner
+ */
+
 public class NewDVD extends JDialog {
 
 	private final JPanel contentPanel = new JPanel();
@@ -188,8 +193,7 @@ public class NewDVD extends JDialog {
 		JButton btnNewRegisseur = new JButton("+");
 		btnNewRegisseur.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				NewRegisseur nr = new NewRegisseur();
-				nr.setVisible(true);
+				btnNewRegisseurActionPerformed(arg0);
 			}
 		});
 
@@ -198,9 +202,9 @@ public class NewDVD extends JDialog {
 		JButton btnNewProducent = new JButton("+");
 		btnNewProducent.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				NewProducer np = new NewProducer();
-				np.setVisible(true);
+				btnNewProducentActionPerformed(e);
 			}
+
 		});
 
 		// Instantiierung von Combofield Variablen
@@ -644,8 +648,26 @@ public class NewDVD extends JDialog {
 		}
 	}
 
+	private void btnNewRegisseurActionPerformed(ActionEvent arg0) {
+		// Regisseur Hinzufügen Button gedrückt
+		NewRegisseur nr = new NewRegisseur(this);
+		nr.setVisible(true);
+	}
+
+	private void btnNewProducentActionPerformed(ActionEvent e) {
+		// Produzent Hinzufügen Button gedrückt
+		NewProducer np = new NewProducer(this);
+		np.setVisible(true);
+
+	}
+
+	/**
+	 * Button "DVD Hinzufügen" wurde gedrückt
+	 * @param arg0 = Aktionevent
+	 * @throws Exception = Exceptionhandling
+	 */
 	private void addActionPerformed(ActionEvent arg0) throws Exception {
-		// Hinzufügen Button gedrückt
+		// DVD Hinzufügen Button gedrückt
 		String title, originalTitle, eanCode, genre;
 		boolean go = true;
 
@@ -716,6 +738,12 @@ public class NewDVD extends JDialog {
 		}
 	}
 
+	/**
+	 * Methode zum Updaten der Combobox Regisseur nach Neueingabe
+	 * 
+	 * @param regisseur
+	 *            Konkadinierter Rückgabewerte aus der Insertmethode
+	 */
 	public void updateComboboxRegisseur(String regisseur) {
 		dbRegisseur.add(regisseur);
 		cAuswahlRegisseur = new DefaultComboBoxModel<String>(dbRegisseur);
@@ -726,18 +754,39 @@ public class NewDVD extends JDialog {
 	public void fillRegisseur() {
 
 	}
-	
-	public void dvdAdded(String title) throws Exception{
-		// Wenn Benutzer erfolgreich hinzu gefügt wurde, die mitteilen und neues, leeres Eingabefenster öffnen.
-		
-		JOptionPane.showMessageDialog(null, ("Die DVD" + title + " wurde erfolgreich angelegt!"), "Vorgang erfolgreich", JOptionPane.INFORMATION_MESSAGE);
+
+	/**
+	 * Wenn DVD erfolgreich hinzu gefügt wurde, dies mitteilen und neues, leeres
+	 * Eingabefenster öffnen.
+	 * 
+	 * @param title
+	 *            = Hinzugefügter DVD Titel
+	 * @throws Exception
+	 *             = Exceptionhandling
+	 */
+	public void dvdAdded(String title) throws Exception {
+		JOptionPane.showMessageDialog(null,
+				("Die DVD" + title + " wurde erfolgreich angelegt!"),
+				"Vorgang erfolgreich", JOptionPane.INFORMATION_MESSAGE);
 		this.setVisible(false);
 		this.dispose();
-		
+
 		// Neues, leeres Erstellungsfenster instantiieren
 		NewDVD dialog = new NewDVD();
 		dialog.setVisible(true);
 
-		
+	}
+
+	/**
+	 * Methode zum Updaten der Combobox Produzent nach Neueingabe
+	 * 
+	 * @param production
+	 *            = Konkadinierter Rückgabewerte aus der Insertmethode
+	 */
+	public void updateComboboxProduction(String production) {
+		dbProduction.add(production);
+		cAuswahlProduction = new DefaultComboBoxModel<String>(dbProduction);
+		cbProducent.setModel(cAuswahlProduction);
+
 	}
 }

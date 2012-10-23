@@ -29,6 +29,8 @@ public class NewProducer extends JDialog {
 	private JButton cancelButton;
 	private Insert insert;
 	private Connection con;
+	private NewDVD newDVD;
+	private boolean fromNewDVD = false;
 
 	/**
 	 * Launch the application.
@@ -44,9 +46,25 @@ public class NewProducer extends JDialog {
 	}
 
 	/**
-	 * Create the dialog.
+	 * Standardkonstruktor
 	 */
 	public NewProducer() {
+		setWindow();
+	}
+
+	/**
+	 * Konstruktor für den Aufruf aus dem newDVD Dialog
+	 * 
+	 * @param newDVD
+	 *            --> Klasseninformationen
+	 */
+	public NewProducer(NewDVD newDVD) {
+		this.newDVD = newDVD;
+		fromNewDVD = true;
+		setWindow();
+	}
+
+	private void setWindow() {
 		setTitle("Neuen Produzent anlegen");
 		setModal(true);
 		setResizable(false);
@@ -81,68 +99,89 @@ public class NewProducer extends JDialog {
 				cancelButton.setActionCommand("Cancel");
 			}
 			GroupLayout gl_buttonPane = new GroupLayout(buttonPane);
-			gl_buttonPane.setHorizontalGroup(
-				gl_buttonPane.createParallelGroup(Alignment.TRAILING)
-					.addGroup(gl_buttonPane.createSequentialGroup()
-						.addContainerGap(326, Short.MAX_VALUE)
-						.addComponent(addButton)
-						.addPreferredGap(ComponentPlacement.RELATED)
-						.addComponent(cancelButton)
-						.addContainerGap())
-			);
-			gl_buttonPane.setVerticalGroup(
-				gl_buttonPane.createParallelGroup(Alignment.TRAILING)
-					.addGroup(gl_buttonPane.createSequentialGroup()
-						.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-						.addGroup(gl_buttonPane.createParallelGroup(Alignment.BASELINE)
+			gl_buttonPane.setHorizontalGroup(gl_buttonPane.createParallelGroup(
+					Alignment.TRAILING).addGroup(
+					gl_buttonPane.createSequentialGroup()
+							.addContainerGap(326, Short.MAX_VALUE)
 							.addComponent(addButton)
-							.addComponent(cancelButton))
-						.addContainerGap())
-			);
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(cancelButton).addContainerGap()));
+			gl_buttonPane.setVerticalGroup(gl_buttonPane.createParallelGroup(
+					Alignment.TRAILING).addGroup(
+					gl_buttonPane
+							.createSequentialGroup()
+							.addContainerGap(GroupLayout.DEFAULT_SIZE,
+									Short.MAX_VALUE)
+							.addGroup(
+									gl_buttonPane
+											.createParallelGroup(
+													Alignment.BASELINE)
+											.addComponent(addButton)
+											.addComponent(cancelButton))
+							.addContainerGap()));
 			buttonPane.setLayout(gl_buttonPane);
 		}
-		
+
 		JPanel panel = new JPanel();
 		panel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(panel, BorderLayout.CENTER);
-		
+
 		txtFirstName = new JTextField();
 		txtFirstName.setText("FirstName");
 		txtFirstName.setColumns(22);
-		
+
 		JLabel label = new JLabel("Vorname");
-		
+
 		JLabel label_1 = new JLabel("Nachname");
-		
+
 		txtLastName = new JTextField();
 		txtLastName.setText("LastName");
 		txtLastName.setColumns(22);
 		GroupLayout gl_panel = new GroupLayout(panel);
-		gl_panel.setHorizontalGroup(
-			gl_panel.createParallelGroup(Alignment.TRAILING)
-				.addGroup(gl_panel.createSequentialGroup()
-					.addContainerGap()
-					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
-						.addComponent(label)
-						.addComponent(txtFirstName, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-					.addGap(101)
-					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
-						.addComponent(label_1)
-						.addComponent(txtLastName, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-					.addContainerGap(20, Short.MAX_VALUE))
-		);
-		gl_panel.setVerticalGroup(
-			gl_panel.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_panel.createSequentialGroup()
-					.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
-						.addComponent(label)
-						.addComponent(label_1))
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
-						.addComponent(txtFirstName, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(txtLastName, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-					.addContainerGap(32, Short.MAX_VALUE))
-		);
+		gl_panel.setHorizontalGroup(gl_panel.createParallelGroup(
+				Alignment.TRAILING).addGroup(
+				gl_panel.createSequentialGroup()
+						.addContainerGap()
+						.addGroup(
+								gl_panel.createParallelGroup(Alignment.LEADING)
+										.addComponent(label)
+										.addComponent(txtFirstName,
+												GroupLayout.PREFERRED_SIZE,
+												GroupLayout.DEFAULT_SIZE,
+												GroupLayout.PREFERRED_SIZE))
+						.addGap(101)
+						.addGroup(
+								gl_panel.createParallelGroup(Alignment.LEADING)
+										.addComponent(label_1)
+										.addComponent(txtLastName,
+												GroupLayout.PREFERRED_SIZE,
+												GroupLayout.DEFAULT_SIZE,
+												GroupLayout.PREFERRED_SIZE))
+						.addContainerGap(20, Short.MAX_VALUE)));
+		gl_panel.setVerticalGroup(gl_panel
+				.createParallelGroup(Alignment.LEADING)
+				.addGroup(
+						gl_panel.createSequentialGroup()
+								.addGroup(
+										gl_panel.createParallelGroup(
+												Alignment.BASELINE)
+												.addComponent(label)
+												.addComponent(label_1))
+								.addPreferredGap(ComponentPlacement.RELATED)
+								.addGroup(
+										gl_panel.createParallelGroup(
+												Alignment.BASELINE)
+												.addComponent(
+														txtFirstName,
+														GroupLayout.PREFERRED_SIZE,
+														GroupLayout.DEFAULT_SIZE,
+														GroupLayout.PREFERRED_SIZE)
+												.addComponent(
+														txtLastName,
+														GroupLayout.PREFERRED_SIZE,
+														GroupLayout.DEFAULT_SIZE,
+														GroupLayout.PREFERRED_SIZE))
+								.addContainerGap(32, Short.MAX_VALUE)));
 		panel.setLayout(gl_panel);
 	}
 
@@ -152,7 +191,7 @@ public class NewProducer extends JDialog {
 		boolean go = true;
 		firstName = txtFirstName.getText();
 		lastName = txtLastName.getText();
-		
+
 		// Auf leere Pflichtfelder überprüfen
 		if (firstName.replaceAll(" ", "").equals("")) {
 			go = false;
@@ -172,39 +211,57 @@ public class NewProducer extends JDialog {
 				throw new Exception(
 						"Verbindung zum SQL Server fehlgeschlagen. Fehlercode 005");
 			}
-			insert = new Insert("dvd_verleih",con);
+			insert = new Insert("dvd_verleih", con);
 
-			try {
-				insert.insertProducer(this,firstName,lastName);
+			// Auf Aufruf aus dem NewDVD Dialog prüfen
+			if (fromNewDVD = false) {
+				try {
+					insert.insertProducer(this, firstName, lastName);
 
-			} catch (InvalidParameterException e) {
-				// Fehlercode 002
-				e.printStackTrace();
-				throw new Exception(
-						"Bei der Uebertragung der Parameter ist ein Fehler aufgetreten! Fehlercode: 002");
+				} catch (InvalidParameterException e) {
+					// Fehlercode 002
+					e.printStackTrace();
+					throw new Exception(
+							"Bei der Uebertragung der Parameter ist ein Fehler aufgetreten! Fehlercode: 002");
+				}
+			} else if (fromNewDVD = true) {
+				try {
+					insert.insertProducer(newDVD, this, firstName, lastName);
+
+				} catch (InvalidParameterException e) {
+					// Fehlercode 002
+					e.printStackTrace();
+					throw new Exception(
+							"Bei der Uebertragung der Parameter ist ein Fehler aufgetreten! Fehlercode: 002");
+				}
 			}
-		} else {
-			JOptionPane
-					.showMessageDialog(
-							null,
-							"Sie haben ein Pflichtfeld nicht ausgefüllt! Bitte überprüfen Sie ihre Angaben in den Feldern",
-							"Regisseurerstellung", JOptionPane.ERROR_MESSAGE);
+
+			else {
+				JOptionPane
+						.showMessageDialog(
+								null,
+								"Sie haben ein Pflichtfeld nicht ausgefüllt! Bitte überprüfen Sie ihre Angaben in den Feldern",
+								"Regisseurerstellung",
+								JOptionPane.ERROR_MESSAGE);
+			}
 
 		}
-		
+
 	}
-	
-	public void productionAdded(String firstName, String lastName){
-		// Wenn Benutzer erfolgreich hinzu gefügt wurde, die mitteilen und neues, leeres Eingabefenster öffnen.
-		
-		JOptionPane.showMessageDialog(null, ("Der Produzent " + firstName + " " + lastName + " wurde erfolgreich angelegt!"), "Vorgang erfolgreich", JOptionPane.INFORMATION_MESSAGE);
+
+	public void productionAdded(String firstName, String lastName) {
+		// Wenn Benutzer erfolgreich hinzu gefügt wurde, die mitteilen und
+		// neues, leeres Eingabefenster öffnen.
+
+		JOptionPane.showMessageDialog(null, ("Der Produzent " + firstName + " "
+				+ lastName + " wurde erfolgreich angelegt!"),
+				"Vorgang erfolgreich", JOptionPane.INFORMATION_MESSAGE);
 		this.setVisible(false);
 		this.dispose();
-		
+
 		// Neues, leeres Erstellungsfenster instantiieren
 		NewRegisseur dialog = new NewRegisseur();
 		dialog.setVisible(true);
 
-		
 	}
 }
