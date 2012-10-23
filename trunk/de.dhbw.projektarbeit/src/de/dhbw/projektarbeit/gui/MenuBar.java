@@ -61,7 +61,7 @@ public class MenuBar extends JMenuBar {
 				try {
 					mntmNeueDvdActionPerformed(e);
 				} catch (Exception e1) {
-					// TODO Auto-generated catch block
+					// Auto-generated catch block
 					e1.printStackTrace();
 				}
 			}
