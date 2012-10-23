@@ -62,7 +62,7 @@ public class NewDVD extends JDialog {
 	private Vector<String> dbRegisseur = new Vector();
 	private Vector<String> dbProduction = new Vector();
 	private JXDatePicker dpRelease;
-	private JSpinner spCountDVD, spProductionYear;
+	private JSpinner spCountDVD, spProductionYear, spDuration;
 	private SpinnerNumberModel smDuration, smCountDVD, smProductionYear;
 	private Insert insert;
 	private Connection con;
@@ -224,14 +224,11 @@ public class NewDVD extends JDialog {
 				production = (String) cbProducent.getSelectedItem();
 			}
 		});
-		// SpinnerNumberModel smDuration setzen
-		smDuration = new SpinnerNumberModel(1, 1, 10000, 1);
-
+		// SpinnerNumberModel smCount setzen
+		smCountDVD = new SpinnerNumberModel(1, 1, 10000, 1);
 		spCountDVD = new JSpinner();
 		spCountDVD.setPreferredSize(new Dimension(500, 400));
-		// SpinnerNumberModel smDuration setzen
-		smDuration = new SpinnerNumberModel(1, 1, 1000, 1);
-		spCountDVD.setModel(smDuration);
+		spCountDVD.setModel(smCountDVD);
 		spCountDVD.setEditor(new JSpinner.NumberEditor(spCountDVD, "0"));
 		
 		JLabel lblCamera = new JLabel("Kamera");
@@ -246,7 +243,10 @@ public class NewDVD extends JDialog {
 		
 		JButton btnNewAuthor = new JButton("+");
 		
-		JSpinner spDuration = new JSpinner();
+		spDuration = new JSpinner();
+		// SpinnerNumberModel smDuration setzen
+		smDuration = new SpinnerNumberModel(1,1,1000,1);
+		spDuration.setModel(smDuration);
 		
 		JLabel label = new JLabel("Dauer in Min.");
 		
@@ -312,7 +312,7 @@ public class NewDVD extends JDialog {
 								.addComponent(label, GroupLayout.PREFERRED_SIZE, 84, GroupLayout.PREFERRED_SIZE)
 								.addComponent(spDuration, GroupLayout.PREFERRED_SIZE, 73, GroupLayout.PREFERRED_SIZE))
 							.addPreferredGap(ComponentPlacement.UNRELATED)
-							.addGroup(gl_contentPanel.createParallelGroup(Alignment.LEADING, false)
+							.addGroup(gl_contentPanel.createParallelGroup(Alignment.LEADING)
 								.addComponent(spCountDVD, GroupLayout.PREFERRED_SIZE, 112, GroupLayout.PREFERRED_SIZE)
 								.addComponent(lblAnzahlDvds, GroupLayout.PREFERRED_SIZE, 106, GroupLayout.PREFERRED_SIZE))))
 					.addGap(12))
@@ -384,13 +384,10 @@ public class NewDVD extends JDialog {
 					.addGroup(gl_contentPanel.createParallelGroup(Alignment.TRAILING)
 						.addComponent(label)
 						.addComponent(lblAnzahlDvds))
-					.addGroup(gl_contentPanel.createParallelGroup(Alignment.LEADING, false)
-						.addGroup(gl_contentPanel.createSequentialGroup()
-							.addGap(3)
-							.addComponent(spDuration, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-						.addGroup(gl_contentPanel.createSequentialGroup()
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(spCountDVD, 0, 0, Short.MAX_VALUE)))
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addGroup(gl_contentPanel.createParallelGroup(Alignment.TRAILING)
+						.addComponent(spDuration, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(spCountDVD, GroupLayout.PREFERRED_SIZE, 20, GroupLayout.PREFERRED_SIZE))
 					.addContainerGap())
 		);
 		contentPanel.setLayout(gl_contentPanel);
