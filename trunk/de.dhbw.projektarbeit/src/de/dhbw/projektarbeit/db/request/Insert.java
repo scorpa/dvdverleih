@@ -26,7 +26,7 @@ import de.dhbw.projektarbeit.gui.Dialogs.NewRegisseur;
  */
 /**
  * @author Juli
- *
+ * 
  */
 public class Insert {
 
@@ -159,7 +159,8 @@ public class Insert {
 	/**
 	 * Methode zum Erstellen eines DB Eintrages für einen neuen Regisseur
 	 * 
-	 * @param nr --> Klasseninformationen NewRegisseur
+	 * @param nr
+	 *            --> Klasseninformationen NewRegisseur
 	 * 
 	 * @param firstName
 	 *            --> Vorname Regisseur
@@ -218,13 +219,16 @@ public class Insert {
 		}
 
 	}
-	
+
 	/**
-	 * Methode zum Erstellen eines DB Eintrages für einen neuen Regisseur vom Fenster newDVD aus
+	 * Methode zum Erstellen eines DB Eintrages für einen neuen Regisseur vom
+	 * Fenster newDVD aus
 	 * 
-	 * @param newDVD --> Klasseninformationen newDVD
+	 * @param newDVD
+	 *            --> Klasseninformationen newDVD
 	 * 
-	 * @param nr --> Klasseninformationen NewRegisseur
+	 * @param nr
+	 *            --> Klasseninformationen NewRegisseur
 	 * 
 	 * @param firstName
 	 *            --> Vorname Regisseur
@@ -233,8 +237,8 @@ public class Insert {
 	 * @throws Exception
 	 *             --> Exceptionhandling auf der SQL DB
 	 */
-	public void insertRegisseur(NewDVD newDVD, NewRegisseur nr, String firstName,
-			String lastName) throws Exception {
+	public void insertRegisseur(NewDVD newDVD, NewRegisseur nr,
+			String firstName, String lastName) throws Exception {
 		try {
 
 			// Alle Einfuege-Operationen sollen als eine Transaktion und mittels
@@ -348,7 +352,7 @@ public class Insert {
 			e.printStackTrace();
 		}
 	}
-	
+
 	/**
 	 * Methode zum Erstellen eines DB Eintrages für einen neuen Produzenten
 	 * 
@@ -363,8 +367,8 @@ public class Insert {
 	 * @throws Exception
 	 *             --> Exceptionhandling auf der SQL DB
 	 */
-	public void insertProducer(NewDVD newDVD, NewProducer np, String firstName, String lastName)
-			throws Exception {
+	public void insertProducer(NewDVD newDVD, NewProducer np, String firstName,
+			String lastName) throws Exception {
 		try {
 
 			// Alle Einfuege-Operationen sollen als eine Transaktion und mittels
@@ -414,11 +418,12 @@ public class Insert {
 			e.printStackTrace();
 		}
 	}
-	
+
 	/**
 	 * Methode zum Erstellen eines DB Eintrages für einen neuen Kameramann
 	 * 
-	 * @param nc --> Klasseninformationen NewCamera
+	 * @param nc
+	 *            --> Klasseninformationen NewCamera
 	 * 
 	 * @param firstName
 	 *            --> Vorname Kameramann
@@ -427,8 +432,8 @@ public class Insert {
 	 * @throws Exception
 	 *             --> Exceptionhandling auf der SQL DB
 	 */
-	public void insertCamera(NewCamera nc, String firstName,
-			String lastName) throws Exception {
+	public void insertCamera(NewCamera nc, String firstName, String lastName)
+			throws Exception {
 		try {
 
 			// Alle Einfuege-Operationen sollen als eine Transaktion und mittels
@@ -477,13 +482,16 @@ public class Insert {
 		}
 
 	}
-	
+
 	/**
-	 * Methode zum Erstellen eines DB Eintrages für einen neuen Kameramann vom Fenster newDVD aus
+	 * Methode zum Erstellen eines DB Eintrages für einen neuen Kameramann vom
+	 * Fenster newDVD aus
 	 * 
-	 * @param newDVD --> Klasseninformationen newDVD
+	 * @param newDVD
+	 *            --> Klasseninformationen newDVD
 	 * 
-	 * @param nr --> Klasseninformationen NewCamera
+	 * @param nr
+	 *            --> Klasseninformationen NewCamera
 	 * 
 	 * @param firstName
 	 *            --> Vorname Kameramann
@@ -544,8 +552,7 @@ public class Insert {
 		}
 
 	}
-	
-	
+
 	/**
 	 * Methode zum Erstellen eines DB Eintrages für einen neuen Produzenten
 	 * 
@@ -578,8 +585,8 @@ public class Insert {
 			 */
 			author.append("INSERT INTO ");
 			author.append(schema);
-			author.append(".author (FirstName, LastName) "
-					+ "VALUES (\"" + firstName + "\",\"" + lastName + "\")");
+			author.append(".author (FirstName, LastName) " + "VALUES (\""
+					+ firstName + "\",\"" + lastName + "\")");
 
 			stmt.executeUpdate(author.toString());
 
@@ -608,7 +615,7 @@ public class Insert {
 			e.printStackTrace();
 		}
 	}
-	
+
 	/**
 	 * Methode zum Erstellen eines DB Eintrages für eines neuen Autors
 	 * 
@@ -623,8 +630,8 @@ public class Insert {
 	 * @throws Exception
 	 *             --> Exceptionhandling auf der SQL DB
 	 */
-	public void insertAuthor(NewDVD newDVD, NewAuthor na, String firstName, String lastName)
-			throws Exception {
+	public void insertAuthor(NewDVD newDVD, NewAuthor na, String firstName,
+			String lastName) throws Exception {
 		try {
 
 			// Alle Einfuege-Operationen sollen als eine Transaktion und mittels
@@ -643,8 +650,8 @@ public class Insert {
 			 */
 			author.append("INSERT INTO ");
 			author.append(schema);
-			author.append(".author (FirstName, LastName) "
-					+ "VALUES (\"" + firstName + "\",\"" + lastName + "\")");
+			author.append(".author (FirstName, LastName) " + "VALUES (\""
+					+ firstName + "\",\"" + lastName + "\")");
 
 			stmt.executeUpdate(author.toString());
 
@@ -674,32 +681,48 @@ public class Insert {
 			e.printStackTrace();
 		}
 	}
-	
 
 	/**
 	 * Methode zum Anlegen einer neuen DVD auf der SQL DB
-	 * @param dvd --> Klasseneigenschaften
-	 * @param eanCode --> EAN Code der DVd
-	 * @param regisseur --> Name des Regisseurs
-	 * @param production --> Name des Produzenten
-	 * @param camera --> Name des Kamermamanns
-	 * @param author --> Name des Autors
-	 * @param title --> Titel der DVD
-	 * @param genre --> Genre der DVD
-	 * @param fsk --> FSK Kennzeichnung
-	 * @param prod_year --> Produktionsjahr
-	 * @param release --> Erscheinungsjahr
-	 * @param duration --> Dauer der DVD in Minuten
-	 * @param prodCountry --> Produktionsland
-	 * @param originalTitle --> Originaltitel
-	 * @param quantity --> Menge der DVD
-	 * @throws Exception --> Exceptionhandling
+	 * 
+	 * @param dvd
+	 *            --> Klasseneigenschaften
+	 * @param eanCode
+	 *            --> EAN Code der DVd
+	 * @param regisseur
+	 *            --> Name des Regisseurs
+	 * @param production
+	 *            --> Name des Produzenten
+	 * @param camera
+	 *            --> Name des Kamermamanns
+	 * @param author
+	 *            --> Name des Autors
+	 * @param title
+	 *            --> Titel der DVD
+	 * @param genre
+	 *            --> Genre der DVD
+	 * @param fsk
+	 *            --> FSK Kennzeichnung
+	 * @param prod_year
+	 *            --> Produktionsjahr
+	 * @param release
+	 *            --> Erscheinungsjahr
+	 * @param duration
+	 *            --> Dauer der DVD in Minuten
+	 * @param prodCountry
+	 *            --> Produktionsland
+	 * @param originalTitle
+	 *            --> Originaltitel
+	 * @param quantity
+	 *            --> Menge der DVD
+	 * @throws Exception
+	 *             --> Exceptionhandling
 	 */
-	public void insertDVD(NewDVD dvd, String eanCode, String regisseur,
-			String production, String camera, String author, String title,
-			String genre, String fsk, int prod_year,
-			java.sql.Date release, int duration, String prodCountry,
-			String originalTitle, int quantity) throws Exception {
+	public void insertDVD(NewDVD dvd, int quantity, String title,
+			String originalTitle, String genre, String prodCountry,
+			int prod_year, java.sql.Date release, int duration, String fsk,
+			String regisseur, String author, String production, String camera,
+			String eanCode) throws Exception {
 
 		try {
 			// Alle Einfuege-Operationen sollen als eine Transaktion und mittels
@@ -717,9 +740,9 @@ public class Insert {
 
 			/*
 			 * Hinzufügen der neu erfassten DVD für die Tabelle "dvd" "Insert
-			 * into dvd_verleih.dvd (Barcode, Regie_ID, Production_ID,
-			 * Camera_ID, Author_ID, Title, Genre, FSK, Prod_Year, Rel_Date,
-			 * Duration, Prod_Country, Original_Title, Quantity) VALUES
+			 * into dvd_verleih.dvd (Quantity, Title, Original_Title, Genre,
+			 * Prod_Country, Prod_Year, Rel_Date, Duration, FSK, String
+			 * Regie_ID, Author_ID, Production_ID, Camera_ID, Barcode) VALUES
 			 * (eanCode, regisseurID, productionID, cameraID, authorID, title,
 			 * genre, fsk, prod_year, release, duration, prodCountry,
 			 * originalTitle, quantity)"
@@ -728,23 +751,17 @@ public class Insert {
 			bufferDVD.append("INSERT INTO ");
 			bufferDVD.append(schema);
 			bufferDVD
-					.append(".dvd (Barcode, Regie_ID, Production_ID, Camera_ID, Author_ID, Title, Genre, FSK, Prod_Year, Rel_Date, Duration, Prod_Country, "
-							+ "Original_Title, Quantity) " + "VALUES (\""
-							+ eanCode
-							+ "\",\""
-							+ regisseurID
-							+ "\",\""
-							+ productionID
-							+ "\",\""
-							+ cameraID
-							+ "\",\""
-							+ authorID
+					.append(".dvd (Quantity, Title, Original_Title, Genre, Prod_Country, Prod_Year, Rel_Date, Duration, FSK, Regie_ID, Author_ID, Production_ID, "
+							+ "Camera_ID, Barcode) " + "VALUES (\""
+							+ quantity
 							+ "\",\""
 							+ title
 							+ "\",\""
+							+ originalTitle
+							+ "\",\""
 							+ genre
 							+ "\",\""
-							+ fsk
+							+ prodCountry
 							+ "\",\""
 							+ prod_year
 							+ "\",\""
@@ -752,11 +769,18 @@ public class Insert {
 							+ "\",\""
 							+ duration
 							+ "\",\""
-							+ prodCountry
+							+ fsk
 							+ "\",\""
-							+ originalTitle
+							+ regisseur
 							+ "\",\""
-							+ quantity + "\")");
+							+ author
+							+ "\",\""
+							+ production
+							+ "\",\""
+							+ camera
+							+ "\",\""
+							+ eanCode
+							+ "\")");
 
 			stmt.executeUpdate(bufferDVD.toString());
 
