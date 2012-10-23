@@ -234,7 +234,22 @@ public class NewDVD extends JDialog {
 		
 		JLabel lblCamera = new JLabel("Kamera");
 		
-		JComboBox cbCamera = new JComboBox();
+		// Instantiierung von Combofield Variablen
+				// ArrayList mit DB Daten von Regisseuren füllen
+		try {
+			dbCamera= fill.fillCbCamera();
+		} catch (IllegalArgumentException e1) {
+			e1.printStackTrace();
+		}
+		cAuswahlCamera = new DefaultComboBoxModel(dbCamera);
+		cbCamera = new JComboBox();
+		cbCamera.setModel(cAuswahlCamera);
+		cbCamera.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				// Auslesen des Combofields
+				camera = (String) cbCamera.getSelectedItem();
+			}
+		});
 		
 		JButton btnNewCamera = new JButton("+");
 		btnNewCamera.addActionListener(new ActionListener() {
@@ -244,18 +259,36 @@ public class NewDVD extends JDialog {
 		});
 		
 		JLabel lblAuthor = new JLabel("Autor");
+		// Instantiierung von Combofield Variablen
+		// ArrayList mit DB Daten von Regisseuren füllen
+		try {
+			dbAuthor= fill.fillCbAuthor();
+		} catch (IllegalArgumentException e1) {
+			e1.printStackTrace();
+		}
+		cAuswahlAuthor = new DefaultComboBoxModel(dbAuthor);
+		cbAuthor = new JComboBox();
+		cbAuthor.setModel(cAuswahlAuthor);
+		cbAuthor.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				// Auslesen des Combofields
+				author = (String) cbAuthor.getSelectedItem();
+			}
+		});
 		
-		JComboBox cbAuthor = new JComboBox();
 		
 		JButton btnNewAuthor = new JButton("+");
+		btnNewAuthor.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				btnNewAuthorActionPerformed(arg0);
+			}
+		});
 		
 		spDuration = new JSpinner();
 		// SpinnerNumberModel smDuration setzen
 		smDuration = new SpinnerNumberModel(1,1,1000,1);
 		spDuration.setModel(smDuration);
-		
 		JLabel label = new JLabel("Dauer in Min.");
-		
 		JLabel lblAnzahlDvds = new JLabel("Anzahl der DVDs");
 
 		GroupLayout gl_contentPanel = new GroupLayout(contentPanel);
@@ -460,6 +493,12 @@ public class NewDVD extends JDialog {
 							.addContainerGap()));
 			buttonPane.setLayout(gl_buttonPane);
 		}
+	}
+
+	protected void btnNewAuthorActionPerformed(ActionEvent arg0) {
+		// TODO Auto-generated method stub
+		NewAuthor na = new NewAuthor(this);
+		na.setVisible(true);
 	}
 
 	protected void btnNewCameraActionPerformes(ActionEvent arg0) {
