@@ -7,6 +7,8 @@ import de.dhbw.projektarbeit.db.request.Filling;
 import de.dhbw.projektarbeit.gui.Dialogs.JTableNotEditable;
 
 import java.awt.CardLayout;
+import java.awt.GridBagLayout;
+
 import javax.swing.JSplitPane;
 import java.awt.Color;
 import javax.swing.GroupLayout;
@@ -34,7 +36,9 @@ public class DVDCard extends JPanel {
 	private void getTables() {
 		// TODO Auto-generated method stub
 		setLayout(new CardLayout(0, 0));
-
+		
+		
+		
 		// Spaltenüberschriften
 		String[] columnNames = { "Menge", "Titel", "Originaltitel", "Genre",
 				"Produktionsland", "Produktionsjahr", "Erscheinungsdatum",
