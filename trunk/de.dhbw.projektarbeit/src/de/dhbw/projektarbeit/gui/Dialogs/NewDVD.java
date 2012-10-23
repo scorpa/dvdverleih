@@ -90,7 +90,7 @@ public class NewDVD extends JDialog {
 		setModal(true);
 		setTitle("Neue DVD anlegen");
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 618, 450);
+		setBounds(100, 100, 625, 450);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
