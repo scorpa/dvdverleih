@@ -53,14 +53,16 @@ public class NewDVD extends JDialog {
 	private JButton addButton;
 	private JButton cancelButton;
 	private String fsk, prodCountry, regie, production, author, camera;
-	private DefaultComboBoxModel cAuswahlRegisseur, cAuswahlProduction;
+	private DefaultComboBoxModel cAuswahlRegisseur, cAuswahlProduction, cAuswahlCamera, cAuswahlAuthor;
 	private Vector<String> vAuswahlRegisseur;
 	private SimpleDateFormat sdf;
 	private Date release;
 	private int prod_year, duration, quantity;
-	private JComboBox cbRegisseur, cbFSK, cbProdCountry, cbProducent;
+	private JComboBox cbRegisseur, cbFSK, cbProdCountry, cbProducent, cbCamera, cbAuthor;
 	private Vector<String> dbRegisseur = new Vector();
 	private Vector<String> dbProduction = new Vector();
+	private Vector<String> dbCamera = new Vector();
+	private Vector<String> dbAuthor = new Vector();
 	private JXDatePicker dpRelease;
 	private JSpinner spCountDVD, spProductionYear, spDuration;
 	private SpinnerNumberModel smDuration, smCountDVD, smProductionYear;
@@ -90,7 +92,7 @@ public class NewDVD extends JDialog {
 		setModal(true);
 		setTitle("Neue DVD anlegen");
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 625, 450);
+		setBounds(100, 100, 620, 450);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
@@ -212,7 +214,6 @@ public class NewDVD extends JDialog {
 		try {
 			dbProduction = fill.fillCbProduction();
 		} catch (IllegalArgumentException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 		cAuswahlProduction = new DefaultComboBoxModel(dbProduction);
@@ -236,6 +237,11 @@ public class NewDVD extends JDialog {
 		JComboBox cbCamera = new JComboBox();
 		
 		JButton btnNewCamera = new JButton("+");
+		btnNewCamera.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				btnNewCameraActionPerformes(arg0);
+			}
+		});
 		
 		JLabel lblAuthor = new JLabel("Autor");
 		
@@ -259,7 +265,7 @@ public class NewDVD extends JDialog {
 					.addContainerGap()
 					.addGroup(gl_contentPanel.createParallelGroup(Alignment.LEADING)
 						.addGroup(gl_contentPanel.createSequentialGroup()
-							.addGroup(gl_contentPanel.createParallelGroup(Alignment.LEADING)
+							.addGroup(gl_contentPanel.createParallelGroup(Alignment.LEADING, false)
 								.addComponent(txtOriginaltitle, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 								.addComponent(lblOriginaltitel)
 								.addComponent(txtTitle, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
@@ -267,41 +273,43 @@ public class NewDVD extends JDialog {
 								.addComponent(lblRegisseur)
 								.addComponent(lblCamera)
 								.addGroup(gl_contentPanel.createSequentialGroup()
-									.addComponent(cbCamera, GroupLayout.PREFERRED_SIZE, 227, GroupLayout.PREFERRED_SIZE)
-									.addPreferredGap(ComponentPlacement.RELATED)
-									.addComponent(btnNewCamera, GroupLayout.PREFERRED_SIZE, 42, GroupLayout.PREFERRED_SIZE))
+									.addComponent(lblAltersbeschrnkung)
+									.addPreferredGap(ComponentPlacement.UNRELATED)
+									.addComponent(lblHerstellungsland))
 								.addGroup(gl_contentPanel.createParallelGroup(Alignment.LEADING)
 									.addGroup(gl_contentPanel.createSequentialGroup()
-										.addComponent(lblAltersbeschrnkung)
-										.addPreferredGap(ComponentPlacement.UNRELATED)
-										.addComponent(lblHerstellungsland))
+										.addComponent(cbCamera, 0, 227, Short.MAX_VALUE)
+										.addPreferredGap(ComponentPlacement.RELATED)
+										.addComponent(btnNewCamera, GroupLayout.PREFERRED_SIZE, 42, GroupLayout.PREFERRED_SIZE))
 									.addGroup(gl_contentPanel.createSequentialGroup()
-										.addComponent(cbRegisseur, 0, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+										.addComponent(cbRegisseur, 0, 230, Short.MAX_VALUE)
 										.addPreferredGap(ComponentPlacement.RELATED)
 										.addComponent(btnNewRegisseur, GroupLayout.PREFERRED_SIZE, 42, GroupLayout.PREFERRED_SIZE))
 									.addGroup(gl_contentPanel.createSequentialGroup()
 										.addComponent(cbFSK, GroupLayout.PREFERRED_SIZE, 129, GroupLayout.PREFERRED_SIZE)
 										.addPreferredGap(ComponentPlacement.RELATED)
 										.addComponent(cbProdCountry, GroupLayout.PREFERRED_SIZE, 140, GroupLayout.PREFERRED_SIZE))))
-							.addGap(34)
+							.addGap(32)
 							.addGroup(gl_contentPanel.createParallelGroup(Alignment.LEADING)
-								.addGroup(gl_contentPanel.createSequentialGroup()
-									.addComponent(cbAuthor, GroupLayout.PREFERRED_SIZE, 231, GroupLayout.PREFERRED_SIZE)
+								.addGroup(Alignment.TRAILING, gl_contentPanel.createSequentialGroup()
+									.addComponent(cbAuthor, 0, 231, Short.MAX_VALUE)
 									.addPreferredGap(ComponentPlacement.RELATED)
 									.addComponent(btnNewAuthor, GroupLayout.PREFERRED_SIZE, 41, GroupLayout.PREFERRED_SIZE))
-								.addComponent(txtEancode, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+								.addComponent(txtEancode)
 								.addGroup(gl_contentPanel.createSequentialGroup()
 									.addGroup(gl_contentPanel.createParallelGroup(Alignment.LEADING)
 										.addComponent(lblProduktionsjahr, GroupLayout.PREFERRED_SIZE, 114, GroupLayout.PREFERRED_SIZE)
-										.addComponent(spProductionYear, GroupLayout.PREFERRED_SIZE, 102, GroupLayout.PREFERRED_SIZE)
+										.addGroup(gl_contentPanel.createSequentialGroup()
+											.addComponent(spProductionYear, GroupLayout.DEFAULT_SIZE, 102, Short.MAX_VALUE)
+											.addGap(12))
 										.addComponent(lblProduzent))
 									.addPreferredGap(ComponentPlacement.RELATED)
 									.addGroup(gl_contentPanel.createParallelGroup(Alignment.LEADING)
 										.addComponent(lblVerffentlichungsdatum)
 										.addComponent(dpRelease, GroupLayout.PREFERRED_SIZE, 158, GroupLayout.PREFERRED_SIZE)))
-								.addComponent(txtGenre, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+								.addComponent(txtGenre)
 								.addGroup(gl_contentPanel.createSequentialGroup()
-									.addComponent(cbProducent, GroupLayout.PREFERRED_SIZE, 231, GroupLayout.PREFERRED_SIZE)
+									.addComponent(cbProducent, 0, 231, Short.MAX_VALUE)
 									.addPreferredGap(ComponentPlacement.RELATED)
 									.addComponent(btnNewProducent, GroupLayout.PREFERRED_SIZE, 41, GroupLayout.PREFERRED_SIZE))
 								.addComponent(lblEanCode)
@@ -315,7 +323,7 @@ public class NewDVD extends JDialog {
 							.addGroup(gl_contentPanel.createParallelGroup(Alignment.LEADING)
 								.addComponent(spCountDVD, GroupLayout.PREFERRED_SIZE, 112, GroupLayout.PREFERRED_SIZE)
 								.addComponent(lblAnzahlDvds, GroupLayout.PREFERRED_SIZE, 106, GroupLayout.PREFERRED_SIZE))))
-					.addGap(12))
+					.addGap(16))
 		);
 		gl_contentPanel.setVerticalGroup(
 			gl_contentPanel.createParallelGroup(Alignment.LEADING)
@@ -359,27 +367,25 @@ public class NewDVD extends JDialog {
 							.addPreferredGap(ComponentPlacement.RELATED)
 							.addGroup(gl_contentPanel.createParallelGroup(Alignment.BASELINE)
 								.addComponent(cbProducent, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-								.addComponent(btnNewProducent, GroupLayout.PREFERRED_SIZE, 28, GroupLayout.PREFERRED_SIZE)))
+								.addComponent(btnNewProducent, GroupLayout.PREFERRED_SIZE, 28, GroupLayout.PREFERRED_SIZE)
+								.addComponent(btnNewRegisseur, GroupLayout.PREFERRED_SIZE, 28, GroupLayout.PREFERRED_SIZE)))
 						.addGroup(gl_contentPanel.createSequentialGroup()
 							.addComponent(lblRegisseur)
 							.addPreferredGap(ComponentPlacement.RELATED)
-							.addGroup(gl_contentPanel.createParallelGroup(Alignment.BASELINE)
-								.addComponent(cbRegisseur, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-								.addComponent(btnNewRegisseur, GroupLayout.PREFERRED_SIZE, 28, GroupLayout.PREFERRED_SIZE))))
+							.addComponent(cbRegisseur, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
 					.addPreferredGap(ComponentPlacement.UNRELATED)
 					.addGroup(gl_contentPanel.createParallelGroup(Alignment.LEADING)
 						.addGroup(gl_contentPanel.createSequentialGroup()
 							.addComponent(lblCamera)
 							.addPreferredGap(ComponentPlacement.RELATED)
-							.addGroup(gl_contentPanel.createParallelGroup(Alignment.BASELINE)
-								.addComponent(cbCamera, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-								.addComponent(btnNewCamera, GroupLayout.PREFERRED_SIZE, 28, GroupLayout.PREFERRED_SIZE)))
+							.addComponent(cbCamera, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
 						.addGroup(gl_contentPanel.createSequentialGroup()
 							.addComponent(lblAuthor)
 							.addPreferredGap(ComponentPlacement.RELATED)
 							.addGroup(gl_contentPanel.createParallelGroup(Alignment.BASELINE)
 								.addComponent(btnNewAuthor, GroupLayout.PREFERRED_SIZE, 28, GroupLayout.PREFERRED_SIZE)
-								.addComponent(cbAuthor, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))))
+								.addComponent(cbAuthor, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+								.addComponent(btnNewCamera, GroupLayout.PREFERRED_SIZE, 28, GroupLayout.PREFERRED_SIZE))))
 					.addPreferredGap(ComponentPlacement.UNRELATED)
 					.addGroup(gl_contentPanel.createParallelGroup(Alignment.TRAILING)
 						.addComponent(label)
@@ -456,6 +462,12 @@ public class NewDVD extends JDialog {
 		}
 	}
 
+	protected void btnNewCameraActionPerformes(ActionEvent arg0) {
+		// Kamera hinzufuegen Button gedrŸckt
+		NewCamera nc = new NewCamera(this);
+		nc.setVisible(true);
+	}
+
 	private void btnNewRegisseurActionPerformed(ActionEvent arg0) {
 		// Regisseur Hinzufügen Button gedrückt
 		NewRegisseur nr = new NewRegisseur(this);
@@ -468,6 +480,8 @@ public class NewDVD extends JDialog {
 		np.setVisible(true);
 
 	}
+	
+	
 
 	/**
 	 * Button "DVD Hinzufügen" wurde gedrückt
@@ -489,8 +503,8 @@ public class NewDVD extends JDialog {
 		regie = (String) cbRegisseur.getSelectedItem();
 		prodCountry = (String) cbProdCountry.getSelectedItem();
 		fsk = (String) cbFSK.getSelectedItem();
-		camera = "";
-		author = "";
+		camera = (String) cbCamera.getSelectedItem();
+		author = (String) cbAuthor.getSelectedItem();
 
 		// Überfürung des JXDates in die Datevariable
 		try {
@@ -517,6 +531,10 @@ public class NewDVD extends JDialog {
 			go = false;
 		} else if (production.replaceAll(" ", "").equals("")) {
 			go = false;
+		}else if (camera.replaceAll(" ", "").equals("")) {
+			go=false;
+		}else if (author.replaceAll(" ", "").equals("")) {
+			go=false;
 		} else if (release == null) {
 			go = false;
 		}
@@ -554,7 +572,7 @@ public class NewDVD extends JDialog {
 	 */
 	public void updateComboboxRegisseur(String regisseur) {
 		dbRegisseur.add(regisseur);
-		cAuswahlRegisseur = new DefaultComboBoxModel<String>(dbRegisseur);
+		cAuswahlRegisseur = new DefaultComboBoxModel(dbRegisseur);
 		cbRegisseur.setModel(cAuswahlRegisseur);
 
 	}
@@ -593,8 +611,34 @@ public class NewDVD extends JDialog {
 	 */
 	public void updateComboboxProduction(String production) {
 		dbProduction.add(production);
-		cAuswahlProduction = new DefaultComboBoxModel<String>(dbProduction);
+		cAuswahlProduction = new DefaultComboBoxModel(dbProduction);
 		cbProducent.setModel(cAuswahlProduction);
+
+	}
+	
+	/**
+	 * Methode zum Updaten der Combobox Kamera nach Neueingabe
+	 * 
+	 * @param production
+	 *            = Konkadinierter Rückgabewerte aus der Insertmethode
+	 */
+	public void updateComboboxCamera(String camera) {
+		dbCamera.add(camera);
+		cAuswahlCamera = new DefaultComboBoxModel(dbCamera);
+		cbCamera.setModel(cAuswahlCamera);
+
+	}
+	
+	/**
+	 * Methode zum Updaten der Combobox Author nach Neueingabe
+	 * 
+	 * @param author
+	 *            = Konkadinierter Rückgabewerte aus der Insertmethode
+	 */
+	public void updateComboboxAuthor(String author) {
+		dbAuthor.add(author);
+		cAuswahlAuthor = new DefaultComboBoxModel(dbAuthor);
+		cbAuthor.setModel(cAuswahlAuthor);
 
 	}
 }
