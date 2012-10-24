@@ -116,4 +116,34 @@ public class Delete {
 			throw new Exception("Fehler beim LÃ¶schen aus der Datenbank.");
 		}
 	}
+
+	public void deleteEdits(int id, String form)
+		throws Exception {
+		try {
+			con.setAutoCommit(false);
+			stmt = con.createStatement();
+			StringBuffer buffer = new StringBuffer();
+			buffer.append("DELETE FROM ");
+			buffer.append(schema);
+			buffer.append(".");
+			buffer.append(form);
+			buffer.append(" WHERE ID = ");
+			buffer.append(id);
+			
+			
+			stmt.executeUpdate(buffer.toString());
+
+			// Neuerfasste Daten auf DB schreiben
+			con.commit();
+			con.setAutoCommit(true);
+			
+		} catch (SQLException e) {
+		
+			con.rollback();
+			con.setAutoCommit(true);
+			e.printStackTrace();
+			throw new Exception(
+					"Fehler beim Einfügen in die Datenbank! Fehlercode 004");
+		}
+	}
 }
