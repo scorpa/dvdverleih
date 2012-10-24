@@ -3,7 +3,12 @@ package de.dhbw.projektarbeit.gui.Dialogs;
 import java.awt.BorderLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import de.dhbw.projektarbeit.gui.Dialogs.JTableNotEditable;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.util.ArrayList;
+
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JButton;
@@ -15,8 +20,11 @@ import javax.swing.JSplitPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.ListSelectionModel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
+
+import de.dhbw.projektarbeit.db.request.Delete;
 import de.dhbw.projektarbeit.db.request.Filling;
 
 public class EditRegisseur extends JDialog {
@@ -27,7 +35,9 @@ public class EditRegisseur extends JDialog {
 	private JButton okButton;
 	private JButton cancelButton;
 	private JTable tbRegisseur;
-
+	private Integer selectedID;
+	ArrayList<Integer> editedID;
+	
 	/**
 	 * Launch the application.
 	 */
@@ -45,13 +55,13 @@ public class EditRegisseur extends JDialog {
 	 * Standardkonsturktor
 	 */
 	public EditRegisseur() {
-		setWindo();
+		setWindow();
 	}
 
 	/**
 	 * Methode zur Dialogerstellung
 	 */
-	private void setWindo() {
+	private void setWindow() {
 
 		// Spaltenüberschriften
 		String[] columnNames = { "ID","Vorname", "Nachname" };
@@ -166,6 +176,13 @@ public class EditRegisseur extends JDialog {
 			splitPane.setLeftComponent(scrollPane);
 
 			tbRegisseur = new JTableNotEditable(model,columnNames);
+			tbRegisseur.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+			tbRegisseur.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseClicked(MouseEvent e) {
+					tbRegisseurMouseClicked(e);
+				}
+			});
 			tbRegisseur.setModel(model);
 			scrollPane.setViewportView(tbRegisseur);
 			splitPane.setDividerLocation(280);
@@ -184,6 +201,12 @@ public class EditRegisseur extends JDialog {
 			}
 
 			JButton btnDelete = new JButton("L\u00F6schen");
+			btnDelete.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent arg0) {
+					
+					
+				}
+			});
 			GroupLayout gl_buttonPane = new GroupLayout(buttonPane);
 			gl_buttonPane.setHorizontalGroup(gl_buttonPane.createParallelGroup(
 					Alignment.LEADING).addGroup(
@@ -213,5 +236,17 @@ public class EditRegisseur extends JDialog {
 							.addContainerGap()));
 			buttonPane.setLayout(gl_buttonPane);
 		}
+	}
+
+	protected void tbRegisseurMouseClicked(MouseEvent e) {
+		
+		try {
+			selectedID = (Integer) tbRegisseur.getValueAt(tbRegisseur.getSelectedRow(), 0);
+			txtFirstName.setText((String) tbRegisseur.getValueAt(tbRegisseur.getSelectedRow(), 1));
+			txtLastName.setText((String) tbRegisseur.getValueAt(tbRegisseur.getSelectedRow(), 2));
+		} catch (Exception e2) {
+			e2.printStackTrace();
+		}
+	
 	}
 }
