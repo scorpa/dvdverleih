@@ -733,16 +733,16 @@ public class Insert {
 			StringBuffer bufferDVD = new StringBuffer();
 
 			// IDs der Fremdschlüssel abfragen
-			int regisseurID = getID(schema, "regisseur", regisseur);
-			int productionID = getID(schema, "production", production);
-			int cameraID = getID(schema, "camera", camera);
-			int authorID = getID(schema, "author", author);
+			int regisseurID = getID(schema,"regisseur","Regie_ID", regisseur);
+			int productionID = getID(schema,"production", "Production_ID", production);
+			int cameraID = getID(schema,"camera", "Camera_ID", camera);
+			int authorID = getID(schema,"author", "Author_ID", author);
 
 			/*
 			 * Hinzufügen der neu erfassten DVD für die Tabelle "dvd" "Insert
 			 * into dvd_verleih.dvd (Quantity, Title, Original_Title, Genre,
 			 * Prod_Country, Prod_Year, Rel_Date, Duration, FSK, String
-			 * Regisseur_ID, Author_ID, Production_ID, Camera_ID, Barcode) VALUES
+			 * Regie_ID, Author_ID, Production_ID, Camera_ID, Barcode) VALUES
 			 * (eanCode, regisseurID, productionID, cameraID, authorID, title,
 			 * genre, fsk, prod_year, release, duration, prodCountry,
 			 * originalTitle, quantity)"
@@ -751,7 +751,7 @@ public class Insert {
 			bufferDVD.append("INSERT INTO ");
 			bufferDVD.append(schema);
 			bufferDVD
-					.append(".dvd (Quantity, Title, Original_Title, Genre, Prod_Country, Prod_Year, Rel_Date, Duration, FSK, Regisseur_ID, Author_ID, Production_ID, "
+					.append(".dvd (Quantity, Title, Original_Title, Genre, Prod_Country, Prod_Year, Rel_Date, Duration, FSK, Regie_ID, Author_ID, Production_ID, "
 							+ "Camera_ID, Barcode) " + "VALUES (\""
 							+ quantity
 							+ "\",\""
@@ -771,13 +771,13 @@ public class Insert {
 							+ "\",\""
 							+ fsk
 							+ "\",\""
-							+ regisseur
+							+ regisseurID
 							+ "\",\""
-							+ author
+							+ authorID
 							+ "\",\""
-							+ production
+							+ productionID
 							+ "\",\""
-							+ camera
+							+ cameraID
 							+ "\",\""
 							+ eanCode
 							+ "\")");
@@ -824,19 +824,21 @@ public class Insert {
 	 * @throws SQLException
 	 *             --> Exceptionhandling
 	 */
-	private int getID(String schema, String table, String searchContent)
+	private int getID(String schema, String table, String field, String searchContent)
 			throws SQLException {
-		String searchString, firstName, lastName, FieldID = null;
+		String searchString, firstName = null, lastName = null, FieldID = null;
 		searchString = searchContent;
+		int ID = 0;
 
 		// Trennen des Vornamen und Nachnamen
+		if(searchString.contains(" ")){
 		firstName = searchString.substring(0, searchString.indexOf(" "));
 		lastName = searchString.substring(searchString.indexOf(" ")+1);
-		lastName.replaceAll(" ","");
+		lastName = lastName.replaceAll(" ","");}
 
-		// ID Begriff erstellen
+	/*	// ID Begriff erstellen
 		FieldID = table.substring(0, 1).toUpperCase() + table.substring(1);
-		FieldID.concat("_ID");
+		FieldID.concat("_ID");*/
 
 		// Alle Einfuege-Operationen sollen als eine Transaktion und mittels
 		// Stringbuffer ausgefuehrt
@@ -848,7 +850,7 @@ public class Insert {
 		StringBuffer searchID = new StringBuffer();
 
 		searchID.append("SELECT ");
-		searchID.append(FieldID);
+		searchID.append(field);
 		searchID.append(" FROM ");
 		searchID.append(schema + "." + table);
 		searchID.append(" WHERE FirstName = \"");
@@ -860,9 +862,9 @@ public class Insert {
 		rset = stmt.executeQuery(searchID.toString());
 
 		// Returnwert auffangen
-		int ID;
-		ID = Integer.valueOf(rset.getString(FieldID));
-
+		while(rset.next()){
+		ID = Integer.valueOf(rset.getString(field));
+		}
 		return ID;
 	}
 }

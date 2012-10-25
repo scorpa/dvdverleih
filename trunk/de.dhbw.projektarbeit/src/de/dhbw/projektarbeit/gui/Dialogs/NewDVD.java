@@ -108,7 +108,7 @@ public class NewDVD extends JDialog {
 		txtOriginaltitle.setColumns(22);
 		JLabel lblOriginaltitel = new JLabel("Originaltitel");
 		txtEancode = new JTextField();
-		txtEancode.setText("EANCode");
+		txtEancode.setText("123456789");
 		txtEancode.setColumns(22);
 
 		JLabel lblEanCode = new JLabel("EAN Code");
@@ -894,9 +894,9 @@ public class NewDVD extends JDialog {
 			}
 			insert = new Insert("dvd_verleih", con);
 			try {
-				insert.insertDVD(this, quantity, originalTitle, originalTitle,
-						genre, genre, prod_year, release, duration, genre,
-						regie, title, originalTitle, genre, eanCode);
+				insert.insertDVD(this, quantity, title, originalTitle, genre,
+						prodCountry, prod_year, release, duration, fsk, regie,
+						author, production, camera, eanCode);
 			} catch (InvalidParameterException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

@@ -110,7 +110,7 @@ CREATE TABLE `customer` (
   `Telefone` varchar(45) DEFAULT NULL,
   `Birthdate` date DEFAULT NULL,
   PRIMARY KEY (`Customer_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COMMENT='Customer Data';
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COMMENT='Customer Data';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -119,7 +119,7 @@ CREATE TABLE `customer` (
 
 LOCK TABLES `customer` WRITE;
 /*!40000 ALTER TABLE `customer` DISABLE KEYS */;
-INSERT INTO `customer` VALUES (3,'Julian','Brunner',73207,'Plochingen','Johanniterstr. ','20/2','h0nKi@gmx.de','0176/70902185','1986-11-22'),(4,'Romina','Möller',73207,'Plochingen','Johanniterstr. ','20/2','romy_moeller@yahoo.de','07153/9243679','1988-02-29');
+INSERT INTO `customer` VALUES (3,'Julian','Brunner',73207,'Plochingen','Johanniterstr. ','20/2','h0nKi@gmx.de','0176/70902185','1986-11-22'),(4,'Romina','Möller',73207,'Plochingen','Johanniterstr. ','20/2','romy_moeller@yahoo.de','07153/9243679','1988-02-29'),(5,'Nataliia','Makara',70174,'Stuttgart','Holzgartenstr.','9a','nataliia.makara@gmail.com','01906666666','1986-07-25');
 /*!40000 ALTER TABLE `customer` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -136,7 +136,7 @@ CREATE TABLE `dvd` (
   `Original_Title` varchar(45) DEFAULT NULL,
   `Genre` varchar(20) DEFAULT NULL,
   `Prod_Country` varchar(40) DEFAULT NULL,
-  `Prod_Year` tinyint(4) DEFAULT NULL,
+  `Prod_Year` int(4) DEFAULT NULL,
   `Rel_Date` date DEFAULT NULL,
   `Duration` tinyint(4) DEFAULT NULL,
   `FSK` varchar(20) DEFAULT NULL,
@@ -163,7 +163,7 @@ CREATE TABLE `dvd` (
 
 LOCK TABLES `dvd` WRITE;
 /*!40000 ALTER TABLE `dvd` DISABLE KEYS */;
-INSERT INTO `dvd` VALUES (127,'321','321','31','31',32,'2012-01-02',21,'321',11,1,2,1,1232);
+INSERT INTO `dvd` VALUES (127,'321','321','31','31',32,'2012-01-02',21,'321',11,1,2,1,1232),(1,'Title','OriginalTitle','Genre','USA',2012,'2012-10-25',1,'ab 0 Jahre',11,1,2,1,123456789);
 /*!40000 ALTER TABLE `dvd` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -368,4 +368,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2012-10-23 18:32:58
+-- Dump completed on 2012-10-25 10:51:01
