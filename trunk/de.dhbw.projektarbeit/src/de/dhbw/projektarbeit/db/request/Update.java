@@ -2,7 +2,9 @@ package de.dhbw.projektarbeit.db.request;
 
 import java.sql.Connection;
 import java.sql.Date;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 import de.dhbw.projektarbeit.db.db.Request;
 
@@ -12,11 +14,12 @@ import de.dhbw.projektarbeit.db.db.Request;
  */
 public class Update {
 
+	private String schema;
 	private Connection con;
-	private Request req;
+	private Statement stmt;
+	private ResultSet rset;
 
-	public static final int EARNING = 1;
-	public static final int EXPENSE = 2;
+	
 
 	/**
 	 * Constructor, initialisiert das Objekt, es wird ein DB-Schema und ein
@@ -28,9 +31,9 @@ public class Update {
 	 * @param req
 	 *            Das Request Objekt
 	 */
-	public Update(Connection con, Request req) {
+	public Update(String schema, Connection con) {
+		this.schema = schema;
 		this.con = con;
-		this.req = req;
 	}
 
 	/**
@@ -89,17 +92,28 @@ public class Update {
 	
 	public void updateEdits(int id, String firstname, String lastname, String form) throws Exception{
 		try {
+			// Alle Einfuege-Operationen sollen als eine Transaktion und mittels
+			// Stringbuffer ausgefuehrt
+			// werden.
 			con.setAutoCommit(false);
-			req.delete().deleteEdits(id, form);
-			if(form == "author"){
-				
-			}else if(form == "regisseur"){
-				
-			}else if(form == "camera"){
-				
-			}else if(form == "agent"){
-				
-			}
+			stmt = con.createStatement();
+			StringBuffer buffer = new StringBuffer();
+			buffer.append("UPDATE ");
+			buffer.append(schema);
+			buffer.append(".");
+			buffer.append(form);
+			buffer.append(" SET FirstName = " );
+			buffer.append("\"" + firstname + "\"");
+			buffer.append(" , LastName = " );
+			buffer.append("\"" + lastname + "\"");
+			buffer.append(" WHERE Regie_ID = ");
+			buffer.append(id);
+			
+			stmt.executeUpdate(buffer.toString());
+	
+			// Neuerfasste Daten auf DB schreiben
+			con.commit();
+			con.setAutoCommit(true);
 			
 		} catch (Exception e) {
 			// Im Fehlerfall Rollback durchführen

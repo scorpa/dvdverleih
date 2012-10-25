@@ -7,7 +7,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.ArrayList;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
@@ -24,19 +26,19 @@ import javax.swing.ListSelectionModel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
-import de.dhbw.projektarbeit.db.request.Delete;
 import de.dhbw.projektarbeit.db.request.Filling;
+import de.dhbw.projektarbeit.db.request.Update;
 
 public class EditRegisseur extends JDialog {
 
 	private final JPanel contentPanel = new JPanel();
 	private JTextField txtFirstName;
 	private JTextField txtLastName;
-	private JButton okButton;
-	private JButton cancelButton;
+	private JButton okButton, cancelButton, btnUpdate;
 	private JTable tbRegisseur;
 	private Integer selectedID;
-	ArrayList<Integer> editedID;
+	private Update update;
+	private Connection con;
 	
 	/**
 	 * Launch the application.
@@ -208,10 +210,16 @@ public class EditRegisseur extends JDialog {
 				}
 			});
 			
-			JButton btnUpdate = new JButton("Speichern");
+			btnUpdate = new JButton("Speichern");
+			btnUpdate.setEnabled(false);
 			btnUpdate.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					btnUpdateActionPerformed(e);
+					try {
+						btnUpdateActionPerformed(e);
+					} catch (Exception e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
 				}
 			});
 			GroupLayout gl_buttonPane = new GroupLayout(buttonPane);
@@ -244,13 +252,9 @@ public class EditRegisseur extends JDialog {
 		}
 	}
 
-	protected void btnUpdateActionPerformed(ActionEvent e) {
-		// Update des Regisseurs
-		try {
-			
-		} catch (Exception e2) {
-			e2.printStackTrace();
-		}
+	protected void btnUpdateActionPerformed(ActionEvent e) throws Exception {
+		updateRegisseur(selectedID, txtFirstName.getText(), txtLastName.getText(), "regisseur");
+		
 	}
 
 	protected void tbRegisseurMouseClicked(MouseEvent e) {
@@ -259,9 +263,38 @@ public class EditRegisseur extends JDialog {
 			selectedID = (Integer) tbRegisseur.getValueAt(tbRegisseur.getSelectedRow(), 0);
 			txtFirstName.setText((String) tbRegisseur.getValueAt(tbRegisseur.getSelectedRow(), 1));
 			txtLastName.setText((String) tbRegisseur.getValueAt(tbRegisseur.getSelectedRow(), 2));
+			if(selectedID > 0){
+				btnUpdate.setEnabled(true);
+			}
 		} catch (Exception e2) {
 			e2.printStackTrace();
 		}
 	
+	}
+	
+	private void updateRegisseur(int id, String firstname, String lastname, String form )throws Exception{
+		// Update des Regisseurs
+				try {
+					try {
+						con = DriverManager
+								.getConnection("jdbc:mysql://localhost/dvd_verleih?user=root");
+					} catch (SQLException e) {
+						// Verbindung zum SQL Server fehlgeschlagen. Fehlercode 005
+						e.printStackTrace();
+						throw new Exception(
+								"Verbindung zum SQL Server fehlgeschlagen. Fehlercode 005");
+					}
+					
+					update = new Update("dvd_verleih",con);
+					update.updateEdits(id, firstname, lastname, form);
+					tbRegisseur.setValueAt(txtFirstName.getText(), tbRegisseur.getSelectedRow(), 1);
+					tbRegisseur.setValueAt(txtLastName.getText(), tbRegisseur.getSelectedRow(), 2);
+					
+					
+				} catch (Exception e2) {
+					e2.printStackTrace();
+					throw new Exception(
+							"Bei der Uebertragung der Parameter ist ein Fehler aufgetreten! Fehlercode: 002");
+				}
 	}
 }
