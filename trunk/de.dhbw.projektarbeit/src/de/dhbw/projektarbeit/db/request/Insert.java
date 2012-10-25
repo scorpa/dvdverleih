@@ -6,6 +6,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import javax.swing.JOptionPane;
+
+import com.mysql.jdbc.exceptions.MySQLIntegrityConstraintViolationException;
+
 import de.dhbw.projektarbeit.gui.Dialogs.NewAuthor;
 import de.dhbw.projektarbeit.gui.Dialogs.NewCamera;
 import de.dhbw.projektarbeit.gui.Dialogs.NewCustomer;
@@ -86,7 +90,7 @@ public class Insert {
 
 		try {
 			// Alle Einfuege-Operationen sollen als eine Transaktion und mittels
-			// Stringbuffer ausgefuehrt Albert hat nen kleines Penis
+			// Stringbuffer ausgefuehrt
 			// werden.
 			con.setAutoCommit(false);
 
@@ -731,6 +735,17 @@ public class Insert {
 			con.setAutoCommit(false);
 			stmt = con.createStatement();
 			StringBuffer bufferDVD = new StringBuffer();
+			
+			// Check, ob DVD schon angelegt ist
+			String checkID = checkNewDVD(eanCode);
+			if (checkID.equals(eanCode)){
+				JOptionPane
+				.showMessageDialog(
+						null,
+						"Die DVD mit dem EAN Code " + eanCode + " existiert bereits! Neue DVD kann nicht angelegt werden",
+						"DVD existiert bereits", JOptionPane.ERROR_MESSAGE);
+				
+			}
 
 			// IDs der Fremdschlüssel abfragen
 			int regisseurID = getID(schema,"regisseur","Regie_ID", regisseur);
@@ -799,7 +814,7 @@ public class Insert {
 					"Fehler beim Einfügen in die Datenbank! Fehlercode 004");
 
 		}
-
+			
 		// Aufruf bei erfolgreicher Kundenneuanlage
 
 		try {
@@ -811,6 +826,46 @@ public class Insert {
 					"Ein Fehler beim Abschluss der Kundenneuerstellung ist aufgetreten! Fehlercode: 001");
 		}
 
+	}
+
+	private String checkNewDVD(String eanCode) throws SQLException {
+		
+		String Barcode="";
+		
+		// Alle Operationen sollen als eine Transaktion und mittels
+		// Stringbuffer ausgefuehrt
+		// werden.
+		try {
+			con.setAutoCommit(false);
+
+			stmt = con.createStatement();
+			StringBuffer checkNewDVD = new StringBuffer();
+			
+			checkNewDVD.append("SELECT Barcode FROM dvd_verleih.dvd WHERE Barcode = \"");
+			checkNewDVD.append(eanCode);
+			checkNewDVD.append("\"");
+			
+			// Abfrage ausführen
+			rset = stmt.executeQuery(checkNewDVD.toString());
+
+			// Returnwert auffangen
+			while(rset.next()){
+			Barcode = rset.getString("Barcode");
+			}
+			return Barcode;
+			
+			
+			
+		/*
+		 * Nach DVD EAN Code suchen, um festzustellen, ob es sie schon gibt
+		 * "Select Barcode FROM dvd_verleih.dvd WHERE Barcode = <eanCode>";
+		 */
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return Barcode;
+		
 	}
 
 	/**
@@ -836,11 +891,7 @@ public class Insert {
 		lastName = searchString.substring(searchString.indexOf(" ")+1);
 		lastName = lastName.replaceAll(" ","");}
 
-	/*	// ID Begriff erstellen
-		FieldID = table.substring(0, 1).toUpperCase() + table.substring(1);
-		FieldID.concat("_ID");*/
-
-		// Alle Einfuege-Operationen sollen als eine Transaktion und mittels
+		// Alle Operationen sollen als eine Transaktion und mittels
 		// Stringbuffer ausgefuehrt
 		// werden.
 		con.setAutoCommit(false);

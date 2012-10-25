@@ -111,10 +111,10 @@ public class NewDVD extends JDialog {
 			@Override
 			public void keyReleased(KeyEvent e) {
 				txtEancodeKeyReleased(e);
-				
+
 			}
 		});
-		
+
 		txtEancode.setColumns(22);
 
 		JLabel lblEanCode = new JLabel("EAN Code");
@@ -295,155 +295,467 @@ public class NewDVD extends JDialog {
 		spDuration.setModel(smDuration);
 		JLabel label = new JLabel("Dauer in Min.");
 		JLabel lblAnzahlDvds = new JLabel("Anzahl der DVDs");
-		
-		 NumberFormat format = NumberFormat.getInstance();
-		
+
+		NumberFormat format = NumberFormat.getInstance();
+
 		GroupLayout gl_contentPanel = new GroupLayout(contentPanel);
-		gl_contentPanel.setHorizontalGroup(
-			gl_contentPanel.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_contentPanel.createSequentialGroup()
-					.addContainerGap()
-					.addGroup(gl_contentPanel.createParallelGroup(Alignment.LEADING)
-						.addGroup(gl_contentPanel.createParallelGroup(Alignment.LEADING, false)
-							.addComponent(txtOriginaltitle, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-							.addComponent(lblOriginaltitel)
-							.addComponent(txtTitle, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-							.addComponent(lblTitel)
-							.addComponent(lblRegisseur)
-							.addComponent(lblCamera)
-							.addGroup(gl_contentPanel.createSequentialGroup()
-								.addComponent(lblAltersbeschrnkung)
-								.addPreferredGap(ComponentPlacement.UNRELATED)
-								.addComponent(lblHerstellungsland))
-							.addGroup(gl_contentPanel.createParallelGroup(Alignment.LEADING)
-								.addGroup(gl_contentPanel.createSequentialGroup()
-									.addComponent(cbCamera, 0, 227, Short.MAX_VALUE)
-									.addPreferredGap(ComponentPlacement.RELATED)
-									.addComponent(btnNewCamera, GroupLayout.PREFERRED_SIZE, 42, GroupLayout.PREFERRED_SIZE))
-								.addGroup(gl_contentPanel.createSequentialGroup()
-									.addComponent(cbRegisseur, 0, 230, Short.MAX_VALUE)
-									.addPreferredGap(ComponentPlacement.RELATED)
-									.addComponent(btnNewRegisseur, GroupLayout.PREFERRED_SIZE, 42, GroupLayout.PREFERRED_SIZE))
-								.addGroup(gl_contentPanel.createSequentialGroup()
-									.addComponent(cbFSK, GroupLayout.PREFERRED_SIZE, 129, GroupLayout.PREFERRED_SIZE)
-									.addPreferredGap(ComponentPlacement.RELATED)
-									.addComponent(cbProdCountry, GroupLayout.PREFERRED_SIZE, 140, GroupLayout.PREFERRED_SIZE))))
-						.addGroup(gl_contentPanel.createSequentialGroup()
-							.addGroup(gl_contentPanel.createParallelGroup(Alignment.LEADING)
-								.addComponent(label, GroupLayout.PREFERRED_SIZE, 84, GroupLayout.PREFERRED_SIZE)
-								.addComponent(spDuration, GroupLayout.PREFERRED_SIZE, 73, GroupLayout.PREFERRED_SIZE))
-							.addPreferredGap(ComponentPlacement.UNRELATED)
-							.addGroup(gl_contentPanel.createParallelGroup(Alignment.LEADING)
-								.addComponent(spCountDVD, GroupLayout.PREFERRED_SIZE, 112, GroupLayout.PREFERRED_SIZE)
-								.addComponent(lblAnzahlDvds, GroupLayout.PREFERRED_SIZE, 106, GroupLayout.PREFERRED_SIZE))))
-					.addGap(32)
-					.addGroup(gl_contentPanel.createParallelGroup(Alignment.LEADING)
-						.addGroup(gl_contentPanel.createSequentialGroup()
-							.addComponent(lblEanCode)
-							.addContainerGap())
-						.addGroup(gl_contentPanel.createSequentialGroup()
-							.addComponent(lblGenre)
-							.addContainerGap())
-						.addGroup(gl_contentPanel.createParallelGroup(Alignment.LEADING)
-							.addGroup(gl_contentPanel.createSequentialGroup()
-								.addGroup(gl_contentPanel.createParallelGroup(Alignment.TRAILING)
-									.addGroup(gl_contentPanel.createSequentialGroup()
-										.addComponent(cbAuthor, 0, 231, Short.MAX_VALUE)
-										.addPreferredGap(ComponentPlacement.RELATED)
-										.addComponent(btnNewAuthor, GroupLayout.PREFERRED_SIZE, 41, GroupLayout.PREFERRED_SIZE))
-									.addComponent(txtEancode)
-									.addGroup(gl_contentPanel.createSequentialGroup()
-										.addGroup(gl_contentPanel.createParallelGroup(Alignment.LEADING)
-											.addComponent(lblProduktionsjahr, GroupLayout.PREFERRED_SIZE, 114, GroupLayout.PREFERRED_SIZE)
-											.addGroup(gl_contentPanel.createSequentialGroup()
-												.addComponent(spProductionYear, GroupLayout.DEFAULT_SIZE, 108, Short.MAX_VALUE)
-												.addGap(12))
-											.addComponent(lblProduzent))
-										.addPreferredGap(ComponentPlacement.RELATED)
-										.addGroup(gl_contentPanel.createParallelGroup(Alignment.LEADING)
-											.addComponent(lblVerffentlichungsdatum)
-											.addComponent(dpRelease, GroupLayout.PREFERRED_SIZE, 158, GroupLayout.PREFERRED_SIZE)))
-									.addComponent(txtGenre)
-									.addGroup(gl_contentPanel.createSequentialGroup()
-										.addComponent(cbProducent, 0, 231, Short.MAX_VALUE)
-										.addPreferredGap(ComponentPlacement.RELATED)
-										.addComponent(btnNewProducent, GroupLayout.PREFERRED_SIZE, 41, GroupLayout.PREFERRED_SIZE)))
-								.addGap(16))
-							.addGroup(gl_contentPanel.createSequentialGroup()
-								.addComponent(lblAuthor, GroupLayout.PREFERRED_SIZE, 63, GroupLayout.PREFERRED_SIZE)
-								.addContainerGap()))))
-		);
-		gl_contentPanel.setVerticalGroup(
-			gl_contentPanel.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_contentPanel.createSequentialGroup()
-					.addGroup(gl_contentPanel.createParallelGroup(Alignment.BASELINE)
-						.addComponent(lblTitel)
-						.addComponent(lblEanCode))
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addGroup(gl_contentPanel.createParallelGroup(Alignment.BASELINE)
-						.addComponent(txtEancode, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(txtTitle, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-					.addPreferredGap(ComponentPlacement.UNRELATED)
-					.addGroup(gl_contentPanel.createParallelGroup(Alignment.BASELINE)
-						.addComponent(lblOriginaltitel)
-						.addComponent(lblGenre))
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addGroup(gl_contentPanel.createParallelGroup(Alignment.BASELINE)
-						.addComponent(txtOriginaltitle, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(txtGenre, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-					.addPreferredGap(ComponentPlacement.UNRELATED)
-					.addGroup(gl_contentPanel.createParallelGroup(Alignment.BASELINE)
-						.addComponent(lblAltersbeschrnkung)
-						.addComponent(lblProduktionsjahr)
-						.addComponent(lblVerffentlichungsdatum)
-						.addComponent(lblHerstellungsland))
-					.addGroup(gl_contentPanel.createParallelGroup(Alignment.LEADING)
-						.addGroup(gl_contentPanel.createSequentialGroup()
-							.addGap(12)
-							.addGroup(gl_contentPanel.createParallelGroup(Alignment.TRAILING, false)
-								.addComponent(dpRelease, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-								.addComponent(spProductionYear, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-						.addGroup(gl_contentPanel.createSequentialGroup()
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addGroup(gl_contentPanel.createParallelGroup(Alignment.BASELINE)
-								.addComponent(cbFSK, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-								.addComponent(cbProdCountry, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))))
-					.addPreferredGap(ComponentPlacement.UNRELATED)
-					.addGroup(gl_contentPanel.createParallelGroup(Alignment.LEADING)
-						.addGroup(gl_contentPanel.createSequentialGroup()
-							.addComponent(lblProduzent)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addGroup(gl_contentPanel.createParallelGroup(Alignment.BASELINE)
-								.addComponent(cbProducent, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-								.addComponent(btnNewProducent, GroupLayout.PREFERRED_SIZE, 28, GroupLayout.PREFERRED_SIZE)
-								.addComponent(btnNewRegisseur, GroupLayout.PREFERRED_SIZE, 28, GroupLayout.PREFERRED_SIZE)))
-						.addGroup(gl_contentPanel.createSequentialGroup()
-							.addComponent(lblRegisseur)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(cbRegisseur, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
-					.addPreferredGap(ComponentPlacement.UNRELATED)
-					.addGroup(gl_contentPanel.createParallelGroup(Alignment.LEADING)
-						.addGroup(gl_contentPanel.createSequentialGroup()
-							.addComponent(lblCamera)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(cbCamera, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-						.addGroup(gl_contentPanel.createSequentialGroup()
-							.addComponent(lblAuthor)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addGroup(gl_contentPanel.createParallelGroup(Alignment.BASELINE)
-								.addComponent(btnNewAuthor, GroupLayout.PREFERRED_SIZE, 28, GroupLayout.PREFERRED_SIZE)
-								.addComponent(cbAuthor, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-								.addComponent(btnNewCamera, GroupLayout.PREFERRED_SIZE, 28, GroupLayout.PREFERRED_SIZE))))
-					.addPreferredGap(ComponentPlacement.UNRELATED)
-					.addGroup(gl_contentPanel.createParallelGroup(Alignment.TRAILING)
-						.addComponent(label)
-						.addComponent(lblAnzahlDvds))
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addGroup(gl_contentPanel.createParallelGroup(Alignment.TRAILING)
-						.addComponent(spDuration, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(spCountDVD, GroupLayout.PREFERRED_SIZE, 20, GroupLayout.PREFERRED_SIZE))
-					.addGap(11))
-		);
+		gl_contentPanel
+				.setHorizontalGroup(gl_contentPanel
+						.createParallelGroup(Alignment.LEADING)
+						.addGroup(
+								gl_contentPanel
+										.createSequentialGroup()
+										.addContainerGap()
+										.addGroup(
+												gl_contentPanel
+														.createParallelGroup(
+																Alignment.LEADING)
+														.addGroup(
+																gl_contentPanel
+																		.createParallelGroup(
+																				Alignment.LEADING,
+																				false)
+																		.addComponent(
+																				txtOriginaltitle,
+																				GroupLayout.PREFERRED_SIZE,
+																				GroupLayout.DEFAULT_SIZE,
+																				GroupLayout.PREFERRED_SIZE)
+																		.addComponent(
+																				lblOriginaltitel)
+																		.addComponent(
+																				txtTitle,
+																				GroupLayout.PREFERRED_SIZE,
+																				GroupLayout.DEFAULT_SIZE,
+																				GroupLayout.PREFERRED_SIZE)
+																		.addComponent(
+																				lblTitel)
+																		.addComponent(
+																				lblRegisseur)
+																		.addComponent(
+																				lblCamera)
+																		.addGroup(
+																				gl_contentPanel
+																						.createSequentialGroup()
+																						.addComponent(
+																								lblAltersbeschrnkung)
+																						.addPreferredGap(
+																								ComponentPlacement.UNRELATED)
+																						.addComponent(
+																								lblHerstellungsland))
+																		.addGroup(
+																				gl_contentPanel
+																						.createParallelGroup(
+																								Alignment.LEADING)
+																						.addGroup(
+																								gl_contentPanel
+																										.createSequentialGroup()
+																										.addComponent(
+																												cbCamera,
+																												0,
+																												227,
+																												Short.MAX_VALUE)
+																										.addPreferredGap(
+																												ComponentPlacement.RELATED)
+																										.addComponent(
+																												btnNewCamera,
+																												GroupLayout.PREFERRED_SIZE,
+																												42,
+																												GroupLayout.PREFERRED_SIZE))
+																						.addGroup(
+																								gl_contentPanel
+																										.createSequentialGroup()
+																										.addComponent(
+																												cbRegisseur,
+																												0,
+																												230,
+																												Short.MAX_VALUE)
+																										.addPreferredGap(
+																												ComponentPlacement.RELATED)
+																										.addComponent(
+																												btnNewRegisseur,
+																												GroupLayout.PREFERRED_SIZE,
+																												42,
+																												GroupLayout.PREFERRED_SIZE))
+																						.addGroup(
+																								gl_contentPanel
+																										.createSequentialGroup()
+																										.addComponent(
+																												cbFSK,
+																												GroupLayout.PREFERRED_SIZE,
+																												129,
+																												GroupLayout.PREFERRED_SIZE)
+																										.addPreferredGap(
+																												ComponentPlacement.RELATED)
+																										.addComponent(
+																												cbProdCountry,
+																												GroupLayout.PREFERRED_SIZE,
+																												140,
+																												GroupLayout.PREFERRED_SIZE))))
+														.addGroup(
+																gl_contentPanel
+																		.createSequentialGroup()
+																		.addGroup(
+																				gl_contentPanel
+																						.createParallelGroup(
+																								Alignment.LEADING)
+																						.addComponent(
+																								label,
+																								GroupLayout.PREFERRED_SIZE,
+																								84,
+																								GroupLayout.PREFERRED_SIZE)
+																						.addComponent(
+																								spDuration,
+																								GroupLayout.PREFERRED_SIZE,
+																								73,
+																								GroupLayout.PREFERRED_SIZE))
+																		.addPreferredGap(
+																				ComponentPlacement.UNRELATED)
+																		.addGroup(
+																				gl_contentPanel
+																						.createParallelGroup(
+																								Alignment.LEADING)
+																						.addComponent(
+																								spCountDVD,
+																								GroupLayout.PREFERRED_SIZE,
+																								112,
+																								GroupLayout.PREFERRED_SIZE)
+																						.addComponent(
+																								lblAnzahlDvds,
+																								GroupLayout.PREFERRED_SIZE,
+																								106,
+																								GroupLayout.PREFERRED_SIZE))))
+										.addGap(32)
+										.addGroup(
+												gl_contentPanel
+														.createParallelGroup(
+																Alignment.LEADING)
+														.addGroup(
+																gl_contentPanel
+																		.createSequentialGroup()
+																		.addComponent(
+																				lblEanCode)
+																		.addContainerGap())
+														.addGroup(
+																gl_contentPanel
+																		.createSequentialGroup()
+																		.addComponent(
+																				lblGenre)
+																		.addContainerGap())
+														.addGroup(
+																gl_contentPanel
+																		.createParallelGroup(
+																				Alignment.LEADING)
+																		.addGroup(
+																				gl_contentPanel
+																						.createSequentialGroup()
+																						.addGroup(
+																								gl_contentPanel
+																										.createParallelGroup(
+																												Alignment.TRAILING)
+																										.addGroup(
+																												gl_contentPanel
+																														.createSequentialGroup()
+																														.addComponent(
+																																cbAuthor,
+																																0,
+																																231,
+																																Short.MAX_VALUE)
+																														.addPreferredGap(
+																																ComponentPlacement.RELATED)
+																														.addComponent(
+																																btnNewAuthor,
+																																GroupLayout.PREFERRED_SIZE,
+																																41,
+																																GroupLayout.PREFERRED_SIZE))
+																										.addComponent(
+																												txtEancode)
+																										.addGroup(
+																												gl_contentPanel
+																														.createSequentialGroup()
+																														.addGroup(
+																																gl_contentPanel
+																																		.createParallelGroup(
+																																				Alignment.LEADING)
+																																		.addComponent(
+																																				lblProduktionsjahr,
+																																				GroupLayout.PREFERRED_SIZE,
+																																				114,
+																																				GroupLayout.PREFERRED_SIZE)
+																																		.addGroup(
+																																				gl_contentPanel
+																																						.createSequentialGroup()
+																																						.addComponent(
+																																								spProductionYear,
+																																								GroupLayout.DEFAULT_SIZE,
+																																								108,
+																																								Short.MAX_VALUE)
+																																						.addGap(12))
+																																		.addComponent(
+																																				lblProduzent))
+																														.addPreferredGap(
+																																ComponentPlacement.RELATED)
+																														.addGroup(
+																																gl_contentPanel
+																																		.createParallelGroup(
+																																				Alignment.LEADING)
+																																		.addComponent(
+																																				lblVerffentlichungsdatum)
+																																		.addComponent(
+																																				dpRelease,
+																																				GroupLayout.PREFERRED_SIZE,
+																																				158,
+																																				GroupLayout.PREFERRED_SIZE)))
+																										.addComponent(
+																												txtGenre)
+																										.addGroup(
+																												gl_contentPanel
+																														.createSequentialGroup()
+																														.addComponent(
+																																cbProducent,
+																																0,
+																																231,
+																																Short.MAX_VALUE)
+																														.addPreferredGap(
+																																ComponentPlacement.RELATED)
+																														.addComponent(
+																																btnNewProducent,
+																																GroupLayout.PREFERRED_SIZE,
+																																41,
+																																GroupLayout.PREFERRED_SIZE)))
+																						.addGap(16))
+																		.addGroup(
+																				gl_contentPanel
+																						.createSequentialGroup()
+																						.addComponent(
+																								lblAuthor,
+																								GroupLayout.PREFERRED_SIZE,
+																								63,
+																								GroupLayout.PREFERRED_SIZE)
+																						.addContainerGap())))));
+		gl_contentPanel
+				.setVerticalGroup(gl_contentPanel
+						.createParallelGroup(Alignment.LEADING)
+						.addGroup(
+								gl_contentPanel
+										.createSequentialGroup()
+										.addGroup(
+												gl_contentPanel
+														.createParallelGroup(
+																Alignment.BASELINE)
+														.addComponent(lblTitel)
+														.addComponent(
+																lblEanCode))
+										.addPreferredGap(
+												ComponentPlacement.RELATED)
+										.addGroup(
+												gl_contentPanel
+														.createParallelGroup(
+																Alignment.BASELINE)
+														.addComponent(
+																txtEancode,
+																GroupLayout.PREFERRED_SIZE,
+																GroupLayout.DEFAULT_SIZE,
+																GroupLayout.PREFERRED_SIZE)
+														.addComponent(
+																txtTitle,
+																GroupLayout.PREFERRED_SIZE,
+																GroupLayout.DEFAULT_SIZE,
+																GroupLayout.PREFERRED_SIZE))
+										.addPreferredGap(
+												ComponentPlacement.UNRELATED)
+										.addGroup(
+												gl_contentPanel
+														.createParallelGroup(
+																Alignment.BASELINE)
+														.addComponent(
+																lblOriginaltitel)
+														.addComponent(lblGenre))
+										.addPreferredGap(
+												ComponentPlacement.RELATED)
+										.addGroup(
+												gl_contentPanel
+														.createParallelGroup(
+																Alignment.BASELINE)
+														.addComponent(
+																txtOriginaltitle,
+																GroupLayout.PREFERRED_SIZE,
+																GroupLayout.DEFAULT_SIZE,
+																GroupLayout.PREFERRED_SIZE)
+														.addComponent(
+																txtGenre,
+																GroupLayout.PREFERRED_SIZE,
+																GroupLayout.DEFAULT_SIZE,
+																GroupLayout.PREFERRED_SIZE))
+										.addPreferredGap(
+												ComponentPlacement.UNRELATED)
+										.addGroup(
+												gl_contentPanel
+														.createParallelGroup(
+																Alignment.BASELINE)
+														.addComponent(
+																lblAltersbeschrnkung)
+														.addComponent(
+																lblProduktionsjahr)
+														.addComponent(
+																lblVerffentlichungsdatum)
+														.addComponent(
+																lblHerstellungsland))
+										.addGroup(
+												gl_contentPanel
+														.createParallelGroup(
+																Alignment.LEADING)
+														.addGroup(
+																gl_contentPanel
+																		.createSequentialGroup()
+																		.addGap(12)
+																		.addGroup(
+																				gl_contentPanel
+																						.createParallelGroup(
+																								Alignment.TRAILING,
+																								false)
+																						.addComponent(
+																								dpRelease,
+																								GroupLayout.DEFAULT_SIZE,
+																								GroupLayout.DEFAULT_SIZE,
+																								Short.MAX_VALUE)
+																						.addComponent(
+																								spProductionYear,
+																								GroupLayout.DEFAULT_SIZE,
+																								GroupLayout.DEFAULT_SIZE,
+																								Short.MAX_VALUE)))
+														.addGroup(
+																gl_contentPanel
+																		.createSequentialGroup()
+																		.addPreferredGap(
+																				ComponentPlacement.RELATED)
+																		.addGroup(
+																				gl_contentPanel
+																						.createParallelGroup(
+																								Alignment.BASELINE)
+																						.addComponent(
+																								cbFSK,
+																								GroupLayout.PREFERRED_SIZE,
+																								GroupLayout.DEFAULT_SIZE,
+																								GroupLayout.PREFERRED_SIZE)
+																						.addComponent(
+																								cbProdCountry,
+																								GroupLayout.PREFERRED_SIZE,
+																								GroupLayout.DEFAULT_SIZE,
+																								GroupLayout.PREFERRED_SIZE))))
+										.addPreferredGap(
+												ComponentPlacement.UNRELATED)
+										.addGroup(
+												gl_contentPanel
+														.createParallelGroup(
+																Alignment.LEADING)
+														.addGroup(
+																gl_contentPanel
+																		.createSequentialGroup()
+																		.addComponent(
+																				lblProduzent)
+																		.addPreferredGap(
+																				ComponentPlacement.RELATED)
+																		.addGroup(
+																				gl_contentPanel
+																						.createParallelGroup(
+																								Alignment.BASELINE)
+																						.addComponent(
+																								cbProducent,
+																								GroupLayout.PREFERRED_SIZE,
+																								GroupLayout.DEFAULT_SIZE,
+																								GroupLayout.PREFERRED_SIZE)
+																						.addComponent(
+																								btnNewProducent,
+																								GroupLayout.PREFERRED_SIZE,
+																								28,
+																								GroupLayout.PREFERRED_SIZE)
+																						.addComponent(
+																								btnNewRegisseur,
+																								GroupLayout.PREFERRED_SIZE,
+																								28,
+																								GroupLayout.PREFERRED_SIZE)))
+														.addGroup(
+																gl_contentPanel
+																		.createSequentialGroup()
+																		.addComponent(
+																				lblRegisseur)
+																		.addPreferredGap(
+																				ComponentPlacement.RELATED)
+																		.addComponent(
+																				cbRegisseur,
+																				GroupLayout.PREFERRED_SIZE,
+																				GroupLayout.DEFAULT_SIZE,
+																				GroupLayout.PREFERRED_SIZE)))
+										.addPreferredGap(
+												ComponentPlacement.UNRELATED)
+										.addGroup(
+												gl_contentPanel
+														.createParallelGroup(
+																Alignment.LEADING)
+														.addGroup(
+																gl_contentPanel
+																		.createSequentialGroup()
+																		.addComponent(
+																				lblCamera)
+																		.addPreferredGap(
+																				ComponentPlacement.RELATED)
+																		.addComponent(
+																				cbCamera,
+																				GroupLayout.PREFERRED_SIZE,
+																				GroupLayout.DEFAULT_SIZE,
+																				GroupLayout.PREFERRED_SIZE))
+														.addGroup(
+																gl_contentPanel
+																		.createSequentialGroup()
+																		.addComponent(
+																				lblAuthor)
+																		.addPreferredGap(
+																				ComponentPlacement.RELATED)
+																		.addGroup(
+																				gl_contentPanel
+																						.createParallelGroup(
+																								Alignment.BASELINE)
+																						.addComponent(
+																								btnNewAuthor,
+																								GroupLayout.PREFERRED_SIZE,
+																								28,
+																								GroupLayout.PREFERRED_SIZE)
+																						.addComponent(
+																								cbAuthor,
+																								GroupLayout.PREFERRED_SIZE,
+																								GroupLayout.DEFAULT_SIZE,
+																								GroupLayout.PREFERRED_SIZE)
+																						.addComponent(
+																								btnNewCamera,
+																								GroupLayout.PREFERRED_SIZE,
+																								28,
+																								GroupLayout.PREFERRED_SIZE))))
+										.addPreferredGap(
+												ComponentPlacement.UNRELATED)
+										.addGroup(
+												gl_contentPanel
+														.createParallelGroup(
+																Alignment.TRAILING)
+														.addComponent(label)
+														.addComponent(
+																lblAnzahlDvds))
+										.addPreferredGap(
+												ComponentPlacement.RELATED)
+										.addGroup(
+												gl_contentPanel
+														.createParallelGroup(
+																Alignment.TRAILING)
+														.addComponent(
+																spDuration,
+																GroupLayout.PREFERRED_SIZE,
+																GroupLayout.DEFAULT_SIZE,
+																GroupLayout.PREFERRED_SIZE)
+														.addComponent(
+																spCountDVD,
+																GroupLayout.PREFERRED_SIZE,
+																20,
+																GroupLayout.PREFERRED_SIZE))
+										.addGap(11)));
 		contentPanel.setLayout(gl_contentPanel);
 		{
 			JPanel buttonPane = new JPanel();
@@ -511,12 +823,22 @@ public class NewDVD extends JDialog {
 	}
 
 	protected void txtEancodeKeyReleased(KeyEvent e) {
-		// PrŸfung ob eine Zahl oder anderes Zeichen eingegeben wurde
-		String text = txtEancode.getText(); 
-		if(txtEancode.getText().matches("[0-9]*")){
+		// Prüfung ob eine Zahl oder anderes Zeichen eingegeben wurde oder länger als 11 Zeichen ist
+		String text = txtEancode.getText();
+		if (txtEancode.getText().matches("[0-9]*")) {
+
+		} else {
+			txtEancode.setText(text.substring(0, text.length() - 1));
+		}
+		
+		if (text.length() >= 10){
+			txtEancode.setText(text.substring(0, text.length() - 1));
+			JOptionPane
+			.showMessageDialog(
+					null,
+					"Der EAN Code darf nur 9 Stellen haben!",
+					"EAN Code", JOptionPane.ERROR_MESSAGE);
 			
-		}else{
-			txtEancode.setText(text.substring(0, text.length()-1));
 		}
 	}
 
@@ -627,6 +949,12 @@ public class NewDVD extends JDialog {
 				e.printStackTrace();
 			}
 
+		} else {
+			JOptionPane
+					.showMessageDialog(
+							null,
+							"Sie haben ein Pflichtfeld nicht ausgefüllt! Bitte überprüfen Sie ihre Angaben in den Feldern",
+							"Regisseurerstellung", JOptionPane.ERROR_MESSAGE);
 		}
 	}
 
