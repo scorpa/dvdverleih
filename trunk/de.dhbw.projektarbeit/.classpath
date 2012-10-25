@@ -2,8 +2,8 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.6"/>
-	<classpathentry kind="lib" path="C:/Users/Juli/Desktop/Fallstudie/de.dhbw.projektarbeit/lib/mysql-connector-java-5.1.22-bin.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Juli/Desktop/Fallstudie/de.dhbw.projektarbeit/lib/swing-layout-1.0.4.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Juli/Desktop/Fallstudie/de.dhbw.projektarbeit/lib/swingx-core-1.6.2.jar"/>
+	<classpathentry kind="lib" path="/Users/Albert/Documents/DHBW/Programmieren/3. Semester/Projektarbeit/workspace/de.dhbw.projektarbeit/lib/mysql-connector-java-5.1.22-bin.jar"/>
+	<classpathentry kind="lib" path="/Users/Albert/Documents/DHBW/Programmieren/3. Semester/Projektarbeit/workspace/de.dhbw.projektarbeit/lib/swing-layout-1.0.4.jar"/>
+	<classpathentry kind="lib" path="/Users/Albert/Documents/DHBW/Programmieren/3. Semester/Projektarbeit/workspace/de.dhbw.projektarbeit/lib/swingx-core-1.6.2.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

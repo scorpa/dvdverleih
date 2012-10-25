@@ -74,9 +74,9 @@ public class Update {
 			// Alle Operationen sollen als eine Transaktion ausgeführt
 			// werden.
 			con.setAutoCommit(false); // wird bei Insert wieder auf true gesetzt
-			req.delete().delete(id, wasBookingtype, wasAsset);
-			req.insert().insert(isBookingtype, category, comment, amount,
-					paymentmethod, date, isAsset);
+			//req.delete().delete(id, wasBookingtype, wasAsset);
+			//req.insert().insert(isBookingtype, category, comment, amount,
+			//		paymentmethod, date, isAsset);
 
 		} catch (SQLException e) {
 			// Im Fehlerfall Rollback durchführen
@@ -86,4 +86,27 @@ public class Update {
 			throw new Exception("Fehler beim Einfügen in die Datenbank.");
 		}
 	}
+	
+	public void updateEdits(int id, String firstname, String lastname, String form) throws Exception{
+		try {
+			con.setAutoCommit(false);
+			req.delete().deleteEdits(id, form);
+			if(form == "author"){
+				
+			}else if(form == "regisseur"){
+				
+			}else if(form == "camera"){
+				
+			}else if(form == "agent"){
+				
+			}
+			
+		} catch (Exception e) {
+			// Im Fehlerfall Rollback durchführen
+			con.rollback();
+			con.setAutoCommit(true);
+			e.printStackTrace();
+		}
+	}
+	
 }

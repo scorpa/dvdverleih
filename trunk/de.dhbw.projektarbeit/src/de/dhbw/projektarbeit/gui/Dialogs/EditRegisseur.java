@@ -207,39 +207,54 @@ public class EditRegisseur extends JDialog {
 					
 				}
 			});
+			
+			JButton btnUpdate = new JButton("Speichern");
+			btnUpdate.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					btnUpdateActionPerformed(e);
+				}
+			});
 			GroupLayout gl_buttonPane = new GroupLayout(buttonPane);
-			gl_buttonPane.setHorizontalGroup(gl_buttonPane.createParallelGroup(
-					Alignment.LEADING).addGroup(
-					Alignment.TRAILING,
-					gl_buttonPane
-							.createSequentialGroup()
-							.addContainerGap()
-							.addComponent(btnDelete,
-									GroupLayout.PREFERRED_SIZE, 96,
-									GroupLayout.PREFERRED_SIZE)
-							.addPreferredGap(ComponentPlacement.RELATED, 371,
-									Short.MAX_VALUE).addComponent(okButton)
-							.addGap(5).addComponent(cancelButton)
-							.addContainerGap()));
-			gl_buttonPane.setVerticalGroup(gl_buttonPane.createParallelGroup(
-					Alignment.LEADING).addGroup(
-					gl_buttonPane
-							.createSequentialGroup()
-							.addGap(5)
-							.addGroup(
-									gl_buttonPane
-											.createParallelGroup(
-													Alignment.LEADING)
-											.addComponent(btnDelete)
-											.addComponent(okButton)
-											.addComponent(cancelButton))
-							.addContainerGap()));
+			gl_buttonPane.setHorizontalGroup(
+				gl_buttonPane.createParallelGroup(Alignment.TRAILING)
+					.addGroup(gl_buttonPane.createSequentialGroup()
+						.addContainerGap()
+						.addComponent(btnDelete, GroupLayout.PREFERRED_SIZE, 96, GroupLayout.PREFERRED_SIZE)
+						.addPreferredGap(ComponentPlacement.RELATED)
+						.addComponent(btnUpdate)
+						.addPreferredGap(ComponentPlacement.RELATED, 213, Short.MAX_VALUE)
+						.addComponent(okButton)
+						.addGap(5)
+						.addComponent(cancelButton)
+						.addContainerGap())
+			);
+			gl_buttonPane.setVerticalGroup(
+				gl_buttonPane.createParallelGroup(Alignment.LEADING)
+					.addGroup(gl_buttonPane.createSequentialGroup()
+						.addGap(5)
+						.addGroup(gl_buttonPane.createParallelGroup(Alignment.LEADING)
+							.addGroup(gl_buttonPane.createParallelGroup(Alignment.BASELINE)
+								.addComponent(btnDelete)
+								.addComponent(btnUpdate))
+							.addComponent(okButton)
+							.addComponent(cancelButton))
+						.addContainerGap())
+			);
 			buttonPane.setLayout(gl_buttonPane);
 		}
 	}
 
+	protected void btnUpdateActionPerformed(ActionEvent e) {
+		// Update des Regisseurs
+		try {
+			
+		} catch (Exception e2) {
+			e2.printStackTrace();
+		}
+	}
+
 	protected void tbRegisseurMouseClicked(MouseEvent e) {
-		
+		// Daten aus Table lesen
 		try {
 			selectedID = (Integer) tbRegisseur.getValueAt(tbRegisseur.getSelectedRow(), 0);
 			txtFirstName.setText((String) tbRegisseur.getValueAt(tbRegisseur.getSelectedRow(), 1));
