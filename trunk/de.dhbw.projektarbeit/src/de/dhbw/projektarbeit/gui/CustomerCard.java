@@ -14,6 +14,7 @@ import javax.swing.table.DefaultTableModel;
 
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
+import javax.swing.ListSelectionModel;
 
 public class CustomerCard extends JPanel {
 	private JTable tbCustomer;
@@ -50,6 +51,8 @@ public class CustomerCard extends JPanel {
 		DefaultTableModel model = new DefaultTableModel(customerData, columnNames);
 		
 		tbCustomer = new JTableNotEditable(model,columnNames);
+		tbCustomer.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		tbCustomer.setFocusable(false);
 		tbCustomer.setModel(model);
 				
 		JScrollPane scrollPane = new JScrollPane(tbCustomer);

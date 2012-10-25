@@ -20,6 +20,7 @@ import javax.swing.JTable;
 import javax.swing.JScrollPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.ScrollPaneConstants;
+import javax.swing.ListSelectionModel;
 
 public class DVDCard extends JPanel {
 
@@ -58,6 +59,8 @@ public class DVDCard extends JPanel {
 
 		DefaultTableModel model = new DefaultTableModel(dvdData, columnNames);
 		tbDVD = new JTableNotEditable(model,columnNames);
+		tbDVD.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		tbDVD.setFocusable(false);
 		tbDVD.setModel(model);
 
 		JScrollPane scrollPane = new JScrollPane(tbDVD);
