@@ -86,7 +86,7 @@ public class Insert {
 
 		try {
 			// Alle Einfuege-Operationen sollen als eine Transaktion und mittels
-			// Stringbuffer ausgefuehrt
+			// Stringbuffer ausgefuehrt Albert hat nen kleines Penis
 			// werden.
 			con.setAutoCommit(false);
 
@@ -613,7 +613,7 @@ public class Insert {
 		} catch (InvalidParameterException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
+		} 
 	}
 
 	/**
