@@ -17,6 +17,7 @@ import org.jdesktop.swingx.JXDatePicker;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import org.jdesktop.swingx.JXTable;
 import javax.swing.JTable;
+import de.dhbw.projektarbeit.gui.CustomerCard;
 
 public class EditCustomer extends JDialog {
 
@@ -29,7 +30,6 @@ public class EditCustomer extends JDialog {
 	private JTextField txtStreetNo;
 	private JTextField txtTelefone;
 	private JTextField txtLastName;
-	private JTable tbCustomer;
 
 	/**
 	 * Launch the application.
@@ -172,8 +172,8 @@ public class EditCustomer extends JDialog {
 				panel.setLayout(gl_panel);
 			}
 			
-			tbCustomer = new JTable();
-			splitPane.setLeftComponent(tbCustomer);
+			CustomerCard customerCard = new CustomerCard();
+			splitPane.setLeftComponent(customerCard);
 			splitPane.setDividerLocation(200);
 		}
 		{
