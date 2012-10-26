@@ -6,6 +6,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import javax.swing.JOptionPane;
+
 import de.dhbw.projektarbeit.db.db.Request;
 
 /**
@@ -90,7 +92,7 @@ public class Update {
 		}
 	}
 	
-	public void updateEdits(int id, String firstname, String lastname, String form) throws Exception{
+	public void updateEdits(int id, String firstname, String lastname, String form, String field) throws Exception{
 		try {
 			// Alle Einfuege-Operationen sollen als eine Transaktion und mittels
 			// Stringbuffer ausgefuehrt
@@ -106,7 +108,9 @@ public class Update {
 			buffer.append("\"" + firstname + "\"");
 			buffer.append(" , LastName = " );
 			buffer.append("\"" + lastname + "\"");
-			buffer.append(" WHERE Regie_ID = ");
+			buffer.append(" WHERE ");
+			buffer.append(field);
+			buffer.append(" = ");
 			buffer.append(id);
 			
 			stmt.executeUpdate(buffer.toString());
@@ -115,12 +119,17 @@ public class Update {
 			con.commit();
 			con.setAutoCommit(true);
 			
+			// Bei erfolgreichem Hinzufügen Nachricht bringen
+			JOptionPane.showMessageDialog(null, ("Der Name wurde erfolgreich geändert!"),
+					"Vorgang erfolgreich", JOptionPane.INFORMATION_MESSAGE);
+			
 		} catch (Exception e) {
 			// Im Fehlerfall Rollback durchfÃ¼hren
 			con.rollback();
 			con.setAutoCommit(true);
 			e.printStackTrace();
 		}
+		
 	}
 	
 }

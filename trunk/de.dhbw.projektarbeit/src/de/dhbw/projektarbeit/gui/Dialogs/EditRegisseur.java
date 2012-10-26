@@ -34,7 +34,7 @@ public class EditRegisseur extends JDialog {
 	private final JPanel contentPanel = new JPanel();
 	private JTextField txtFirstName;
 	private JTextField txtLastName;
-	private JButton okButton, cancelButton, btnUpdate;
+	private JButton cancelButton, btnUpdate;
 	private JTable tbRegisseur;
 	private Integer selectedID;
 	private Update update;
@@ -193,12 +193,12 @@ public class EditRegisseur extends JDialog {
 			JPanel buttonPane = new JPanel();
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
-				okButton = new JButton("OK");
-				okButton.setActionCommand("OK");
-				getRootPane().setDefaultButton(okButton);
-			}
-			{
 				cancelButton = new JButton("Cancel");
+				cancelButton.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						dispose();
+					}
+				});
 				cancelButton.setActionCommand("Cancel");
 			}
 
@@ -224,39 +224,48 @@ public class EditRegisseur extends JDialog {
 			});
 			GroupLayout gl_buttonPane = new GroupLayout(buttonPane);
 			gl_buttonPane.setHorizontalGroup(
-				gl_buttonPane.createParallelGroup(Alignment.TRAILING)
+				gl_buttonPane.createParallelGroup(Alignment.LEADING)
 					.addGroup(gl_buttonPane.createSequentialGroup()
 						.addContainerGap()
 						.addComponent(btnDelete, GroupLayout.PREFERRED_SIZE, 96, GroupLayout.PREFERRED_SIZE)
 						.addPreferredGap(ComponentPlacement.RELATED)
-						.addComponent(btnUpdate)
-						.addPreferredGap(ComponentPlacement.RELATED, 213, Short.MAX_VALUE)
-						.addComponent(okButton)
-						.addGap(5)
+						.addComponent(btnUpdate, GroupLayout.PREFERRED_SIZE, 102, GroupLayout.PREFERRED_SIZE)
+						.addPreferredGap(ComponentPlacement.RELATED, 307, Short.MAX_VALUE)
 						.addComponent(cancelButton)
-						.addContainerGap())
+						.addGap(18))
 			);
 			gl_buttonPane.setVerticalGroup(
 				gl_buttonPane.createParallelGroup(Alignment.LEADING)
 					.addGroup(gl_buttonPane.createSequentialGroup()
 						.addGap(5)
 						.addGroup(gl_buttonPane.createParallelGroup(Alignment.LEADING)
+							.addComponent(cancelButton)
 							.addGroup(gl_buttonPane.createParallelGroup(Alignment.BASELINE)
 								.addComponent(btnDelete)
-								.addComponent(btnUpdate))
-							.addComponent(okButton)
-							.addComponent(cancelButton))
+								.addComponent(btnUpdate)))
 						.addContainerGap())
 			);
 			buttonPane.setLayout(gl_buttonPane);
 		}
 	}
-
+	/**
+	 * Bei Klick auf die Tabelle wird die angeklickte Zeile ausgelesen
+	 * 
+	 * @param e
+	 *            --> Eventhandling
+	 */
 	protected void btnUpdateActionPerformed(ActionEvent e) throws Exception {
 		updateRegisseur(selectedID, txtFirstName.getText(), txtLastName.getText(), "regisseur");
 		
 	}
-
+	/**
+	 * Übergabemethode der Werte aus der ausgelesenen Zeile an den Updateaufruf
+	 * 
+	 * @param e
+	 *            --> Eventhandling
+	 * @throws Exception
+	 *             --> Exceptionhandling
+	 */
 	protected void tbRegisseurMouseClicked(MouseEvent e) {
 		// Daten aus Table lesen
 		try {
@@ -271,7 +280,20 @@ public class EditRegisseur extends JDialog {
 		}
 	
 	}
-	
+	/**
+	 * Die Updatefunktion wird mit den übergebenen Parametern aufgerufen
+	 * 
+	 * @param id
+	 *            --> ID des Eintrags auf der DB
+	 * @param firstname
+	 *            --> Vorname des Regisseur
+	 * @param lastname
+	 *            --> Nachname des Regisseur
+	 * @param form
+	 *            --> Tabelle, in der auf der DB die Daten liegen
+	 * @throws Exception
+	 *             --> Exceptionhandling
+	 */
 	private void updateRegisseur(int id, String firstname, String lastname, String form )throws Exception{
 		// Update des Regisseurs
 				try {
@@ -284,9 +306,9 @@ public class EditRegisseur extends JDialog {
 						throw new Exception(
 								"Verbindung zum SQL Server fehlgeschlagen. Fehlercode 005");
 					}
-					
+					// Aufruf der Updatefunktion
 					update = new Update("dvd_verleih",con);
-					update.updateEdits(id, firstname, lastname, form);
+					update.updateEdits(id, firstname, lastname, form, "Regie_ID");
 					tbRegisseur.setValueAt(txtFirstName.getText(), tbRegisseur.getSelectedRow(), 1);
 					tbRegisseur.setValueAt(txtLastName.getText(), tbRegisseur.getSelectedRow(), 2);
 					
