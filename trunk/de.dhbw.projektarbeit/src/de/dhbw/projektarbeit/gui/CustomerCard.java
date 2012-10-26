@@ -34,7 +34,7 @@ public class CustomerCard extends JPanel {
 		setLayout(new CardLayout(0, 0));
 		
 		// Spaltenüberschriften
-		String[] columnNames = { "Vorname", "Nachname", "Postleitzahl", "Ort",
+		String[] columnNames = { "ID", "Vorname", "Nachname", "Postleitzahl", "Ort",
 				"Strasse", "Hausnummer", "EMail",
 				"Telefon", "Geurtstag"};
 
