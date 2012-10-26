@@ -31,15 +31,15 @@ import java.awt.event.MouseAdapter;
 public class EditCustomer extends JDialog {
 
 	private final JPanel contentPanel = new JPanel();
-	private JTextField txtFirstName;
-	private JTextField txtZipCode;
-	private JTextField txtCity;
-	private JTextField txtEMail;
-	private JTextField txtStreet;
-	private JTextField txtStreetNo;
-	private JTextField txtTelefone;
-	private JTextField txtLastName;
-	private JXDatePicker dpBirthdate;
+	public JTextField txtFirstName;
+	public JTextField txtZipCode;
+	public JTextField txtCity;
+	public JTextField txtEMail;
+	public JTextField txtStreet;
+	public JTextField txtStreetNo;
+	public JTextField txtTelefone;
+	public JTextField txtLastName;
+	public JXDatePicker dpBirthdate;
 	private Update update;
 	private Connection con;
 	private Integer selectedID;
@@ -352,20 +352,20 @@ public class EditCustomer extends JDialog {
 	}*/
 	public void fillTextFields(Object[] returnArray){
 		// Daten aus Table mit Methode getSelectedRow lesen
-		Object[] result = new Object[10];
+		//Object[] result = new Object[10];
 		CustomerCard cc = new CustomerCard();
 		
 		try {
-			selectedID = (Integer) result[0];
-			txtFirstName.setText((String) result[1]);
-			txtLastName.setText((String) result[2]);
-			txtZipCode.setText((String) result[3]);
-			txtCity.setText((String) result[4]);
-			txtStreet.setText((String) result[5]);
-			txtStreetNo.setText((String) result[6]);
-			txtEMail.setText((String) result[7]);
-			txtTelefone.setText((String) result[8]);
-			dpBirthdate.setDate((Date) result[9]);
+			selectedID = (Integer) returnArray[0];
+			txtFirstName.setText((String) returnArray[1]);
+			txtLastName.setText((String) returnArray[2]);
+			txtZipCode.setText((String) returnArray[3]);
+			txtCity.setText((String) returnArray[4]);
+			txtStreet.setText((String) returnArray[5]);
+			txtStreetNo.setText((String) returnArray[6]);
+			txtEMail.setText((String) returnArray[7]);
+			txtTelefone.setText((String) returnArray[8]);
+			dpBirthdate.setDate((Date) returnArray[9]);
 		} catch (Exception e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();

@@ -24,8 +24,9 @@ import java.awt.event.MouseAdapter;
 
 public class CustomerCard extends JPanel {
 	private JTable tbCustomer;
-	private JTextField txtFirstName = null, txtLastName = null, txtZipcode = null, txtCity = null, txtEmail = null, txtStreet = null, txtStreetno = null, txtTelefone = null;
-	private Date birthdate = null;
+	private String txtFirstName, txtLastName, txtCity, txtEmail, txtStreet, txtStreetno, txtTelefone;
+	private String txtZipcode;
+	private Date birthdate;
 
 	/**
 	 * Create the panel.
@@ -90,6 +91,8 @@ public class CustomerCard extends JPanel {
 	 *         [7] = Email(String); [8] = Telefone(String); [9] = birthdate(Date)
 	 */
 	public void tbCustomerMouseClicked(MouseEvent e) {
+		EditCustomer ec = new EditCustomer();
+		
 		int selectedID;
 		
 		Object[] returnArray = new Object[10];
@@ -97,41 +100,41 @@ public class CustomerCard extends JPanel {
 		try {
 			selectedID = (Integer) tbCustomer.getValueAt(
 					tbCustomer.getSelectedRow(), 0);
-			txtFirstName.setText((String) tbCustomer.getValueAt(
-					tbCustomer.getSelectedRow(), 1));
-			txtLastName.setText((String) tbCustomer.getValueAt(
-					tbCustomer.getSelectedRow(), 2));
-			txtZipcode.setText((String) tbCustomer.getValueAt(
-					tbCustomer.getSelectedRow(), 3));
-			txtCity.setText((String) tbCustomer.getValueAt(
-					tbCustomer.getSelectedRow(), 4));
-			txtStreet.setText((String) tbCustomer.getValueAt(
-					tbCustomer.getSelectedRow(), 5));
-			txtStreetno.setText((String) tbCustomer.getValueAt(
-					tbCustomer.getSelectedRow(), 6));
-			txtEmail.setText((String) tbCustomer.getValueAt(
-					tbCustomer.getSelectedRow(), 7));
-			txtTelefone.setText((String) tbCustomer.getValueAt(
-					tbCustomer.getSelectedRow(), 8));
-			birthdate.setTime((Long) tbCustomer.getValueAt(
-					tbCustomer.getSelectedRow(), 9));
+			txtFirstName= (String) tbCustomer.getValueAt(
+					tbCustomer.getSelectedRow(), 1);
+			txtLastName = (String) tbCustomer.getValueAt(
+					tbCustomer.getSelectedRow(), 2);
+			txtZipcode = (String) tbCustomer.getValueAt(
+					tbCustomer.getSelectedRow(), 3);
+			txtCity = (String) tbCustomer.getValueAt(
+					tbCustomer.getSelectedRow(), 4);
+			txtStreet = (String) tbCustomer.getValueAt(
+					tbCustomer.getSelectedRow(), 5);
+			txtStreetno = (String) tbCustomer.getValueAt(
+					tbCustomer.getSelectedRow(), 6);
+			txtEmail = (String) tbCustomer.getValueAt(
+					tbCustomer.getSelectedRow(), 7);
+			txtTelefone = (String) tbCustomer.getValueAt(
+					tbCustomer.getSelectedRow(), 8);
+			birthdate = (Date) tbCustomer.getValueAt(
+					tbCustomer.getSelectedRow(), 9);
 			// Ausgelesene Felder in ObjectArray übergeben
 			returnArray[0] = selectedID;
 			returnArray[1] = txtFirstName;
-			returnArray[1] = txtLastName;
-			returnArray[1] = txtZipcode;
-			returnArray[1] = txtCity;
-			returnArray[1] = txtStreet;
-			returnArray[1] = txtStreetno;
-			returnArray[1] = txtEmail;
-			returnArray[1] = txtTelefone;
-			returnArray[1] = birthdate;
+			returnArray[2] = txtLastName;
+			returnArray[3] = txtZipcode;
+			returnArray[4] = txtCity;
+			returnArray[5] = txtStreet;
+			returnArray[6] = txtStreetno;
+			returnArray[7] = txtEmail;
+			returnArray[8] = txtTelefone;
+			returnArray[9] = birthdate;
 
 		} catch (Exception e2) {
 			e2.printStackTrace();
 		}
 		// ObjectArray zurück geben
-		EditCustomer ec = new EditCustomer();
+		ec = new EditCustomer();
 		ec.fillTextFields(returnArray);
 	}
 
