@@ -6,7 +6,11 @@ import java.awt.Dimension;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.security.InvalidParameterException;
+import java.sql.Connection;
 import java.sql.Date;
+import java.sql.DriverManager;
 import java.text.SimpleDateFormat;
 
 import javax.swing.GroupLayout;
@@ -22,8 +26,9 @@ import javax.swing.border.EmptyBorder;
 
 import org.jdesktop.swingx.JXDatePicker;
 
-import de.dhbw.projektarbeit.customer.CreateCustomer;
+import de.dhbw.projektarbeit.db.request.Insert;
 import de.dhbw.projektarbeit.logic.Main;
+import java.awt.event.KeyAdapter;
 
 public class NewCustomer extends JDialog {
 
@@ -40,6 +45,8 @@ public class NewCustomer extends JDialog {
 	private JTextField txtTelefone;
 	private JButton cancelButton;
 	private JXDatePicker dpBirthdate; 
+	private Connection con;
+	private Insert insert;
 
 	/**
 	 * Launch the application.
@@ -87,6 +94,12 @@ public class NewCustomer extends JDialog {
 		JLabel lblPostleitzahl = new JLabel("Postleitzahl");
 
 		txtZipcode = new JTextField();
+		txtZipcode.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent arg0) {
+				txtZipcodeKeyReleased(arg0);
+			}
+		});
 		txtZipcode.setColumns(5);
 
 		txtCity = new JTextField();
@@ -419,11 +432,31 @@ public class NewCustomer extends JDialog {
 	}
 
 
+	protected void txtZipcodeKeyReleased(KeyEvent arg0) {
+		// Prüfung ob eine Zahl oder anderes Zeichen eingegeben wurde oder länger als 11 Zeichen ist
+		String text = txtZipcode.getText();
+		if (txtZipcode.getText().matches("[0-9]*")) {
+
+		} else {
+			txtZipcode.setText(text.substring(0, text.length() - 1));
+		}
+		
+		if (text.length() > 5){
+			txtZipcode.setText(text.substring(0, text.length() - 1));
+			JOptionPane
+			.showMessageDialog(
+					null,
+					"Die Postleitzahl darf nur 5 Stellen haben!",
+					"Postleitzahl", JOptionPane.ERROR_MESSAGE);
+			
+		}
+	}
+
+	
 	private void btnAddcustomerActionPerformed(ActionEvent arg0)
 			throws Exception {
 		// Check, ob alle Felder ausgefüllt sind
 		String firstName = null, lastName = null, city = null, street = null, streetNo = null, email = null, telefone = null, zipCode = null;
-		int zip_code = 0;
 		boolean go = true;
 
 		// Übergabe der Inputs
@@ -439,17 +472,7 @@ public class NewCustomer extends JDialog {
 		// Überprüfung auf Parsefehler bei der Postleitzahl mit entsprechender
 		// Fehlermeldung 
 		if (zipCode.replaceAll(" ", "").equals("")) {
-			zip_code = 0;
-		} else {
-			try {
-
-				zip_code = Integer.parseInt(txtZipcode.getText());
-			} catch (NumberFormatException e) {
-				// Fehlercode 003
-				e.printStackTrace();
-				throw new Exception(
-						"Bitte geben Sie eine gütlige Postleitzahl ein! Fehlercode 003");
-			}
+		
 		}
 
 		// Auf leere Pflichtfelder überprüfen
@@ -457,7 +480,7 @@ public class NewCustomer extends JDialog {
 			   go = false;
 			  } else if (lastName.replaceAll(" ", "").equals("")) {
 			   go = false;
-			  } else if (zip_code == 0 || (zip_code <= 00001 && zip_code >= 99999)) {
+			  } else if (zipCode.replaceAll(" ", "").equals("")) {
 			   go = false;
 			  } else if (city.replaceAll(" ", "").equals("")) {
 			   go = false;
@@ -475,11 +498,16 @@ public class NewCustomer extends JDialog {
 
 		// Aufrufen der Methode CreateCustomer
 		if (go == true) {
-			CreateCustomer cc = new CreateCustomer();
+			con = DriverManager.getConnection("jdbc:mysql://localhost/dvd_verleih?user=root");
+			insert = new Insert("dvd_verleih",con);
 			try {
-				cc.CreateNewCustomer(this, firstName, lastName, zip_code, city, street, streetNo, email, telefone, dateBirthdate);
-			} catch (Exception e) {
+				insert.insertCustomer(this, firstName, lastName, zipCode, city, street,
+						streetNo, email, telefone, dateBirthdate);
+			} catch (InvalidParameterException e) {
+				// Fehlercode 002
 				e.printStackTrace();
+				throw new Exception(
+						"Bei der Uebertragung der Parameter ist ein Fehler aufgetreten! Fehlercode: 002");
 			}
 		} else {
 			JOptionPane

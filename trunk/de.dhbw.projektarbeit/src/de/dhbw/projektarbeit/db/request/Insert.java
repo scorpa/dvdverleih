@@ -84,7 +84,7 @@ public class Insert {
 	 */
 
 	public void insertCustomer(NewCustomer nc, String firstName,
-			String lastName, int zip_code, String city, String street,
+			String lastName, String zipCode, String city, String street,
 			String streetNo, String email, String telefone,
 			java.sql.Date birthdate) throws Exception {
 
@@ -115,7 +115,7 @@ public class Insert {
 					+ "\",\""
 					+ lastName
 					+ "\",\""
-					+ zip_code
+					+ zipCode
 					+ "\",\""
 					+ city
 					+ "\",\""
