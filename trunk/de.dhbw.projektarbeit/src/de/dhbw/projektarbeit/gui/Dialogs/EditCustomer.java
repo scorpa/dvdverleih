@@ -31,15 +31,16 @@ import java.awt.event.MouseAdapter;
 public class EditCustomer extends JDialog {
 
 	private final JPanel contentPanel = new JPanel();
-	public JTextField txtFirstName;
-	public JTextField txtZipCode;
-	public JTextField txtCity;
-	public JTextField txtEMail;
-	public JTextField txtStreet;
-	public JTextField txtStreetNo;
-	public JTextField txtTelefone;
-	public JTextField txtLastName;
-	public JXDatePicker dpBirthdate;
+	
+	private JTextField txtFirstName;
+	private JTextField txtZipCode;
+	private JTextField txtCity;
+	private JTextField txtEMail;
+	private JTextField txtStreet;
+	private JTextField txtStreetNo;
+	private JTextField txtTelefone;
+	private JTextField txtLastName;
+	private JXDatePicker dpBirthdate;
 	private Update update;
 	private Connection con;
 	private Integer selectedID;
@@ -352,10 +353,14 @@ public class EditCustomer extends JDialog {
 	}*/
 	public void fillTextFields(Object[] returnArray){
 		// Daten aus Table mit Methode getSelectedRow lesen
-		//Object[] result = new Object[10];
-		CustomerCard cc = new CustomerCard();
+		//Object[] result = new Object[10];		
+		
+
+		System.out.println((String) returnArray[1]);
+		
 		
 		try {
+			
 			selectedID = (Integer) returnArray[0];
 			txtFirstName.setText((String) returnArray[1]);
 			txtLastName.setText((String) returnArray[2]);
@@ -371,5 +376,10 @@ public class EditCustomer extends JDialog {
 			e1.printStackTrace();
 		}
 	}
+
+	public JTextField getTxtFirstName() {
+		return txtFirstName;
+	}
+	
 
 }
