@@ -23,9 +23,9 @@ import javax.swing.ListSelectionModel;
 import java.awt.event.MouseAdapter;
 
 public class CustomerCard extends JPanel {
+	private static final long serialVersionUID = -3111381486436058627L;
 	private JTable tbCustomer;
-	private String txtFirstName, txtLastName, txtCity, txtEmail, txtStreet, txtStreetno, txtTelefone;
-	private String txtZipcode;
+	private String txtFirstName, txtLastName, txtCity, txtEmail, txtStreet, txtStreetno, txtTelefone, txtZipcode;
 	private Date birthdate;
 
 	/**

@@ -80,4 +80,50 @@ public class Update {
 		
 	}
 	
+	public void updateCustomer(int id, String firstname, String lastname, String zipcode, String city, String street, String streetno, String email, String telefone, java.sql.Date birthdate) throws Exception {
+		try {
+			// Alle Einfuege-Operationen sollen als eine Transaktion und mittels
+			// Stringbuffer ausgefuehrt
+			// werden.
+			con.setAutoCommit(false);
+			stmt = con.createStatement();
+			StringBuffer buffer = new StringBuffer();
+			buffer.append("UPDATE ");
+			buffer.append(schema);
+			buffer.append(".customer");
+			buffer.append(" SET FirstName = " );
+			buffer.append("\"" + firstname + "\"");
+			buffer.append(" , LastName = " );
+			buffer.append("\"" + lastname + "\"");
+			buffer.append(" , Zip_Code = " );
+			buffer.append("\"" + zipcode + "\"");
+			buffer.append(" , City = " );
+			buffer.append("\"" + city + "\"");
+			buffer.append(" , Street = " );
+			buffer.append("\"" + street + "\"");
+			buffer.append(" , StreetNo = " );
+			buffer.append("\"" + streetno + "\"");
+			buffer.append(" , Email = " );
+			buffer.append("\"" + email + "\"");
+			buffer.append(" , Telefone = " );
+			buffer.append("\"" + telefone + "\"");
+			buffer.append(" , Birthdate = " );
+			buffer.append("\"" + birthdate + "\"");
+			buffer.append(" WHERE Customer_ID = ");
+			buffer.append(id);
+			
+			stmt.executeUpdate(buffer.toString());
+	
+			// Neuerfasste Daten auf DB schreiben
+			con.commit();
+			con.setAutoCommit(true);
+			
+		} catch (Exception e) {
+			// Im Fehlerfall Rollback durchführen
+			con.rollback();
+			con.setAutoCommit(true);
+			e.printStackTrace();
+		}
+	}
+	
 }
