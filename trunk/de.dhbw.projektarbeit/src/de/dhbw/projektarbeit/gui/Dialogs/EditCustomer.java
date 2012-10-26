@@ -6,7 +6,10 @@ import java.awt.FlowLayout;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
+import javax.swing.ListSelectionModel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableModel;
+
 import java.awt.CardLayout;
 import java.awt.event.MouseEvent;
 import java.sql.Connection;
@@ -22,28 +25,35 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 import org.jdesktop.swingx.JXTable;
 import javax.swing.JTable;
 
+import de.dhbw.projektarbeit.db.request.Filling;
 import de.dhbw.projektarbeit.db.request.Update;
 import de.dhbw.projektarbeit.gui.CustomerCard;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
+import java.awt.GridBagLayout;
+import java.awt.GridBagConstraints;
+import javax.swing.JScrollPane;
+import java.awt.Insets;
+import java.awt.Component;
 
 public class EditCustomer extends JDialog {
 
 	private final JPanel contentPanel = new JPanel();
 	
-	private JTextField txtFirstName;
-	private JTextField txtZipCode;
-	private JTextField txtCity;
-	private JTextField txtEMail;
-	private JTextField txtStreet;
-	private JTextField txtStreetNo;
-	private JTextField txtTelefone;
-	private JTextField txtLastName;
-	private JXDatePicker dpBirthdate;
+	private static JTextField txtFirstName;
+	private static JTextField txtZipCode;
+	private static JTextField txtCity;
+	private static JTextField txtEMail;
+	private static JTextField txtStreet;
+	private static JTextField txtStreetNo;
+	private static JTextField txtTelefone;
+	private static JTextField txtLastName;
+	private static JXDatePicker dpBirthdate;
 	private Update update;
 	private Connection con;
-	private Integer selectedID;
+	private static Integer selectedID;
+	private JTable tbCustomer;
 
 	/**
 	 * Launch the application.
@@ -63,6 +73,7 @@ public class EditCustomer extends JDialog {
 	 */
 	public EditCustomer() {
 		setWindow();
+		loadTable();
 	}
 
 	/**
@@ -301,9 +312,51 @@ public class EditCustomer extends JDialog {
 										.addContainerGap(30, Short.MAX_VALUE)));
 				panel.setLayout(gl_panel);
 			}
+			
+			JPanel panel = new JPanel();
+			splitPane.setLeftComponent(panel);
+			
+			
+			// Spaltenüberschriften
+			String[] columnNames = { "ID", "Vorname", "Nachname", "Postleitzahl",
+					"Ort", "Strasse", "Hausnummer", "EMail", "Telefon", "Geurtstag" };
 
-			CustomerCard customerCard = new CustomerCard();
-			splitPane.setLeftComponent(customerCard);
+			Filling fill = new Filling();
+
+			Object[][] customerData = null;
+			try {
+				customerData = fill.getTable("customer");
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			;
+			
+
+			DefaultTableModel model = new DefaultTableModel(customerData,
+					columnNames);
+			
+			tbCustomer = new JTableNotEditable(model, columnNames);
+			tbCustomer.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+			tbCustomer.setFocusable(false);
+			tbCustomer.setModel(model);
+						
+			JScrollPane scrollPane = new JScrollPane(tbCustomer);
+			scrollPane.setName("scrollCustomer");
+			GroupLayout gl_panel = new GroupLayout(panel);
+			gl_panel.setHorizontalGroup(
+				gl_panel.createParallelGroup(Alignment.LEADING)
+					.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 596, Short.MAX_VALUE)
+			);
+			gl_panel.setVerticalGroup(
+				gl_panel.createParallelGroup(Alignment.LEADING)
+					.addGroup(gl_panel.createSequentialGroup()
+						.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 193, Short.MAX_VALUE)
+						.addGap(5))
+			);
+			
+			
+			panel.setLayout(gl_panel);
 			splitPane.setDividerLocation(200);
 		}
 		{
@@ -351,34 +404,31 @@ public class EditCustomer extends JDialog {
 			e1.printStackTrace();
 		}
 	}*/
-	public void fillTextFields(Object[] returnArray){
-		// Daten aus Table mit Methode getSelectedRow lesen
-		//Object[] result = new Object[10];		
-		
-
-		System.out.println((String) returnArray[1]);
-		
-		
+	public void loadTable(){		
 		try {
-			
-			selectedID = (Integer) returnArray[0];
-			txtFirstName.setText((String) returnArray[1]);
-			txtLastName.setText((String) returnArray[2]);
-			txtZipCode.setText((String) returnArray[3]);
-			txtCity.setText((String) returnArray[4]);
-			txtStreet.setText((String) returnArray[5]);
-			txtStreetNo.setText((String) returnArray[6]);
-			txtEMail.setText((String) returnArray[7]);
-			txtTelefone.setText((String) returnArray[8]);
-			dpBirthdate.setDate((Date) returnArray[9]);
+
+			// Spaltenüberschriften
+			String[] columnNames = { "ID", "Vorname", "Nachname", "Postleitzahl",
+					"Ort", "Strasse", "Hausnummer", "EMail", "Telefon", "Geurtstag" };
+
+			Filling fill = new Filling();
+
+			Object[][] customerData = null;
+			try {
+				customerData = fill.getTable("customer");
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			;
 		} catch (Exception e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 	}
 
-	public JTextField getTxtFirstName() {
-		return txtFirstName;
+	private void filltbCusomer(){
+		
 	}
 	
 

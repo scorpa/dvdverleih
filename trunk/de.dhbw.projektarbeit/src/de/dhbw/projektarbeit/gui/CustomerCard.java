@@ -59,11 +59,6 @@ public class CustomerCard extends JPanel {
 				columnNames);
 
 		tbCustomer = new JTableNotEditable(model, columnNames);
-		tbCustomer.addMouseListener(new MouseAdapter() {
-			public void mouseClicked(MouseEvent e) {
-				tbCustomerMouseClicked(e);
-			}
-		});
 		tbCustomer.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		tbCustomer.setFocusable(false);
 		tbCustomer.setModel(model);
@@ -74,68 +69,4 @@ public class CustomerCard extends JPanel {
 
 	}
 	
-/*	private void tbCustomerMouseClicked(MouseEvent e) {
-		getSelectedRow(e);
-	}
-*/
-	/**
-	 * Methode zum Auslesen des ausgewählten CustomerCard Eintrags
-	 * 
-	 * @param e
-	 *            --> MouseEvent aus dem entsprechenden Dialog, aus dem die
-	 *            Anfrage kommt
-	 * @return 
-	 * @return returnArray enthält die ausgelesenen Felder [0] = ID; [1] =
-	 *         FirstName(String); [2] = LastName(String); [3] = Zipcode(String);
-	 *         [4] = City(String); [5] = Street(String); [6] = StreetNo(String);
-	 *         [7] = Email(String); [8] = Telefone(String); [9] = birthdate(Date)
-	 */
-	public void tbCustomerMouseClicked(MouseEvent e) {
-		EditCustomer ec = new EditCustomer();
-		
-		int selectedID;
-		
-		Object[] returnArray = new Object[10];
-		// Felder der ausgewählten Zeile auslesen
-		try {
-			selectedID = (Integer) tbCustomer.getValueAt(
-					tbCustomer.getSelectedRow(), 0);
-			txtFirstName= (String) tbCustomer.getValueAt(
-					tbCustomer.getSelectedRow(), 1);
-			txtLastName = (String) tbCustomer.getValueAt(
-					tbCustomer.getSelectedRow(), 2);
-			txtZipcode = (String) tbCustomer.getValueAt(
-					tbCustomer.getSelectedRow(), 3);
-			txtCity = (String) tbCustomer.getValueAt(
-					tbCustomer.getSelectedRow(), 4);
-			txtStreet = (String) tbCustomer.getValueAt(
-					tbCustomer.getSelectedRow(), 5);
-			txtStreetno = (String) tbCustomer.getValueAt(
-					tbCustomer.getSelectedRow(), 6);
-			txtEmail = (String) tbCustomer.getValueAt(
-					tbCustomer.getSelectedRow(), 7);
-			txtTelefone = (String) tbCustomer.getValueAt(
-					tbCustomer.getSelectedRow(), 8);
-			birthdate = (Date) tbCustomer.getValueAt(
-					tbCustomer.getSelectedRow(), 9);
-			// Ausgelesene Felder in ObjectArray übergeben
-			returnArray[0] = selectedID;
-			returnArray[1] = txtFirstName;
-			returnArray[2] = txtLastName;
-			returnArray[3] = txtZipcode;
-			returnArray[4] = txtCity;
-			returnArray[5] = txtStreet;
-			returnArray[6] = txtStreetno;
-			returnArray[7] = txtEmail;
-			returnArray[8] = txtTelefone;
-			returnArray[9] = birthdate;
-
-		} catch (Exception e2) {
-			e2.printStackTrace();
-		}
-		// ObjectArray zurück geben
-		ec = new EditCustomer();
-		ec.fillTextFields(returnArray);
-	}
-
 }
