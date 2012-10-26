@@ -4,6 +4,12 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 
+import de.dhbw.projektarbeit.gui.Dialogs.EditAuthor;
+import de.dhbw.projektarbeit.gui.Dialogs.EditCamera;
+import de.dhbw.projektarbeit.gui.Dialogs.EditProducer;
+import de.dhbw.projektarbeit.gui.Dialogs.EditRegisseur;
+import de.dhbw.projektarbeit.gui.Dialogs.NewAuthor;
+import de.dhbw.projektarbeit.gui.Dialogs.NewCamera;
 import de.dhbw.projektarbeit.gui.Dialogs.NewCustomer;
 import de.dhbw.projektarbeit.gui.Dialogs.NewDVD;
 import de.dhbw.projektarbeit.gui.Dialogs.NewProducer;
@@ -21,6 +27,7 @@ public class MenuBar extends JMenuBar {
 		JMenuItem mntmBeenden = new JMenuItem("Beenden");
 		mntmBeenden.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				// Button "Beenden" gedrückt
 				mntmBeendenActionPerformed(arg0);
 			}
 		});
@@ -35,6 +42,7 @@ public class MenuBar extends JMenuBar {
 		JMenuItem mntmNeuerKunde = new JMenuItem("Neuer Kunde");
 		mntmNeuerKunde.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				// Button "Neuer Kunde" gedrückt
 				mntmNeuerKundeActionPerformed(e);
 			}
 		});
@@ -49,6 +57,7 @@ public class MenuBar extends JMenuBar {
 		JMenuItem mntmNeueDvd = new JMenuItem("Neue DVD");
 		mntmNeueDvd.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				// Button "Neue DVD" gedrückt
 				try {
 					mntmNeueDvdActionPerformed(e);
 				} catch (Exception e1) {
@@ -71,6 +80,7 @@ public class MenuBar extends JMenuBar {
 		JMenuItem mntmNeuerRegissuer = new JMenuItem("Neuer Regisseur");
 		mntmNeuerRegissuer.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				// Button "Neuer Regisseur" gedrückt
 				mntmNeuerRegissuerActionPerformed(e);
 			}
 		});
@@ -78,6 +88,12 @@ public class MenuBar extends JMenuBar {
 
 		JMenuItem mntmRegisseurBearbeiten = new JMenuItem(
 				"Regisseur bearbeiten");
+		mntmRegisseurBearbeiten.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				// Button "Regisseur bearbeiten" gedrückt
+				mntmRegisseurBearbeitenActionPerformed(arg0);
+			}
+		});
 		mnRegisseur.add(mntmRegisseurBearbeiten);
 
 		JMenu mnProduzent = new JMenu("Produzent");
@@ -86,6 +102,7 @@ public class MenuBar extends JMenuBar {
 		JMenuItem mntmNeuerProduzent = new JMenuItem("Neuer Produzent");
 		mntmNeuerProduzent.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				// Button "Neuer Produzent" gedrückt
 				mntmNeuerProduzentActionPerformed(e);
 			}
 		});
@@ -93,24 +110,54 @@ public class MenuBar extends JMenuBar {
 
 		JMenuItem mntmProduzentBearbeiten = new JMenuItem(
 				"Produzent bearbeiten");
+		mntmProduzentBearbeiten.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				// Button "Produzent bearbeiten" gedrückt
+				mntmProduzentBearbeitenActionPerformed(e);
+			}
+		});
 		mnProduzent.add(mntmProduzentBearbeiten);
 
 		JMenu mnKamera = new JMenu("Kamera");
 		mnDialoge.add(mnKamera);
 
-		JMenuItem mntmNeueKamera = new JMenuItem("Neue Kamera");
+		JMenuItem mntmNeueKamera = new JMenuItem("Neuer Kamermann");
+		mntmNeueKamera.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				// Button "Neuer Kameramann" gedrückt
+				mntmNeueKameraActionPerformed(e);
+			}
+		});
 		mnKamera.add(mntmNeueKamera);
 
-		JMenuItem mntmKameraBearbeiten = new JMenuItem("Kamera bearbeiten");
+		JMenuItem mntmKameraBearbeiten = new JMenuItem("Kameramann bearbeiten");
+		mntmKameraBearbeiten.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				// Button "Kameramann bearbeiten" gedrückt
+				mntmKameraBearbeitenActionPerformed(e);
+			}
+		});
 		mnKamera.add(mntmKameraBearbeiten);
 
 		JMenu mnAutor = new JMenu("Autor");
 		mnDialoge.add(mnAutor);
 
 		JMenuItem mntmNeuerAutor = new JMenuItem("Neuer Autor");
+		mntmNeuerAutor.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				// Button "Neuer Autor" gedrückt
+				mntmNeuerAutorActionPerformed(e);
+			}
+		});
 		mnAutor.add(mntmNeuerAutor);
 
 		JMenuItem mntmAutorBearbeiten = new JMenuItem("Autor bearbeiten");
+		mntmAutorBearbeiten.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				// Button "Autor bearbeiten" gedrückt
+				mntmAutorBearbeitenActionPerformed(e);
+			}
+		});
 		mnAutor.add(mntmAutorBearbeiten);
 	}
 
@@ -159,6 +206,14 @@ public class MenuBar extends JMenuBar {
 		NewRegisseur nr = new NewRegisseur();
 		nr.setVisible(true);
 	}
+	/**
+	 * Aufruf aus dem Kontextmenü Dialoge -> Regisseur --> Regisseur bearbeiten
+	 * @param arg0 --> Eventhandling
+	 */
+	private void mntmRegisseurBearbeitenActionPerformed(ActionEvent arg0) {
+		EditRegisseur er = new EditRegisseur();
+		er.setVisible(true);
+	}
 
 	/**
 	 * Aufruf aus dem Kontextmenü Dialoge -> Produzent --> Neuen Produzent
@@ -168,5 +223,50 @@ public class MenuBar extends JMenuBar {
 	private void mntmNeuerProduzentActionPerformed(ActionEvent e) {
 		NewProducer np = new NewProducer();
 		np.setVisible(true);
+	}
+	
+	/**
+	 * Aufruf aus dem Kontextmenü Dialoge -> Produzent --> Produzent bearbeiten
+	 * @param e --> Eventhandling
+	 */
+	private void mntmProduzentBearbeitenActionPerformed(ActionEvent e) {
+		EditProducer ep = new EditProducer();
+		ep.setVisible(true);
+	}
+	
+	/**
+	 * Aufruf aus dem Kontextmenü Dialoge -> Kamera --> Neuer Kameramann anlegen
+	 * @param e --> Eventhandling
+	 */
+	private void mntmNeueKameraActionPerformed(ActionEvent e) {
+		NewCamera nc = new NewCamera();
+		nc.setVisible(true);
+	}
+	
+	/**
+	 * Aufruf aus dem Kontextmenü Dialoge -> Kamera --> Kameramann bearbeiten
+	 * @param e --> Eventhandling
+	 */
+	private void mntmKameraBearbeitenActionPerformed(ActionEvent e) {
+		EditCamera ec = new EditCamera();
+		ec.setVisible(true);
+	}
+	
+	/**
+	 * Aufruf aus dem Kontextmenü Dialoge -> Autor --> Neuer Autor anlegen
+	 * @param e --> Eventhandling
+	 */
+	private void mntmNeuerAutorActionPerformed(ActionEvent e) {
+		NewAuthor na = new NewAuthor();
+		na.setVisible(true);
+	}
+	
+	/**
+	 * Aufruf aus dem Kontextmenü Dialoge -> Autor --> Autor bearbeiten
+	 * @param e --> Eventhandling
+	 */
+	private void mntmAutorBearbeitenActionPerformed(ActionEvent e) {
+		EditAuthor ea = new EditAuthor();
+		ea.setVisible(true);
 	}
 }

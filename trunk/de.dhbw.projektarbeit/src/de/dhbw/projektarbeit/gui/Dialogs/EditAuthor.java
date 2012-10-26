@@ -75,16 +75,16 @@ public class EditAuthor extends JDialog {
 
 		Filling fill = new Filling();
 
-		Object[][] productionData = null;
+		Object[][] authorData = null;
 		try {
-			productionData = fill.getTable("author");
+			authorData = fill.getTable("author");
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		;
 
-		DefaultTableModel model = new DefaultTableModel(productionData,
+		DefaultTableModel model = new DefaultTableModel(authorData,
 				columnNames);
 		
 		setModal(true);
@@ -205,9 +205,9 @@ public class EditAuthor extends JDialog {
 				cancelButton.setActionCommand("Cancel");
 			}
 
-			JButton btnDelete = new JButton("L\u00F6schen");
+			btnDelete = new JButton("L\u00F6schen");
 
-			JButton btnUpdate = new JButton("Speichern");
+			btnUpdate = new JButton("Speichern");
 			btnUpdate.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					try {
@@ -284,7 +284,7 @@ public class EditAuthor extends JDialog {
 			txtLastName.setText((String) tbAuthor.getValueAt(
 					tbAuthor.getSelectedRow(), 2));
 			if (selectedID >= 0) {
-				btnUpdate.setVisible(true);
+				btnUpdate.setEnabled(true);
 				}
 		} catch (Exception e2) {
 			e2.printStackTrace();
