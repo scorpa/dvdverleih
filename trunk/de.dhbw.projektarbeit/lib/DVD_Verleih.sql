@@ -102,7 +102,7 @@ CREATE TABLE `customer` (
   `Customer_ID` int(11) NOT NULL AUTO_INCREMENT,
   `FirstName` text,
   `LastName` text,
-  `ZIP_Code` int(5) unsigned zerofill DEFAULT NULL,
+  `ZIP_Code` varchar(5) DEFAULT NULL,
   `City` text,
   `Street` text,
   `StreetNo` varchar(10) DEFAULT NULL,
@@ -119,7 +119,7 @@ CREATE TABLE `customer` (
 
 LOCK TABLES `customer` WRITE;
 /*!40000 ALTER TABLE `customer` DISABLE KEYS */;
-INSERT INTO `customer` VALUES (3,'Julian','Brunner',73207,'Plochingen','Johanniterstr. ','20/2','h0nKi@gmx.de','0176/70902185','1986-11-22'),(4,'Romina','Möller',73207,'Plochingen','Johanniterstr. ','20/2','romy_moeller@yahoo.de','07153/9243679','1988-02-29'),(5,'Nataliia','Makara',70174,'Stuttgart','Holzgartenstr.','9a','nataliia.makara@gmail.com','01906666666','1986-07-25');
+INSERT INTO `customer` VALUES (3,'Julian','Brunner','09934','Plochingen','Johanniterstr. ','20/2','h0nKi@gmx.de','0176/70902185','1986-11-22'),(4,'Romina','Möller','73207','Plochingen','Johanniterstr. ','20/2','romy_moeller@yahoo.de','07153/9243679','1988-02-29'),(5,'Nataliia','Makara','70174','Stuttgart','Holzgartenstr.','9a','nataliia.makara@gmail.com','01906666666','1986-07-25');
 /*!40000 ALTER TABLE `customer` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -163,7 +163,7 @@ CREATE TABLE `dvd` (
 
 LOCK TABLES `dvd` WRITE;
 /*!40000 ALTER TABLE `dvd` DISABLE KEYS */;
-INSERT INTO `dvd` VALUES (127,'321','321','31','31',32,'2012-01-02',21,'321',11,1,2,1,1232),(1,'Title','OriginalTitle','Genre','USA',2012,'2012-10-25',1,'ab 0 Jahre',11,1,2,1,123456789);
+INSERT INTO `dvd` VALUES (127,'321','321','31','31',32,'2012-01-02',21,'321',11,1,2,1,1232),(1,'Title','OriginalTitle','Genre','USA',2012,'2012-10-25',1,'ab 0 Jahre',11,1,2,1,123123),(1,'Title','OriginalTitle','Genre','USA',2012,'2012-10-25',1,'ab 0 Jahre',11,1,2,1,123456789),(1,'Title','OriginalTitle','Genre','USA',2012,'2012-10-25',1,'ab 0 Jahre',11,1,2,1,999999999),(1,'Title','OriginalTitle','Genre','USA',2012,'2012-10-25',1,'ab 0 Jahre',11,1,2,1,1312312312);
 /*!40000 ALTER TABLE `dvd` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -202,7 +202,7 @@ CREATE TABLE `production` (
   `FirstName` varchar(45) DEFAULT NULL,
   `LastName` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`Production_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -227,7 +227,7 @@ CREATE TABLE `regisseur` (
   `FirstName` text,
   `LastName` text,
   PRIMARY KEY (`Regie_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -368,4 +368,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2012-10-25 10:51:01
+-- Dump completed on 2012-10-26 11:32:51
