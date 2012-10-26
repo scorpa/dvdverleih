@@ -23,6 +23,7 @@ import javax.swing.JTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import org.jdesktop.swingx.JXTable;
 
+import de.dhbw.projektarbeit.db.request.Delete;
 import de.dhbw.projektarbeit.db.request.Filling;
 import de.dhbw.projektarbeit.db.request.Update;
 
@@ -69,7 +70,7 @@ public class EditAuthor extends JDialog {
 	 * Standardkonsturktor
 	 */
 	private void setWindow() {
-		
+
 		// Spaltenüberschriften
 		String[] columnNames = { "ID", "Vorname", "Nachname" };
 
@@ -84,9 +85,8 @@ public class EditAuthor extends JDialog {
 		}
 		;
 
-		DefaultTableModel model = new DefaultTableModel(authorData,
-				columnNames);
-		
+		DefaultTableModel model = new DefaultTableModel(authorData, columnNames);
+
 		setModal(true);
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		setAlwaysOnTop(true);
@@ -199,13 +199,23 @@ public class EditAuthor extends JDialog {
 				cancelButton = new JButton("Cancel");
 				cancelButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-					dispose();
+						dispose();
 					}
 				});
 				cancelButton.setActionCommand("Cancel");
 			}
 
 			btnDelete = new JButton("L\u00F6schen");
+			btnDelete.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					try {
+						btnDeleteActionPerformed(e);
+					} catch (Exception e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+				}
+			});
 
 			btnUpdate = new JButton("Speichern");
 			btnUpdate.addActionListener(new ActionListener() {
@@ -268,6 +278,7 @@ public class EditAuthor extends JDialog {
 			buttonPane.setLayout(gl_buttonPane);
 		}
 	}
+
 	/**
 	 * Bei Klick auf die Tabelle wird die angeklickte Zeile ausgelesen
 	 * 
@@ -285,11 +296,12 @@ public class EditAuthor extends JDialog {
 					tbAuthor.getSelectedRow(), 2));
 			if (selectedID >= 0) {
 				btnUpdate.setEnabled(true);
-				}
+			}
 		} catch (Exception e2) {
 			e2.printStackTrace();
 		}
 	}
+
 	/**
 	 * Übergabemethode der Werte aus der ausgelesenen Zeile an den Updateaufruf
 	 * 
@@ -299,11 +311,11 @@ public class EditAuthor extends JDialog {
 	 *             --> Exceptionhandling
 	 */
 	protected void btnUpdateActionPerformed(ActionEvent e) throws Exception {
-		updateAuthor(selectedID, txtFirstName.getText(),
-				txtLastName.getText(), "author");
+		updateAuthor(selectedID, txtFirstName.getText(), txtLastName.getText(),
+				"author");
 
 	}
-	
+
 	/**
 	 * Die Updatefunktion wird mit den übergebenen Parametern aufgerufen
 	 * 
@@ -345,5 +357,23 @@ public class EditAuthor extends JDialog {
 			throw new Exception(
 					"Bei der Uebertragung der Parameter ist ein Fehler aufgetreten! Fehlercode: 002");
 		}
+	}
+
+	private void btnDeleteActionPerformed(ActionEvent e) throws Exception {
+		String firstname, lastname;
+		// Verbindung zum SQL Server herstellen
+		try {
+			con = DriverManager
+					.getConnection("jdbc:mysql://localhost/dvd_verleih?user=root");
+		} catch (SQLException b) {
+			// Verbindung zum SQL Server fehlgeschlagen. Fehlercode 005
+			b.printStackTrace();
+			throw new Exception(
+					"Verbindung zum SQL Server fehlgeschlagen. Fehlercode 005");
+		}
+		// Aufruf der Deletemethode
+		Delete delete = new Delete("dvd_verleih", con);
+		delete.deleteEdits(selectedID, firstname = txtFirstName.getText(), lastname = txtLastName.getText(), "author", "Author_ID");
+
 	}
 }

@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import javax.swing.JOptionPane;
+
 /**
  * Mit Hilfe dieser Klasse lassen sich Datensaetze loeschen.
  * 
@@ -36,88 +38,7 @@ public class Delete {
 		this.con = con;
 	}
 
-	/**
-	 * Loescht einen Eintrag aus den Tabellen assets, earnings buw. expenses, und
-	 * bankaccount. Dies sollte durchgefuehrt werden, wenn ein Eintrag falsch
-	 * oder doppelt eingegeben wurde.
-	 * 
-	 * @param id
-	 *            Die ID des zu löschenden Eintrags
-	 * @param bookingtype
-	 *            Die Art der Buchung <li>Einnahme: Delete.EARNING</li><li>
-	 *            Ausgabe: Delete.EXPENSE</li>
-	 * @param isAsset
-	 *            Boolean, der angibt, ob es sich bei dem zu loeschenden Eintrag
-	 *            um einen Wertgegenstand handelt. true = ist Wertgegenstand,
-	 *            false = kein Wertgegenstand
-	 * @throws Exception
-	 *             Wenn beim Loeschen der Eintraege aus den Tabellen ein Fehler
-	 *             auftritt.
-	 */
-	public void delete(long id, int bookingtype, boolean isAsset)
-			throws Exception {
-		try {
-
-			// Alle Lösch-Operationen sollen als eine Transaktion ausgeführt
-			// werden.
-			con.setAutoCommit(false);
-
-			stmt = con.createStatement();
-
-			StringBuffer deleteAsset, deleteBooking, deleteAccount;
-
-			// Löschen aus Tabelle assets
-			if (isAsset) {
-				deleteAsset = new StringBuffer();
-				deleteAsset.append("DELETE FROM ");
-				deleteAsset.append(schema);
-				deleteAsset
-						.append(".assets WHERE Expenses_ID = (SELECT E.ID FROM ");
-				deleteAsset.append(schema);
-				deleteAsset.append(".expenses AS E WHERE E.Bankaccount_ID = ");
-				deleteAsset.append(id);
-				deleteAsset.append(")");
-
-				stmt.executeUpdate(deleteAsset.toString());
-			}
-
-			// Löschen aus Tabelle earnings bzw. expenses
-			deleteBooking = new StringBuffer();
-			deleteBooking.append("DELETE FROM ");
-			deleteBooking.append(schema);
-			deleteBooking.append(".");
-			if (bookingtype == Delete.EARNING)
-				deleteBooking.append("earnings");
-			if (bookingtype == Delete.EXPENSE)
-				deleteBooking.append("expenses");
-			deleteBooking.append(" WHERE Bankaccount_ID = ");
-			deleteBooking.append(id);
-
-			stmt.executeUpdate(deleteBooking.toString());
-
-			// Löschen aus Tabelle bankaccount
-			deleteAccount = new StringBuffer();
-			deleteAccount.append("DELETE FROM ");
-			deleteAccount.append(schema);
-			deleteAccount.append(".bankaccount WHERE ID = ");
-			deleteAccount.append(id);
-
-			stmt.executeUpdate(deleteAccount.toString());
-
-			// Änderungen schreiben, AutoCommit wieder einschalten
-			con.commit();
-			con.setAutoCommit(true);
-
-		} catch (SQLException e) {
-			// Im Fehlerfall Rollback durchführen, AutoCommit wieder einschalten
-			con.rollback();
-			con.setAutoCommit(true);
-			e.printStackTrace();
-			throw new Exception("Fehler beim Löschen aus der Datenbank.");
-		}
-	}
-
-	public void deleteEdits(int id, String form)
+	public void deleteEdits(int id, String firstname, String lastname, String form, String field)
 		throws Exception {
 		try {
 			con.setAutoCommit(false);
@@ -127,7 +48,9 @@ public class Delete {
 			buffer.append(schema);
 			buffer.append(".");
 			buffer.append(form);
-			buffer.append(" WHERE ID = ");
+			buffer.append(" WHERE ");
+			buffer.append(field);
+			buffer.append(" = ");
 			buffer.append(id);
 			
 			
@@ -137,13 +60,17 @@ public class Delete {
 			con.commit();
 			con.setAutoCommit(true);
 			
+			// Bei erfolgreichem L�schen Nachricht bringen
+			JOptionPane.showMessageDialog(null, ("Der Eintrag " + firstname + " " + lastname + " wurde erfolgreich gel�scht!"),
+					"Vorgang erfolgreich", JOptionPane.INFORMATION_MESSAGE);
+			
 		} catch (SQLException e) {
 		
 			con.rollback();
 			con.setAutoCommit(true);
 			e.printStackTrace();
 			throw new Exception(
-					"Fehler beim Einf�gen in die Datenbank! Fehlercode 004");
+					"Fehler beim L�schen der Zeile aus der Datenbank! Fehlercode 007");
 		}
 	}
 }

@@ -6,4 +6,6 @@ Fehlercodes:
 004: Insert.java				Fehler beim Einfügen in die Datenbank! Fehlercode 004
 005: CreateRegisseur.java		Verbindung zum SQL Server fehlgeschlagen. Fehlercode 005
 006: Filling.java				Fehler bei der Datenbankabfrage! Fehlercode 006
+007: Delete.java				Fehler beim Löschen der Zeile aus der Datenbank! Fehlercode 007
+008: Update.java				Fehler beim Ändern der Zeile in der Datenbank! Fehlercode 008
 
