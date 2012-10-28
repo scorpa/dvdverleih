@@ -69,7 +69,7 @@ public class NewProducer extends JDialog {
 		setModal(true);
 		setResizable(false);
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 500, 155);
+		setBounds(100, 100, 600, 155);
 		getContentPane().setLayout(new BorderLayout());
 		{
 			JPanel buttonPane = new JPanel();
@@ -81,7 +81,6 @@ public class NewProducer extends JDialog {
 						try {
 							addButtonActionPerformed(arg0);
 						} catch (Exception e) {
-							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
 					}
@@ -127,7 +126,6 @@ public class NewProducer extends JDialog {
 		getContentPane().add(panel, BorderLayout.CENTER);
 
 		txtFirstName = new JTextField();
-		txtFirstName.setText("FirstName");
 		txtFirstName.setColumns(22);
 
 		JLabel label = new JLabel("Vorname");
@@ -135,64 +133,47 @@ public class NewProducer extends JDialog {
 		JLabel label_1 = new JLabel("Nachname");
 
 		txtLastName = new JTextField();
-		txtLastName.setText("LastName");
 		txtLastName.setColumns(22);
 		GroupLayout gl_panel = new GroupLayout(panel);
-		gl_panel.setHorizontalGroup(gl_panel.createParallelGroup(
-				Alignment.TRAILING).addGroup(
-				gl_panel.createSequentialGroup()
-						.addContainerGap()
-						.addGroup(
-								gl_panel.createParallelGroup(Alignment.LEADING)
-										.addComponent(label)
-										.addComponent(txtFirstName,
-												GroupLayout.PREFERRED_SIZE,
-												GroupLayout.DEFAULT_SIZE,
-												GroupLayout.PREFERRED_SIZE))
-						.addGap(101)
-						.addGroup(
-								gl_panel.createParallelGroup(Alignment.LEADING)
-										.addComponent(label_1)
-										.addComponent(txtLastName,
-												GroupLayout.PREFERRED_SIZE,
-												GroupLayout.DEFAULT_SIZE,
-												GroupLayout.PREFERRED_SIZE))
-						.addContainerGap(20, Short.MAX_VALUE)));
-		gl_panel.setVerticalGroup(gl_panel
-				.createParallelGroup(Alignment.LEADING)
-				.addGroup(
-						gl_panel.createSequentialGroup()
-								.addGroup(
-										gl_panel.createParallelGroup(
-												Alignment.BASELINE)
-												.addComponent(label)
-												.addComponent(label_1))
-								.addPreferredGap(ComponentPlacement.RELATED)
-								.addGroup(
-										gl_panel.createParallelGroup(
-												Alignment.BASELINE)
-												.addComponent(
-														txtFirstName,
-														GroupLayout.PREFERRED_SIZE,
-														GroupLayout.DEFAULT_SIZE,
-														GroupLayout.PREFERRED_SIZE)
-												.addComponent(
-														txtLastName,
-														GroupLayout.PREFERRED_SIZE,
-														GroupLayout.DEFAULT_SIZE,
-														GroupLayout.PREFERRED_SIZE))
-								.addContainerGap(32, Short.MAX_VALUE)));
+		gl_panel.setHorizontalGroup(
+			gl_panel.createParallelGroup(Alignment.TRAILING)
+				.addGroup(Alignment.LEADING, gl_panel.createSequentialGroup()
+					.addContainerGap()
+					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
+						.addComponent(label)
+						.addComponent(txtFirstName, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+					.addGap(18)
+					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
+						.addComponent(label_1)
+						.addComponent(txtLastName, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+					.addContainerGap(123, Short.MAX_VALUE))
+		);
+		gl_panel.setVerticalGroup(
+			gl_panel.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel.createSequentialGroup()
+					.addContainerGap()
+					.addGroup(gl_panel.createParallelGroup(Alignment.TRAILING)
+						.addGroup(gl_panel.createSequentialGroup()
+							.addComponent(label_1)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(txtLastName, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+						.addGroup(gl_panel.createSequentialGroup()
+							.addComponent(label)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(txtFirstName, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
+					.addContainerGap(32, Short.MAX_VALUE))
+		);
 		panel.setLayout(gl_panel);
 	}
 
 	private void addButtonActionPerformed(ActionEvent arg0) throws Exception {
-		// Hinzufügen Button gedrückt
+		// Hinzufuegen Button gedrueckt
 		String firstName, lastName;
 		boolean go = true;
 		firstName = txtFirstName.getText();
 		lastName = txtLastName.getText();
 
-		// Auf leere Pflichtfelder überprüfen
+		// Auf leere Pflichtfelder ueberpruefen
 		if (firstName.replaceAll(" ", "").equals("")) {
 			go = false;
 		} else if (lastName.replaceAll(" ", "").equals("")) {
@@ -262,6 +243,5 @@ public class NewProducer extends JDialog {
 		// Neues, leeres Erstellungsfenster instantiieren
 		NewRegisseur dialog = new NewRegisseur();
 		dialog.setVisible(true);
-
 	}
 }

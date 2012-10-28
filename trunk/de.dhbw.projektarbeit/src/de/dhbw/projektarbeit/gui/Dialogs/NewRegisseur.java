@@ -81,11 +81,9 @@ public class NewRegisseur extends JDialog {
 		JLabel lblVorname = new JLabel("Vorname");
 
 		txtFirstname = new JTextField();
-		txtFirstname.setText("FirstName");
 		txtFirstname.setColumns(22);
 
 		txtLastname = new JTextField();
-		txtLastname.setText("LastName");
 		txtLastname.setColumns(22);
 
 		JLabel lblNachname = new JLabel("Nachname");
@@ -200,13 +198,13 @@ public class NewRegisseur extends JDialog {
 	}
 
 	private void addButtonActionPerforemd(ActionEvent arg0) throws Exception {
-		// Hinzufügen-Button gedrückt
+		// Hinzufuegen-Button gedrueckt
 		String firstName, lastName;
 		boolean go = true;
 		firstName = txtFirstname.getText();
 		lastName = txtLastname.getText();
 
-		// Auf leere Pflichtfelder überprüfen
+		// Auf leere Pflichtfelder ueberpruefen
 		if (firstName.replaceAll(" ", "").equals("")) {
 			go = false;
 		} else if (lastName.replaceAll(" ", "").equals("")) {
@@ -215,8 +213,6 @@ public class NewRegisseur extends JDialog {
 		
 		// Aufrufen der Methode CreateRegisseur
 		if (go == true) {
-			
-			
 			try {
 				con = DriverManager
 						.getConnection("jdbc:mysql://localhost/dvd_verleih?user=root");
@@ -228,12 +224,11 @@ public class NewRegisseur extends JDialog {
 			}
 			insert = new Insert("dvd_verleih",con);
 			
-			// Auf Aufruf aus dem NewDVD Dialog prüfen
+			// Auf Aufruf aus dem NewDVD Dialog pruefen
 			if (fromNewDVD = false){
-
 			try {
-				insert.insertRegisseur(this,firstName, lastName);
-
+				//Regisseur INSERT aufrufen
+				insert.insertRegisseur(this, firstName, lastName);
 			} catch (InvalidParameterException e) {
 				// Fehlercode 002
 				e.printStackTrace();
@@ -243,8 +238,8 @@ public class NewRegisseur extends JDialog {
 			}
 			else if (fromNewDVD = true){
 				try {
+					//Regisseur INSERT aufrufen
 					insert.insertRegisseur(newDVD,this,firstName, lastName);
-
 				} catch (InvalidParameterException e) {
 					// Fehlercode 002
 					e.printStackTrace();
@@ -258,15 +253,12 @@ public class NewRegisseur extends JDialog {
 							null,
 							"Sie haben ein Pflichtfeld nicht ausgefüllt! Bitte überprüfen Sie ihre Angaben in den Feldern",
 							"Regisseurerstellung", JOptionPane.ERROR_MESSAGE);
-
 		}
-
 	}
 
 	public void regisseurAdded(String firstName, String lastName) {
 		// Wenn Benutzer erfolgreich hinzu gefügt wurde, die mitteilen und
 		// neues, leeres Eingabefenster öffnen.
-
 		JOptionPane.showMessageDialog(null, ("Der Regisseur " + firstName + " "
 				+ lastName + " wurde erfolgreich angelegt!"),
 				"Vorgang erfolgreich", JOptionPane.INFORMATION_MESSAGE);
@@ -276,7 +268,5 @@ public class NewRegisseur extends JDialog {
 		// Neues, leeres Erstellungsfenster instantiieren
 		NewRegisseur dialog = new NewRegisseur();
 		dialog.setVisible(true);
-
 	}
-
 }

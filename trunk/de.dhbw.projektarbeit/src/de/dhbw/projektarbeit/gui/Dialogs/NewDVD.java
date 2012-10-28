@@ -100,10 +100,8 @@ public class NewDVD extends JDialog {
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		JLabel lblTitel = new JLabel("Titel");
 		txtTitle = new JTextField();
-		txtTitle.setText("Title");
 		txtTitle.setColumns(22);
 		txtOriginaltitle = new JTextField();
-		txtOriginaltitle.setText("OriginalTitle");
 		txtOriginaltitle.setColumns(22);
 		JLabel lblOriginaltitel = new JLabel("Originaltitel");
 		txtEancode = new JTextField();
@@ -120,7 +118,6 @@ public class NewDVD extends JDialog {
 		JLabel lblEanCode = new JLabel("EAN Code");
 
 		txtGenre = new JTextField();
-		txtGenre.setText("Genre");
 		txtGenre.setColumns(22);
 
 		JLabel lblGenre = new JLabel("Genre");
@@ -788,7 +785,7 @@ public class NewDVD extends JDialog {
 				getRootPane().setDefaultButton(addButton);
 			}
 			{
-				cancelButton = new JButton("Cancel");
+				cancelButton = new JButton("Abbrechen");
 				cancelButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						dispose();

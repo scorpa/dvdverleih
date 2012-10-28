@@ -377,6 +377,7 @@ public class EditCustomer extends JDialog {
 								"Verbindung zum SQL Server fehlgeschlagen. Fehlercode 005");
 					}
 					
+					//
 					update = new Update("dvd_verleih",con);
 					update.updateCustomer(id, firstname, lastname, zipcode, city, street, streetno, email, telefone, birthdate);
 					tbCustomer.setValueAt(txtFirstName.getText(), tbCustomer.getSelectedRow(), 1);
