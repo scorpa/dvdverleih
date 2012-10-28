@@ -1,17 +1,19 @@
 package de.dhbw.projektarbeit.gui.Dialogs;
 
 import java.awt.BorderLayout;
-import java.awt.Dialog;
 import java.awt.Dimension;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.security.InvalidParameterException;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.DriverManager;
 import java.text.SimpleDateFormat;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
@@ -27,26 +29,22 @@ import javax.swing.border.EmptyBorder;
 import org.jdesktop.swingx.JXDatePicker;
 
 import de.dhbw.projektarbeit.db.request.Insert;
-import de.dhbw.projektarbeit.logic.Main;
-import java.awt.event.KeyAdapter;
 
 public class NewCustomer extends JDialog {
 
 	private final JPanel contentPanel = new JPanel();
 	private SimpleDateFormat sdf;
 	private Date dateBirthdate;
-	private JTextField txtFirstname;
-	private JTextField txtLastname;
-	private JTextField txtZipcode;
-	private JTextField txtCity;
-	private JTextField txtEmail;
-	private JTextField txtStreet;
-	private JTextField txtStreetno;
-	private JTextField txtTelefone;
+	private JTextField txtFirstname, txtLastname, txtZipcode, txtCity, txtEmail, txtStreet, txtStreetno, txtTelefone;
 	private JButton cancelButton;
 	private JXDatePicker dpBirthdate; 
 	private Connection con;
 	private Insert insert;
+	private Pattern pattern;
+	private Matcher matcher;
+	private static final String EMAIL_PATTERN = 
+		"^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
+		+ "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
 
 	/**
 	 * Launch the application.
@@ -83,10 +81,8 @@ public class NewCustomer extends JDialog {
 
 		txtFirstname = new JTextField();
 		txtFirstname.setColumns(22);
-		txtFirstname.setText("FirstName");
 
 		txtLastname = new JTextField();
-		txtLastname.setText("LastName");
 		txtLastname.setColumns(22);
 
 		JLabel lblNachname = new JLabel("Nachname");
@@ -103,7 +99,6 @@ public class NewCustomer extends JDialog {
 		txtZipcode.setColumns(5);
 
 		txtCity = new JTextField();
-		txtCity.setText("City");
 		txtCity.setColumns(10);
 
 		JLabel lblOrt = new JLabel("Ort");
@@ -111,21 +106,17 @@ public class NewCustomer extends JDialog {
 		JLabel lblEmailAdresse = new JLabel("E-Mail Adresse");
 
 		txtEmail = new JTextField();
-		txtEmail.setText("EMail");
 		txtEmail.setColumns(22);
 
 		txtStreet = new JTextField();
-		txtStreet.setText("Street");
 		txtStreet.setColumns(15);
 
 		txtStreetno = new JTextField();
-		txtStreetno.setText("StreetNo");
 		txtStreetno.setColumns(5);
 
 		JLabel lblStrasseUndHausnummer = new JLabel("Strasse und Hausnummer");
 
 		txtTelefone = new JTextField();
-		txtTelefone.setText("Telefone");
 		txtTelefone.setColumns(15);
 
 		JLabel lblTelefonnummer = new JLabel("Telefonnummer");
@@ -469,13 +460,13 @@ public class NewCustomer extends JDialog {
 		telefone = txtTelefone.getText();
 		zipCode = txtZipcode.getText();
 
-		// Überprüfung auf Parsefehler bei der Postleitzahl mit entsprechender
+		// Ueberpruefung auf Parsefehler bei der Postleitzahl mit entsprechender
 		// Fehlermeldung 
 		if (zipCode.replaceAll(" ", "").equals("")) {
 		
 		}
-
-		// Auf leere Pflichtfelder überprüfen
+		
+		// Auf leere Pflichtfelder ueberpruefen
 		if (firstName.replaceAll(" ", "").equals("")) {
 			   go = false;
 			  } else if (lastName.replaceAll(" ", "").equals("")) {
@@ -495,6 +486,11 @@ public class NewCustomer extends JDialog {
 			  } else if (dateBirthdate == null) {
 			   go = false;
 			  }
+		
+		//Ueberpruefung EmailFeld
+		//if(validate(txtEmail.getText()) == false){
+		//	go=false;
+		//}
 
 		// Aufrufen der Methode CreateCustomer
 		if (go == true) {
@@ -523,8 +519,6 @@ public class NewCustomer extends JDialog {
 	private void cancelButtonActionPerfomred(ActionEvent arg0) {
 		// Canclebutton gedrückt
 		dispose();
-		
-
 	}
 	
 	/**
@@ -541,10 +535,24 @@ public class NewCustomer extends JDialog {
 		// Neues, leeres Erstellungsfenster instantiieren
 		NewCustomer dialog = new NewCustomer();
 		dialog.setVisible(true);
-
-		
 	}
 	
-	
+	private void EmailValidator() {
+		pattern = Pattern.compile(EMAIL_PATTERN);
+	}
+ 
+	/**
+	 * Validate hex with regular expression
+	 * 
+	 * @param hex
+	 *            hex for validation
+	 * @return true valid hex, false invalid hex
+	 */
+	private boolean validate(final String hex) {
+ 
+		matcher = pattern.matcher(hex);
+		return matcher.matches();
+ 
+	}
 
 }

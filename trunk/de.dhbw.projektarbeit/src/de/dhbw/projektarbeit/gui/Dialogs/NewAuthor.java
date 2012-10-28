@@ -81,11 +81,9 @@ public class NewAuthor extends JDialog {
 		JLabel lblVorname = new JLabel("Vorname");
 
 		txtFirstname = new JTextField();
-		txtFirstname.setText("FirstName");
 		txtFirstname.setColumns(22);
 
 		txtLastname = new JTextField();
-		txtLastname.setText("LastName");
 		txtLastname.setColumns(22);
 
 		JLabel lblNachname = new JLabel("Nachname");
