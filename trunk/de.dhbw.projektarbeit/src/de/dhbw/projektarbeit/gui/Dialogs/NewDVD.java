@@ -828,12 +828,12 @@ public class NewDVD extends JDialog {
 			txtEancode.setText(text.substring(0, text.length() - 1));
 		}
 		
-		if (text.length() >= 10){
+		if (text.length() > 13){
 			txtEancode.setText(text.substring(0, text.length() - 1));
 			JOptionPane
 			.showMessageDialog(
 					null,
-					"Der EAN Code darf nur 9 Stellen haben!",
+					"Der EAN Code darf maximal 13 Stellen haben!",
 					"EAN Code", JOptionPane.ERROR_MESSAGE);
 			
 		}
