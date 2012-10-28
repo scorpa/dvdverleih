@@ -14,7 +14,8 @@ import de.dhbw.projektarbeit.db.mysql.MysqlAccess;
 public class Filling {
 
 	/**
-	 * Klasse wird benutzt, um Comboboxen zu füllen
+	 * Klasse für die Methoden zum Füllen von Komboboxen, Tabellen und deren
+	 * Hilfsmethoden
 	 */
 	private String schema = "dvd_verleih";
 	private Connection con;
@@ -42,7 +43,17 @@ public class Filling {
 
 	}
 
-	public Vector<String> fillCbRegisseur() throws Exception {
+	/**
+	 * Methode zur Aktualisierung von Dropdown Menüs nach dem Hinzufügen eines
+	 * Eintrags
+	 * 
+	 * @param table
+	 *            --> Tabelle, die aktualisiert werden soll
+	 * @return --> aktualisierter Vektor für das DefaultComboboxModel
+	 * @throws Exception
+	 *             --> Exceptionhandling
+	 */
+	public Vector<String> fillCbs(String table) throws Exception {
 
 		try {
 			getConnection();
@@ -61,9 +72,9 @@ public class Filling {
 			 * Befüllen der Combobox Regisseur mit den Werten aus der DB
 			 * "Select * from dvd_verleih.regisseur"
 			 */
-			fillCbRegisseur.append("Select * from ");
+			fillCbRegisseur.append("SELECT * FROM ");
 			fillCbRegisseur.append(schema);
-			fillCbRegisseur.append(".regisseur");
+			fillCbRegisseur.append("." + table);
 
 			// Abfrage ausführen
 			rset = stmt.executeQuery(fillCbRegisseur.toString());
@@ -90,161 +101,8 @@ public class Filling {
 
 	}
 
-	public Vector<String> fillCbProduction() throws Exception {
-
-		// Verbindung zum SQL Server aufbauen
-		try {
-			con = DriverManager
-					.getConnection("jdbc:mysql://localhost/dvd_verleih?user=root");
-		} catch (SQLException e) {
-			// Verbindung zum SQL Server fehlgeschlagen. Fehlercode 005
-			e.printStackTrace();
-			throw new Exception(
-					"Verbindung zum SQL Server fehlgeschlagen. Fehlercode 005");
-		}
-
-		try {
-
-			// Erstelle Statement und Stringbuffer
-			stmt = con.createStatement();
-			StringBuffer fillCbProduction = new StringBuffer();
-
-			/*
-			 * Befüllen der Combobox Regisseur mit den Werten aus der DB
-			 * "Select * from dvd_verleih.regisseur"
-			 */
-			fillCbProduction.append("Select * from ");
-			fillCbProduction.append(schema);
-			fillCbProduction.append(".production");
-
-			// Abfrage ausführen
-			rset = stmt.executeQuery(fillCbProduction.toString());
-
-			// Vektor für Abfragestrings erstellen
-			Vector<String> results = new Vector();
-
-			// Ergebnisse speichern
-			while (rset.next()) {
-				results.add(rset.getString("FirstName").concat(
-						" " + rset.getString("LastName")));
-			}
-
-			return results;
-
-		} catch (SQLException e) {
-			// Im Falle eines Fehlers Rollback durchführen und Fehlermeldung
-			// schreiben
-			// Fehlercode 004
-			e.printStackTrace();
-			throw new Exception(
-					"Fehler bei der Datenbankabfrage! Fehlercode 006");
-		}
-	}
-
-	public Vector<String> fillCbAuthor() throws Exception {
-
-		// Verbindung zum SQL Server aufbauen
-		try {
-			con = DriverManager
-					.getConnection("jdbc:mysql://localhost/dvd_verleih?user=root");
-		} catch (SQLException e) {
-			// Verbindung zum SQL Server fehlgeschlagen. Fehlercode 005
-			e.printStackTrace();
-			throw new Exception(
-					"Verbindung zum SQL Server fehlgeschlagen. Fehlercode 005");
-		}
-
-		try {
-
-			// Erstelle Statement und Stringbuffer
-			stmt = con.createStatement();
-			StringBuffer fillCbAuthor = new StringBuffer();
-
-			/*
-			 * Befüllen der Combobox Regisseur mit den Werten aus der DB
-			 * "Select * from dvd_verleih.regisseur"
-			 */
-			fillCbAuthor.append("Select * from ");
-			fillCbAuthor.append(schema);
-			fillCbAuthor.append(".author");
-
-			// Abfrage ausführen
-			rset = stmt.executeQuery(fillCbAuthor.toString());
-
-			// Vektor für Abfragestrings erstellen
-			Vector<String> results = new Vector();
-
-			// Ergebnisse speichern
-			while (rset.next()) {
-				results.add(rset.getString("FirstName").concat(
-						" " + rset.getString("LastName")));
-			}
-
-			return results;
-
-		} catch (SQLException e) {
-			// Im Falle eines Fehlers Rollback durchführen und Fehlermeldung
-			// schreiben
-			// Fehlercode 004
-			e.printStackTrace();
-			throw new Exception(
-					"Fehler bei der Datenbankabfrage! Fehlercode 006");
-		}
-	}
-
-	public Vector<String> fillCbCamera() throws Exception {
-
-		// Verbindung zum SQL Server aufbauen
-		try {
-			con = DriverManager
-					.getConnection("jdbc:mysql://localhost/dvd_verleih?user=root");
-		} catch (SQLException e) {
-			// Verbindung zum SQL Server fehlgeschlagen. Fehlercode 005
-			e.printStackTrace();
-			throw new Exception(
-					"Verbindung zum SQL Server fehlgeschlagen. Fehlercode 005");
-		}
-
-		try {
-
-			// Erstelle Statement und Stringbuffer
-			stmt = con.createStatement();
-			StringBuffer fillCbCamera = new StringBuffer();
-
-			/*
-			 * Befüllen der Combobox Regisseur mit den Werten aus der DB
-			 * "Select * from dvd_verleih.regisseur"
-			 */
-			fillCbCamera.append("Select * from ");
-			fillCbCamera.append(schema);
-			fillCbCamera.append(".camera");
-
-			// Abfrage ausführen
-			rset = stmt.executeQuery(fillCbCamera.toString());
-
-			// Vektor für Abfragestrings erstellen
-			Vector<String> results = new Vector();
-
-			// Ergebnisse speichern
-			while (rset.next()) {
-				results.add(rset.getString("FirstName").concat(
-						" " + rset.getString("LastName")));
-			}
-
-			return results;
-
-		} catch (SQLException e) {
-			// Im Falle eines Fehlers Rollback durchführen und Fehlermeldung
-			// schreiben
-			// Fehlercode 004
-			e.printStackTrace();
-			throw new Exception(
-					"Fehler bei der Datenbankabfrage! Fehlercode 006");
-		}
-	}
-
 	/**
-	 * Methode zur Listenfüllung
+	 * Methode zur Listenfüllung in den JTables
 	 * 
 	 * @return --> Returnwert in Form eines Objektarrays für die Tabellensicht
 	 * @tabelle --> Tabelle, die gefüllt werden soll
@@ -255,8 +113,7 @@ public class Filling {
 
 		// Verbindung zum SQL Server aufbauen
 		try {
-			con = DriverManager
-					.getConnection("jdbc:mysql://localhost/dvd_verleih?user=root");
+			getConnection();
 		} catch (SQLException e) {
 			// Verbindung zum SQL Server fehlgeschlagen. Fehlercode 005
 			e.printStackTrace();
@@ -310,7 +167,7 @@ public class Filling {
 		} catch (SQLException e) {
 			// Im Falle eines Fehlers Rollback durchführen und Fehlermeldung
 			// schreiben
-			// Fehlercode 004
+			// Fehlercode 006
 			e.printStackTrace();
 			throw new Exception(
 					"Fehler bei der Datenbankabfrage! Fehlercode 006");
@@ -404,7 +261,8 @@ public class Filling {
 	 *            --> Feldbezeichnugn der ID
 	 * @param IDArray
 	 *            --> IDArray[Rubrikvariable][Zeilenzähler]Arrays mit den IDs
-	 * @return --> Objekt; Rückgabe des Zeilenwerts des, zur ID gehörenden, Tabelleneintags
+	 * @return --> Objekt; Rückgabe des Zeilenwerts des, zur ID gehörenden,
+	 *         Tabelleneintags
 	 * @throws Exception
 	 *             --> Exceptionhandling
 	 */
@@ -413,7 +271,7 @@ public class Filling {
 
 		// Objekt für Ergebnisstrings erstellen
 		Object results = null;
-		
+
 		// Verbindung zur SQL DB herstellen
 		try {
 			getConnection();
@@ -421,9 +279,9 @@ public class Filling {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		try {
-			// Erstelle Statement 
+			// Erstelle Statement
 			stmt = con.createStatement();
 
 			/*

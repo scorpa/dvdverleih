@@ -183,7 +183,7 @@ public class NewDVD extends JDialog {
 		// Instantiierung von Combofield Variablen
 		// ArrayList mit DB Daten von Regisseuren füllen
 		try {
-			dbRegisseur = fill.fillCbRegisseur();
+			dbRegisseur = fill.fillCbs("regisseur");
 		} catch (IllegalArgumentException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
@@ -217,7 +217,7 @@ public class NewDVD extends JDialog {
 		// Instantiierung von Combofield Variablen
 		// ArrayList mit DB Daten von Regisseuren füllen
 		try {
-			dbProduction = fill.fillCbProduction();
+			dbProduction = fill.fillCbs("production");
 		} catch (IllegalArgumentException e1) {
 			e1.printStackTrace();
 		}
@@ -240,7 +240,7 @@ public class NewDVD extends JDialog {
 		// Instantiierung von Combofield Variablen
 		// ArrayList mit DB Daten von Regisseuren füllen
 		try {
-			dbCamera = fill.fillCbCamera();
+			dbCamera = fill.fillCbs("camera");
 		} catch (IllegalArgumentException e1) {
 			e1.printStackTrace();
 		}
@@ -265,7 +265,7 @@ public class NewDVD extends JDialog {
 		// Instantiierung von Combofield Variablen
 		// ArrayList mit DB Daten von Regisseuren füllen
 		try {
-			dbAuthor = fill.fillCbAuthor();
+			dbAuthor = fill.fillCbs("author");
 		} catch (IllegalArgumentException e1) {
 			e1.printStackTrace();
 		}
