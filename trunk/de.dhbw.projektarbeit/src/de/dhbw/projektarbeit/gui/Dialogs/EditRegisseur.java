@@ -26,6 +26,7 @@ import javax.swing.ListSelectionModel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
+import de.dhbw.projektarbeit.db.request.Delete;
 import de.dhbw.projektarbeit.db.request.Filling;
 import de.dhbw.projektarbeit.db.request.Update;
 
@@ -205,8 +206,12 @@ public class EditRegisseur extends JDialog {
 			JButton btnDelete = new JButton("L\u00F6schen");
 			btnDelete.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
-					
-					
+					try {
+						btnDeleteActionPerformed(arg0);
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 				}
 			});
 			
@@ -318,5 +323,22 @@ public class EditRegisseur extends JDialog {
 					throw new Exception(
 							"Bei der Uebertragung der Parameter ist ein Fehler aufgetreten! Fehlercode: 002");
 				}
+	}
+	
+	private void btnDeleteActionPerformed(ActionEvent arg0) throws Exception {
+		// Verbindung zum SQL Server herstellen
+		try {
+			con = DriverManager
+					.getConnection("jdbc:mysql://localhost/dvd_verleih?user=root");
+		} catch (SQLException b) {
+			// Verbindung zum SQL Server fehlgeschlagen. Fehlercode 005
+			b.printStackTrace();
+			throw new Exception(
+					"Verbindung zum SQL Server fehlgeschlagen. Fehlercode 005");
+		}
+		// Aufruf der Deletemethode
+		Delete delete = new Delete("dvd_verleih", con);
+		delete.deleteEdits(selectedID, txtFirstName.getText(), txtLastName.getText(), "author", "Author_ID");
+
 	}
 }

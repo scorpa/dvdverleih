@@ -360,7 +360,6 @@ public class EditAuthor extends JDialog {
 	}
 
 	private void btnDeleteActionPerformed(ActionEvent e) throws Exception {
-		String firstname, lastname;
 		// Verbindung zum SQL Server herstellen
 		try {
 			con = DriverManager
@@ -373,7 +372,7 @@ public class EditAuthor extends JDialog {
 		}
 		// Aufruf der Deletemethode
 		Delete delete = new Delete("dvd_verleih", con);
-		delete.deleteEdits(selectedID, firstname = txtFirstName.getText(), lastname = txtLastName.getText(), "author", "Author_ID");
+		delete.deleteEdits(selectedID, txtFirstName.getText(), txtLastName.getText(), "author", "Author_ID");
 
 	}
 }

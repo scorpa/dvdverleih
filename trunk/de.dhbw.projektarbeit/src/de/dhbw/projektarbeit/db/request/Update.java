@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 
 import de.dhbw.projektarbeit.db.db.Request;

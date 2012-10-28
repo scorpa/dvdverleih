@@ -1,6 +1,7 @@
 package de.dhbw.projektarbeit.db.request;
 
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
@@ -15,7 +16,7 @@ import javax.swing.JOptionPane;
 public class Delete {
 
 	private String schema;
-
+	private ResultSet rset;
 	private Connection con;
 	private Statement stmt;
 
@@ -45,32 +46,41 @@ public class Delete {
 			stmt = con.createStatement();
 			StringBuffer buffer = new StringBuffer();
 			
-			buffer.append("SELECT ");
-			buffer.append(field);
-			buffer.append(" FROM ");
-			buffer.append(schema);
+			buffer.append("SELECT COUNT(");
+			buffer.append(field + ")");
+			buffer.append(" FROM DVD");
+						
 			
-			
-			
-			buffer.append("DELETE FROM ");
-			buffer.append(schema);
-			buffer.append(".");
-			buffer.append(form);
-			buffer.append(" WHERE ");
-			buffer.append(field);
-			buffer.append(" = ");
-			buffer.append(id);
-			
-			
-			stmt.executeUpdate(buffer.toString());
+			rset = stmt.executeQuery(buffer.toString());
+			int count = 0;
+			  while(rset.next()) {
+			    count++; // Zeilen-ZŠhler erhšhen
+			  }
+			  if(count <= 0){
+				buffer = new StringBuffer();
+			  	buffer.append("DELETE FROM ");
+				buffer.append(schema);
+				buffer.append(".");
+				buffer.append(form);
+				buffer.append(" WHERE ");
+				buffer.append(field);
+				buffer.append(" = ");
+				buffer.append(id);
+				stmt.executeUpdate(buffer.toString());
 
-			// Neuerfasste Daten auf DB schreiben
-			con.commit();
-			con.setAutoCommit(true);
+				// Neuerfasste Daten auf DB schreiben
+				con.commit();
+				con.setAutoCommit(true);
+				
+				// Bei erfolgreichem Löschen Nachricht bringen
+				JOptionPane.showMessageDialog(null, ("Der Eintrag " + firstname + " " + lastname + " wurde erfolgreich gelöscht!"),
+						"Vorgang erfolgreich", JOptionPane.INFORMATION_MESSAGE);
+			  }else{
+				  JOptionPane.showMessageDialog(null, ("Der Eintrag konnte nicht gelšscht werden, da dieser noch benutzt wird!"),
+							"Vorgang abgebrochen", JOptionPane.WARNING_MESSAGE); 
+			  }
 			
-			// Bei erfolgreichem Löschen Nachricht bringen
-			JOptionPane.showMessageDialog(null, ("Der Eintrag " + firstname + " " + lastname + " wurde erfolgreich gelöscht!"),
-					"Vorgang erfolgreich", JOptionPane.INFORMATION_MESSAGE);
+			
 			
 		} catch (SQLException e) {
 		
