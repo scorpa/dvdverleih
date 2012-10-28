@@ -77,15 +77,15 @@ public class MysqlAccess {
 			DriverManager.setLoginTimeout(10);
 
 			// DB-Verbindungsobjekt erzeugen
-			con = DriverManager.getConnection(dbUrl, user, password);
+			con = DriverManager.getConnection("jdbc:mysql://localhost/dvd_verleih?user=root");
 
 		} catch (SQLException e) {
 			e.printStackTrace();
-			throw new Exception("Fehler beim Verbindungsaufbau.");
+			throw new Exception("Verbindung zum SQL Server fehlgeschlagen. Fehlercode 005");
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 			throw new Exception(
-					"Datenbank-Treiber konnte nicht gefunden werden.");
+					"Datenbank-Treiber konnte nicht gefunden werden! Fehlercode 009");
 		}
 
 		return con;

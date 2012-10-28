@@ -31,6 +31,7 @@ public class NewProducer extends JDialog {
 	private Connection con;
 	private NewDVD newDVD;
 	private boolean fromNewDVD = false;
+	private MysqlAccess mysql;
 
 	/**
 	 * Launch the application.
@@ -184,8 +185,9 @@ public class NewProducer extends JDialog {
 		if (go == true) {
 			// Verbindung zum SQL Server aufbauen
 			try {
-				con = DriverManager
-						.getConnection("jdbc:mysql://localhost/dvd_verleih?user=root");
+				mysql = new MysqlAccess();
+				con = mysql.getConnection();
+
 			} catch (SQLException e) {
 				// Verbindung zum SQL Server fehlgeschlagen. Fehlercode 005
 				e.printStackTrace();

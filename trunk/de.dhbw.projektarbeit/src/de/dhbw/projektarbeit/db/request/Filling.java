@@ -9,6 +9,8 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Vector;
 
+import de.dhbw.projektarbeit.db.mysql.MysqlAccess;
+
 public class Filling {
 
 	/**
@@ -20,18 +22,30 @@ public class Filling {
 	private ResultSet rset;
 	private ResultSetMetaData rsmd;
 	private Object[][] listing;
+	private MysqlAccess mysql;
+	
+	/**
+	 * Stellt die Verbindung mit dem SQL Server über die Methode "getConnection" her
+	 * @throws Exception --> Exceptionhandling
+	 */
+	private void getConnection() throws Exception {
+		try {
+			mysql = new MysqlAccess();
+			con = mysql.getConnection();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
 
 	public Vector<String> fillCbRegisseur() throws Exception {
 
-		// Verbindung zum SQL Server aufbauen
 		try {
-			con = DriverManager
-					.getConnection("jdbc:mysql://localhost/dvd_verleih?user=root");
-		} catch (SQLException e) {
-			// Verbindung zum SQL Server fehlgeschlagen. Fehlercode 005
-			e.printStackTrace();
-			throw new Exception(
-					"Verbindung zum SQL Server fehlgeschlagen. Fehlercode 005");
+			getConnection();
+		} catch (Exception e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
 		}
 
 		try {
@@ -298,6 +312,10 @@ public class Filling {
 					"Fehler bei der Datenbankabfrage! Fehlercode 006");
 		}
 		
+	}
+	
+	public void getRegisseur(Object[] regisseur){
+		 Object[] regisseur = new Object[];
 	}
 	
 }

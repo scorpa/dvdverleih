@@ -35,26 +35,6 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.Date;
 
-/**
- * @author Juli
- *
- */
-/**
- * @author Juli
- *
- */
-/**
- * @author Juli
- *
- */
-/**
- * @author Juli
- *
- */
-/**
- * @author Juli
- *
- */
 public class EditDVD extends JDialog {
 
 	private final JPanel contentPanel = new JPanel();
@@ -62,8 +42,8 @@ public class EditDVD extends JDialog {
 	private JTextField txtOriginalTitle;
 	private JTextField txtEANCode;
 	private JTextField txtGenre;
-	private JSpinner spCountDVD, spDuration;
-	private JComboBox cbProduction, cbFSK, cbRegisseur;
+	private JSpinner spCountDVD, spDuration, spProductionYear;
+	private JComboBox cbProduction, cbFSK, cbRegisseur, cbProdCountry, cbAuthor, cbCamera;
 	private JXDatePicker dpReleaseDate;
 	private JButton okButton;
 	private JButton cancelButton;
@@ -141,8 +121,7 @@ public class EditDVD extends JDialog {
 				cbFSK = new JComboBox();
 				JLabel label_2 = new JLabel("Altersbeschr\u00E4nkung");
 				JLabel label_3 = new JLabel("Herstellungsland");
-				JComboBox cbProdCountry = new JComboBox();
-				cbProdCountry.setSelectedIndex(11);
+				cbProdCountry = new JComboBox();
 				JLabel lblRegisseur = new JLabel("Regisseur");
 				JLabel label_5 = new JLabel("Produzent");
 				JLabel label_6 = new JLabel("Genre");
@@ -151,7 +130,7 @@ public class EditDVD extends JDialog {
 				txtEANCode.setText("EANCode");
 				txtEANCode.setColumns(22);
 				JLabel label_8 = new JLabel("Produktionsjahr");
-				JSpinner spProductionYear = new JSpinner();
+				spProductionYear = new JSpinner();
 				spProductionYear.setPreferredSize(new Dimension(40, 28));
 				spProductionYear.setModel(new SpinnerNumberModel(1920, 1920,
 						2020, 1));
@@ -179,13 +158,13 @@ public class EditDVD extends JDialog {
 				
 				JLabel lblCamera = new JLabel("Kamera");
 				
-				JComboBox cbCamera = new JComboBox();
+				cbCamera = new JComboBox();
 				
 				JButton button = new JButton("+");
 				
 				JLabel lblAuthor = new JLabel("Autor");
 				
-				JComboBox cbAuthor = new JComboBox();
+				cbAuthor = new JComboBox();
 				
 				JButton btnNewAuthor = new JButton("+");
 				GroupLayout gl_panel = new GroupLayout(panel);
@@ -414,6 +393,12 @@ public class EditDVD extends JDialog {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		};
+		
+		
+	}
+	
+	public void IDRegisseur(){
+		
 	}
 	
 	/**
@@ -426,17 +411,20 @@ public class EditDVD extends JDialog {
 			txtTitle.setText((String) tbDVD.getValueAt(tbDVD.getSelectedRow(), 1));
 			txtOriginalTitle.setText((String) tbDVD.getValueAt(tbDVD.getSelectedRow(), 2));
 			txtGenre.setText((String) tbDVD.getValueAt(tbDVD.getSelectedRow(), 3));
-			cbProduction.setSelectedItem(tbDVD.getValueAt(tbDVD.getSelectedRow(), 4));
-			dpReleaseDate.setDate((Date) tbDVD.getValueAt(tbDVD.getSelectedRow(), 5));
-			spDuration.setValue(tbDVD.getValueAt(tbDVD.getSelectedRow(), 6));
-			cbFSK.setSelectedItem(tbDVD.getValueAt(tbDVD.getSelectedRow(), 7));
-			cbRegisseur.setSelectedItem(tbDVD.getValueAt(tbDVD.getSelectedRow(), 8));
-			dpBirthdate.setDate((Date) tbDVD.getValueAt(tbDVD.getSelectedRow(), 9));
-			selectedID = (Integer) tbDVD.getValueAt(tbDVD.getSelectedRow(), 0);
+			cbProdCountry.setSelectedItem(tbDVD.getValueAt(tbDVD.getSelectedRow(), 4));
+			spProductionYear.setValue(tbDVD.getValueAt(tbDVD.getSelectedRow(), 5));
+			dpReleaseDate.setDate((Date) tbDVD.getValueAt(tbDVD.getSelectedRow(), 6));
+			spDuration.setValue(tbDVD.getValueAt(tbDVD.getSelectedRow(), 7));
+			cbFSK.setSelectedItem(tbDVD.getValueAt(tbDVD.getSelectedRow(), 8));
+			cbRegisseur.setSelectedItem(tbDVD.getValueAt(tbDVD.getSelectedRow(), 9));
+			cbAuthor.setSelectedItem(tbDVD.getValueAt(tbDVD.getSelectedRow(), 10));
+			cbProduction.setSelectedItem(tbDVD.getValueAt(tbDVD.getSelectedRow(), 11));
+			cbCamera.setSelectedItem(tbDVD.getValueAt(tbDVD.getSelectedRow(), 12));
+			txtEANCode.setText((String) tbDVD.getValueAt(tbDVD.getSelectedRow(), 13));
 			
-		} catch (Exception e) {
+		} catch (Exception a) {
 			// TODO: handle exception
-			e.printStackTrace();
+			a.printStackTrace();
 		}
 	}
 }
