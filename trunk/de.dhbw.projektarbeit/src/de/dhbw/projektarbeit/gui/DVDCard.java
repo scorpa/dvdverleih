@@ -25,40 +25,47 @@ import javax.swing.ListSelectionModel;
 public class DVDCard extends JPanel {
 
 	private JTable tbDVD;
+	private Object[][] dvdData;
+	private DefaultTableModel model;
+	Filling fill = new Filling();
+	// Spaltenüberschriften
+	private String[] columnNames = { "Menge", "Titel", "Originaltitel",
+			"Genre", "Produktionsland", "Produktionsjahr", "Erscheinungsdatum",
+			"Länge", "Altersfreigabe", "Regie", "Autor", "Produkiton",
+			"Kamera", "EAN Code" };
 
 	/**
-	 * Create the panel.
+	 * Standardkonstruktor
 	 */
 	public DVDCard() {
 		getTables();
-
+		// Ersetzen der Fremdschlüssel mit entsprechenden Einträgen aus den
+		// Tabellen auf der DB
+		fill.getNameFromID(dvdData);
+		setWindow();
 	}
 
+	/**
+	 * Methode zum generieren der Gesamtübersicht vorhandener DVDs aus der DB
+	 */
 	private void getTables() {
-		// TODO Auto-generated method stub
-		setLayout(new CardLayout(0, 0));
-		
-		
-		
-		// Spaltenüberschriften
-		String[] columnNames = { "Menge", "Titel", "Originaltitel", "Genre",
-				"Produktionsland", "Produktionsjahr", "Erscheinungsdatum",
-				"Länge", "Altersfreigabe", "Regie", "Autor", "Produkiton",
-				"Kamera", "EAN Code" };
-
-		Filling fill = new Filling();
-
-		Object[][] dvdData = null;
+		// Aufruf der Fill-Methode
 		try {
 			dvdData = fill.getTable("dvd");
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		};
+		}
+		;
+	}
 
-
-		DefaultTableModel model = new DefaultTableModel(dvdData, columnNames);
-		tbDVD = new JTableNotEditable(model,columnNames);
+	/**
+	 * Methode zur Carddarstellung
+	 */
+	private void setWindow() {
+		setLayout(new CardLayout(0, 0));
+		model = new DefaultTableModel(dvdData, columnNames);
+		tbDVD = new JTableNotEditable(model, columnNames);
 		tbDVD.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		tbDVD.setFocusable(false);
 		tbDVD.setModel(model);
@@ -66,7 +73,5 @@ public class DVDCard extends JPanel {
 		JScrollPane scrollPane = new JScrollPane(tbDVD);
 		scrollPane.setName("scrollDVD");
 		add(scrollPane, "name_25881698244854");
-
 	}
-
 }
