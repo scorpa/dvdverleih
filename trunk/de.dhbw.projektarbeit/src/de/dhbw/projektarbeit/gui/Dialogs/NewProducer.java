@@ -90,7 +90,7 @@ public class NewProducer extends JDialog {
 				getRootPane().setDefaultButton(addButton);
 			}
 			{
-				cancelButton = new JButton("Cancel");
+				cancelButton = new JButton("Abbrechen");
 				cancelButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent arg0) {
 						dispose();

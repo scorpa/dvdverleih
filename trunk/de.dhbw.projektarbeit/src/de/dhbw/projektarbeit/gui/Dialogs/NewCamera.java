@@ -54,7 +54,7 @@ public class NewCamera extends JDialog {
 	}
 
 	/**
-	 * Konstruktor für den Aufruf aus dem newDVD Dialog
+	 * Konstruktor fŸr den Aufruf aus dem newDVD Dialog
 	 * @param newDVD --> Klasseninformationen
 	 */
 	public NewCamera(NewDVD newDVD) {
@@ -151,6 +151,7 @@ public class NewCamera extends JDialog {
 				addButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent arg0) {
 						try {
+							//auf ActionListener reagieren
 							addButtonActionPerforemd(arg0);
 						} catch (Exception e) {
 							e.printStackTrace();
@@ -161,9 +162,10 @@ public class NewCamera extends JDialog {
 				getRootPane().setDefaultButton(addButton);
 			}
 			{
-				cancelButton = new JButton("Cancel");
+				cancelButton = new JButton("Abbrechen");
 				cancelButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent arg0) {
+						//Fenster schlie§en
 						dispose();
 					}
 				});
@@ -196,13 +198,13 @@ public class NewCamera extends JDialog {
 	}
 
 	private void addButtonActionPerforemd(ActionEvent arg0) throws Exception {
-		// Hinzufügen-Button gedrückt
+		// HinzufŸgen-Button gedrŸckt
 		String firstName, lastName;
 		boolean go = true;
 		firstName = txtFirstname.getText();
 		lastName = txtLastname.getText();
 
-		// Auf leere Pflichtfelder überprüfen
+		// Auf leere Pflichtfelder ŸberprŸfen
 		if (firstName.replaceAll(" ", "").equals("")) {
 			go = false;
 		} else if (lastName.replaceAll(" ", "").equals("")) {
@@ -222,7 +224,7 @@ public class NewCamera extends JDialog {
 			}
 			insert = new Insert("dvd_verleih",con);
 			
-			// Auf Aufruf aus dem NewDVD Dialog prüfen
+			// Auf Aufruf aus dem NewDVD Dialog prŸfen
 			if (fromNewDVD = false){
 
 			try {

@@ -40,10 +40,18 @@ public class Delete {
 
 	public void deleteEdits(int id, String firstname, String lastname, String form, String field)
 		throws Exception {
-		try {
+		try {	
 			con.setAutoCommit(false);
 			stmt = con.createStatement();
 			StringBuffer buffer = new StringBuffer();
+			
+			buffer.append("SELECT ");
+			buffer.append(field);
+			buffer.append(" FROM ");
+			buffer.append(schema);
+			
+			
+			
 			buffer.append("DELETE FROM ");
 			buffer.append(schema);
 			buffer.append(".");

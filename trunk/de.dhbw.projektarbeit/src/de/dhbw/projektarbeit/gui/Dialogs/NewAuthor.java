@@ -151,6 +151,7 @@ public class NewAuthor extends JDialog {
 				addButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent arg0) {
 						try {
+							//Auf ActionListener reagieren 
 							addButtonActionPerforemd(arg0);
 						} catch (Exception e) {
 							e.printStackTrace();
@@ -161,9 +162,10 @@ public class NewAuthor extends JDialog {
 				getRootPane().setDefaultButton(addButton);
 			}
 			{
-				cancelButton = new JButton("Cancel");
+				cancelButton = new JButton("Abbrechen");
 				cancelButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent arg0) {
+						//Fenster schlie§en
 						dispose();
 					}
 				});
@@ -254,7 +256,6 @@ public class NewAuthor extends JDialog {
 							"Regisseurerstellung", JOptionPane.ERROR_MESSAGE);
 
 		}
-
 	}
 
 	public void authorAdded(String firstName, String lastName) {
@@ -270,7 +271,5 @@ public class NewAuthor extends JDialog {
 		// Neues, leeres Erstellungsfenster instantiieren
 		NewAuthor dialog = new NewAuthor();
 		dialog.setVisible(true);
-
 	}
-
 }
