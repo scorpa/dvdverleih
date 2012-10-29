@@ -53,7 +53,7 @@ CREATE TABLE `author` (
   `FirstName` varchar(45) DEFAULT NULL,
   `LastName` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`Author_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -62,7 +62,7 @@ CREATE TABLE `author` (
 
 LOCK TABLES `author` WRITE;
 /*!40000 ALTER TABLE `author` DISABLE KEYS */;
-INSERT INTO `author` VALUES (1,'Test','Test');
+INSERT INTO `author` VALUES (1,'Test','Test'),(2,'Schniedel','Wutzi');
 /*!40000 ALTER TABLE `author` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -87,7 +87,7 @@ CREATE TABLE `camera` (
 
 LOCK TABLES `camera` WRITE;
 /*!40000 ALTER TABLE `camera` DISABLE KEYS */;
-INSERT INTO `camera` VALUES (1,'Test','Test');
+INSERT INTO `camera` VALUES (1,'Camera','Mann');
 /*!40000 ALTER TABLE `camera` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -110,7 +110,7 @@ CREATE TABLE `customer` (
   `Telefone` varchar(45) DEFAULT NULL,
   `Birthdate` date DEFAULT NULL,
   PRIMARY KEY (`Customer_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COMMENT='Customer Data';
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COMMENT='Customer Data';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -119,7 +119,7 @@ CREATE TABLE `customer` (
 
 LOCK TABLES `customer` WRITE;
 /*!40000 ALTER TABLE `customer` DISABLE KEYS */;
-INSERT INTO `customer` VALUES (3,'Julian','Brunner','09934','Plochingen','Johanniterstr. ','20/2','h0nKi@gmx.de','0176/70902185','1986-11-22'),(4,'Romina','Möller','73207','Plochingen','Johanniterstr. ','20/2','romy_moeller@yahoo.de','07153/9243679','1988-02-29'),(5,'Nataliia','Makara','70174','Stuttgart','Holzgartenstr.','9a','nataliia.makara@gmail.com','01906666666','1986-07-25');
+INSERT INTO `customer` VALUES (3,'Julian','Brunner','09934','Plochingen','Johanniterstr. ','20/2','h0nKi@gmx.de','0176/70902185','1986-11-22'),(4,'Romina','Möller','73207','Plochingen','Johanniterstr. ','20/2','romy_moeller@yahoo.de','07153/9243679','1988-02-29'),(5,'Nataliia','Makara','70174','Stuttgart','Holzgartenstr.','9a','nataliia.makara@gmail.com','01906666666','1986-07-25'),(6,'FirstName','LastName','43645','City','Street','StreetNo','EMail','Telefone','2012-10-26');
 /*!40000 ALTER TABLE `customer` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -144,7 +144,7 @@ CREATE TABLE `dvd` (
   `Author_ID` int(11) NOT NULL,
   `Production_ID` int(11) NOT NULL,
   `Camera_ID` int(11) NOT NULL,
-  `Barcode` int(11) NOT NULL,
+  `Barcode` varchar(13) NOT NULL,
   PRIMARY KEY (`Barcode`),
   KEY `fk_dvd_author_idx` (`Author_ID`),
   KEY `fk_dvd_camera_idx` (`Camera_ID`),
@@ -163,31 +163,8 @@ CREATE TABLE `dvd` (
 
 LOCK TABLES `dvd` WRITE;
 /*!40000 ALTER TABLE `dvd` DISABLE KEYS */;
-INSERT INTO `dvd` VALUES (127,'321','321','31','31',32,'2012-01-02',21,'321',11,1,2,1,1232),(1,'Title','OriginalTitle','Genre','USA',2012,'2012-10-25',1,'ab 0 Jahre',11,1,2,1,123123),(1,'Title','OriginalTitle','Genre','USA',2012,'2012-10-25',1,'ab 0 Jahre',11,1,2,1,123456789),(1,'Title','OriginalTitle','Genre','USA',2012,'2012-10-25',1,'ab 0 Jahre',11,1,2,1,999999999),(1,'Title','OriginalTitle','Genre','USA',2012,'2012-10-25',1,'ab 0 Jahre',11,1,2,1,1312312312);
+INSERT INTO `dvd` VALUES (1,'Title','OriginalTitle','Genre','USA',2012,'2012-10-25',1,'ab 0 Jahre',11,1,2,1,'123123'),(127,'321','321','31','31',32,'2012-01-02',21,'321',11,1,2,1,'1232'),(1,'Title','OriginalTitle','Genre','USA',2012,'2012-10-25',1,'ab 0 Jahre',11,1,2,1,'123456789'),(1,'Title','OriginalTitle','Genre','USA',2012,'2012-10-25',1,'ab 0 Jahre',11,1,2,1,'1312312312'),(1,'Fuck','Fuck you really','Alletandere','Italien',1940,'1940-04-23',120,'indiziert',11,2,3,1,'2343534534534'),(1,'Title','OriginalTitle','Genre','USA',2012,'2012-10-25',1,'ab 0 Jahre',11,1,2,1,'999999999');
 /*!40000 ALTER TABLE `dvd` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `price`
---
-
-DROP TABLE IF EXISTS `price`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `price` (
-  `Price_ID` int(11) NOT NULL AUTO_INCREMENT,
-  `Price1` double DEFAULT NULL,
-  PRIMARY KEY (`Price_ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `price`
---
-
-LOCK TABLES `price` WRITE;
-/*!40000 ALTER TABLE `price` DISABLE KEYS */;
-/*!40000 ALTER TABLE `price` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -241,123 +218,8 @@ INSERT INTO `regisseur` VALUES (11,'Steven ','Spielberg');
 UNLOCK TABLES;
 
 --
--- Table structure for table `rental`
+-- Dumping routines for database 'dvd_verleih'
 --
-
-DROP TABLE IF EXISTS `rental`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `rental` (
-  `Rental_ID` int(11) NOT NULL AUTO_INCREMENT,
-  `Customer_ID` int(11) NOT NULL,
-  `Personal_ID` int(11) NOT NULL,
-  PRIMARY KEY (`Rental_ID`,`Customer_ID`),
-  KEY `fk_rental_customer1_idx` (`Customer_ID`),
-  KEY `fk_rental_agent_idx` (`Personal_ID`),
-  CONSTRAINT `fk_rental_agent` FOREIGN KEY (`Personal_ID`) REFERENCES `agent` (`Personal_ID`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_rental_customer` FOREIGN KEY (`Customer_ID`) REFERENCES `customer` (`Customer_ID`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `rental`
---
-
-LOCK TABLES `rental` WRITE;
-/*!40000 ALTER TABLE `rental` DISABLE KEYS */;
-/*!40000 ALTER TABLE `rental` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `rental_pos`
---
-
-DROP TABLE IF EXISTS `rental_pos`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `rental_pos` (
-  `Pos_ID` tinyint(4) NOT NULL AUTO_INCREMENT,
-  `Rental_ID` int(11) NOT NULL,
-  `Barcode` int(11) NOT NULL,
-  `Quantity` int(11) DEFAULT NULL,
-  PRIMARY KEY (`Pos_ID`,`Rental_ID`),
-  KEY `fk_rental_pos_rental_idx` (`Rental_ID`),
-  KEY `fk_rental_pos_dvd_idx` (`Barcode`),
-  CONSTRAINT `fk_rental_pos_dvd` FOREIGN KEY (`Barcode`) REFERENCES `dvd` (`Barcode`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_rental_pos_rental` FOREIGN KEY (`Rental_ID`) REFERENCES `rental` (`Rental_ID`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `rental_pos`
---
-
-LOCK TABLES `rental_pos` WRITE;
-/*!40000 ALTER TABLE `rental_pos` DISABLE KEYS */;
-/*!40000 ALTER TABLE `rental_pos` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `return`
---
-
-DROP TABLE IF EXISTS `return`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `return` (
-  `Return_ID` int(11) NOT NULL AUTO_INCREMENT,
-  `Customer_ID` int(11) NOT NULL,
-  `Personal_ID` int(11) NOT NULL,
-  PRIMARY KEY (`Return_ID`),
-  KEY `fk_return_customer_idx` (`Customer_ID`),
-  KEY `fk_return_agent_idx` (`Personal_ID`),
-  CONSTRAINT `fk_return_agent` FOREIGN KEY (`Personal_ID`) REFERENCES `agent` (`Personal_ID`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_return_customer` FOREIGN KEY (`Customer_ID`) REFERENCES `customer` (`Customer_ID`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='		';
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `return`
---
-
-LOCK TABLES `return` WRITE;
-/*!40000 ALTER TABLE `return` DISABLE KEYS */;
-/*!40000 ALTER TABLE `return` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `return_pos`
---
-
-DROP TABLE IF EXISTS `return_pos`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `return_pos` (
-  `Pos_ID` tinyint(4) NOT NULL AUTO_INCREMENT,
-  `Return_ID` int(11) NOT NULL,
-  `Barcode` int(11) NOT NULL,
-  `Price_ID` int(11) NOT NULL,
-  `Quantity` int(11) DEFAULT NULL,
-  `Rental_period` varchar(45) DEFAULT NULL,
-  `Discount` double DEFAULT NULL,
-  PRIMARY KEY (`Pos_ID`,`Return_ID`),
-  KEY `fk_return_pos_return_idx` (`Return_ID`),
-  KEY `fk_return_pos_price_idx` (`Price_ID`),
-  KEY `fk_return_pos_dvd_idx` (`Barcode`),
-  CONSTRAINT `fk_return_pos_dvd` FOREIGN KEY (`Barcode`) REFERENCES `dvd` (`Barcode`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_return_pos_price` FOREIGN KEY (`Price_ID`) REFERENCES `price` (`Price_ID`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_return_pos_return` FOREIGN KEY (`Return_ID`) REFERENCES `return` (`Return_ID`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `return_pos`
---
-
-LOCK TABLES `return_pos` WRITE;
-/*!40000 ALTER TABLE `return_pos` DISABLE KEYS */;
-/*!40000 ALTER TABLE `return_pos` ENABLE KEYS */;
-UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -368,4 +230,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2012-10-26 11:32:51
+-- Dump completed on 2012-10-29 12:07:59
