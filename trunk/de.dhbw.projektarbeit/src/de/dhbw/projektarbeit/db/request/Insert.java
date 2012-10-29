@@ -881,7 +881,7 @@ public class Insert {
 	 * @throws SQLException
 	 *             --> Exceptionhandling
 	 */
-	private int getID(String schema, String table, String field, String searchContent)
+	public int getID(String schema, String table, String field, String searchContent)
 			throws SQLException {
 		String searchString, firstName = null, lastName = null, FieldID = null;
 		searchString = searchContent;

@@ -6,7 +6,8 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.Date;
+import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.util.Vector;
 
 import javax.swing.DefaultComboBoxModel;
@@ -30,7 +31,12 @@ import javax.swing.table.DefaultTableModel;
 
 import org.jdesktop.swingx.JXDatePicker;
 
+import de.dhbw.projektarbeit.db.mysql.MysqlAccess;
 import de.dhbw.projektarbeit.db.request.Filling;
+import de.dhbw.projektarbeit.db.request.Update;
+
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class EditDVD extends JDialog {
 
@@ -40,12 +46,14 @@ public class EditDVD extends JDialog {
 	private JTextField txtEANCode;
 	private JTextField txtGenre;
 	private JSpinner spCountDVD, spDuration, spProductionYear;
-	private JComboBox cbProducent, cbFSK, cbRegisseur, cbProdCountry,
-			cbAuthor, cbCamera;
+	private JComboBox cbProducent, cbFSK, cbRegisseur, cbProdCountry, cbAuthor,
+			cbCamera;
 	private DefaultComboBoxModel cAuswahlRegisseur, cAuswahlProduction,
-	cAuswahlCamera, cAuswahlAuthor;
+			cAuswahlCamera, cAuswahlAuthor;
+	private Date releaseDate;
+	private SimpleDateFormat sdf;
 	private JXDatePicker dpReleaseDate;
-	private JButton okButton;
+	private JButton okButton, btnUpdate;
 	private JButton cancelButton;
 	private JTable tbDVD;
 	private Object[][] dvdData;
@@ -54,7 +62,7 @@ public class EditDVD extends JDialog {
 			"Genre", "Produktionsland", "Produktionsjahr", "Erscheinungsdatum",
 			"Länge", "Altersfreigabe", "Regie", "Autor", "Produkiton",
 			"Kamera", "EAN Code" };
-	private static Integer selectedID;
+	private String oldEAN;
 	private Filling fill = new Filling();
 	private Vector<String> dbRegisseur = new Vector();
 	private Vector<String> dbProduction = new Vector();
@@ -76,7 +84,8 @@ public class EditDVD extends JDialog {
 
 	/**
 	 * Standardkonstruktor
-	 * @throws Exception 
+	 * 
+	 * @throws Exception
 	 */
 	public EditDVD() throws Exception {
 		loadTable();
@@ -88,7 +97,8 @@ public class EditDVD extends JDialog {
 
 	/**
 	 * Methode zur Dialogerstellung
-	 * @throws Exception 
+	 * 
+	 * @throws Exception
 	 */
 	private void setWindow() throws Exception {
 		setResizable(false);
@@ -138,11 +148,17 @@ public class EditDVD extends JDialog {
 				cbRegisseur.setModel(cAuswahlRegisseur);
 				JButton btnNewRegisseur = new JButton("+");
 				cbFSK = new JComboBox();
-				cbFSK.setModel(new DefaultComboBoxModel(new String[] {"ab 0 Jahre", "ab 6 Jahre", "ab 12 Jahre", "ab 16 Jahre", "ab 18 Jahre", "indiziert"}));
+				cbFSK.setModel(new DefaultComboBoxModel(new String[] {
+						"ab 0 Jahre", "ab 6 Jahre", "ab 12 Jahre",
+						"ab 16 Jahre", "ab 18 Jahre", "indiziert" }));
 				JLabel label_2 = new JLabel("Altersbeschr\u00E4nkung");
 				JLabel label_3 = new JLabel("Herstellungsland");
 				cbProdCountry = new JComboBox();
-				cbProdCountry.setModel(new DefaultComboBoxModel(new String[] {"Australien", "Deutschland", "Frankreich", "Gro\u00DFbritannien", "Hong Kong", "Indien", "Italien", "Kanada", "Niederlande", "Russland", "Spanien", "USA"}));
+				cbProdCountry.setModel(new DefaultComboBoxModel(new String[] {
+						"Australien", "Deutschland", "Frankreich",
+						"Gro\u00DFbritannien", "Hong Kong", "Indien",
+						"Italien", "Kanada", "Niederlande", "Russland",
+						"Spanien", "USA" }));
 				cbProdCountry.setSelectedIndex(11);
 				JLabel lblRegisseur = new JLabel("Regisseur");
 				JLabel label_5 = new JLabel("Produzent");
@@ -158,7 +174,7 @@ public class EditDVD extends JDialog {
 				spProductionYear.setEditor(new JSpinner.NumberEditor(
 						spProductionYear, "0"));
 				dpReleaseDate = new JXDatePicker();
-				dpReleaseDate.setFormats(new String[] {});
+				dpReleaseDate.setFormats(new String[] { "dd.MM.yyyy" });
 				JLabel label_9 = new JLabel("Ver\u00F6ffentlichungsdatum");
 				txtGenre = new JTextField();
 				txtGenre.setColumns(22);
@@ -582,8 +598,9 @@ public class EditDVD extends JDialog {
 										.addContainerGap(9, Short.MAX_VALUE)));
 				panel.setLayout(gl_panel);
 			}
-			
-			// Zuweisung des JTable Models, der Daten und der Spaltenüberschriften
+
+			// Zuweisung des JTable Models, der Daten und der
+			// Spaltenüberschriften
 			model = new DefaultTableModel(dvdData, columnNames);
 			tbDVD = new JTableNotEditable(model, columnNames);
 			tbDVD.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
@@ -618,8 +635,13 @@ public class EditDVD extends JDialog {
 
 			JButton button = new JButton("L\u00F6schen");
 
-			JButton button_1 = new JButton("Speichern");
-			button_1.setEnabled(false);
+			btnUpdate = new JButton("Speichern");
+			btnUpdate.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					btnUpdateActionPerformed(e);
+				}
+			});
+			btnUpdate.setEnabled(false);
 			GroupLayout gl_buttonPane = new GroupLayout(buttonPane);
 			gl_buttonPane.setHorizontalGroup(gl_buttonPane.createParallelGroup(
 					Alignment.TRAILING).addGroup(
@@ -629,8 +651,9 @@ public class EditDVD extends JDialog {
 							.addComponent(button, GroupLayout.PREFERRED_SIZE,
 									96, GroupLayout.PREFERRED_SIZE)
 							.addGap(6)
-							.addComponent(button_1, GroupLayout.PREFERRED_SIZE,
-									103, GroupLayout.PREFERRED_SIZE)
+							.addComponent(btnUpdate,
+									GroupLayout.PREFERRED_SIZE, 103,
+									GroupLayout.PREFERRED_SIZE)
 							.addPreferredGap(ComponentPlacement.RELATED, 261,
 									Short.MAX_VALUE).addComponent(okButton)
 							.addPreferredGap(ComponentPlacement.RELATED)
@@ -649,7 +672,7 @@ public class EditDVD extends JDialog {
 															.addComponent(
 																	button)
 															.addComponent(
-																	button_1)
+																	btnUpdate)
 															.addGroup(
 																	gl_buttonPane
 																			.createParallelGroup(
@@ -701,8 +724,8 @@ public class EditDVD extends JDialog {
 					tbDVD.getSelectedRow(), 4));
 			spProductionYear.setValue(tbDVD.getValueAt(tbDVD.getSelectedRow(),
 					5));
-			dpReleaseDate.setDate((Date) tbDVD.getValueAt(
-					tbDVD.getSelectedRow(), 6));
+			dpReleaseDate.setDate(((java.util.Date) tbDVD.getValueAt(
+					tbDVD.getSelectedRow(), 6)));
 			spDuration.setValue(tbDVD.getValueAt(tbDVD.getSelectedRow(), 7));
 			cbFSK.setSelectedItem(tbDVD.getValueAt(tbDVD.getSelectedRow(), 8));
 			cbRegisseur.setSelectedItem(tbDVD.getValueAt(
@@ -713,12 +736,59 @@ public class EditDVD extends JDialog {
 					tbDVD.getSelectedRow(), 11));
 			cbCamera.setSelectedItem(tbDVD.getValueAt(tbDVD.getSelectedRow(),
 					12));
+			
 			txtEANCode.setText((String) tbDVD.getValueAt(
 					tbDVD.getSelectedRow(), 13));
-
+			// Befüllen der alten EAN, um sie später übergeben zu können
+			oldEAN = txtEANCode.getText();
+			if (txtEANCode != null) {
+				btnUpdate.setEnabled(true);
+			}
 		} catch (Exception a) {
 			// TODO: handle exception
 			a.printStackTrace();
 		}
 	}
+
+	private void btnUpdateActionPerformed(ActionEvent e) {
+		MysqlAccess mysql = new MysqlAccess();
+		try {
+			// Updatemethode aufrufen und Connection zum SQL Server herstellen
+			Update update = new Update("dvd_verleih", mysql.getConnection());
+			// Festlegung des Formats für das SQL Date Feld
+			sdf = new SimpleDateFormat();
+			sdf.applyPattern("yyyy-MM-dd");
+			releaseDate = (Date.valueOf(sdf.format(dpReleaseDate.getDate())));
+			update.editDVD((Integer) spCountDVD.getValue(), txtTitle.getText(),
+					txtOriginalTitle.getText(), txtGenre.getText(),
+					(String) cbProdCountry.getSelectedItem(),
+					(Integer) spProductionYear.getValue(), releaseDate,
+					(Integer) spDuration.getValue(),
+					(String) cbFSK.getSelectedItem(),
+					(String) cbRegisseur.getSelectedItem(),
+					(String) cbAuthor.getSelectedItem(),
+					(String) cbProducent.getSelectedItem(),
+					(String) cbCamera.getSelectedItem(), txtEANCode.getText(), oldEAN);
+			
+			// Aktualisieren der JTable tbDVD
+			tbDVD.setValueAt(spCountDVD.getValue(), tbDVD.getSelectedRow(), 0);
+			tbDVD.setValueAt(txtTitle.getText(), tbDVD.getSelectedRow(), 1);
+			tbDVD.setValueAt(txtOriginalTitle.getText(), tbDVD.getSelectedRow(), 2);
+			tbDVD.setValueAt(txtGenre.getText(), tbDVD.getSelectedRow(), 3);
+			tbDVD.setValueAt((String) cbProdCountry.getSelectedItem(), tbDVD.getSelectedRow(), 4);
+			tbDVD.setValueAt(spProductionYear.getValue(), tbDVD.getSelectedRow(), 5);
+			tbDVD.setValueAt(releaseDate, tbDVD.getSelectedRow(), 6);
+			tbDVD.setValueAt((String) cbFSK.getSelectedItem(), tbDVD.getSelectedRow(), 7);
+			tbDVD.setValueAt((String) cbRegisseur.getSelectedItem(), tbDVD.getSelectedRow(), 8);
+			tbDVD.setValueAt((String) cbAuthor.getSelectedItem(), tbDVD.getSelectedRow(), 9);
+			tbDVD.setValueAt((String) cbProducent.getSelectedItem(), tbDVD.getSelectedRow(), 10);
+			tbDVD.setValueAt((String) cbCamera.getSelectedItem(), tbDVD.getSelectedRow(), 11);
+			tbDVD.setValueAt(txtEANCode.getText(), tbDVD.getSelectedRow(), 12);
+			
+		} catch (Exception e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+	}
+
 }

@@ -22,8 +22,6 @@ public class Update {
 	private Statement stmt;
 	private ResultSet rset;
 
-	
-
 	/**
 	 * Constructor, initialisiert das Objekt, es wird ein DB-Schema und ein
 	 * Connection Objekt uebergeben.
@@ -39,7 +37,8 @@ public class Update {
 		this.con = con;
 	}
 
-	public void updateEdits(int id, String firstname, String lastname, String form, String field) throws Exception{
+	public void updateEdits(int id, String firstname, String lastname,
+			String form, String field) throws Exception {
 		try {
 			// Alle Einfuege-Operationen sollen als eine Transaktion und mittels
 			// Stringbuffer ausgefuehrt
@@ -51,25 +50,26 @@ public class Update {
 			buffer.append(schema);
 			buffer.append(".");
 			buffer.append(form);
-			buffer.append(" SET FirstName = " );
+			buffer.append(" SET FirstName = ");
 			buffer.append("\"" + firstname + "\"");
-			buffer.append(" , LastName = " );
+			buffer.append(" , LastName = ");
 			buffer.append("\"" + lastname + "\"");
 			buffer.append(" WHERE ");
 			buffer.append(field);
 			buffer.append(" = ");
 			buffer.append(id);
-			
+
 			stmt.executeUpdate(buffer.toString());
-	
+
 			// Neuerfasste Daten auf DB schreiben
 			con.commit();
 			con.setAutoCommit(true);
-			
+
 			// Bei erfolgreicher Änderung Nachricht bringen
-			JOptionPane.showMessageDialog(null, ("Der Eintrag " + firstname + " " + lastname + " wurde erfolgreich geändert!"),
+			JOptionPane.showMessageDialog(null, ("Der Eintrag " + firstname
+					+ " " + lastname + " wurde erfolgreich geändert!"),
 					"Vorgang erfolgreich", JOptionPane.INFORMATION_MESSAGE);
-			
+
 		} catch (Exception e) {
 			// Im Fehlerfall Rollback durchfÃ¼hren
 			con.rollback();
@@ -78,12 +78,15 @@ public class Update {
 			throw new Exception(
 					"Fehler beim Ändern der Zeile in der Datenbank! Fehlercode 008");
 		}
-		
+
 	}
-	
-	public void updateCustomer(int id, String firstname, String lastname, String zipcode, String city, String street, String streetno, String email, String telefone, java.sql.Date birthdate) throws Exception {
+
+	public void updateCustomer(int id, String firstname, String lastname,
+			String zipcode, String city, String street, String streetno,
+			String email, String telefone, java.sql.Date birthdate)
+			throws Exception {
 		try {
-			// Alle Einfuege-Operationen sollen als eine Transaktion und mittels
+			// Alle Update-Operationen sollen als eine Transaktion und mittels
 			// Stringbuffer ausgefuehrt
 			// werden.
 			con.setAutoCommit(false);
@@ -92,33 +95,33 @@ public class Update {
 			buffer.append("UPDATE ");
 			buffer.append(schema);
 			buffer.append(".customer");
-			buffer.append(" SET FirstName = " );
+			buffer.append(" SET FirstName = ");
 			buffer.append("\"" + firstname + "\"");
-			buffer.append(" , LastName = " );
+			buffer.append(" , LastName = ");
 			buffer.append("\"" + lastname + "\"");
-			buffer.append(" , Zip_Code = " );
+			buffer.append(" , Zip_Code = ");
 			buffer.append("\"" + zipcode + "\"");
-			buffer.append(" , City = " );
+			buffer.append(" , City = ");
 			buffer.append("\"" + city + "\"");
-			buffer.append(" , Street = " );
+			buffer.append(" , Street = ");
 			buffer.append("\"" + street + "\"");
-			buffer.append(" , StreetNo = " );
+			buffer.append(" , StreetNo = ");
 			buffer.append("\"" + streetno + "\"");
-			buffer.append(" , Email = " );
+			buffer.append(" , Email = ");
 			buffer.append("\"" + email + "\"");
-			buffer.append(" , Telefone = " );
+			buffer.append(" , Telefone = ");
 			buffer.append("\"" + telefone + "\"");
-			buffer.append(" , Birthdate = " );
+			buffer.append(" , Birthdate = ");
 			buffer.append("\"" + birthdate + "\"");
 			buffer.append(" WHERE Customer_ID = ");
 			buffer.append(id);
-			
+
 			stmt.executeUpdate(buffer.toString());
-	
+
 			// Neuerfasste Daten auf DB schreiben
 			con.commit();
 			con.setAutoCommit(true);
-			
+
 		} catch (Exception e) {
 			// Im Fehlerfall Rollback durchfÃ¼hren
 			con.rollback();
@@ -126,5 +129,99 @@ public class Update {
 			e.printStackTrace();
 		}
 	}
-	
+
+/**
+ * Methode zum Editieren von DVDs. 
+ * @param quantity --> Anzahl der DVDs
+ * @param title --> Titel der DVD
+ * @param originalTitle --> Originaltitel der DVD
+ * @param genre --> Genre der DVD
+ * @param prodCountry --> Herstellungsland
+ * @param prod_year --> Produktionsjahr
+ * @param release --> Erscheinungsdatum
+ * @param duration --> Filmdauer
+ * @param fsk --> FSK Einstufung
+ * @param regisseur --> Regisseur
+ * @param author --> Autor
+ * @param production --> Produzent
+ * @param camera --> Kameramann
+ * @param eanCode --> Barcode
+ * @param oldEAN --> Alter Barcode, falls dieser geändert wurde
+ */
+	public void editDVD(int quantity, String title, String originalTitle,
+			String genre, String prodCountry, int prod_year,
+			java.sql.Date release, int duration, String fsk, String regisseur,
+			String author, String production, String camera, String eanCode,
+			String oldEAN) {
+			
+			int regisseurID, authorID, productionID, cameraID;
+		try {
+			// IDs von Regisseur, Autor, Production und Camera beziehen
+			Insert insert = new Insert("dvd_verleih", con);
+			regisseurID = insert.getID("dvd_verleih", "regisseur", "Regie_ID", regisseur);
+			authorID = insert.getID("dvd_verleih", "author", "Author_ID", author);
+			productionID = insert.getID("dvd_verleih", "production", "Production_ID", production);
+			cameraID = insert.getID("dvd_verleih", "camera", "Camera_ID", camera);
+			
+			// Alle Update-Operationen sollen als eine Transaktion und mittels
+			// Stringbuffer ausgefuehrt
+			// werden.
+			con.setAutoCommit(false);
+			stmt = con.createStatement();
+			StringBuffer editDVD = new StringBuffer();
+			editDVD.append("UPDATE ");
+			editDVD.append (schema);
+			editDVD.append(".dvd SET Quantity = ");
+			editDVD.append("\"" + quantity + "\"");
+			editDVD.append(", Title = ");
+			editDVD.append("\"" + title+ "\"");
+			editDVD.append(", Original_Title = ");
+			editDVD.append("\"" + originalTitle+ "\"");
+			editDVD.append(", Genre = ");
+			editDVD.append("\"" + genre+ "\"");
+			editDVD.append(", Prod_Country = ");
+			editDVD.append("\"" + prodCountry+ "\"");
+			editDVD.append(", Prod_Year = ");
+			editDVD.append(prod_year);
+			editDVD.append(", Rel_Date = ");
+			editDVD.append("\"" + release+ "\"");
+			editDVD.append(", Duration = ");
+			editDVD.append("\"" + duration+ "\"");
+			editDVD.append(", FSK = ");
+			editDVD.append("\"" + fsk+ "\"");
+			editDVD.append(", Regie_ID = ");
+			editDVD.append("\"" + regisseurID+ "\"");
+			editDVD.append(", Author_ID = ");
+			editDVD.append("\"" + authorID+ "\"");
+			editDVD.append(", Production_ID = ");
+			editDVD.append("\"" + productionID+ "\"");
+			editDVD.append(",Camera_ID = ");
+			editDVD.append("\"" + cameraID+ "\"");
+			editDVD.append(", Barcode = ");
+			editDVD.append("\"" + eanCode+ "\"");
+			editDVD.append(" WHERE Barcode = ");
+			editDVD.append("\"" + oldEAN + "\"");
+
+			stmt.executeUpdate(editDVD.toString());
+
+			// Neuerfasste Daten auf DB schreiben
+			con.commit();
+			con.setAutoCommit(true);
+			
+			// Bei erfolgreicher Änderung Nachricht bringen
+			JOptionPane.showMessageDialog(null, ("Der Eintrag in der DVD \"" + title + "\" wurde erfolgreich geändert!"),
+					"Vorgang erfolgreich", JOptionPane.INFORMATION_MESSAGE);
+		} catch (SQLException e) {
+			// Im Fehlerfall Rollback durchfÃ¼hren
+			try {
+				con.rollback();
+				con.setAutoCommit(true);
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			e.printStackTrace();
+		}
+
+	}
 }

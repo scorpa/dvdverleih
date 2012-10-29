@@ -255,6 +255,10 @@ public class EditCustomer extends JDialog {
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
 				btnSave = new JButton("Speichern");
+				btnSave.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent arg0) {
+					}
+				});
 				btnSave.setActionCommand("OK");
 				getRootPane().setDefaultButton(btnSave);
 			}
