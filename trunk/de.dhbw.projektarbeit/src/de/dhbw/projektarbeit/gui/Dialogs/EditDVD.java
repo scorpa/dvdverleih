@@ -1,39 +1,36 @@
 package de.dhbw.projektarbeit.gui.Dialogs;
 
 import java.awt.BorderLayout;
-import java.awt.FlowLayout;
-
-import javax.swing.JButton;
-import javax.swing.JDialog;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import javax.swing.table.DefaultTableModel;
-
-import java.awt.CardLayout;
-import javax.swing.JSplitPane;
-import java.awt.GridBagLayout;
-import java.awt.GridBagConstraints;
-import javax.swing.GroupLayout;
-import javax.swing.GroupLayout.Alignment;
-import javax.swing.JTextField;
-import javax.swing.JLabel;
-import javax.swing.JComboBox;
-import javax.swing.JSpinner;
-import javax.swing.ListSelectionModel;
-import javax.swing.SpinnerNumberModel;
-
 import java.awt.Dimension;
-import org.jdesktop.swingx.JXDatePicker;
-import javax.swing.LayoutStyle.ComponentPlacement;
-import org.jdesktop.swingx.JXTable;
-
-import de.dhbw.projektarbeit.db.request.Filling;
-
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.Date;
+import java.util.Vector;
+
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JDialog;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JSpinner;
+import javax.swing.JSplitPane;
+import javax.swing.JTable;
+import javax.swing.JTextField;
+import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.ListSelectionModel;
+import javax.swing.SpinnerNumberModel;
+import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableModel;
+
+import org.jdesktop.swingx.JXDatePicker;
+
+import de.dhbw.projektarbeit.db.request.Filling;
 
 public class EditDVD extends JDialog {
 
@@ -43,8 +40,10 @@ public class EditDVD extends JDialog {
 	private JTextField txtEANCode;
 	private JTextField txtGenre;
 	private JSpinner spCountDVD, spDuration, spProductionYear;
-	private JComboBox cbProduction, cbFSK, cbRegisseur, cbProdCountry,
+	private JComboBox cbProducent, cbFSK, cbRegisseur, cbProdCountry,
 			cbAuthor, cbCamera;
+	private DefaultComboBoxModel cAuswahlRegisseur, cAuswahlProduction,
+	cAuswahlCamera, cAuswahlAuthor;
 	private JXDatePicker dpReleaseDate;
 	private JButton okButton;
 	private JButton cancelButton;
@@ -57,6 +56,10 @@ public class EditDVD extends JDialog {
 			"Kamera", "EAN Code" };
 	private static Integer selectedID;
 	private Filling fill = new Filling();
+	private Vector<String> dbRegisseur = new Vector();
+	private Vector<String> dbProduction = new Vector();
+	private Vector<String> dbCamera = new Vector();
+	private Vector<String> dbAuthor = new Vector();
 
 	/**
 	 * Launch the application.
@@ -73,8 +76,9 @@ public class EditDVD extends JDialog {
 
 	/**
 	 * Standardkonstruktor
+	 * @throws Exception 
 	 */
-	public EditDVD() {
+	public EditDVD() throws Exception {
 		loadTable();
 		// Ersetzen der Fremdschlüssel mit entsprechenden Einträgen aus den
 		// Tabellen auf der DB
@@ -84,12 +88,13 @@ public class EditDVD extends JDialog {
 
 	/**
 	 * Methode zur Dialogerstellung
+	 * @throws Exception 
 	 */
-	private void setWindow() {
+	private void setWindow() throws Exception {
 		setResizable(false);
 		setModal(true);
 		setTitle("DVDs bearbeiten");
-		setBounds(100, 100, 610, 723);
+		setBounds(100, 100, 615, 723);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
@@ -109,29 +114,41 @@ public class EditDVD extends JDialog {
 			gbc_splitPane.gridy = 0;
 			contentPanel.add(splitPane, gbc_splitPane);
 			{
+				// Instantiierung von der Fillmethode für das Combofield
+				Filling fill = new Filling();
 				JPanel panel = new JPanel();
 				panel.setBorder(new EmptyBorder(5, 5, 5, 5));
 				splitPane.setRightComponent(panel);
 				txtTitle = new JTextField();
-				txtTitle.setText("Title");
 				txtTitle.setColumns(22);
 				txtOriginalTitle = new JTextField();
-				txtOriginalTitle.setText("OriginalTitle");
 				txtOriginalTitle.setColumns(22);
 				JLabel label = new JLabel("Titel");
 				JLabel label_1 = new JLabel("Originaltitel");
+				// Instantiierung von Combofield Variablen
+				// ArrayList mit DB Daten von Regisseuren füllen
+				try {
+					dbRegisseur = fill.fillCbs("regisseur");
+				} catch (IllegalArgumentException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				cAuswahlRegisseur = new DefaultComboBoxModel(dbRegisseur);
 				cbRegisseur = new JComboBox();
+				cbRegisseur.setModel(cAuswahlRegisseur);
 				JButton btnNewRegisseur = new JButton("+");
 				cbFSK = new JComboBox();
+				cbFSK.setModel(new DefaultComboBoxModel(new String[] {"ab 0 Jahre", "ab 6 Jahre", "ab 12 Jahre", "ab 16 Jahre", "ab 18 Jahre", "indiziert"}));
 				JLabel label_2 = new JLabel("Altersbeschr\u00E4nkung");
 				JLabel label_3 = new JLabel("Herstellungsland");
 				cbProdCountry = new JComboBox();
+				cbProdCountry.setModel(new DefaultComboBoxModel(new String[] {"Australien", "Deutschland", "Frankreich", "Gro\u00DFbritannien", "Hong Kong", "Indien", "Italien", "Kanada", "Niederlande", "Russland", "Spanien", "USA"}));
+				cbProdCountry.setSelectedIndex(11);
 				JLabel lblRegisseur = new JLabel("Regisseur");
 				JLabel label_5 = new JLabel("Produzent");
 				JLabel label_6 = new JLabel("Genre");
 				JLabel label_7 = new JLabel("EAN Code");
 				txtEANCode = new JTextField();
-				txtEANCode.setText("EANCode");
 				txtEANCode.setColumns(22);
 				JLabel label_8 = new JLabel("Produktionsjahr");
 				spProductionYear = new JSpinner();
@@ -141,12 +158,20 @@ public class EditDVD extends JDialog {
 				spProductionYear.setEditor(new JSpinner.NumberEditor(
 						spProductionYear, "0"));
 				dpReleaseDate = new JXDatePicker();
-				dpReleaseDate.setFormats(new String[] { "MM.DD.YYYY" });
+				dpReleaseDate.setFormats(new String[] {});
 				JLabel label_9 = new JLabel("Ver\u00F6ffentlichungsdatum");
 				txtGenre = new JTextField();
-				txtGenre.setText("Genre");
 				txtGenre.setColumns(22);
-				cbProduction = new JComboBox();
+				// Instantiierung von Combofield Variablen
+				// ArrayList mit DB Daten von Regisseuren füllen
+				try {
+					dbProduction = fill.fillCbs("production");
+				} catch (IllegalArgumentException e1) {
+					e1.printStackTrace();
+				}
+				cAuswahlProduction = new DefaultComboBoxModel(dbProduction);
+				cbProducent = new JComboBox();
+				cbProducent.setModel(cAuswahlProduction);
 				JButton btnNewProducer = new JButton("+");
 				JLabel lblDauerInMin = new JLabel("Dauer in Min.");
 				spDuration = new JSpinner();
@@ -162,13 +187,31 @@ public class EditDVD extends JDialog {
 
 				JLabel lblCamera = new JLabel("Kamera");
 
+				// Instantiierung von Combofield Variablen
+				// ArrayList mit DB Daten von Regisseuren füllen
+				try {
+					dbCamera = fill.fillCbs("camera");
+				} catch (IllegalArgumentException e1) {
+					e1.printStackTrace();
+				}
+				cAuswahlCamera = new DefaultComboBoxModel(dbCamera);
 				cbCamera = new JComboBox();
+				cbCamera.setModel(cAuswahlCamera);
 
 				JButton button = new JButton("+");
 
 				JLabel lblAuthor = new JLabel("Autor");
 
+				// Instantiierung von Combofield Variablen
+				// ArrayList mit DB Daten von Regisseuren füllen
+				try {
+					dbAuthor = fill.fillCbs("author");
+				} catch (IllegalArgumentException e1) {
+					e1.printStackTrace();
+				}
+				cAuswahlAuthor = new DefaultComboBoxModel(dbAuthor);
 				cbAuthor = new JComboBox();
+				cbAuthor.setModel(cAuswahlAuthor);
 
 				JButton btnNewAuthor = new JButton("+");
 				GroupLayout gl_panel = new GroupLayout(panel);
@@ -296,7 +339,7 @@ public class EditDVD extends JDialog {
 																														.addGroup(
 																																gl_panel.createSequentialGroup()
 																																		.addComponent(
-																																				cbProduction,
+																																				cbProducent,
 																																				0,
 																																				224,
 																																				Short.MAX_VALUE)
@@ -472,7 +515,7 @@ public class EditDVD extends JDialog {
 																28,
 																GroupLayout.PREFERRED_SIZE)
 														.addComponent(
-																cbProduction,
+																cbProducent,
 																GroupLayout.PREFERRED_SIZE,
 																GroupLayout.DEFAULT_SIZE,
 																GroupLayout.PREFERRED_SIZE)
@@ -543,6 +586,7 @@ public class EditDVD extends JDialog {
 			// Zuweisung des JTable Models, der Daten und der Spaltenüberschriften
 			model = new DefaultTableModel(dvdData, columnNames);
 			tbDVD = new JTableNotEditable(model, columnNames);
+			tbDVD.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 			tbDVD.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseClicked(MouseEvent e) {
@@ -665,7 +709,7 @@ public class EditDVD extends JDialog {
 					tbDVD.getSelectedRow(), 9));
 			cbAuthor.setSelectedItem(tbDVD.getValueAt(tbDVD.getSelectedRow(),
 					10));
-			cbProduction.setSelectedItem(tbDVD.getValueAt(
+			cbProducent.setSelectedItem(tbDVD.getValueAt(
 					tbDVD.getSelectedRow(), 11));
 			cbCamera.setSelectedItem(tbDVD.getValueAt(tbDVD.getSelectedRow(),
 					12));

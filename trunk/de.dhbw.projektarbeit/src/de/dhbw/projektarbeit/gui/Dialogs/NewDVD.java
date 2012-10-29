@@ -55,7 +55,6 @@ public class NewDVD extends JDialog {
 	private String fsk, prodCountry, regie, production, author, camera;
 	private DefaultComboBoxModel cAuswahlRegisseur, cAuswahlProduction,
 			cAuswahlCamera, cAuswahlAuthor;
-	private Vector<String> vAuswahlRegisseur;
 	private SimpleDateFormat sdf;
 	private Date release;
 	private int prod_year, duration, quantity;
@@ -132,9 +131,7 @@ public class NewDVD extends JDialog {
 			}
 
 		});
-		cbFSK.setModel(new DefaultComboBoxModel(new String[] { "ab 0 Jahre",
-				"ab 6 Jahre", "ab 12 Jahre", "ab 16 Jahre", "ab 18 Jahre",
-				"indiziert" }));
+		cbFSK.setModel(new DefaultComboBoxModel(new String[] {"ab 0 Jahre", "ab 6 Jahre", "ab 12 Jahre", "ab 16 Jahre", "ab 18 Jahre", "indiziert"}));
 
 		// Auslesen des Combofields
 		cbProdCountry = new JComboBox();
@@ -143,10 +140,7 @@ public class NewDVD extends JDialog {
 
 			}
 		});
-		cbProdCountry.setModel(new DefaultComboBoxModel(new String[] {
-				"Australien", "Deutschland", "Frankreich",
-				"Gro\u00DFbritannien", "Hong Kong", "Indien", "Italien",
-				"Kanada", "Niederlande", "Russland", "Spanien", "USA" }));
+		cbProdCountry.setModel(new DefaultComboBoxModel(new String[] {"Australien", "Deutschland", "Frankreich", "Gro\u00DFbritannien", "Hong Kong", "Indien", "Italien", "Kanada", "Niederlande", "Russland", "Spanien", "USA"}));
 		cbProdCountry.setSelectedIndex(11);
 
 		JLabel lblHerstellungsland = new JLabel("Herstellungsland");
@@ -191,12 +185,7 @@ public class NewDVD extends JDialog {
 		cAuswahlRegisseur = new DefaultComboBoxModel(dbRegisseur);
 		cbRegisseur = new JComboBox();
 		cbRegisseur.setModel(cAuswahlRegisseur);
-		cbRegisseur.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-
-			}
-		});
-
+		
 		JButton btnNewRegisseur = new JButton("+");
 		btnNewRegisseur.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -224,10 +213,6 @@ public class NewDVD extends JDialog {
 		cAuswahlProduction = new DefaultComboBoxModel(dbProduction);
 		cbProducent = new JComboBox();
 		cbProducent.setModel(cAuswahlProduction);
-		cbProducent.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
 		// SpinnerNumberModel smCount setzen
 		smCountDVD = new SpinnerNumberModel(1, 1, 10000, 1);
 		spCountDVD = new JSpinner();
