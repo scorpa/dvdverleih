@@ -91,4 +91,59 @@ public class Delete {
 					"Fehler beim Löschen der Zeile aus der Datenbank! Fehlercode 007");
 		}
 	}
+	
+	public void deleteDVD(int id, String field, String form)
+			throws Exception {
+			try {	
+				con.setAutoCommit(false);
+				stmt = con.createStatement();
+				StringBuffer buffer = new StringBuffer();
+				
+				//†berprŸfen ob selektierte ID vorhanden ist
+				buffer.append("SELECT COUNT(");
+				buffer.append(field + ")");
+				buffer.append(" FROM DVD");
+							
+				
+				rset = stmt.executeQuery(buffer.toString());
+				int count = 0;
+				  while(rset.next()) {
+				    count++; // Zeilen-ZŠhler erhšhen
+				  }
+				  if(count <= 0){
+					buffer = new StringBuffer();
+				  	buffer.append("DELETE FROM ");
+					buffer.append(schema);
+					buffer.append(".");
+					buffer.append(form);
+					buffer.append(" WHERE ");
+					buffer.append(field);
+					buffer.append(" = ");
+					buffer.append(id);
+					stmt.executeUpdate(buffer.toString());
+
+					// Neuerfasste Daten auf DB schreiben
+					con.commit();
+					con.setAutoCommit(true);
+					
+					// Bei erfolgreichem Lšschen Nachricht bringen
+					JOptionPane.showMessageDialog(null, ("Die DVD wurde erfolgreich gelšscht!"),
+							"Vorgang erfolgreich", JOptionPane.INFORMATION_MESSAGE);
+				  }else{
+					  JOptionPane.showMessageDialog(null, ("Die DVD konnte nicht gelšscht werden!"),
+								"Vorgang abgebrochen", JOptionPane.WARNING_MESSAGE); 
+				  }
+				
+				
+				
+			} catch (SQLException e) {
+			
+				con.rollback();
+				con.setAutoCommit(true);
+				e.printStackTrace();
+				throw new Exception(
+						"Fehler beim Lšschen der Zeile aus der Datenbank! Fehlercode 007");
+			}
+		}
+	
 }
