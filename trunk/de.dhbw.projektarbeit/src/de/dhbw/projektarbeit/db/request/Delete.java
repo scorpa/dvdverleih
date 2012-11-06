@@ -113,7 +113,7 @@ public class Delete {
 				  while(rset.next()) {
 				    count++; // Zeilen-ZŠhler erhšhen
 				  }
-				  if(count <= 0){
+				  if(count > 0){
 					buffer = new StringBuffer();
 				  	buffer.append("DELETE FROM ");
 					buffer.append(schema);

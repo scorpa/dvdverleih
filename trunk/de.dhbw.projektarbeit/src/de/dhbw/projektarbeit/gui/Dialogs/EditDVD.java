@@ -19,6 +19,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
@@ -36,6 +37,7 @@ import org.jdesktop.swingx.JXDatePicker;
 import de.dhbw.projektarbeit.db.mysql.MysqlAccess;
 import de.dhbw.projektarbeit.db.request.Delete;
 import de.dhbw.projektarbeit.db.request.Filling;
+import de.dhbw.projektarbeit.db.request.Update;
 
 public class EditDVD extends JDialog {
 
@@ -641,10 +643,11 @@ public class EditDVD extends JDialog {
 
 			btnUpdate = new JButton("Speichern");
 			btnUpdate.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					btnUpdateActionPerformed(e);
+				public void actionPerformed(ActionEvent arg0) {
+					btnUpdateActionPerformed(arg0);
 				}
 			});
+			
 			btnUpdate.setEnabled(false);
 			GroupLayout gl_buttonPane = new GroupLayout(buttonPane);
 			gl_buttonPane.setHorizontalGroup(gl_buttonPane.createParallelGroup(
@@ -691,9 +694,28 @@ public class EditDVD extends JDialog {
 			buttonPane.setLayout(gl_buttonPane);
 		}
 	}
-
 	protected void btnDeleteActionPerformed(ActionEvent arg0) {
-		
+		MysqlAccess mysql = new MysqlAccess();
+		boolean go = true;
+		// Überfürung des JXDates in die Datevariable
+
+		try {
+			// Auf leere Pflichtfelder ueberpruefen
+			if (txtEANCode.getText().replaceAll(" ", "").equals("")) {
+				go = false;
+			}
+			// Updatemethode aufrufen und Connection zum SQL Server herstellen
+			Delete delete = new Delete("dvd_verleih", mysql.getConnection());
+			// Festlegung des Formats für das SQL Date Feld
+			sdf = new SimpleDateFormat();
+			sdf.applyPattern("yyyy-MM-dd");
+			delete.deleteDVD(this, "Barcode", "dvd",txtEANCode.getText());
+			
+			
+		} catch (Exception e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		
 	}
 
@@ -762,9 +784,9 @@ public class EditDVD extends JDialog {
 	private void btnUpdateActionPerformed(ActionEvent e) {
 		MysqlAccess mysql = new MysqlAccess();
 		boolean go = true;
-		// Überfürung des JXDates in die Datevariable
+		// Ueberpruefung des JXDates in die Datevariable
 		try {
-			release = (Date.valueOf(sdf.format(dpReleaseDate.getDate())));
+			release = Date.valueOf(sdf.format(dpReleaseDate.getDate()));
 		} catch (IllegalArgumentException i) {
 			i.printStackTrace();
 		}
@@ -790,26 +812,12 @@ public class EditDVD extends JDialog {
 				go = false;
 			}
 			// Updatemethode aufrufen und Connection zum SQL Server herstellen
-			Delete delete = new Delete("dvd_verleih", mysql.getConnection());
-			// Festlegung des Formats für das SQL Date Feld
+			Update update = new Update("dvd_verleih", mysql.getConnection());
+			// Festlegung des Formats fuer das SQL Date Feld
 			sdf = new SimpleDateFormat();
 			sdf.applyPattern("yyyy-MM-dd");
-			delete.delteDVD(,txtEANCode.getText());
+			//update.editDVD(quantity, title, originalTitle, genre, prodCountry, prod_year, release, duration, fsk, regisseur, author, production, camera, eanCode, oldEAN);
 			
-			// Aktualisieren der JTable tbDVD
-			tbDVD.setValueAt(spCountDVD.getValue(), tbDVD.getSelectedRow(), 0);
-			tbDVD.setValueAt(txtTitle.getText(), tbDVD.getSelectedRow(), 1);
-			tbDVD.setValueAt(txtOriginalTitle.getText(), tbDVD.getSelectedRow(), 2);
-			tbDVD.setValueAt(txtGenre.getText(), tbDVD.getSelectedRow(), 3);
-			tbDVD.setValueAt((String) cbProdCountry.getSelectedItem(), tbDVD.getSelectedRow(), 4);
-			tbDVD.setValueAt(spProductionYear.getValue(), tbDVD.getSelectedRow(), 5);
-			tbDVD.setValueAt(release, tbDVD.getSelectedRow(), 6);
-			tbDVD.setValueAt((String) cbFSK.getSelectedItem(), tbDVD.getSelectedRow(), 7);
-			tbDVD.setValueAt((String) cbRegisseur.getSelectedItem(), tbDVD.getSelectedRow(), 8);
-			tbDVD.setValueAt((String) cbAuthor.getSelectedItem(), tbDVD.getSelectedRow(), 9);
-			tbDVD.setValueAt((String) cbProducent.getSelectedItem(), tbDVD.getSelectedRow(), 10);
-			tbDVD.setValueAt((String) cbCamera.getSelectedItem(), tbDVD.getSelectedRow(), 11);
-			tbDVD.setValueAt(txtEANCode.getText(), tbDVD.getSelectedRow(), 12);
 			
 		} catch (Exception e1) {
 			// TODO Auto-generated catch block
@@ -819,6 +827,13 @@ public class EditDVD extends JDialog {
 
 	public void dvdDeleted(String code) {
 		try {
+			this.setVisible(false);
+			this.dispose();
+
+			// Neues, leeres Erstellungsfenster instantiieren
+			EditDVD dialog = new EditDVD();
+			dialog.setVisible(true);
+						
 			
 		} catch (Exception e) {
 			e.printStackTrace();
