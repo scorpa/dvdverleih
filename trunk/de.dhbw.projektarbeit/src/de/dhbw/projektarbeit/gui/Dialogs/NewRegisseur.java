@@ -19,6 +19,7 @@ import javax.swing.JTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.border.EmptyBorder;
 
+import de.dhbw.projektarbeit.db.mysql.MysqlAccess;
 import de.dhbw.projektarbeit.db.request.Insert;
 
 public class NewRegisseur extends JDialog {
@@ -31,7 +32,8 @@ public class NewRegisseur extends JDialog {
 	private boolean fromNewDVD = false;
 	private Insert insert;
 	private Connection con;
-	private NewDVD newDVD;
+	private NewDVD newDVD = null;
+	private EditDVD editDVD = null;
 
 	/**
 	 * Launch the application.
@@ -59,6 +61,16 @@ public class NewRegisseur extends JDialog {
 	 */
 	public NewRegisseur(NewDVD newDVD) {
 		this.newDVD = newDVD;
+		fromNewDVD = true;
+		setWindow();
+	}
+	
+	/**
+	 * Konstruktor für den Aufruf aus dem editDVD Dialog
+	 * @param editDVD --> Klasseninformationen
+	 */
+	public NewRegisseur(EditDVD editDVD) {
+		this.editDVD = editDVD;
 		fromNewDVD = true;
 		setWindow();
 	}
@@ -213,18 +225,10 @@ public class NewRegisseur extends JDialog {
 		
 		// Aufrufen der Methode CreateRegisseur
 		if (go == true) {
-			try {
-				con = DriverManager
-						.getConnection("jdbc:mysql://localhost/dvd_verleih?user=root");
-			} catch (SQLException e) {
-				// Verbindung zum SQL Server fehlgeschlagen. Fehlercode 005
-				e.printStackTrace();
-				throw new Exception(
-						"Verbindung zum SQL Server fehlgeschlagen. Fehlercode 005");
-			}
-			insert = new Insert("dvd_verleih",con);
+			MysqlAccess mysql = new MysqlAccess();
+			insert = new Insert("dvd_verleih",mysql.getConnection());
 			
-			// Auf Aufruf aus dem NewDVD Dialog pruefen
+			// Auf Aufruf aus dem NewDVD oder EditDVD Dialog pruefen
 			if (fromNewDVD = false){
 			try {
 				//Regisseur INSERT aufrufen
@@ -239,7 +243,11 @@ public class NewRegisseur extends JDialog {
 			else if (fromNewDVD = true){
 				try {
 					//Regisseur INSERT aufrufen
-					insert.insertRegisseur(newDVD,this,firstName, lastName);
+					if(newDVD != null){
+					insert.insertRegisseur(newDVD,this,firstName, lastName);}
+					else if (editDVD != null){
+						insert.insertRegisseur(editDVD,this,firstName, lastName);
+					}
 				} catch (InvalidParameterException e) {
 					// Fehlercode 002
 					e.printStackTrace();
@@ -259,8 +267,8 @@ public class NewRegisseur extends JDialog {
 	public void regisseurAdded(String firstName, String lastName) {
 		// Wenn Benutzer erfolgreich hinzu gefügt wurde, die mitteilen und
 		// neues, leeres Eingabefenster öffnen.
-		JOptionPane.showMessageDialog(null, ("Der Regisseur " + firstName + " "
-				+ lastName + " wurde erfolgreich angelegt!"),
+		JOptionPane.showMessageDialog(null, ("Der Regisseur \"" + firstName + " "
+				+ lastName + "\" wurde erfolgreich angelegt!"),
 				"Vorgang erfolgreich", JOptionPane.INFORMATION_MESSAGE);
 		this.setVisible(false);
 		this.dispose();

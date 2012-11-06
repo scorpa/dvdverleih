@@ -29,9 +29,9 @@ public class NewProducer extends JDialog {
 	private JButton cancelButton;
 	private Insert insert;
 	private Connection con;
-	private NewDVD newDVD;
+	private NewDVD newDVD = null;
+	private EditDVD editDVD = null;
 	private boolean fromNewDVD = false;
-	private MysqlAccess mysql;
 
 	/**
 	 * Launch the application.
@@ -61,6 +61,18 @@ public class NewProducer extends JDialog {
 	 */
 	public NewProducer(NewDVD newDVD) {
 		this.newDVD = newDVD;
+		fromNewDVD = true;
+		setWindow();
+	}
+
+	/**
+	 * Konstruktor für den Aufruf aus dem editDVD Dialog
+	 * 
+	 * @param newDVD
+	 *            --> Klasseninformationen
+	 */
+	public NewProducer(EditDVD editDVD) {
+		this.editDVD = editDVD;
 		fromNewDVD = true;
 		setWindow();
 	}
@@ -136,34 +148,58 @@ public class NewProducer extends JDialog {
 		txtLastName = new JTextField();
 		txtLastName.setColumns(22);
 		GroupLayout gl_panel = new GroupLayout(panel);
-		gl_panel.setHorizontalGroup(
-			gl_panel.createParallelGroup(Alignment.TRAILING)
-				.addGroup(Alignment.LEADING, gl_panel.createSequentialGroup()
-					.addContainerGap()
-					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
-						.addComponent(label)
-						.addComponent(txtFirstName, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-					.addGap(18)
-					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
-						.addComponent(label_1)
-						.addComponent(txtLastName, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-					.addContainerGap(123, Short.MAX_VALUE))
-		);
-		gl_panel.setVerticalGroup(
-			gl_panel.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_panel.createSequentialGroup()
-					.addContainerGap()
-					.addGroup(gl_panel.createParallelGroup(Alignment.TRAILING)
-						.addGroup(gl_panel.createSequentialGroup()
-							.addComponent(label_1)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(txtLastName, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-						.addGroup(gl_panel.createSequentialGroup()
-							.addComponent(label)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(txtFirstName, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
-					.addContainerGap(32, Short.MAX_VALUE))
-		);
+		gl_panel.setHorizontalGroup(gl_panel.createParallelGroup(
+				Alignment.TRAILING).addGroup(
+				Alignment.LEADING,
+				gl_panel.createSequentialGroup()
+						.addContainerGap()
+						.addGroup(
+								gl_panel.createParallelGroup(Alignment.LEADING)
+										.addComponent(label)
+										.addComponent(txtFirstName,
+												GroupLayout.PREFERRED_SIZE,
+												GroupLayout.DEFAULT_SIZE,
+												GroupLayout.PREFERRED_SIZE))
+						.addGap(18)
+						.addGroup(
+								gl_panel.createParallelGroup(Alignment.LEADING)
+										.addComponent(label_1)
+										.addComponent(txtLastName,
+												GroupLayout.PREFERRED_SIZE,
+												GroupLayout.DEFAULT_SIZE,
+												GroupLayout.PREFERRED_SIZE))
+						.addContainerGap(123, Short.MAX_VALUE)));
+		gl_panel.setVerticalGroup(gl_panel
+				.createParallelGroup(Alignment.LEADING)
+				.addGroup(
+						gl_panel.createSequentialGroup()
+								.addContainerGap()
+								.addGroup(
+										gl_panel.createParallelGroup(
+												Alignment.TRAILING)
+												.addGroup(
+														gl_panel.createSequentialGroup()
+																.addComponent(
+																		label_1)
+																.addPreferredGap(
+																		ComponentPlacement.RELATED)
+																.addComponent(
+																		txtLastName,
+																		GroupLayout.PREFERRED_SIZE,
+																		GroupLayout.DEFAULT_SIZE,
+																		GroupLayout.PREFERRED_SIZE))
+												.addGroup(
+														gl_panel.createSequentialGroup()
+																.addComponent(
+																		label)
+																.addPreferredGap(
+																		ComponentPlacement.RELATED)
+																.addComponent(
+																		txtFirstName,
+																		GroupLayout.PREFERRED_SIZE,
+																		GroupLayout.DEFAULT_SIZE,
+																		GroupLayout.PREFERRED_SIZE)))
+								.addContainerGap(32, Short.MAX_VALUE)));
 		panel.setLayout(gl_panel);
 	}
 
@@ -184,19 +220,10 @@ public class NewProducer extends JDialog {
 		// Aufrufen der Methode CreateRegisseur
 		if (go == true) {
 			// Verbindung zum SQL Server aufbauen
-			try {
-				mysql = new MysqlAccess();
-				con = mysql.getConnection();
+			MysqlAccess mysql = new MysqlAccess();
+			insert = new Insert("dvd_verleih", mysql.getConnection());
 
-			} catch (SQLException e) {
-				// Verbindung zum SQL Server fehlgeschlagen. Fehlercode 005
-				e.printStackTrace();
-				throw new Exception(
-						"Verbindung zum SQL Server fehlgeschlagen. Fehlercode 005");
-			}
-			insert = new Insert("dvd_verleih", con);
-
-			// Auf Aufruf aus dem NewDVD Dialog prüfen
+			// Auf Aufruf aus dem NewDVD oder EditDVD Dialog prüfen
 			if (fromNewDVD = false) {
 				try {
 					insert.insertProducer(this, firstName, lastName);
@@ -209,7 +236,12 @@ public class NewProducer extends JDialog {
 				}
 			} else if (fromNewDVD = true) {
 				try {
-					insert.insertProducer(newDVD, this, firstName, lastName);
+					if (newDVD != null) {
+						insert.insertProducer(newDVD, this, firstName, lastName);
+					} else if (editDVD != null) {
+						insert.insertProducer(editDVD, this, firstName,
+								lastName);
+					}
 
 				} catch (InvalidParameterException e) {
 					// Fehlercode 002
@@ -236,8 +268,8 @@ public class NewProducer extends JDialog {
 		// Wenn Benutzer erfolgreich hinzu gefügt wurde, die mitteilen und
 		// neues, leeres Eingabefenster öffnen.
 
-		JOptionPane.showMessageDialog(null, ("Der Produzent " + firstName + " "
-				+ lastName + " wurde erfolgreich angelegt!"),
+		JOptionPane.showMessageDialog(null, ("Der Produzent \"" + firstName + " "
+				+ lastName + "\" wurde erfolgreich angelegt!"),
 				"Vorgang erfolgreich", JOptionPane.INFORMATION_MESSAGE);
 		this.setVisible(false);
 		this.dispose();

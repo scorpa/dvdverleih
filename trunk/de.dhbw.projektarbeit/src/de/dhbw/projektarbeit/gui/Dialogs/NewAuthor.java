@@ -19,6 +19,7 @@ import javax.swing.JTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.border.EmptyBorder;
 
+import de.dhbw.projektarbeit.db.mysql.MysqlAccess;
 import de.dhbw.projektarbeit.db.request.Insert;
 
 public class NewAuthor extends JDialog {
@@ -31,7 +32,8 @@ public class NewAuthor extends JDialog {
 	private boolean fromNewDVD = false;
 	private Insert insert;
 	private Connection con;
-	private NewDVD newDVD;
+	private NewDVD newDVD = null;
+	private EditDVD editDVD = null;
 
 	/**
 	 * Launch the application.
@@ -55,10 +57,24 @@ public class NewAuthor extends JDialog {
 
 	/**
 	 * Konstruktor für den Aufruf aus dem newDVD Dialog
-	 * @param newDVD --> Klasseninformationen
+	 * 
+	 * @param newDVD
+	 *            --> Klasseninformationen
 	 */
 	public NewAuthor(NewDVD newDVD) {
 		this.newDVD = newDVD;
+		fromNewDVD = true;
+		setWindow();
+	}
+
+	/**
+	 * Konstruktor für den Aufruf aus dem editDVD Dialog
+	 * 
+	 * @param editDVD
+	 *            --> Klasseninformationen
+	 */
+	public NewAuthor(EditDVD editDVD) {
+		this.editDVD = editDVD;
 		fromNewDVD = true;
 		setWindow();
 	}
@@ -151,7 +167,7 @@ public class NewAuthor extends JDialog {
 				addButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent arg0) {
 						try {
-							//Auf ActionListener reagieren 
+							// Auf ActionListener reagieren
 							addButtonActionPerforemd(arg0);
 						} catch (Exception e) {
 							e.printStackTrace();
@@ -165,7 +181,7 @@ public class NewAuthor extends JDialog {
 				cancelButton = new JButton("Abbrechen");
 				cancelButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent arg0) {
-						//Fenster schlie§en
+						// Fenster schlie§en
 						dispose();
 					}
 				});
@@ -210,37 +226,31 @@ public class NewAuthor extends JDialog {
 		} else if (lastName.replaceAll(" ", "").equals("")) {
 			go = false;
 		}
-		
+
 		// Aufrufen der Methode CreateRegisseur
 		if (go == true) {
-			try {
-				con = DriverManager
-						.getConnection("jdbc:mysql://localhost/dvd_verleih?user=root");
-			} catch (SQLException e) {
-				// Verbindung zum SQL Server fehlgeschlagen. Fehlercode 005
-				e.printStackTrace();
-				throw new Exception(
-						"Verbindung zum SQL Server fehlgeschlagen. Fehlercode 005");
-			}
-			insert = new Insert("dvd_verleih",con);
-			
-			// Auf Aufruf aus dem NewDVD Dialog prüfen
-			if (fromNewDVD = false){
+			MysqlAccess mysql = new MysqlAccess();
+			insert = new Insert("dvd_verleih",mysql.getConnection());
 
-			try {
-				insert.insertAuthor(this,firstName, lastName);
+			// Auf Aufruf aus dem NewDVD oder EditDVD Dialog pruefen
+			if (fromNewDVD = false) {
 
-			} catch (InvalidParameterException e) {
-				// Fehlercode 002
-				e.printStackTrace();
-				throw new Exception(
-						"Bei der Uebertragung der Parameter ist ein Fehler aufgetreten! Fehlercode: 002");
-			}
-			}
-			else if (fromNewDVD = true){
 				try {
-					insert.insertAuthor(newDVD,this,firstName, lastName);
+					insert.insertAuthor(this, firstName, lastName);
 
+				} catch (InvalidParameterException e) {
+					// Fehlercode 002
+					e.printStackTrace();
+					throw new Exception(
+							"Bei der Uebertragung der Parameter ist ein Fehler aufgetreten! Fehlercode: 002");
+				}
+			} else if (fromNewDVD = true) {
+				try {
+					if (newDVD != null) {
+						insert.insertAuthor(newDVD, this, firstName, lastName);
+					} else if (editDVD != null) {
+						insert.insertAuthor(editDVD, this, firstName, lastName);
+					}
 				} catch (InvalidParameterException e) {
 					// Fehlercode 002
 					e.printStackTrace();
@@ -262,8 +272,8 @@ public class NewAuthor extends JDialog {
 		// Wenn Benutzer erfolgreich hinzu gefügt wurde, die mitteilen und
 		// neues, leeres Eingabefenster öffnen.
 
-		JOptionPane.showMessageDialog(null, ("Der Autor " + firstName + " "
-				+ lastName + " wurde erfolgreich angelegt!"),
+		JOptionPane.showMessageDialog(null, ("Der Autor \"" + firstName + " "
+				+ lastName + "\" wurde erfolgreich angelegt!"),
 				"Vorgang erfolgreich", JOptionPane.INFORMATION_MESSAGE);
 		this.setVisible(false);
 		this.dispose();

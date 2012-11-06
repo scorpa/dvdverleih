@@ -1,7 +1,10 @@
 package de.dhbw.projektarbeit.gui;
 
-import javax.swing.JMenuBar;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 import javax.swing.JMenu;
+import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 
 import de.dhbw.projektarbeit.gui.Dialogs.EditAuthor;
@@ -10,13 +13,9 @@ import de.dhbw.projektarbeit.gui.Dialogs.EditProducer;
 import de.dhbw.projektarbeit.gui.Dialogs.EditRegisseur;
 import de.dhbw.projektarbeit.gui.Dialogs.NewAuthor;
 import de.dhbw.projektarbeit.gui.Dialogs.NewCamera;
-import de.dhbw.projektarbeit.gui.Dialogs.NewCustomer;
 import de.dhbw.projektarbeit.gui.Dialogs.NewDVD;
 import de.dhbw.projektarbeit.gui.Dialogs.NewProducer;
 import de.dhbw.projektarbeit.gui.Dialogs.NewRegisseur;
-
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 
 public class MenuBar extends JMenuBar {
 	public MenuBar() {
@@ -35,21 +34,6 @@ public class MenuBar extends JMenuBar {
 
 		JMenu mnDialoge = new JMenu("Dialoge");
 		add(mnDialoge);
-
-		JMenu mnKunde = new JMenu("Kunde");
-		mnDialoge.add(mnKunde);
-
-		JMenuItem mntmNeuerKunde = new JMenuItem("Neuer Kunde");
-		mntmNeuerKunde.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				// Button "Neuer Kunde" gedrückt
-				mntmNeuerKundeActionPerformed(e);
-			}
-		});
-		mnKunde.add(mntmNeuerKunde);
-
-		JMenuItem mntmKundeBearbeiten = new JMenuItem("Kunde bearbeiten");
-		mnKunde.add(mntmKundeBearbeiten);
 
 		JMenu mnDvd = new JMenu("DVD");
 		mnDialoge.add(mnDvd);
@@ -70,9 +54,6 @@ public class MenuBar extends JMenuBar {
 
 		JMenuItem mntmDvdBearbeiten = new JMenuItem("DVD bearbeiten");
 		mnDvd.add(mntmDvdBearbeiten);
-
-		JMenuItem mntmVerleihpreis = new JMenuItem("Verleihpreis");
-		mnDvd.add(mntmVerleihpreis);
 
 		JMenu mnRegisseur = new JMenu("Regisseur");
 		mnDialoge.add(mnRegisseur);
@@ -169,17 +150,6 @@ public class MenuBar extends JMenuBar {
 	 */
 	private void mntmBeendenActionPerformed(ActionEvent arg0) {
 		System.exit(0);
-	}
-
-	/**
-	 * Aufruf aus dem Kontextmenüt Dialoge -> Kunden --> Neuer Kunde anlegen
-	 * 
-	 * @param e
-	 *            --> Eventhandling
-	 */
-	private void mntmNeuerKundeActionPerformed(ActionEvent e) {
-		NewCustomer nc = new NewCustomer();
-		nc.setVisible(true);
 	}
 
 	/**

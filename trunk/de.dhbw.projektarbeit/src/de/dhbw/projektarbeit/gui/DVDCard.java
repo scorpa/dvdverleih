@@ -31,7 +31,7 @@ public class DVDCard extends JPanel {
 	// Spaltenüberschriften
 	private String[] columnNames = { "Menge", "Titel", "Originaltitel",
 			"Genre", "Produktionsland", "Produktionsjahr", "Erscheinungsdatum",
-			"Länge", "Altersfreigabe", "Regie", "Autor", "Produkiton",
+			"Länge", "Altersfreigabe", "Regie", "Autor", "Produktion",
 			"Kamera", "EAN Code" };
 
 	/**
@@ -66,9 +66,26 @@ public class DVDCard extends JPanel {
 		setLayout(new CardLayout(0, 0));
 		model = new DefaultTableModel(dvdData, columnNames);
 		tbDVD = new JTableNotEditable(model, columnNames);
+		tbDVD.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 		tbDVD.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		tbDVD.setFocusable(false);
 		tbDVD.setModel(model);
+		
+		// Spaltenbreiten setzen
+		tbDVD.getColumn("Menge").setPreferredWidth(45);
+		tbDVD.getColumn("Titel").setPreferredWidth(300);
+		tbDVD.getColumn("Originaltitel").setPreferredWidth(300);
+		tbDVD.getColumn("Genre").setPreferredWidth(150);
+		tbDVD.getColumn("Produktionsland").setPreferredWidth(150);
+		tbDVD.getColumn("Produktionsjahr").setPreferredWidth(100);
+		tbDVD.getColumn("Erscheinungsdatum").setPreferredWidth(130);
+		tbDVD.getColumn("Länge").setPreferredWidth(50);
+		tbDVD.getColumn("Altersfreigabe").setPreferredWidth(90);
+		tbDVD.getColumn("Regie").setPreferredWidth(200);
+		tbDVD.getColumn("Autor").setPreferredWidth(200);
+		tbDVD.getColumn("Produktion").setPreferredWidth(200);
+		tbDVD.getColumn("Kamera").setPreferredWidth(200);
+		tbDVD.getColumn("EAN Code").setPreferredWidth(100);
 
 		JScrollPane scrollPane = new JScrollPane(tbDVD);
 		scrollPane.setName("scrollDVD");

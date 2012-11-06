@@ -4,10 +4,8 @@ import java.sql.Connection;
 import java.sql.SQLException;
 
 import de.dhbw.projektarbeit.db.mysql.MysqlAccess;
-import de.dhbw.projektarbeit.db.request.ControlData;
 import de.dhbw.projektarbeit.db.request.Delete;
 import de.dhbw.projektarbeit.db.request.Insert;
-import de.dhbw.projektarbeit.db.request.Listing;
 import de.dhbw.projektarbeit.db.request.Update;
 
 /**
@@ -21,10 +19,8 @@ public class Request {
 	private MysqlAccess mysqlAccess;
 	private Connection con;
 
-	private ControlData controlData;
 	private Delete delete;
 	private Insert insert;
-	private Listing listing;
 	private Update update;
 
 	/**
@@ -45,22 +41,12 @@ public class Request {
 
 		con = mysqlAccess.getConnection();
 
-		controlData = new ControlData(schema, con);
 		delete = new Delete(schema, con);
 		insert = new Insert(schema, con);
-		listing = new Listing(schema, con);
-		update = new Update(con, this);
+		update = new Update(schema, con);
 
 	}
 
-	/**
-	 * @return Das ControlData Objekt. Es wird verwendet, um alle Zusatzabfragen
-	 *         wie Liste der Zahlungsmittel, Liste der Einnahme-/Ausgabearten,
-	 *         etc. zur Verfügung zu stellen und zu verwalten.
-	 */
-	public ControlData controlData() {
-		return controlData;
-	}
 
 	/**
 	 * @return Das Delete Objekt. Es wird verwendet, um Einträge aus der
@@ -77,14 +63,6 @@ public class Request {
 	 */
 	public Insert insert() {
 		return insert;
-	}
-
-	/**
-	 * @return Das Listing Objekt. Es wird verwendet, um alle DB-Abfragen
-	 *         durchzuführen, die Übersichtslisten liefern sollen.
-	 */
-	public Listing listing() {
-		return listing;
 	}
 
 	/**

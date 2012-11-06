@@ -22,9 +22,6 @@ public class Delete {
 	private Connection con;
 	private Statement stmt;
 
-	public static final int EARNING = 1;
-	public static final int EXPENSE = 2;
-
 	/**
 	 * Constructor, initialisiert das Objekt, es wird ein DB-Schema und ein
 	 * Connection Objekt uebergeben.
@@ -41,26 +38,25 @@ public class Delete {
 		this.con = con;
 	}
 
-	public void deleteEdits(int id, String firstname, String lastname, String form, String field)
-		throws Exception {
-		try {	
+	public void deleteEdits(int id, String firstname, String lastname,
+			String form, String field) throws Exception {
+		try {
 			con.setAutoCommit(false);
 			stmt = con.createStatement();
 			StringBuffer buffer = new StringBuffer();
-			
+
 			buffer.append("SELECT COUNT(");
 			buffer.append(field + ")");
 			buffer.append(" FROM DVD");
-						
-			
+
 			rset = stmt.executeQuery(buffer.toString());
 			int count = 0;
-			  while(rset.next()) {
-			    count++; // Zeilen-ZŠhler erhšhen
-			  }
-			  if(count <= 0){
+			while (rset.next()) {
+				count++; // Zeilen-ZŠhler erhšhen
+			}
+			if (count <= 0) {
 				buffer = new StringBuffer();
-			  	buffer.append("DELETE FROM ");
+				buffer.append("DELETE FROM ");
 				buffer.append(schema);
 				buffer.append(".");
 				buffer.append(form);
@@ -73,19 +69,21 @@ public class Delete {
 				// Neuerfasste Daten auf DB schreiben
 				con.commit();
 				con.setAutoCommit(true);
-				
+
 				// Bei erfolgreichem Löschen Nachricht bringen
-				JOptionPane.showMessageDialog(null, ("Der Eintrag " + firstname + " " + lastname + " wurde erfolgreich gelöscht!"),
+				JOptionPane.showMessageDialog(null, ("Der Eintrag " + firstname
+						+ " " + lastname + " wurde erfolgreich gelöscht!"),
 						"Vorgang erfolgreich", JOptionPane.INFORMATION_MESSAGE);
-			  }else{
-				  JOptionPane.showMessageDialog(null, ("Der Eintrag konnte nicht gelšscht werden, da dieser noch benutzt wird!"),
-							"Vorgang abgebrochen", JOptionPane.WARNING_MESSAGE); 
-			  }
-			
-			
-			
+			} else {
+				JOptionPane
+						.showMessageDialog(
+								null,
+								("Der Eintrag konnte nicht gelöcht werden, da dieser noch benutzt wird!"),
+								"Vorgang abgebrochen",
+								JOptionPane.WARNING_MESSAGE);
+			}
 		} catch (SQLException e) {
-		
+
 			con.rollback();
 			con.setAutoCommit(true);
 			e.printStackTrace();
@@ -93,65 +91,77 @@ public class Delete {
 					"Fehler beim Löschen der Zeile aus der Datenbank! Fehlercode 007");
 		}
 	}
-	
+
+	/**
+	 * Löschen einer DVD aus dem JDialog EditDVD
+	 * 
+	 * @param ed
+	 *            --> Klasseninformationen aus EditDVD
+	 * @param field
+	 *            --> Zeilenbezeichnung, die als Select genommen werden soll
+	 * @param form
+	 *            --> Tabelle, aus der gelöscht werden soll
+	 * @param code
+	 *            --> EAN Code (Primärschlüssel) der DVD
+	 * @throws Exception
+	 */
 	public void deleteDVD(EditDVD ed, String field, String form, String code)
 			throws Exception {
-			try {	
-				
-				con.setAutoCommit(false);
-				stmt = con.createStatement();
-				StringBuffer buffer = new StringBuffer();
-				
-				//†berprŸfen ob selektierte ID vorhanden ist
-				buffer.append("SELECT COUNT(");
-				buffer.append(field + ")");
-				buffer.append(" FROM DVD");
-							
-				
-				rset = stmt.executeQuery(buffer.toString());
-				int count = 0;
-				  while(rset.next()) {
-				    count++; // Zeilen-ZŠhler erhšhen
-				  }
-				  if(count > 0){
-					buffer = new StringBuffer();
-				  	buffer.append("DELETE FROM ");
-					buffer.append(schema);
-					buffer.append(".");
-					buffer.append(form);
-					buffer.append(" WHERE ");
-					buffer.append(field);
-					buffer.append(" = ");
-					buffer.append(code);
-					stmt.executeUpdate(buffer.toString());
+		try {
 
-					// Neuerfasste Daten auf DB schreiben
-					con.commit();
-					con.setAutoCommit(true);
-					
-					// Bei erfolgreichem Lšschen Nachricht bringen
-					JOptionPane.showMessageDialog(null, ("Die DVD wurde erfolgreich gelšscht!"),
-							"Vorgang erfolgreich", JOptionPane.INFORMATION_MESSAGE);
-				  }else{
-					  JOptionPane.showMessageDialog(null, ("Die DVD konnte nicht gelšscht werden!"),
-								"Vorgang abgebrochen", JOptionPane.WARNING_MESSAGE); 
-				  }
-				
-				
-				
-			} catch (SQLException e) {
-			
-				con.rollback();
+			con.setAutoCommit(false);
+			stmt = con.createStatement();
+			StringBuffer buffer = new StringBuffer();
+
+			// †berprŸfen ob selektierte ID vorhanden ist
+			buffer.append("SELECT COUNT(");
+			buffer.append(field + ")");
+			buffer.append(" FROM DVD");
+
+			rset = stmt.executeQuery(buffer.toString());
+			int count = 0;
+			while (rset.next()) {
+				count++; // Zeilen-ZŠhler erhšhen
+			}
+			if (count > 0) {
+				buffer = new StringBuffer();
+				buffer.append("DELETE FROM ");
+				buffer.append(schema);
+				buffer.append(".");
+				buffer.append(form);
+				buffer.append(" WHERE ");
+				buffer.append(field);
+				buffer.append(" = ");
+				buffer.append(code);
+				stmt.executeUpdate(buffer.toString());
+
+				// Neuerfasste Daten auf DB schreiben
+				con.commit();
 				con.setAutoCommit(true);
-				e.printStackTrace();
-				throw new Exception(
-						"Fehler beim Lšschen der Zeile aus der Datenbank! Fehlercode 007");
+
+				// Bei erfolgreichem Lšschen Nachricht bringen
+				JOptionPane.showMessageDialog(null,
+						("Die DVD mit dem EAN Code " + code + " wurde erfolgreich gelöcht!"),
+						"Vorgang erfolgreich", JOptionPane.INFORMATION_MESSAGE);
+			} else {
+				JOptionPane.showMessageDialog(null,
+						("Die DVD mit dem EAN Code " + code + " konnte nicht gelöcht werden!"),
+						"Vorgang abgebrochen", JOptionPane.WARNING_MESSAGE);
 			}
-			try {
-				ed.dvdDeleted(code);
-			} catch (Exception e) {
-				// TODO: handle exception
-			}
+
+		} catch (SQLException e) {
+
+			con.rollback();
+			con.setAutoCommit(true);
+			e.printStackTrace();
+			throw new Exception(
+					"Fehler beim Lšschen der Zeile aus der Datenbank! Fehlercode 007");
 		}
-	
+		try {
+			ed.dvdDeleted();
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+	}
+
 }

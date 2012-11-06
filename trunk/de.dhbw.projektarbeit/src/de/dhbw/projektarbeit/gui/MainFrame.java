@@ -2,6 +2,7 @@ package de.dhbw.projektarbeit.gui;
 
 import java.awt.CardLayout;
 import java.awt.Dimension;
+import java.awt.GraphicsEnvironment;
 
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
@@ -20,10 +21,10 @@ public class MainFrame extends javax.swing.JFrame {
 
 	public MainFrame() {
 		super();
-		setMinimumSize(new Dimension(800, 600));
+		setMinimumSize(new Dimension(1024, 768));
 		setSize(new Dimension(800, 600));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setTitle("DVD Verleih");
+		setTitle("DVD Verwaltung");
 		try {
 			UIManager.setLookAndFeel(UIManager
 					.getCrossPlatformLookAndFeelClassName());
@@ -74,10 +75,8 @@ public class MainFrame extends javax.swing.JFrame {
 			
 			DVDCard dvdCard = new DVDCard();
 			tabbedPane.addTab("DVD Liste", null, dvdCard, null);
-			
-			CustomerCard customerCard = new CustomerCard();
-			tabbedPane.addTab("Kundenliste", null, customerCard, null);
 			getContentPane().setLayout(groupLayout);
+			this.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		} catch(Exception e) {
 			e.printStackTrace();
 		}

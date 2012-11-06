@@ -51,10 +51,10 @@ public class EditDVD extends JDialog {
 			cbCamera;
 	private DefaultComboBoxModel cAuswahlRegisseur, cAuswahlProduction,
 			cAuswahlCamera, cAuswahlAuthor;
-	private Date release;
+	private Date releaseDate;
 	private SimpleDateFormat sdf;
 	private JXDatePicker dpReleaseDate;
-	private JButton okButton, btnUpdate;
+	private JButton btnUpdate;
 	private JButton cancelButton;
 	private JTable tbDVD;
 	private Object[][] dvdData;
@@ -148,6 +148,11 @@ public class EditDVD extends JDialog {
 				cbRegisseur = new JComboBox();
 				cbRegisseur.setModel(cAuswahlRegisseur);
 				JButton btnNewRegisseur = new JButton("+");
+				btnNewRegisseur.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						btnNewRegisseurActionPerformed(e);
+					}
+				});
 				cbFSK = new JComboBox();
 				cbFSK.setModel(new DefaultComboBoxModel(new String[] {
 						"ab 0 Jahre", "ab 6 Jahre", "ab 12 Jahre",
@@ -190,6 +195,11 @@ public class EditDVD extends JDialog {
 				cbProducent = new JComboBox();
 				cbProducent.setModel(cAuswahlProduction);
 				JButton btnNewProducer = new JButton("+");
+				btnNewProducer.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						btnNewProducerActionPerformed(e);
+					}
+				});
 				JLabel lblDauerInMin = new JLabel("Dauer in Min.");
 				spDuration = new JSpinner();
 
@@ -215,7 +225,12 @@ public class EditDVD extends JDialog {
 				cbCamera = new JComboBox();
 				cbCamera.setModel(cAuswahlCamera);
 
-				JButton button = new JButton("+");
+				JButton btnNewCamera = new JButton("+");
+				btnNewCamera.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						btnNewCameraActionPerformed(e);
+					}
+				});
 
 				JLabel lblAuthor = new JLabel("Autor");
 
@@ -231,6 +246,11 @@ public class EditDVD extends JDialog {
 				cbAuthor.setModel(cAuswahlAuthor);
 
 				JButton btnNewAuthor = new JButton("+");
+				btnNewAuthor.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						btnNewAuthorActionPerformed(e);
+					}
+				});
 				GroupLayout gl_panel = new GroupLayout(panel);
 				gl_panel.setHorizontalGroup(gl_panel
 						.createParallelGroup(Alignment.LEADING)
@@ -250,7 +270,7 @@ public class EditDVD extends JDialog {
 																		.addPreferredGap(
 																				ComponentPlacement.RELATED)
 																		.addComponent(
-																				button,
+																				btnNewCamera,
 																				GroupLayout.PREFERRED_SIZE,
 																				40,
 																				GroupLayout.PREFERRED_SIZE)
@@ -559,7 +579,7 @@ public class EditDVD extends JDialog {
 																GroupLayout.DEFAULT_SIZE,
 																GroupLayout.PREFERRED_SIZE)
 														.addComponent(
-																button,
+																btnNewCamera,
 																GroupLayout.PREFERRED_SIZE,
 																28,
 																GroupLayout.PREFERRED_SIZE)
@@ -625,12 +645,12 @@ public class EditDVD extends JDialog {
 			JPanel buttonPane = new JPanel();
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
-				okButton = new JButton("OK");
-				okButton.setActionCommand("OK");
-				getRootPane().setDefaultButton(okButton);
-			}
-			{
 				cancelButton = new JButton("Cancel");
+				cancelButton.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent arg0) {
+						dispose();
+					}
+				});
 				cancelButton.setActionCommand("Cancel");
 			}
 
@@ -647,7 +667,7 @@ public class EditDVD extends JDialog {
 					btnUpdateActionPerformed(arg0);
 				}
 			});
-			
+
 			btnUpdate.setEnabled(false);
 			GroupLayout gl_buttonPane = new GroupLayout(buttonPane);
 			gl_buttonPane.setHorizontalGroup(gl_buttonPane.createParallelGroup(
@@ -655,68 +675,32 @@ public class EditDVD extends JDialog {
 					gl_buttonPane
 							.createSequentialGroup()
 							.addContainerGap()
-							.addComponent(btnDelete, GroupLayout.PREFERRED_SIZE,
-									96, GroupLayout.PREFERRED_SIZE)
+							.addComponent(btnDelete,
+									GroupLayout.PREFERRED_SIZE, 96,
+									GroupLayout.PREFERRED_SIZE)
 							.addGap(6)
 							.addComponent(btnUpdate,
 									GroupLayout.PREFERRED_SIZE, 103,
 									GroupLayout.PREFERRED_SIZE)
-							.addPreferredGap(ComponentPlacement.RELATED, 261,
-									Short.MAX_VALUE).addComponent(okButton)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(cancelButton).addContainerGap()));
-			gl_buttonPane
-					.setVerticalGroup(gl_buttonPane
-							.createParallelGroup(Alignment.LEADING)
+							.addPreferredGap(ComponentPlacement.RELATED, 319,
+									Short.MAX_VALUE).addComponent(cancelButton)
+							.addContainerGap()));
+			gl_buttonPane.setVerticalGroup(gl_buttonPane.createParallelGroup(
+					Alignment.LEADING).addGroup(
+					gl_buttonPane
+							.createSequentialGroup()
+							.addGap(5)
 							.addGroup(
 									gl_buttonPane
-											.createSequentialGroup()
-											.addGap(5)
-											.addGroup(
-													gl_buttonPane
-															.createParallelGroup(
-																	Alignment.LEADING)
-															.addComponent(
-																	btnDelete)
-															.addComponent(
-																	btnUpdate)
-															.addGroup(
-																	gl_buttonPane
-																			.createParallelGroup(
-																					Alignment.BASELINE)
-																			.addComponent(
-																					cancelButton)
-																			.addComponent(
-																					okButton)))
-											.addContainerGap(
-													GroupLayout.DEFAULT_SIZE,
-													Short.MAX_VALUE)));
+											.createParallelGroup(
+													Alignment.LEADING)
+											.addComponent(btnDelete)
+											.addComponent(btnUpdate)
+											.addComponent(cancelButton))
+							.addContainerGap(GroupLayout.DEFAULT_SIZE,
+									Short.MAX_VALUE)));
 			buttonPane.setLayout(gl_buttonPane);
 		}
-	}
-	protected void btnDeleteActionPerformed(ActionEvent arg0) {
-		MysqlAccess mysql = new MysqlAccess();
-		boolean go = true;
-		// Überfürung des JXDates in die Datevariable
-
-		try {
-			// Auf leere Pflichtfelder ueberpruefen
-			if (txtEANCode.getText().replaceAll(" ", "").equals("")) {
-				go = false;
-			}
-			// Updatemethode aufrufen und Connection zum SQL Server herstellen
-			Delete delete = new Delete("dvd_verleih", mysql.getConnection());
-			// Festlegung des Formats für das SQL Date Feld
-			sdf = new SimpleDateFormat();
-			sdf.applyPattern("yyyy-MM-dd");
-			delete.deleteDVD(this, "Barcode", "dvd",txtEANCode.getText());
-			
-			
-		} catch (Exception e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-		
 	}
 
 	/**
@@ -767,7 +751,7 @@ public class EditDVD extends JDialog {
 					tbDVD.getSelectedRow(), 11));
 			cbCamera.setSelectedItem(tbDVD.getValueAt(tbDVD.getSelectedRow(),
 					12));
-			
+
 			txtEANCode.setText((String) tbDVD.getValueAt(
 					tbDVD.getSelectedRow(), 13));
 			// Befüllen der alten EAN, um sie später übergeben zu können
@@ -781,51 +765,95 @@ public class EditDVD extends JDialog {
 		}
 	}
 
+	/**
+	 * Updatebutton wurde gedrückt Methode ruft die Updatefunktion auf
+	 * 
+	 * @param e
+	 *            --> Actionhandling
+	 */
 	private void btnUpdateActionPerformed(ActionEvent e) {
 		MysqlAccess mysql = new MysqlAccess();
-		boolean go = true;
-		// Ueberpruefung des JXDates in die Datevariable
 		try {
-			release = Date.valueOf(sdf.format(dpReleaseDate.getDate()));
-		} catch (IllegalArgumentException i) {
-			i.printStackTrace();
-		}
-		try {
-			// Auf leere Pflichtfelder überprüfen
-			if (txtTitle.getText().replaceAll(" ", "").equals("")) {
-				go = false;
-			} else if (txtOriginalTitle.getText().replaceAll(" ", "").equals("")) {
-				go = false;
-			} else if (txtEANCode.getText().replaceAll(" ", "").equals("")) {
-				go = false;
-			} else if (txtGenre.getText().replaceAll(" ", "").equals("")) {
-				go = false;
-			} else if (cbRegisseur.getSelectedItem().toString().replaceAll(" ", "").equals("")) {
-				go = false;
-			} else if (cbProducent.getSelectedItem().toString().replaceAll(" ", "").equals("")) {
-				go = false;
-			} else if (cbCamera.getSelectedItem().toString().replaceAll(" ", "").equals("")) {
-				go = false;
-			} else if (cbAuthor.getSelectedItem().toString().replaceAll(" ", "").equals("")) {
-				go = false;
-			} else if (release == null) {
-				go = false;
-			}
 			// Updatemethode aufrufen und Connection zum SQL Server herstellen
 			Update update = new Update("dvd_verleih", mysql.getConnection());
-			// Festlegung des Formats fuer das SQL Date Feld
+			// Festlegung des Formats für das SQL Date Feld
 			sdf = new SimpleDateFormat();
 			sdf.applyPattern("yyyy-MM-dd");
-			//update.editDVD(quantity, title, originalTitle, genre, prodCountry, prod_year, release, duration, fsk, regisseur, author, production, camera, eanCode, oldEAN);
-			
-			
+			releaseDate = (Date.valueOf(sdf.format(dpReleaseDate.getDate())));
+			update.editDVD((Integer) spCountDVD.getValue(), txtTitle.getText(),
+					txtOriginalTitle.getText(), txtGenre.getText(),
+					(String) cbProdCountry.getSelectedItem(),
+					(Integer) spProductionYear.getValue(), releaseDate,
+					(Integer) spDuration.getValue(),
+					(String) cbFSK.getSelectedItem(),
+					(String) cbRegisseur.getSelectedItem(),
+					(String) cbAuthor.getSelectedItem(),
+					(String) cbProducent.getSelectedItem(),
+					(String) cbCamera.getSelectedItem(), txtEANCode.getText(),
+					oldEAN);
+
+			// Aktualisieren der JTable tbDVD
+			tbDVD.setValueAt(spCountDVD.getValue(), tbDVD.getSelectedRow(), 0);
+			tbDVD.setValueAt(txtTitle.getText(), tbDVD.getSelectedRow(), 1);
+			tbDVD.setValueAt(txtOriginalTitle.getText(),
+					tbDVD.getSelectedRow(), 2);
+			tbDVD.setValueAt(txtGenre.getText(), tbDVD.getSelectedRow(), 3);
+			tbDVD.setValueAt((String) cbProdCountry.getSelectedItem(),
+					tbDVD.getSelectedRow(), 4);
+			tbDVD.setValueAt(spProductionYear.getValue(),
+					tbDVD.getSelectedRow(), 5);
+			tbDVD.setValueAt(releaseDate, tbDVD.getSelectedRow(), 6);
+			tbDVD.setValueAt(spDuration.getValue(), tbDVD.getSelectedRow(), 7);
+			tbDVD.setValueAt((String) cbFSK.getSelectedItem(),
+					tbDVD.getSelectedRow(), 8);
+			tbDVD.setValueAt((String) cbRegisseur.getSelectedItem(),
+					tbDVD.getSelectedRow(), 9);
+			tbDVD.setValueAt((String) cbAuthor.getSelectedItem(),
+					tbDVD.getSelectedRow(), 10);
+			tbDVD.setValueAt((String) cbProducent.getSelectedItem(),
+					tbDVD.getSelectedRow(), 11);
+			tbDVD.setValueAt((String) cbCamera.getSelectedItem(),
+					tbDVD.getSelectedRow(), 12);
+			tbDVD.setValueAt(txtEANCode.getText(), tbDVD.getSelectedRow(), 13);
+
+		} catch (Exception e1) {
+			e1.printStackTrace();
+		}
+	}
+
+	/**
+	 * Löschen Button wurde gedrückt
+	 * 
+	 * @param arg0
+	 *            --> Actionhandling
+	 */
+	protected void btnDeleteActionPerformed(ActionEvent arg0) {
+		MysqlAccess mysql = new MysqlAccess();
+		boolean go = true;
+
+		try {
+			// Auf leere Pflichtfelder ueberpruefen
+			if (txtEANCode.getText().replaceAll(" ", "").equals("")) {
+				go = false;
+			}
+			if (go == true) {
+				// Deletemethode aufrufen und Connection zum SQL Server
+				// herstellen
+				Delete delete = new Delete("dvd_verleih", mysql.getConnection());
+				delete.deleteDVD(this, "Barcode", "dvd", txtEANCode.getText());
+			}
 		} catch (Exception e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 	}
 
-	public void dvdDeleted(String code) {
+	/**
+	 * Rückmeldung aus der Methode Delete
+	 * 
+	 * @param code
+	 */
+	public void dvdDeleted() {
 		try {
 			this.setVisible(false);
 			this.dispose();
@@ -833,12 +861,106 @@ public class EditDVD extends JDialog {
 			// Neues, leeres Erstellungsfenster instantiieren
 			EditDVD dialog = new EditDVD();
 			dialog.setVisible(true);
-						
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+
 	}
 
+	/**
+	 * Button "Neuer Regisseur" gedrückt
+	 * 
+	 * @param e
+	 *            --> Actionhandling
+	 */
+	private void btnNewRegisseurActionPerformed(ActionEvent e) {
+		NewRegisseur nr = new NewRegisseur(this);
+		nr.setVisible(true);
+	}
+
+	/**
+	 * Button "Neuer Produzent" gedrückt
+	 * 
+	 * @param e
+	 *            --> Actionhandling
+	 */
+	private void btnNewProducerActionPerformed(ActionEvent e) {
+		NewProducer np = new NewProducer(this);
+		np.setVisible(true);
+	}
+
+	/**
+	 * Button "Neuer Kameramann" gedrückt
+	 * 
+	 * @param e
+	 *            --> Actionhandling
+	 */
+	private void btnNewCameraActionPerformed(ActionEvent e) {
+		NewCamera nc = new NewCamera(this);
+		nc.setVisible(true);
+	}
+
+	/**
+	 * Button "Neuer Autor" gedrückt
+	 * 
+	 * @param e
+	 *            --> Actionhandling
+	 */
+	private void btnNewAuthorActionPerformed(ActionEvent e) {
+		NewAuthor na = new NewAuthor(this);
+		na.setVisible(true);
+	}
+
+	/**
+	 * Methode zum Updaten der Combobox Regisseur nach Neueingabe
+	 * 
+	 * @param regisseur
+	 *            Konkadinierter Rückgabewerte aus der Insertmethode
+	 */
+	public void updateComboboxRegisseur(String regisseur) {
+		dbRegisseur.add(regisseur);
+		cAuswahlRegisseur = new DefaultComboBoxModel(dbRegisseur);
+		cbRegisseur.setModel(cAuswahlRegisseur);
+
+	}
+
+	/**
+	 * Methode zum Updaten der Combobox Produzent nach Neueingabe
+	 * 
+	 * @param production
+	 *            = Konkadinierter Rückgabewerte aus der Insertmethode
+	 */
+	public void updateComboboxProduction(String production) {
+		dbProduction.add(production);
+		cAuswahlProduction = new DefaultComboBoxModel(dbProduction);
+		cbProducent.setModel(cAuswahlProduction);
+
+	}
+
+	/**
+	 * Methode zum Updaten der Combobox Kamera nach Neueingabe
+	 * 
+	 * @param production
+	 *            = Konkadinierter Rückgabewerte aus der Insertmethode
+	 */
+	public void updateComboboxCamera(String camera) {
+		dbCamera.add(camera);
+		cAuswahlCamera = new DefaultComboBoxModel(dbCamera);
+		cbCamera.setModel(cAuswahlCamera);
+
+	}
+
+	/**
+	 * Methode zum Updaten der Combobox Author nach Neueingabe
+	 * 
+	 * @param author
+	 *            = Konkadinierter Rückgabewerte aus der Insertmethode
+	 */
+	public void updateComboboxAuthor(String author) {
+		dbAuthor.add(author);
+		cAuswahlAuthor = new DefaultComboBoxModel(dbAuthor);
+		cbAuthor.setModel(cAuswahlAuthor);
+
+	}
 }

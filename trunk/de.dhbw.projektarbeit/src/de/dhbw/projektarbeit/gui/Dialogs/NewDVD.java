@@ -131,7 +131,9 @@ public class NewDVD extends JDialog {
 			}
 
 		});
-		cbFSK.setModel(new DefaultComboBoxModel(new String[] {"ab 0 Jahre", "ab 6 Jahre", "ab 12 Jahre", "ab 16 Jahre", "ab 18 Jahre", "indiziert"}));
+		cbFSK.setModel(new DefaultComboBoxModel(new String[] { "ab 0 Jahre",
+				"ab 6 Jahre", "ab 12 Jahre", "ab 16 Jahre", "ab 18 Jahre",
+				"indiziert" }));
 
 		// Auslesen des Combofields
 		cbProdCountry = new JComboBox();
@@ -140,7 +142,10 @@ public class NewDVD extends JDialog {
 
 			}
 		});
-		cbProdCountry.setModel(new DefaultComboBoxModel(new String[] {"Australien", "Deutschland", "Frankreich", "Gro\u00DFbritannien", "Hong Kong", "Indien", "Italien", "Kanada", "Niederlande", "Russland", "Spanien", "USA"}));
+		cbProdCountry.setModel(new DefaultComboBoxModel(new String[] {
+				"Australien", "Deutschland", "Frankreich",
+				"Gro\u00DFbritannien", "Hong Kong", "Indien", "Italien",
+				"Kanada", "Niederlande", "Russland", "Spanien", "USA" }));
 		cbProdCountry.setSelectedIndex(11);
 
 		JLabel lblHerstellungsland = new JLabel("Herstellungsland");
@@ -185,7 +190,7 @@ public class NewDVD extends JDialog {
 		cAuswahlRegisseur = new DefaultComboBoxModel(dbRegisseur);
 		cbRegisseur = new JComboBox();
 		cbRegisseur.setModel(cAuswahlRegisseur);
-		
+
 		JButton btnNewRegisseur = new JButton("+");
 		btnNewRegisseur.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -805,22 +810,21 @@ public class NewDVD extends JDialog {
 	}
 
 	protected void txtEancodeKeyReleased(KeyEvent e) {
-		// Prüfung ob eine Zahl oder anderes Zeichen eingegeben wurde oder länger als 11 Zeichen ist
+		// Prüfung ob eine Zahl oder anderes Zeichen eingegeben wurde oder
+		// länger als 11 Zeichen ist
 		String text = txtEancode.getText();
 		if (txtEancode.getText().matches("[0-9]*")) {
 
 		} else {
 			txtEancode.setText(text.substring(0, text.length() - 1));
 		}
-		
-		if (text.length() > 13){
+
+		if (text.length() > 13) {
 			txtEancode.setText(text.substring(0, text.length() - 1));
-			JOptionPane
-			.showMessageDialog(
-					null,
-					"Der EAN Code darf maximal 13 Stellen haben!",
-					"EAN Code", JOptionPane.ERROR_MESSAGE);
-			
+			JOptionPane.showMessageDialog(null,
+					"Der EAN Code darf maximal 13 Stellen haben!", "EAN Code",
+					JOptionPane.ERROR_MESSAGE);
+
 		}
 	}
 
