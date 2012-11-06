@@ -7,6 +7,8 @@ import java.sql.Statement;
 
 import javax.swing.JOptionPane;
 
+import de.dhbw.projektarbeit.gui.Dialogs.EditDVD;
+
 /**
  * Mit Hilfe dieser Klasse lassen sich Datensaetze loeschen.
  * 
@@ -92,9 +94,10 @@ public class Delete {
 		}
 	}
 	
-	public void deleteDVD(int id, String field, String form)
+	public void deleteDVD(EditDVD ed, String field, String form, String code)
 			throws Exception {
 			try {	
+				
 				con.setAutoCommit(false);
 				stmt = con.createStatement();
 				StringBuffer buffer = new StringBuffer();
@@ -119,7 +122,7 @@ public class Delete {
 					buffer.append(" WHERE ");
 					buffer.append(field);
 					buffer.append(" = ");
-					buffer.append(id);
+					buffer.append(code);
 					stmt.executeUpdate(buffer.toString());
 
 					// Neuerfasste Daten auf DB schreiben
@@ -143,6 +146,11 @@ public class Delete {
 				e.printStackTrace();
 				throw new Exception(
 						"Fehler beim Lšschen der Zeile aus der Datenbank! Fehlercode 007");
+			}
+			try {
+				ed.dvdDeleted(code);
+			} catch (Exception e) {
+				// TODO: handle exception
 			}
 		}
 	

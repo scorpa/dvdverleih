@@ -4,6 +4,8 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.sql.Date;
@@ -32,11 +34,8 @@ import javax.swing.table.DefaultTableModel;
 import org.jdesktop.swingx.JXDatePicker;
 
 import de.dhbw.projektarbeit.db.mysql.MysqlAccess;
+import de.dhbw.projektarbeit.db.request.Delete;
 import de.dhbw.projektarbeit.db.request.Filling;
-import de.dhbw.projektarbeit.db.request.Update;
-
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 
 public class EditDVD extends JDialog {
 
@@ -50,7 +49,7 @@ public class EditDVD extends JDialog {
 			cbCamera;
 	private DefaultComboBoxModel cAuswahlRegisseur, cAuswahlProduction,
 			cAuswahlCamera, cAuswahlAuthor;
-	private Date releaseDate;
+	private Date release;
 	private SimpleDateFormat sdf;
 	private JXDatePicker dpReleaseDate;
 	private JButton okButton, btnUpdate;
@@ -633,7 +632,12 @@ public class EditDVD extends JDialog {
 				cancelButton.setActionCommand("Cancel");
 			}
 
-			JButton button = new JButton("L\u00F6schen");
+			JButton btnDelete = new JButton("L\u00F6schen");
+			btnDelete.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent arg0) {
+					btnDeleteActionPerformed(arg0);
+				}
+			});
 
 			btnUpdate = new JButton("Speichern");
 			btnUpdate.addActionListener(new ActionListener() {
@@ -648,7 +652,7 @@ public class EditDVD extends JDialog {
 					gl_buttonPane
 							.createSequentialGroup()
 							.addContainerGap()
-							.addComponent(button, GroupLayout.PREFERRED_SIZE,
+							.addComponent(btnDelete, GroupLayout.PREFERRED_SIZE,
 									96, GroupLayout.PREFERRED_SIZE)
 							.addGap(6)
 							.addComponent(btnUpdate,
@@ -670,7 +674,7 @@ public class EditDVD extends JDialog {
 															.createParallelGroup(
 																	Alignment.LEADING)
 															.addComponent(
-																	button)
+																	btnDelete)
 															.addComponent(
 																	btnUpdate)
 															.addGroup(
@@ -686,6 +690,11 @@ public class EditDVD extends JDialog {
 													Short.MAX_VALUE)));
 			buttonPane.setLayout(gl_buttonPane);
 		}
+	}
+
+	protected void btnDeleteActionPerformed(ActionEvent arg0) {
+		
+		
 	}
 
 	/**
@@ -752,23 +761,40 @@ public class EditDVD extends JDialog {
 
 	private void btnUpdateActionPerformed(ActionEvent e) {
 		MysqlAccess mysql = new MysqlAccess();
+		boolean go = true;
+		// Überfürung des JXDates in die Datevariable
 		try {
+			release = (Date.valueOf(sdf.format(dpReleaseDate.getDate())));
+		} catch (IllegalArgumentException i) {
+			i.printStackTrace();
+		}
+		try {
+			// Auf leere Pflichtfelder überprüfen
+			if (txtTitle.getText().replaceAll(" ", "").equals("")) {
+				go = false;
+			} else if (txtOriginalTitle.getText().replaceAll(" ", "").equals("")) {
+				go = false;
+			} else if (txtEANCode.getText().replaceAll(" ", "").equals("")) {
+				go = false;
+			} else if (txtGenre.getText().replaceAll(" ", "").equals("")) {
+				go = false;
+			} else if (cbRegisseur.getSelectedItem().toString().replaceAll(" ", "").equals("")) {
+				go = false;
+			} else if (cbProducent.getSelectedItem().toString().replaceAll(" ", "").equals("")) {
+				go = false;
+			} else if (cbCamera.getSelectedItem().toString().replaceAll(" ", "").equals("")) {
+				go = false;
+			} else if (cbAuthor.getSelectedItem().toString().replaceAll(" ", "").equals("")) {
+				go = false;
+			} else if (release == null) {
+				go = false;
+			}
 			// Updatemethode aufrufen und Connection zum SQL Server herstellen
-			Update update = new Update("dvd_verleih", mysql.getConnection());
+			Delete delete = new Delete("dvd_verleih", mysql.getConnection());
 			// Festlegung des Formats für das SQL Date Feld
 			sdf = new SimpleDateFormat();
 			sdf.applyPattern("yyyy-MM-dd");
-			releaseDate = (Date.valueOf(sdf.format(dpReleaseDate.getDate())));
-			update.editDVD((Integer) spCountDVD.getValue(), txtTitle.getText(),
-					txtOriginalTitle.getText(), txtGenre.getText(),
-					(String) cbProdCountry.getSelectedItem(),
-					(Integer) spProductionYear.getValue(), releaseDate,
-					(Integer) spDuration.getValue(),
-					(String) cbFSK.getSelectedItem(),
-					(String) cbRegisseur.getSelectedItem(),
-					(String) cbAuthor.getSelectedItem(),
-					(String) cbProducent.getSelectedItem(),
-					(String) cbCamera.getSelectedItem(), txtEANCode.getText(), oldEAN);
+			delete.delteDVD(,txtEANCode.getText());
 			
 			// Aktualisieren der JTable tbDVD
 			tbDVD.setValueAt(spCountDVD.getValue(), tbDVD.getSelectedRow(), 0);
@@ -777,7 +803,7 @@ public class EditDVD extends JDialog {
 			tbDVD.setValueAt(txtGenre.getText(), tbDVD.getSelectedRow(), 3);
 			tbDVD.setValueAt((String) cbProdCountry.getSelectedItem(), tbDVD.getSelectedRow(), 4);
 			tbDVD.setValueAt(spProductionYear.getValue(), tbDVD.getSelectedRow(), 5);
-			tbDVD.setValueAt(releaseDate, tbDVD.getSelectedRow(), 6);
+			tbDVD.setValueAt(release, tbDVD.getSelectedRow(), 6);
 			tbDVD.setValueAt((String) cbFSK.getSelectedItem(), tbDVD.getSelectedRow(), 7);
 			tbDVD.setValueAt((String) cbRegisseur.getSelectedItem(), tbDVD.getSelectedRow(), 8);
 			tbDVD.setValueAt((String) cbAuthor.getSelectedItem(), tbDVD.getSelectedRow(), 9);
@@ -789,6 +815,15 @@ public class EditDVD extends JDialog {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
+	}
+
+	public void dvdDeleted(String code) {
+		try {
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
 	}
 
 }
