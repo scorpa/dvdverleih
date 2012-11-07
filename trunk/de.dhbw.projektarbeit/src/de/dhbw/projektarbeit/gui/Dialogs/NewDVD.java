@@ -880,13 +880,6 @@ public class NewDVD extends JDialog {
 		author = (String) cbAuthor.getSelectedItem();
 		production = (String) cbProducent.getSelectedItem();
 
-		// Überfürung des JXDates in die Datevariable
-		try {
-			release = (Date.valueOf(sdf.format(dpRelease.getDate())));
-		} catch (IllegalArgumentException i) {
-			i.printStackTrace();
-		}
-
 		// JSpinner auslesen spDuration, spCountDVD, spProductionYear
 		duration = smDuration.getNumber().intValue();
 		quantity = smCountDVD.getNumber().intValue();
@@ -926,6 +919,13 @@ public class NewDVD extends JDialog {
 						"Verbindung zum SQL Server fehlgeschlagen. Fehlercode 005");
 			}
 			insert = new Insert("dvd_verleih", con);
+			
+			// Überfürung des JXDates in die Datevariable
+			try {
+				release = (Date.valueOf(sdf.format(dpRelease.getDate())));
+			} catch (IllegalArgumentException i) {
+				i.printStackTrace();
+			}
 			try {
 				insert.insertDVD(this, quantity, title, originalTitle, genre,
 						prodCountry, prod_year, release, duration, fsk, regie,
@@ -942,19 +942,6 @@ public class NewDVD extends JDialog {
 							"Sie haben ein Pflichtfeld nicht ausgefüllt! Bitte überprüfen Sie ihre Angaben in den Feldern",
 							"Regisseurerstellung", JOptionPane.ERROR_MESSAGE);
 		}
-	}
-
-	/**
-	 * Methode zum Updaten der Combobox Regisseur nach Neueingabe
-	 * 
-	 * @param regisseur
-	 *            Konkadinierter Rückgabewerte aus der Insertmethode
-	 */
-	public void updateComboboxRegisseur(String regisseur) {
-		dbRegisseur.add(regisseur);
-		cAuswahlRegisseur = new DefaultComboBoxModel(dbRegisseur);
-		cbRegisseur.setModel(cAuswahlRegisseur);
-
 	}
 
 	public void fillRegisseur() {
@@ -993,6 +980,7 @@ public class NewDVD extends JDialog {
 		dbProduction.add(production);
 		cAuswahlProduction = new DefaultComboBoxModel(dbProduction);
 		cbProducent.setModel(cAuswahlProduction);
+		cbProducent.setSelectedItem(production);
 
 	}
 
@@ -1006,6 +994,7 @@ public class NewDVD extends JDialog {
 		dbCamera.add(camera);
 		cAuswahlCamera = new DefaultComboBoxModel(dbCamera);
 		cbCamera.setModel(cAuswahlCamera);
+		cbCamera.setSelectedItem(camera);
 
 	}
 
@@ -1019,6 +1008,21 @@ public class NewDVD extends JDialog {
 		dbAuthor.add(author);
 		cAuswahlAuthor = new DefaultComboBoxModel(dbAuthor);
 		cbAuthor.setModel(cAuswahlAuthor);
+		cbAuthor.setSelectedItem(author);
+
+	}
+	
+	/**
+	 * Methode zum Updaten der Combobox Regisseur nach Neueingabe
+	 * 
+	 * @param regisseur
+	 *            Konkadinierter Rückgabewerte aus der Insertmethode
+	 */
+	public void updateComboboxRegisseur(String regisseur) {
+		dbRegisseur.add(regisseur);
+		cAuswahlRegisseur = new DefaultComboBoxModel(dbRegisseur);
+		cbRegisseur.setModel(cAuswahlRegisseur);
+		cbRegisseur.setSelectedItem(regisseur);
 
 	}
 }

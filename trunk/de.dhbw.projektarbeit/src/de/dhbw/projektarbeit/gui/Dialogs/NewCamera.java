@@ -279,10 +279,6 @@ public class NewCamera extends JDialog {
 		this.setVisible(false);
 		this.dispose();
 
-		// Neues, leeres Erstellungsfenster instantiieren
-		NewCamera dialog = new NewCamera();
-		dialog.setVisible(true);
-
 	}
 
 }

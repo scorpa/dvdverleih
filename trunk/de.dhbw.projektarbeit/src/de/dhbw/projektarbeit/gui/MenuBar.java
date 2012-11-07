@@ -9,6 +9,7 @@ import javax.swing.JMenuItem;
 
 import de.dhbw.projektarbeit.gui.Dialogs.EditAuthor;
 import de.dhbw.projektarbeit.gui.Dialogs.EditCamera;
+import de.dhbw.projektarbeit.gui.Dialogs.EditDVD;
 import de.dhbw.projektarbeit.gui.Dialogs.EditProducer;
 import de.dhbw.projektarbeit.gui.Dialogs.EditRegisseur;
 import de.dhbw.projektarbeit.gui.Dialogs.NewAuthor;
@@ -17,9 +18,11 @@ import de.dhbw.projektarbeit.gui.Dialogs.NewDVD;
 import de.dhbw.projektarbeit.gui.Dialogs.NewProducer;
 import de.dhbw.projektarbeit.gui.Dialogs.NewRegisseur;
 
-public class MenuBar extends JMenuBar {
-	public MenuBar() {
 
+public class MenuBar extends JMenuBar {
+	
+	public MenuBar() {
+		
 		JMenu mnDatei = new JMenu("Datei");
 		add(mnDatei);
 
@@ -53,6 +56,11 @@ public class MenuBar extends JMenuBar {
 		mnDvd.add(mntmNeueDvd);
 
 		JMenuItem mntmDvdBearbeiten = new JMenuItem("DVD bearbeiten");
+		mntmDvdBearbeiten.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				mntmDvdBearbeitenActionPerformed(arg0);
+			}
+		});
 		mnDvd.add(mntmDvdBearbeiten);
 
 		JMenu mnRegisseur = new JMenu("Regisseur");
@@ -163,6 +171,18 @@ public class MenuBar extends JMenuBar {
 	private void mntmNeueDvdActionPerformed(ActionEvent e) throws Exception {
 		NewDVD dvd = new NewDVD();
 		dvd.setVisible(true);
+	}
+	
+
+	private void mntmDvdBearbeitenActionPerformed(ActionEvent arg0) {
+		EditDVD editDVD = null;
+		try {
+			editDVD = new EditDVD();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		editDVD.setVisible(true);
 	}
 
 	/**

@@ -278,8 +278,5 @@ public class NewAuthor extends JDialog {
 		this.setVisible(false);
 		this.dispose();
 
-		// Neues, leeres Erstellungsfenster instantiieren
-		NewAuthor dialog = new NewAuthor();
-		dialog.setVisible(true);
 	}
 }

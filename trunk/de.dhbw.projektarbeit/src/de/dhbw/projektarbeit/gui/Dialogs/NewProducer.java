@@ -274,8 +274,5 @@ public class NewProducer extends JDialog {
 		this.setVisible(false);
 		this.dispose();
 
-		// Neues, leeres Erstellungsfenster instantiieren
-		NewRegisseur dialog = new NewRegisseur();
-		dialog.setVisible(true);
 	}
 }
