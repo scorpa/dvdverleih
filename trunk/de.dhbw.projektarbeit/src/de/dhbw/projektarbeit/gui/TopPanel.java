@@ -100,7 +100,7 @@ public class TopPanel extends JPanel {
 	private void btnNeueDvdActionPerformed(java.awt.event.ActionEvent e)
 			throws Exception {
 		// Dialog NewDVD aufrufen
-		NewDVD dialog = new NewDVD();
+		NewDVD dialog = new NewDVD(mf);
 		dialog.setVisible(true);
 
 	}
@@ -112,7 +112,7 @@ public class TopPanel extends JPanel {
 	 *            Clickevent
 	 */
 	private void btnDvdBearbeitenActionPerformed(java.awt.event.ActionEvent e) {
-		// Dialog NewDVD aufrufen
+		// Dialog EditDVD aufrufen
 		EditDVD dialog = null;
 		try {
 			dialog = new EditDVD(mf);

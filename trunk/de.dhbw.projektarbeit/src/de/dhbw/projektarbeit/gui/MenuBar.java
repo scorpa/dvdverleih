@@ -169,7 +169,7 @@ public class MenuBar extends JMenuBar {
 	 *             --> Exceptionhandling
 	 */
 	private void mntmNeueDvdActionPerformed(ActionEvent e) throws Exception {
-		NewDVD dvd = new NewDVD();
+		NewDVD dvd = new NewDVD(mf);
 		dvd.setVisible(true);
 	}
 

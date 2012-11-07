@@ -36,6 +36,8 @@ import org.jdesktop.swingx.JXDatePicker;
 import de.dhbw.projektarbeit.db.mysql.MysqlAccess;
 import de.dhbw.projektarbeit.db.request.Filling;
 import de.dhbw.projektarbeit.db.request.Insert;
+import de.dhbw.projektarbeit.gui.MainFrame;
+
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
@@ -70,27 +72,27 @@ public class NewDVD extends JDialog {
 	private JSpinner spCountDVD, spProductionYear, spDuration;
 	private SpinnerNumberModel smDuration, smCountDVD, smProductionYear;
 	private Insert insert;
-	private Connection con;
+	private MainFrame mf;
 
 	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		try {
-			NewDVD dialog = new NewDVD();
-			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-			dialog.setVisible(true);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-
-	/**
-	 * Create the dialog.
+	 * Standardkonstruktor
 	 * 
 	 * @throws Exception
 	 */
 	public NewDVD() throws Exception {
+		setWindow();
+	}
+	
+	/**
+	 * Konstruktor für den Aufruf aus dem MainFrame mit Übergbae der Klassenparameter
+	 * @param mf --> Klassenparameter der Klasse MainFrame
+	 */
+	public NewDVD(MainFrame mf) {
+		this.mf = mf;
+		setWindow();
+	}
+
+	private void setWindow() {
 		setResizable(false);
 		setModal(true);
 		setTitle("Neue DVD anlegen");
@@ -187,6 +189,9 @@ public class NewDVD extends JDialog {
 		} catch (IllegalArgumentException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
+		} catch (Exception e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
 		}
 		cAuswahlRegisseur = new DefaultComboBoxModel(dbRegisseur);
 		cbRegisseur = new JComboBox();
@@ -215,6 +220,9 @@ public class NewDVD extends JDialog {
 			dbProduction = fill.fillCbs("production");
 		} catch (IllegalArgumentException e1) {
 			e1.printStackTrace();
+		} catch (Exception e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
 		}
 		cAuswahlProduction = new DefaultComboBoxModel(dbProduction);
 		cbProducent = new JComboBox();
@@ -233,6 +241,9 @@ public class NewDVD extends JDialog {
 		try {
 			dbCamera = fill.fillCbs("camera");
 		} catch (IllegalArgumentException e1) {
+			e1.printStackTrace();
+		} catch (Exception e1) {
+			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 		cAuswahlCamera = new DefaultComboBoxModel(dbCamera);
@@ -258,6 +269,9 @@ public class NewDVD extends JDialog {
 		try {
 			dbAuthor = fill.fillCbs("author");
 		} catch (IllegalArgumentException e1) {
+			e1.printStackTrace();
+		} catch (Exception e1) {
+			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 		cAuswahlAuthor = new DefaultComboBoxModel(dbAuthor);
@@ -906,7 +920,7 @@ public class NewDVD extends JDialog {
 			go = false;
 		} else if (dpRelease.toString() == "") {
 			go = false;
-		} else if (dpRelease.toString() != ""){
+		} else if (dpRelease.toString() != "") {
 			// Überfürung des JXDates in die Datevariable
 			try {
 				release = (Date.valueOf(sdf.format(dpRelease.getDate())));
@@ -918,12 +932,12 @@ public class NewDVD extends JDialog {
 		// Aufrufen der Methode zum Anlegen einer DVD
 		if (go == true) {
 			insert = new Insert("dvd_verleih", mysql.getConnection());
-			
 
 			try {
 				insert.insertDVD(this, quantity, title, originalTitle, genre,
 						prodCountry, prod_year, release, duration, fsk, regie,
 						author, production, camera, eanCode);
+			
 			} catch (InvalidParameterException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -955,6 +969,8 @@ public class NewDVD extends JDialog {
 		JOptionPane.showMessageDialog(null,
 				("Die DVD \"" + title + "\" wurde erfolgreich angelegt!"),
 				"Vorgang erfolgreich", JOptionPane.INFORMATION_MESSAGE);
+		// MainFrame Tabelle aktualisieren
+		mf.refreshTable();
 		this.setVisible(false);
 		this.dispose();
 
@@ -1005,7 +1021,7 @@ public class NewDVD extends JDialog {
 		cbAuthor.setSelectedItem(author);
 
 	}
-	
+
 	/**
 	 * Methode zum Updaten der Combobox Regisseur nach Neueingabe
 	 * 

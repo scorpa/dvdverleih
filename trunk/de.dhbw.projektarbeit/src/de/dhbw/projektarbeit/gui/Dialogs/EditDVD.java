@@ -872,7 +872,7 @@ public class EditDVD extends JDialog {
 						tbDVD.getSelectedRow(), 12);
 				tbDVD.setValueAt(txtEANCode.getText(), tbDVD.getSelectedRow(),
 						13);
-				
+				// MainFrame Tabelle aktualisieren
 				mf.refreshTable();
 
 			} else {
@@ -908,6 +908,8 @@ public class EditDVD extends JDialog {
 				// herstellen
 				Delete delete = new Delete("dvd_verleih", mysql.getConnection());
 				delete.deleteDVD(this, "Barcode", "dvd", txtEANCode.getText());
+				// MainFrame Tabelle aktualisieren
+				mf.refreshTable();
 			}
 		} catch (Exception e1) {
 			// TODO Auto-generated catch block
