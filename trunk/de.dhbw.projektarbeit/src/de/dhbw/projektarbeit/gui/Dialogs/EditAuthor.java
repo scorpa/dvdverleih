@@ -185,7 +185,6 @@ public class EditAuthor extends JDialog {
 
 			tbAuthor = new JTableNotEditable(model, columnNames);
 			tbAuthor.addMouseListener(new MouseAdapter() {
-				@Override
 				public void mouseClicked(MouseEvent e) {
 					tbAuthorMouseClicked(e);
 				}

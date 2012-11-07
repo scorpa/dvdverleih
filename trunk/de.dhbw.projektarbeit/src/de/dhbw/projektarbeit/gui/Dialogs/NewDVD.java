@@ -105,7 +105,6 @@ public class NewDVD extends JDialog {
 		JLabel lblOriginaltitel = new JLabel("Originaltitel");
 		txtEancode = new JTextField();
 		txtEancode.addKeyListener(new KeyAdapter() {
-			@Override
 			public void keyReleased(KeyEvent e) {
 				txtEancodeKeyReleased(e);
 

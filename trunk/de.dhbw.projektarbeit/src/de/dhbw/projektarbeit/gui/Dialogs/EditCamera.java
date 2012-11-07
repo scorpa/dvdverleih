@@ -184,7 +184,6 @@ public class EditCamera extends JDialog {
 
 			tbCamera = new JTableNotEditable(model, columnNames);
 			tbCamera.addMouseListener(new MouseAdapter() {
-				@Override
 				public void mouseClicked(MouseEvent e) {
 					tbCameraMouseClicked(e);
 				}

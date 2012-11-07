@@ -181,7 +181,6 @@ public class EditProducer extends JDialog {
 
 			tbProduction = new JTableNotEditable(model, columnNames);
 			tbProduction.addMouseListener(new MouseAdapter() {
-				@Override
 				public void mouseClicked(MouseEvent e) {
 					tbProductionMouseClicked(e);
 				}

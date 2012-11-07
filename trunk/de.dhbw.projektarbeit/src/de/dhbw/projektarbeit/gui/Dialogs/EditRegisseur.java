@@ -181,7 +181,6 @@ public class EditRegisseur extends JDialog {
 			tbRegisseur = new JTableNotEditable(model,columnNames);
 			tbRegisseur.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 			tbRegisseur.addMouseListener(new MouseAdapter() {
-				@Override
 				public void mouseClicked(MouseEvent e) {
 					tbRegisseurMouseClicked(e);
 				}

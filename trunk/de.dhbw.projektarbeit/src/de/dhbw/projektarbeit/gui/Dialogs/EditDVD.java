@@ -622,7 +622,6 @@ public class EditDVD extends JDialog {
 			tbDVD = new JTableNotEditable(model, columnNames);
 			tbDVD.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 			tbDVD.addMouseListener(new MouseAdapter() {
-				@Override
 				public void mouseClicked(MouseEvent e) {
 					// Mausklick auf Tabellenspalte
 					tbDVDMouseClicked(e);
