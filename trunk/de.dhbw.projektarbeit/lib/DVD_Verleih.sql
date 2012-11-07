@@ -18,30 +18,6 @@ USE `dvd_verleih`;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `agent`
---
-
-DROP TABLE IF EXISTS `agent`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `agent` (
-  `Personal_ID` int(11) NOT NULL AUTO_INCREMENT,
-  `FirstName` text,
-  `LastName` text,
-  PRIMARY KEY (`Personal_ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Agent''s Data\n';
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `agent`
---
-
-LOCK TABLES `agent` WRITE;
-/*!40000 ALTER TABLE `agent` DISABLE KEYS */;
-/*!40000 ALTER TABLE `agent` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `author`
 --
 
@@ -92,38 +68,6 @@ INSERT INTO `camera` VALUES (1,'Camera','Mann'),(2,'Tes','Test');
 UNLOCK TABLES;
 
 --
--- Table structure for table `customer`
---
-
-DROP TABLE IF EXISTS `customer`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `customer` (
-  `Customer_ID` int(11) NOT NULL AUTO_INCREMENT,
-  `FirstName` text,
-  `LastName` text,
-  `ZIP_Code` varchar(5) DEFAULT NULL,
-  `City` text,
-  `Street` text,
-  `StreetNo` varchar(10) DEFAULT NULL,
-  `Email` varchar(45) DEFAULT NULL,
-  `Telefone` varchar(45) DEFAULT NULL,
-  `Birthdate` date DEFAULT NULL,
-  PRIMARY KEY (`Customer_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COMMENT='Customer Data';
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `customer`
---
-
-LOCK TABLES `customer` WRITE;
-/*!40000 ALTER TABLE `customer` DISABLE KEYS */;
-INSERT INTO `customer` VALUES (3,'Julian','Brunner','09934','Plochingen','Johanniterstr. ','20/2','h0nKi@gmx.de','0176/70902185','1986-11-22'),(4,'Romina','Möller','73207','Plochingen','Johanniterstr. ','20/2','romy_moeller@yahoo.de','07153/9243679','1988-02-29'),(5,'Nataliia','Makara','70174','Stuttgart','Holzgartenstr.','9a','nataliia.makara@gmail.com','01906666666','1986-07-25'),(6,'FirstName','LastName','43645','City','Street','StreetNo','EMail','Telefone','2012-10-26');
-/*!40000 ALTER TABLE `customer` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `dvd`
 --
 
@@ -163,7 +107,7 @@ CREATE TABLE `dvd` (
 
 LOCK TABLES `dvd` WRITE;
 /*!40000 ALTER TABLE `dvd` DISABLE KEYS */;
-INSERT INTO `dvd` VALUES (1,'Title','OriginalTitle','Genre','USA',2012,'2012-10-25',1,'ab 0 Jahre',11,1,2,1,'123123'),(1,'Title','OriginalTitle','Genre','USA',2012,'2012-10-25',1,'ab 0 Jahre',15,1,2,2,'123456789'),(1,'Sex and the City','OriginalTitle','Genre','USA',2012,'2012-10-25',1,'ab 0 Jahre',11,1,2,1,'1312312312'),(1,'Title','OriginalTitle','Genre','USA',2012,'2012-10-25',1580,'indiziert',17,1,2,1,'999999999');
+INSERT INTO `dvd` VALUES (1,'Title','OriginalTitle','Genre','USA',2012,'2012-10-25',1,'ab 0 Jahre',11,1,2,1,'123123'),(1,'Title','Qweqwe','Genre','USA',2012,'2012-10-25',1,'ab 0 Jahre',15,1,2,2,'123456789'),(1,'Sex and the City 2','OriginalTitle','Genre','USA',2012,'2012-10-25',1,'ab 0 Jahre',11,1,2,1,'1312312312'),(1,'Nataliia','Natash','Horror','Russland',2010,'2012-11-08',120,'ab 16 Jahre',14,2,2,2,'9834092834098'),(1,'Title','OriginalTitle','Genre','USA',2012,'2012-10-25',1580,'indiziert',17,1,2,1,'999999999');
 /*!40000 ALTER TABLE `dvd` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -204,7 +148,7 @@ CREATE TABLE `regisseur` (
   `FirstName` text,
   `LastName` text,
   PRIMARY KEY (`Regie_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -213,7 +157,7 @@ CREATE TABLE `regisseur` (
 
 LOCK TABLES `regisseur` WRITE;
 /*!40000 ALTER TABLE `regisseur` DISABLE KEYS */;
-INSERT INTO `regisseur` VALUES (11,'Steven ','Spielberg'),(12,'Barty','Marthy'),(13,'Test','Test'),(14,'Tante','Emma'),(15,'Rhababer','Balaber'),(16,'erwer','werwer'),(17,'ewwe','qweqwe');
+INSERT INTO `regisseur` VALUES (11,'Steven ','Spielberg'),(12,'Barty','Marthy'),(13,'Test','Test'),(14,'Tante','Emma'),(15,'Rhababer','Balaber'),(16,'erwer','werwer'),(17,'ewwe','qweqwe'),(18,'Lu','Lu'),(19,'Trala','la');
 /*!40000 ALTER TABLE `regisseur` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -226,4 +170,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2012-11-06 18:32:22
+-- Dump completed on 2012-11-07 22:56:41

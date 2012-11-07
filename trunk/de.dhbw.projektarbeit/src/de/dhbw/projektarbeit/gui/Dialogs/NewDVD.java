@@ -2,6 +2,7 @@ package de.dhbw.projektarbeit.gui.Dialogs;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.dnd.DnDConstants;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.security.InvalidParameterException;
@@ -32,6 +33,7 @@ import javax.swing.text.NumberFormatter;
 
 import org.jdesktop.swingx.JXDatePicker;
 
+import de.dhbw.projektarbeit.db.mysql.MysqlAccess;
 import de.dhbw.projektarbeit.db.request.Filling;
 import de.dhbw.projektarbeit.db.request.Insert;
 import java.awt.event.KeyAdapter;
@@ -864,6 +866,7 @@ public class NewDVD extends JDialog {
 		// DVD Hinzufügen Button gedrückt
 		String title, originalTitle, eanCode, genre;
 		boolean go = true;
+		MysqlAccess mysql = new MysqlAccess();
 
 		// Übergabe der Inputs aus Textfeldern
 		title = txtTitle.getText();
@@ -901,30 +904,22 @@ public class NewDVD extends JDialog {
 			go = false;
 		} else if (author.replaceAll(" ", "").equals("")) {
 			go = false;
-		} else if (release == null) {
+		} else if (dpRelease.toString() == "") {
 			go = false;
-		}
-
-		// Aufrufen der Methode zum Anlegen einer DVD
-		if (go == true) {
-			// Verbindung zum SQL Server aufbauen
-			try {
-				con = DriverManager
-						.getConnection("jdbc:mysql://localhost/dvd_verleih?user=root");
-			} catch (SQLException e) {
-				// Verbindung zum SQL Server fehlgeschlagen. Fehlercode 005
-				e.printStackTrace();
-				throw new Exception(
-						"Verbindung zum SQL Server fehlgeschlagen. Fehlercode 005");
-			}
-			insert = new Insert("dvd_verleih", con);
-			
+		} else if (dpRelease.toString() != ""){
 			// Überfürung des JXDates in die Datevariable
 			try {
 				release = (Date.valueOf(sdf.format(dpRelease.getDate())));
 			} catch (IllegalArgumentException i) {
 				i.printStackTrace();
 			}
+		}
+
+		// Aufrufen der Methode zum Anlegen einer DVD
+		if (go == true) {
+			insert = new Insert("dvd_verleih", mysql.getConnection());
+			
+
 			try {
 				insert.insertDVD(this, quantity, title, originalTitle, genre,
 						prodCountry, prod_year, release, duration, fsk, regie,
@@ -958,7 +953,7 @@ public class NewDVD extends JDialog {
 	 */
 	public void dvdAdded(String title) throws Exception {
 		JOptionPane.showMessageDialog(null,
-				("Die DVD" + title + " wurde erfolgreich angelegt!"),
+				("Die DVD \"" + title + "\" wurde erfolgreich angelegt!"),
 				"Vorgang erfolgreich", JOptionPane.INFORMATION_MESSAGE);
 		this.setVisible(false);
 		this.dispose();

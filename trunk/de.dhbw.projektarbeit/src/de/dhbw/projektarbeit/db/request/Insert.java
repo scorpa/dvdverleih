@@ -976,8 +976,7 @@ public class Insert {
 
 		}
 
-		// Aufruf bei erfolgreicher Kundenneuanlage
-
+		// Aufruf bei erfolgreicher DVD-Neuanlage
 		try {
 			dvd.dvdAdded(title);
 		} catch (InvalidParameterException e) {
@@ -988,7 +987,12 @@ public class Insert {
 		}
 
 	}
-
+	/**
+	 * Methode zur Überprüfunf, ob bei der Neuanlage der DVD diese schon vorhanden ist
+	 * @param eanCode --> Barcode der DVD
+	 * @return --> gibt den gesuchten Barcode zurück, falls er vorhanden ist
+	 * @throws SQLException --> SQL Exceptionhandling
+	 */
 	private String checkNewDVD(String eanCode) throws SQLException {
 
 		String Barcode = "";
@@ -1001,7 +1005,11 @@ public class Insert {
 
 			stmt = con.createStatement();
 			StringBuffer checkNewDVD = new StringBuffer();
-
+			
+			/*
+			 * Nach DVD EAN Code suchen, um festzustellen, ob es sie schon gibt
+			 * "Select Barcode FROM dvd_verleih.dvd WHERE Barcode = <eanCode>";
+			 */
 			checkNewDVD
 					.append("SELECT Barcode FROM dvd_verleih.dvd WHERE Barcode = \"");
 			checkNewDVD.append(eanCode);
@@ -1016,10 +1024,6 @@ public class Insert {
 			}
 			return Barcode;
 
-			/*
-			 * Nach DVD EAN Code suchen, um festzustellen, ob es sie schon gibt
-			 * "Select Barcode FROM dvd_verleih.dvd WHERE Barcode = <eanCode>";
-			 */
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -19,6 +19,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
@@ -786,13 +787,41 @@ public class EditDVD extends JDialog {
 	 */
 	private void btnUpdateActionPerformed(ActionEvent e) {
 		MysqlAccess mysql = new MysqlAccess();
+		boolean go = true;
 		try {
 			// Updatemethode aufrufen und Connection zum SQL Server herstellen
 			Update update = new Update("dvd_verleih", mysql.getConnection());
 			// Festlegung des Formats für das SQL Date Feld
 			sdf = new SimpleDateFormat();
 			sdf.applyPattern("yyyy-MM-dd");
-			releaseDate = (Date.valueOf(sdf.format(dpReleaseDate.getDate())));
+			// Auf leere Pflichtfelder überprüfen
+			if (txtTitle.getText().replaceAll(" ", "").equals("")) {
+				go = false;
+			} else if (txtOriginalTitle.getText().replaceAll(" ", "").equals("")) {
+				go = false;
+			} else if (txtEANCode.getText().replaceAll(" ", "").equals("")) {
+				go = false;
+			} else if (txtGenre.getText().replaceAll(" ", "").equals("")) {
+				go = false;
+			} else if (((String) cbRegisseur.getSelectedItem()).replaceAll(" ", "").equals("")) {
+				go = false;
+			} else if (((String) cbProducent.getSelectedItem()).replaceAll(" ", "").equals("")) {
+				go = false;
+			} else if (((String) cbCamera.getSelectedItem()).replaceAll(" ", "").equals("")) {
+				go = false;
+			} else if (((String) cbAuthor.getSelectedItem()).replaceAll(" ", "").equals("")) {
+				go = false;
+			} else if (dpReleaseDate.toString() == "") {
+				go = false;
+			} else if (dpReleaseDate.toString() != ""){
+				try {
+					releaseDate = (Date
+							.valueOf(sdf.format(dpReleaseDate.getDate())));
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}}
+			if (go == true){
 			update.editDVD((Integer) spCountDVD.getValue(), txtTitle.getText(),
 					txtOriginalTitle.getText(), txtGenre.getText(),
 					(String) cbProdCountry.getSelectedItem(),
@@ -804,7 +833,7 @@ public class EditDVD extends JDialog {
 					(String) cbProducent.getSelectedItem(),
 					(String) cbCamera.getSelectedItem(), txtEANCode.getText(),
 					oldEAN);
-
+			
 			// Aktualisieren der JTable tbDVD
 			tbDVD.setValueAt(spCountDVD.getValue(), tbDVD.getSelectedRow(), 0);
 			tbDVD.setValueAt(txtTitle.getText(), tbDVD.getSelectedRow(), 1);
@@ -828,7 +857,14 @@ public class EditDVD extends JDialog {
 			tbDVD.setValueAt((String) cbCamera.getSelectedItem(),
 					tbDVD.getSelectedRow(), 12);
 			tbDVD.setValueAt(txtEANCode.getText(), tbDVD.getSelectedRow(), 13);
-			
+			}
+			else {
+				JOptionPane
+				.showMessageDialog(
+						null,
+						"Sie haben ein Pflichtfeld nicht ausgefüllt! Bitte überprüfen Sie ihre Angaben in den Feldern",
+						"Regisseurerstellung", JOptionPane.ERROR_MESSAGE);
+			}
 		} catch (Exception e1) {
 			e1.printStackTrace();
 		}
