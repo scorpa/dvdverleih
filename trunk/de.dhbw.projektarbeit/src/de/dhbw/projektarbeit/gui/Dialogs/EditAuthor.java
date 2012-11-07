@@ -45,8 +45,7 @@ public class EditAuthor extends JDialog {
 	private JTable tbAuthor;
 	private Integer selectedID;
 	private Update update;
-	private MysqlAccess mysql = new MysqlAccess();
-	private Connection con;
+
 	/**
 	 * Launch the application.
 	 */

@@ -21,7 +21,6 @@ import javax.swing.JTable;
 import de.dhbw.projektarbeit.db.request.Filling;
 import de.dhbw.projektarbeit.gui.Dialogs.JTableNotEditable;
 
-
 public class MainFrame extends javax.swing.JFrame {
 	private MenuBar menuBar;
 	private TopPanel topPanel;
@@ -34,6 +33,7 @@ public class MainFrame extends javax.swing.JFrame {
 			"Kamera", "EAN Code" };
 	private Object[][] dvdData;
 	private Filling fill;
+	private JTableNotEditable jTable;
 
 	public MainFrame() {
 		super();
@@ -53,40 +53,50 @@ public class MainFrame extends javax.swing.JFrame {
 
 	private void initGUI() {
 		try {
-			
+
 			{
-				menuBar =  new MenuBar();
+				menuBar = new MenuBar(this);
 				topPanel = new TopPanel();
 			}
 			{
 				this.setSize(800, 600);
 				this.setJMenuBar(menuBar);
-				
+
 			}
-			
-			TopPanel topPanel_1 = new TopPanel();
-			
+
+			TopPanel topPanel_1 = new TopPanel(this);
+
 			JPanel panelMain = new JPanel();
 			panelMain.setLayout(new CardLayout(0, 0));
 			GroupLayout groupLayout = new GroupLayout(getContentPane());
-			groupLayout.setHorizontalGroup(
-				groupLayout.createParallelGroup(Alignment.LEADING)
-					.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
-						.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
-							.addComponent(topPanel_1, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 1440, Short.MAX_VALUE)
-							.addComponent(panelMain, GroupLayout.DEFAULT_SIZE, 1440, Short.MAX_VALUE))
-						.addGap(0))
-			);
-			groupLayout.setVerticalGroup(
-				groupLayout.createParallelGroup(Alignment.LEADING)
-					.addGroup(groupLayout.createSequentialGroup()
-						.addComponent(topPanel_1, GroupLayout.PREFERRED_SIZE, 29, GroupLayout.PREFERRED_SIZE)
-						.addPreferredGap(ComponentPlacement.RELATED)
-						.addComponent(panelMain, GroupLayout.DEFAULT_SIZE, 795, Short.MAX_VALUE))
-			);
-			
+			groupLayout.setHorizontalGroup(groupLayout.createParallelGroup(
+					Alignment.LEADING).addGroup(
+					Alignment.TRAILING,
+					groupLayout
+							.createSequentialGroup()
+							.addGroup(
+									groupLayout
+											.createParallelGroup(
+													Alignment.TRAILING)
+											.addComponent(topPanel_1,
+													Alignment.LEADING,
+													GroupLayout.DEFAULT_SIZE,
+													1440, Short.MAX_VALUE)
+											.addComponent(panelMain,
+													GroupLayout.DEFAULT_SIZE,
+													1440, Short.MAX_VALUE))
+							.addGap(0)));
+			groupLayout.setVerticalGroup(groupLayout.createParallelGroup(
+					Alignment.LEADING).addGroup(
+					groupLayout
+							.createSequentialGroup()
+							.addComponent(topPanel_1,
+									GroupLayout.PREFERRED_SIZE, 29,
+									GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(panelMain, GroupLayout.DEFAULT_SIZE,
+									795, Short.MAX_VALUE)));
 
-			
 			// Zuweisung des JTable Models, der Daten und der
 			// Spaltenüberschriften
 			model = new DefaultTableModel(dvdData, columnNames);
@@ -96,38 +106,25 @@ public class MainFrame extends javax.swing.JFrame {
 			tbDVD.setFocusable(false);
 			tbDVD.setModel(model);
 			
-			// Spaltenbreiten setzen
-			tbDVD.getColumn("Menge").setPreferredWidth(45);
-			tbDVD.getColumn("Titel").setPreferredWidth(300);
-			tbDVD.getColumn("Originaltitel").setPreferredWidth(300);
-			tbDVD.getColumn("Genre").setPreferredWidth(150);
-			tbDVD.getColumn("Produktionsland").setPreferredWidth(150);
-			tbDVD.getColumn("Produktionsjahr").setPreferredWidth(100);
-			tbDVD.getColumn("Erscheinungsdatum").setPreferredWidth(130);
-			tbDVD.getColumn("Länge").setPreferredWidth(50);
-			tbDVD.getColumn("Altersfreigabe").setPreferredWidth(90);
-			tbDVD.getColumn("Regie").setPreferredWidth(200);
-			tbDVD.getColumn("Autor").setPreferredWidth(200);
-			tbDVD.getColumn("Produktion").setPreferredWidth(200);
-			tbDVD.getColumn("Kamera").setPreferredWidth(200);
-			tbDVD.getColumn("EAN Code").setPreferredWidth(100);
-			tbDVD.getTableHeader().setReorderingAllowed(false);
-			
+			// Tabelleneigenschaften setzen
+			jTable = new JTableNotEditable();
+			tbDVD = jTable.setColumnSize(tbDVD);
+
 			JScrollPane scrollPane = new JScrollPane(tbDVD);
 			panelMain.add(scrollPane, "name_45280400366220");
 			scrollPane.setViewportView(tbDVD);
 			getContentPane().setLayout(groupLayout);
 			this.setExtendedState(JFrame.MAXIMIZED_BOTH);
-		} catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
-	
-	public void cardLayoutDVD(){
+
+	public void cardLayoutDVD() {
 		CardLayout card = (CardLayout) panelMain.getLayout();
 		card.show(panelMain, "custom_1350565561472");
 	}
-	
+
 	/**
 	 * Aufruf der FillMethode zur Befüllung der DVD JTable
 	 */
@@ -140,10 +137,20 @@ public class MainFrame extends javax.swing.JFrame {
 			// Tabellen auf der DB
 			fill.getNameFromID(dvdData);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		;
 	}
-	
+
+	/**
+	 * Methode zum Updaten der MainFrame Tabelle nach Update der DVDs.
+	 */
+	public void refreshTable() {
+		loadTable();
+		model = new DefaultTableModel(dvdData, columnNames);
+		tbDVD.setModel(model);
+		// Tabelleneigenschaften setzen
+		jTable = new JTableNotEditable();
+		tbDVD = jTable.setColumnSize(tbDVD);
+	}
+
 }

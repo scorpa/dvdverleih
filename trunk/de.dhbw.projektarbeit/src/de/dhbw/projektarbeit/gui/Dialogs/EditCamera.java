@@ -23,6 +23,7 @@ import javax.swing.JTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import org.jdesktop.swingx.JXTable;
 
+import de.dhbw.projektarbeit.db.mysql.MysqlAccess;
 import de.dhbw.projektarbeit.db.request.Filling;
 import de.dhbw.projektarbeit.db.request.Update;
 
@@ -43,7 +44,6 @@ public class EditCamera extends JDialog {
 	private JTable tbCamera;
 	private Integer selectedID;
 	private Update update;
-	private Connection con;
 
 	/**
 	 * Launch the application.
@@ -296,20 +296,12 @@ public class EditCamera extends JDialog {
 	 */
 	private void updateCamera(int id, String firstname, String lastname,
 			String form) throws Exception {
+		MysqlAccess mysql = new MysqlAccess();
 		// Update des Produzenten
 		try {
-			try {
-				con = DriverManager
-						.getConnection("jdbc:mysql://localhost/dvd_verleih?user=root");
-			} catch (SQLException e) {
-				// Verbindung zum SQL Server fehlgeschlagen. Fehlercode 005
-				e.printStackTrace();
-				throw new Exception(
-						"Verbindung zum SQL Server fehlgeschlagen. Fehlercode 005");
-			}
 			// Aufruf der Updatefunktion mit der speziellen Weitergabe des
 			// Tabellenfelds Production_ID
-			update = new Update("dvd_verleih", con);
+			update = new Update("dvd_verleih", mysql.getConnection());
 			update.updateEdits(id, firstname, lastname, form, "Camera_ID");
 			tbCamera.setValueAt(txtFirstName.getText(),
 					tbCamera.getSelectedRow(), 1);

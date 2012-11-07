@@ -18,11 +18,11 @@ import de.dhbw.projektarbeit.gui.Dialogs.NewDVD;
 import de.dhbw.projektarbeit.gui.Dialogs.NewProducer;
 import de.dhbw.projektarbeit.gui.Dialogs.NewRegisseur;
 
-
 public class MenuBar extends JMenuBar {
-	
-	public MenuBar() {
-		
+	private MainFrame mf;
+
+	public MenuBar(MainFrame mf) {
+		this.mf = mf;
 		JMenu mnDatei = new JMenu("Datei");
 		add(mnDatei);
 
@@ -172,12 +172,17 @@ public class MenuBar extends JMenuBar {
 		NewDVD dvd = new NewDVD();
 		dvd.setVisible(true);
 	}
-	
 
+	/**
+	 * Aufruf aus dem Kontextmenü Dialoge -> DVD --> DVD editieren
+	 * 
+	 * @param arg0
+	 *            --> Eventhandling
+	 */
 	private void mntmDvdBearbeitenActionPerformed(ActionEvent arg0) {
 		EditDVD editDVD = null;
 		try {
-			editDVD = new EditDVD();
+			editDVD = new EditDVD(mf);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -196,9 +201,12 @@ public class MenuBar extends JMenuBar {
 		NewRegisseur nr = new NewRegisseur();
 		nr.setVisible(true);
 	}
+
 	/**
 	 * Aufruf aus dem Kontextmenü Dialoge -> Regisseur --> Regisseur bearbeiten
-	 * @param arg0 --> Eventhandling
+	 * 
+	 * @param arg0
+	 *            --> Eventhandling
 	 */
 	private void mntmRegisseurBearbeitenActionPerformed(ActionEvent arg0) {
 		EditRegisseur er = new EditRegisseur();
@@ -208,52 +216,64 @@ public class MenuBar extends JMenuBar {
 	/**
 	 * Aufruf aus dem Kontextmenü Dialoge -> Produzent --> Neuen Produzent
 	 * anlegen
-	 * @param e --> Eventhandling
+	 * 
+	 * @param e
+	 *            --> Eventhandling
 	 */
 	private void mntmNeuerProduzentActionPerformed(ActionEvent e) {
 		NewProducer np = new NewProducer();
 		np.setVisible(true);
 	}
-	
+
 	/**
 	 * Aufruf aus dem Kontextmenü Dialoge -> Produzent --> Produzent bearbeiten
-	 * @param e --> Eventhandling
+	 * 
+	 * @param e
+	 *            --> Eventhandling
 	 */
 	private void mntmProduzentBearbeitenActionPerformed(ActionEvent e) {
 		EditProducer ep = new EditProducer();
 		ep.setVisible(true);
 	}
-	
+
 	/**
 	 * Aufruf aus dem Kontextmenü Dialoge -> Kamera --> Neuer Kameramann anlegen
-	 * @param e --> Eventhandling
+	 * 
+	 * @param e
+	 *            --> Eventhandling
 	 */
 	private void mntmNeueKameraActionPerformed(ActionEvent e) {
 		NewCamera nc = new NewCamera();
 		nc.setVisible(true);
 	}
-	
+
 	/**
 	 * Aufruf aus dem Kontextmenü Dialoge -> Kamera --> Kameramann bearbeiten
-	 * @param e --> Eventhandling
+	 * 
+	 * @param e
+	 *            --> Eventhandling
 	 */
 	private void mntmKameraBearbeitenActionPerformed(ActionEvent e) {
 		EditCamera ec = new EditCamera();
 		ec.setVisible(true);
 	}
-	
+
 	/**
 	 * Aufruf aus dem Kontextmenü Dialoge -> Autor --> Neuer Autor anlegen
-	 * @param e --> Eventhandling
+	 * 
+	 * @param e
+	 *            --> Eventhandling
 	 */
 	private void mntmNeuerAutorActionPerformed(ActionEvent e) {
 		NewAuthor na = new NewAuthor();
 		na.setVisible(true);
 	}
-	
+
 	/**
 	 * Aufruf aus dem Kontextmenü Dialoge -> Autor --> Autor bearbeiten
-	 * @param e --> Eventhandling
+	 * 
+	 * @param e
+	 *            --> Eventhandling
 	 */
 	private void mntmAutorBearbeitenActionPerformed(ActionEvent e) {
 		EditAuthor ea = new EditAuthor();

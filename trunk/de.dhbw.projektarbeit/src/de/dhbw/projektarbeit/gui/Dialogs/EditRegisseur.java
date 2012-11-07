@@ -26,6 +26,7 @@ import javax.swing.ListSelectionModel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
+import de.dhbw.projektarbeit.db.mysql.MysqlAccess;
 import de.dhbw.projektarbeit.db.request.Delete;
 import de.dhbw.projektarbeit.db.request.Filling;
 import de.dhbw.projektarbeit.db.request.Update;
@@ -39,7 +40,6 @@ public class EditRegisseur extends JDialog {
 	private JTable tbRegisseur;
 	private Integer selectedID;
 	private Update update;
-	private Connection con;
 	
 	/**
 	 * Launch the application.
@@ -300,18 +300,10 @@ public class EditRegisseur extends JDialog {
 	 */
 	private void updateRegisseur(int id, String firstname, String lastname, String form )throws Exception{
 		// Update des Regisseurs
+		MysqlAccess mysql = new MysqlAccess();
 				try {
-					try {
-						con = DriverManager
-								.getConnection("jdbc:mysql://localhost/dvd_verleih?user=root");
-					} catch (SQLException e) {
-						// Verbindung zum SQL Server fehlgeschlagen. Fehlercode 005
-						e.printStackTrace();
-						throw new Exception(
-								"Verbindung zum SQL Server fehlgeschlagen. Fehlercode 005");
-					}
 					// Aufruf der Updatefunktion
-					update = new Update("dvd_verleih",con);
+					update = new Update("dvd_verleih", mysql.getConnection());
 					update.updateEdits(id, firstname, lastname, form, "Regie_ID");
 					tbRegisseur.setValueAt(txtFirstName.getText(), tbRegisseur.getSelectedRow(), 1);
 					tbRegisseur.setValueAt(txtLastName.getText(), tbRegisseur.getSelectedRow(), 2);
@@ -325,18 +317,9 @@ public class EditRegisseur extends JDialog {
 	}
 	
 	private void btnDeleteActionPerformed(ActionEvent arg0) throws Exception {
-		// Verbindung zum SQL Server herstellen
-		try {
-			con = DriverManager
-					.getConnection("jdbc:mysql://localhost/dvd_verleih?user=root");
-		} catch (SQLException b) {
-			// Verbindung zum SQL Server fehlgeschlagen. Fehlercode 005
-			b.printStackTrace();
-			throw new Exception(
-					"Verbindung zum SQL Server fehlgeschlagen. Fehlercode 005");
-		}
+		MysqlAccess mysql = new MysqlAccess();
 		// Aufruf der Deletemethode
-		Delete delete = new Delete("dvd_verleih", con);
+		Delete delete = new Delete("dvd_verleih",  mysql.getConnection());
 		delete.deleteEdits(selectedID, txtFirstName.getText(), txtLastName.getText(), "author", "Author_ID");
 
 	}

@@ -21,6 +21,7 @@ import javax.swing.JLabel;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import org.jdesktop.swingx.JXTable;
 
+import de.dhbw.projektarbeit.db.mysql.MysqlAccess;
 import de.dhbw.projektarbeit.db.request.Filling;
 import de.dhbw.projektarbeit.db.request.Update;
 
@@ -42,7 +43,6 @@ public class EditProducer extends JDialog {
 	private JButton cancelButton;
 	private int selectedID;
 	private Update update;
-	private Connection con;
 	private JScrollPane scrollPane;
 	private JTable tbProduction;
 
@@ -298,20 +298,12 @@ public class EditProducer extends JDialog {
 	 */
 	private void updateProduction(int id, String firstname, String lastname,
 			String form) throws Exception {
+		MysqlAccess mysql = new MysqlAccess();
 		// Update des Produzenten
 		try {
-			try {
-				con = DriverManager
-						.getConnection("jdbc:mysql://localhost/dvd_verleih?user=root");
-			} catch (SQLException e) {
-				// Verbindung zum SQL Server fehlgeschlagen. Fehlercode 005
-				e.printStackTrace();
-				throw new Exception(
-						"Verbindung zum SQL Server fehlgeschlagen. Fehlercode 005");
-			}
-			// Aufruf der Updatefunktion mit der speziellen Weitergabe des
+						// Aufruf der Updatefunktion mit der speziellen Weitergabe des
 			// Tabellenfelds Production_ID
-			update = new Update("dvd_verleih", con);
+			update = new Update("dvd_verleih", mysql.getConnection());
 			update.updateEdits(id, firstname, lastname, form, "Production_ID");
 			tbProduction.setValueAt(txtFirstName.getText(),
 					tbProduction.getSelectedRow(), 1);

@@ -38,6 +38,7 @@ import de.dhbw.projektarbeit.db.mysql.MysqlAccess;
 import de.dhbw.projektarbeit.db.request.Delete;
 import de.dhbw.projektarbeit.db.request.Filling;
 import de.dhbw.projektarbeit.db.request.Update;
+import de.dhbw.projektarbeit.gui.MainFrame;
 
 public class EditDVD extends JDialog {
 
@@ -69,10 +70,12 @@ public class EditDVD extends JDialog {
 	private Vector<String> dbProduction = new Vector();
 	private Vector<String> dbCamera = new Vector();
 	private Vector<String> dbAuthor = new Vector();
+	private MainFrame mf;
+	private JTableNotEditable jTable;
 
-	/**
+/*	*//**
 	 * Launch the application.
-	 */
+	 *//*
 	public static void main(String[] args) {
 		try {
 			EditDVD dialog = new EditDVD();
@@ -81,18 +84,33 @@ public class EditDVD extends JDialog {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-	}
+	}*/
 
 	/**
 	 * Standardkonstruktor
 	 * 
 	 * @throws Exception
-	 */
+	 *//*
 	public EditDVD() throws Exception {
 		loadTable();
 		setWindow();
-	}
+	}*/
 	
+	/**
+	 * Konstruktor für die Übergabe der MainFrame Klasse 
+	 * @param mf --> Klasseninformationen der MainFrame Klasse
+	 */
+	public EditDVD(MainFrame mf) {
+		this.mf = mf;
+		loadTable();
+		try {
+			setWindow();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
 	/**
 	 * Methode zur Dialogerstellung
 	 * 
@@ -631,23 +649,10 @@ public class EditDVD extends JDialog {
 			tbDVD.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 			tbDVD.setFocusable(false);
 			tbDVD.setModel(model);
-			
-			// Spaltenbreiten setzen
-			tbDVD.getColumn("Menge").setPreferredWidth(45);
-			tbDVD.getColumn("Titel").setPreferredWidth(300);
-			tbDVD.getColumn("Originaltitel").setPreferredWidth(300);
-			tbDVD.getColumn("Genre").setPreferredWidth(150);
-			tbDVD.getColumn("Produktionsland").setPreferredWidth(150);
-			tbDVD.getColumn("Produktionsjahr").setPreferredWidth(100);
-			tbDVD.getColumn("Erscheinungsdatum").setPreferredWidth(130);
-			tbDVD.getColumn("Länge").setPreferredWidth(50);
-			tbDVD.getColumn("Altersfreigabe").setPreferredWidth(90);
-			tbDVD.getColumn("Regie").setPreferredWidth(200);
-			tbDVD.getColumn("Autor").setPreferredWidth(200);
-			tbDVD.getColumn("Produktion").setPreferredWidth(200);
-			tbDVD.getColumn("Kamera").setPreferredWidth(200);
-			tbDVD.getColumn("EAN Code").setPreferredWidth(100);
-			tbDVD.getTableHeader().setReorderingAllowed(false);
+
+			// Tabelleneigenschaften setzen
+			jTable = new JTableNotEditable();
+			tbDVD = jTable.setColumnSize(tbDVD);
 
 			JScrollPane scrollPane = new JScrollPane(tbDVD);
 			splitPane.setLeftComponent(scrollPane);
@@ -797,73 +802,86 @@ public class EditDVD extends JDialog {
 			// Auf leere Pflichtfelder überprüfen
 			if (txtTitle.getText().replaceAll(" ", "").equals("")) {
 				go = false;
-			} else if (txtOriginalTitle.getText().replaceAll(" ", "").equals("")) {
+			} else if (txtOriginalTitle.getText().replaceAll(" ", "")
+					.equals("")) {
 				go = false;
 			} else if (txtEANCode.getText().replaceAll(" ", "").equals("")) {
 				go = false;
 			} else if (txtGenre.getText().replaceAll(" ", "").equals("")) {
 				go = false;
-			} else if (((String) cbRegisseur.getSelectedItem()).replaceAll(" ", "").equals("")) {
+			} else if (((String) cbRegisseur.getSelectedItem()).replaceAll(" ",
+					"").equals("")) {
 				go = false;
-			} else if (((String) cbProducent.getSelectedItem()).replaceAll(" ", "").equals("")) {
+			} else if (((String) cbProducent.getSelectedItem()).replaceAll(" ",
+					"").equals("")) {
 				go = false;
-			} else if (((String) cbCamera.getSelectedItem()).replaceAll(" ", "").equals("")) {
+			} else if (((String) cbCamera.getSelectedItem())
+					.replaceAll(" ", "").equals("")) {
 				go = false;
-			} else if (((String) cbAuthor.getSelectedItem()).replaceAll(" ", "").equals("")) {
+			} else if (((String) cbAuthor.getSelectedItem())
+					.replaceAll(" ", "").equals("")) {
 				go = false;
 			} else if (dpReleaseDate.toString() == "") {
 				go = false;
-			} else if (dpReleaseDate.toString() != ""){
+			} else if (dpReleaseDate.toString() != "") {
 				try {
-					releaseDate = (Date
-							.valueOf(sdf.format(dpReleaseDate.getDate())));
+					releaseDate = (Date.valueOf(sdf.format(dpReleaseDate
+							.getDate())));
 				} catch (Exception e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
-				}}
-			if (go == true){
-			update.editDVD((Integer) spCountDVD.getValue(), txtTitle.getText(),
-					txtOriginalTitle.getText(), txtGenre.getText(),
-					(String) cbProdCountry.getSelectedItem(),
-					(Integer) spProductionYear.getValue(), releaseDate,
-					(Integer) spDuration.getValue(),
-					(String) cbFSK.getSelectedItem(),
-					(String) cbRegisseur.getSelectedItem(),
-					(String) cbAuthor.getSelectedItem(),
-					(String) cbProducent.getSelectedItem(),
-					(String) cbCamera.getSelectedItem(), txtEANCode.getText(),
-					oldEAN);
-			
-			// Aktualisieren der JTable tbDVD
-			tbDVD.setValueAt(spCountDVD.getValue(), tbDVD.getSelectedRow(), 0);
-			tbDVD.setValueAt(txtTitle.getText(), tbDVD.getSelectedRow(), 1);
-			tbDVD.setValueAt(txtOriginalTitle.getText(),
-					tbDVD.getSelectedRow(), 2);
-			tbDVD.setValueAt(txtGenre.getText(), tbDVD.getSelectedRow(), 3);
-			tbDVD.setValueAt((String) cbProdCountry.getSelectedItem(),
-					tbDVD.getSelectedRow(), 4);
-			tbDVD.setValueAt(spProductionYear.getValue(),
-					tbDVD.getSelectedRow(), 5);
-			tbDVD.setValueAt(releaseDate, tbDVD.getSelectedRow(), 6);
-			tbDVD.setValueAt(spDuration.getValue(), tbDVD.getSelectedRow(), 7);
-			tbDVD.setValueAt((String) cbFSK.getSelectedItem(),
-					tbDVD.getSelectedRow(), 8);
-			tbDVD.setValueAt((String) cbRegisseur.getSelectedItem(),
-					tbDVD.getSelectedRow(), 9);
-			tbDVD.setValueAt((String) cbAuthor.getSelectedItem(),
-					tbDVD.getSelectedRow(), 10);
-			tbDVD.setValueAt((String) cbProducent.getSelectedItem(),
-					tbDVD.getSelectedRow(), 11);
-			tbDVD.setValueAt((String) cbCamera.getSelectedItem(),
-					tbDVD.getSelectedRow(), 12);
-			tbDVD.setValueAt(txtEANCode.getText(), tbDVD.getSelectedRow(), 13);
+				}
 			}
-			else {
+			if (go == true) {
+				update.editDVD((Integer) spCountDVD.getValue(),
+						txtTitle.getText(), txtOriginalTitle.getText(),
+						txtGenre.getText(),
+						(String) cbProdCountry.getSelectedItem(),
+						(Integer) spProductionYear.getValue(), releaseDate,
+						(Integer) spDuration.getValue(),
+						(String) cbFSK.getSelectedItem(),
+						(String) cbRegisseur.getSelectedItem(),
+						(String) cbAuthor.getSelectedItem(),
+						(String) cbProducent.getSelectedItem(),
+						(String) cbCamera.getSelectedItem(),
+						txtEANCode.getText(), oldEAN);
+
+				// Aktualisieren der JTable tbDVD
+				tbDVD.setValueAt(spCountDVD.getValue(), tbDVD.getSelectedRow(),
+						0);
+				tbDVD.setValueAt(txtTitle.getText(), tbDVD.getSelectedRow(), 1);
+				tbDVD.setValueAt(txtOriginalTitle.getText(),
+						tbDVD.getSelectedRow(), 2);
+				tbDVD.setValueAt(txtGenre.getText(), tbDVD.getSelectedRow(), 3);
+				tbDVD.setValueAt((String) cbProdCountry.getSelectedItem(),
+						tbDVD.getSelectedRow(), 4);
+				tbDVD.setValueAt(spProductionYear.getValue(),
+						tbDVD.getSelectedRow(), 5);
+				tbDVD.setValueAt(releaseDate, tbDVD.getSelectedRow(), 6);
+				tbDVD.setValueAt(spDuration.getValue(), tbDVD.getSelectedRow(),
+						7);
+				tbDVD.setValueAt((String) cbFSK.getSelectedItem(),
+						tbDVD.getSelectedRow(), 8);
+				tbDVD.setValueAt((String) cbRegisseur.getSelectedItem(),
+						tbDVD.getSelectedRow(), 9);
+				tbDVD.setValueAt((String) cbAuthor.getSelectedItem(),
+						tbDVD.getSelectedRow(), 10);
+				tbDVD.setValueAt((String) cbProducent.getSelectedItem(),
+						tbDVD.getSelectedRow(), 11);
+				tbDVD.setValueAt((String) cbCamera.getSelectedItem(),
+						tbDVD.getSelectedRow(), 12);
+				tbDVD.setValueAt(txtEANCode.getText(), tbDVD.getSelectedRow(),
+						13);
+				
+				mf.refreshTable();
+
+			} else {
 				JOptionPane
-				.showMessageDialog(
-						null,
-						"Sie haben ein Pflichtfeld nicht ausgefüllt! Bitte überprüfen Sie ihre Angaben in den Feldern",
-						"Regisseurerstellung", JOptionPane.ERROR_MESSAGE);
+						.showMessageDialog(
+								null,
+								"Sie haben ein Pflichtfeld nicht ausgefüllt! Bitte überprüfen Sie ihre Angaben in den Feldern",
+								"Regisseurerstellung",
+								JOptionPane.ERROR_MESSAGE);
 			}
 		} catch (Exception e1) {
 			e1.printStackTrace();
@@ -908,7 +926,7 @@ public class EditDVD extends JDialog {
 			this.dispose();
 
 			// Neues, leeres Erstellungsfenster instantiieren
-			EditDVD dialog = new EditDVD();
+			EditDVD dialog = new EditDVD(mf);
 			dialog.setVisible(true);
 
 		} catch (Exception e) {
