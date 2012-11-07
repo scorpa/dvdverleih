@@ -47,8 +47,8 @@ public class MainFrame extends javax.swing.JFrame {
 		} catch (Exception e) {
 
 		}
-		initGUI();
 		loadTable();
+		initGUI();
 	}
 
 	private void initGUI() {
@@ -71,10 +71,10 @@ public class MainFrame extends javax.swing.JFrame {
 			GroupLayout groupLayout = new GroupLayout(getContentPane());
 			groupLayout.setHorizontalGroup(
 				groupLayout.createParallelGroup(Alignment.LEADING)
-					.addGroup(groupLayout.createSequentialGroup()
-						.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-							.addComponent(topPanel_1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-							.addComponent(panelMain, GroupLayout.DEFAULT_SIZE, 800, Short.MAX_VALUE))
+					.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
+						.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
+							.addComponent(topPanel_1, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 1440, Short.MAX_VALUE)
+							.addComponent(panelMain, GroupLayout.DEFAULT_SIZE, 1440, Short.MAX_VALUE))
 						.addGap(0))
 			);
 			groupLayout.setVerticalGroup(
@@ -82,13 +82,10 @@ public class MainFrame extends javax.swing.JFrame {
 					.addGroup(groupLayout.createSequentialGroup()
 						.addComponent(topPanel_1, GroupLayout.PREFERRED_SIZE, 29, GroupLayout.PREFERRED_SIZE)
 						.addPreferredGap(ComponentPlacement.RELATED)
-						.addComponent(panelMain, GroupLayout.DEFAULT_SIZE, 521, Short.MAX_VALUE))
+						.addComponent(panelMain, GroupLayout.DEFAULT_SIZE, 795, Short.MAX_VALUE))
 			);
 			
 
-			
-			
-			tbDVD = new JTable();
 			
 			// Zuweisung des JTable Models, der Daten und der
 			// Spaltenüberschriften
