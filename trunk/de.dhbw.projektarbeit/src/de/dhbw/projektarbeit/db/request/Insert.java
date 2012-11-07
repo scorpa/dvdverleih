@@ -16,7 +16,7 @@ import de.dhbw.projektarbeit.gui.Dialogs.NewProducer;
 import de.dhbw.projektarbeit.gui.Dialogs.NewRegisseur;
 
 /**
- * @author Juli
+ * @author Brunner
  * 
  */
 public class Insert {

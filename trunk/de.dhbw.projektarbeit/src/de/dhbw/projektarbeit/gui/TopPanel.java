@@ -13,6 +13,10 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 import de.dhbw.projektarbeit.gui.Dialogs.EditDVD;
 import de.dhbw.projektarbeit.gui.Dialogs.NewDVD;
 
+/**
+ * @author Eisen
+ * 
+ */
 public class TopPanel extends JPanel {
 	private MainFrame mf;
 

@@ -9,7 +9,7 @@ import de.dhbw.projektarbeit.db.request.Insert;
 import de.dhbw.projektarbeit.db.request.Update;
 
 /**
- * @author reindan
+ * @author BrunEis
  * 
  */
 public class Request {

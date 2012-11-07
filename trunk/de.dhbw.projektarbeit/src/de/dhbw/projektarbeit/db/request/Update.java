@@ -12,7 +12,7 @@ import javax.swing.JOptionPane;
 import de.dhbw.projektarbeit.db.db.Request;
 
 /**
- * @author Albert
+ * @author BrunEis
  * 
  */
 public class Update {

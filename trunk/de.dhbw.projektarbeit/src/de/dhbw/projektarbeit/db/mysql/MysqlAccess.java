@@ -8,7 +8,7 @@ import java.sql.SQLException;
  * Die Klasse DBAccess dient zur Verwaltung der DB-Verbindung. Sie stellt hierzu
  * Methoden zum Aufbau und Trennen, sowie Abfragen der Verbindung bereit.
  * 
- * @author reindan
+ * @author BrunEis
  */
 public class MysqlAccess {
 

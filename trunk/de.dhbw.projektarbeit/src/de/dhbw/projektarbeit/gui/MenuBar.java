@@ -18,6 +18,10 @@ import de.dhbw.projektarbeit.gui.Dialogs.NewDVD;
 import de.dhbw.projektarbeit.gui.Dialogs.NewProducer;
 import de.dhbw.projektarbeit.gui.Dialogs.NewRegisseur;
 
+/**
+ * @author Eisen
+ * 
+ */
 public class MenuBar extends JMenuBar {
 	private MainFrame mf;
 

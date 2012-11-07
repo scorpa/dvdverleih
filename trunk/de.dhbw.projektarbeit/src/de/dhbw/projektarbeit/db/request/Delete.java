@@ -12,7 +12,7 @@ import de.dhbw.projektarbeit.gui.Dialogs.EditDVD;
 /**
  * Mit Hilfe dieser Klasse lassen sich Datensaetze loeschen.
  * 
- * @author reindan
+ * @author BrunEis
  * 
  */
 public class Delete {

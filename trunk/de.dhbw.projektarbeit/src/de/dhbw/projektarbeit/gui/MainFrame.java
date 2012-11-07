@@ -21,6 +21,10 @@ import javax.swing.JTable;
 import de.dhbw.projektarbeit.db.request.Filling;
 import de.dhbw.projektarbeit.gui.Dialogs.JTableNotEditable;
 
+/**
+ * @author Eisen
+ * 
+ */
 public class MainFrame extends javax.swing.JFrame {
 	private MenuBar menuBar;
 	private TopPanel topPanel;
