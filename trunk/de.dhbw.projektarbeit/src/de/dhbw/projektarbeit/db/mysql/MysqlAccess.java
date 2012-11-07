@@ -29,7 +29,7 @@ public class MysqlAccess {
 	 * @param dbUrl
 	 *            String enthält die URL zu der Datenbank mit der die Verbindung
 	 *            aufgebaut werden soll in der Form: hostname/dbname z.B.
-	 *            192.168.1.131/dhbw
+	 *            localhost/dvd_verleih
 	 */
 	public void setDbUrl(String dbUrl) {
 		this.dbUrl = "jdbc:mysql://" + dbUrl;
