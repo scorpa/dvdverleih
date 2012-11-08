@@ -39,7 +39,7 @@ public class EditProducer extends JDialog {
 	private final JPanel contentPanel = new JPanel();
 	private JTextField txtFirstName;
 	private JTextField txtLastName;
-	private JButton btnUpdate;
+	private JButton btnUpdate, btnDelete;
 	private JButton cancelButton;
 	private int selectedID;
 	private Update update;
@@ -115,12 +115,10 @@ public class EditProducer extends JDialog {
 				panel.setBorder(new EmptyBorder(5, 5, 5, 5));
 				splitPane.setRightComponent(panel);
 				txtFirstName = new JTextField();
-				txtFirstName.setText("FirstName");
 				txtFirstName.setColumns(22);
 				JLabel label = new JLabel("Vorname");
 				JLabel label_1 = new JLabel("Nachname");
 				txtLastName = new JTextField();
-				txtLastName.setText("LastName");
 				txtLastName.setColumns(22);
 				GroupLayout gl_panel = new GroupLayout(panel);
 				gl_panel.setHorizontalGroup(gl_panel
@@ -203,7 +201,8 @@ public class EditProducer extends JDialog {
 				cancelButton.setActionCommand("Cancel");
 			}
 
-			JButton btnDelete = new JButton("L\u00F6schen");
+			btnDelete = new JButton("L\u00F6schen");
+			btnDelete.setEnabled(false);
 
 			btnUpdate = new JButton("Speichern");
 			btnUpdate.addActionListener(new ActionListener() {
@@ -261,6 +260,7 @@ public class EditProducer extends JDialog {
 					tbProduction.getSelectedRow(), 2));
 			if (selectedID > 0) {
 				btnUpdate.setEnabled(true);
+				btnDelete.setEnabled(true);
 			}
 		} catch (Exception e2) {
 			e2.printStackTrace();

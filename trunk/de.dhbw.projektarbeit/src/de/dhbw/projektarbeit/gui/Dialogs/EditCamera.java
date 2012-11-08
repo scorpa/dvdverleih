@@ -117,10 +117,8 @@ public class EditCamera extends JDialog {
 				splitPane.setRightComponent(panel);
 				JLabel label = new JLabel("Vorname");
 				txtFirstName = new JTextField();
-				txtFirstName.setText("FirstName");
 				txtFirstName.setColumns(22);
 				txtLastName = new JTextField();
-				txtLastName.setText("LastName");
 				txtLastName.setColumns(22);
 				JLabel label_1 = new JLabel("Nachname");
 				GroupLayout gl_panel = new GroupLayout(panel);
@@ -205,6 +203,7 @@ public class EditCamera extends JDialog {
 			}
 
 			btnDelete = new JButton("L\u00F6schen");
+			btnDelete.setEnabled(false);
 
 			btnUpdate = new JButton("Speichern");
 			btnUpdate.addActionListener(new ActionListener() {
@@ -260,6 +259,7 @@ public class EditCamera extends JDialog {
 					tbCamera.getSelectedRow(), 2));
 			if (selectedID > 0) {
 				btnUpdate.setEnabled(true);
+				btnDelete.setEnabled(true);
 			}
 		} catch (Exception e2) {
 			e2.printStackTrace();

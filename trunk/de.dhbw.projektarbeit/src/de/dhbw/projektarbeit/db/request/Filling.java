@@ -163,6 +163,7 @@ public class Filling {
 			for (int i = 0; i < results.size(); i++)
 				listing[i] = results.get(i);
 			
+			if((String) tabelle == "dvd"){
 			// Festlegung des Formats für das Date Feld
 			sdf = new SimpleDateFormat();
 			sdf.applyPattern("dd.MM.yyyy");
@@ -170,6 +171,7 @@ public class Filling {
 				String date;
 				date = sdf.format(listing[i][6]);
 				listing[i][6] = date;
+			}
 			}
 			mysql.closeConnection();
 			return listing;

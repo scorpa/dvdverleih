@@ -36,7 +36,7 @@ public class EditRegisseur extends JDialog {
 	private final JPanel contentPanel = new JPanel();
 	private JTextField txtFirstName;
 	private JTextField txtLastName;
-	private JButton cancelButton, btnUpdate;
+	private JButton cancelButton, btnUpdate, btnDelete;
 	private JTable tbRegisseur;
 	private Integer selectedID;
 	private Update update;
@@ -113,10 +113,8 @@ public class EditRegisseur extends JDialog {
 				splitPane.setRightComponent(panel);
 				JLabel label = new JLabel("Vorname");
 				txtFirstName = new JTextField();
-				txtFirstName.setText("FirstName");
 				txtFirstName.setColumns(22);
 				txtLastName = new JTextField();
-				txtLastName.setText("LastName");
 				txtLastName.setColumns(22);
 				JLabel label_1 = new JLabel("Nachname");
 				GroupLayout gl_panel = new GroupLayout(panel);
@@ -202,7 +200,8 @@ public class EditRegisseur extends JDialog {
 				cancelButton.setActionCommand("Cancel");
 			}
 
-			JButton btnDelete = new JButton("L\u00F6schen");
+			btnDelete = new JButton("L\u00F6schen");
+			btnDelete.setEnabled(false);
 			btnDelete.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
 					try {
@@ -278,6 +277,7 @@ public class EditRegisseur extends JDialog {
 			txtLastName.setText((String) tbRegisseur.getValueAt(tbRegisseur.getSelectedRow(), 2));
 			if(selectedID > 0){
 				btnUpdate.setEnabled(true);
+				btnDelete.setEnabled(true);
 			}
 		} catch (Exception e2) {
 			e2.printStackTrace();
