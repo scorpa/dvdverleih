@@ -26,8 +26,8 @@ DROP TABLE IF EXISTS `author`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `author` (
   `Author_ID` int(11) NOT NULL AUTO_INCREMENT,
-  `FirstName` varchar(45) DEFAULT NULL,
-  `LastName` varchar(45) DEFAULT NULL,
+  `FirstName` text,
+  `LastName` text,
   PRIMARY KEY (`Author_ID`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -51,8 +51,8 @@ DROP TABLE IF EXISTS `camera`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `camera` (
   `Camera_ID` int(11) NOT NULL AUTO_INCREMENT,
-  `FirstName` varchar(45) DEFAULT NULL,
-  `LastName` varchar(45) DEFAULT NULL,
+  `FirstName` text,
+  `LastName` text,
   PRIMARY KEY (`Camera_ID`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -76,10 +76,10 @@ DROP TABLE IF EXISTS `dvd`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `dvd` (
   `Quantity` tinyint(4) DEFAULT NULL,
-  `Title` varchar(45) DEFAULT NULL,
-  `Original_Title` varchar(45) DEFAULT NULL,
-  `Genre` varchar(45) DEFAULT NULL,
-  `Prod_Country` varchar(40) DEFAULT NULL,
+  `Title` text,
+  `Original_Title` text,
+  `Genre` text,
+  `Prod_Country` text,
   `Prod_Year` int(4) DEFAULT NULL,
   `Rel_Date` date DEFAULT NULL,
   `Duration` int(4) DEFAULT NULL,
@@ -107,7 +107,7 @@ CREATE TABLE `dvd` (
 
 LOCK TABLES `dvd` WRITE;
 /*!40000 ALTER TABLE `dvd` DISABLE KEYS */;
-INSERT INTO `dvd` VALUES (1,'Title','OriginalTitle','Genre','USA',2012,'2012-10-25',1,'ab 0 Jahre',11,1,2,1,'123123'),(1,'Title','Qweqwe','Genre','USA',2012,'2012-10-25',1,'ab 0 Jahre',15,1,2,2,'123456789'),(1,'Sex and the City 3','OriginalTitle','Genre','USA',2012,'2012-10-25',1,'ab 0 Jahre',11,1,2,1,'1312312312'),(1,'Biatch','Biatchig','324','USA',2012,'2012-11-13',1,'ab 0 Jahre',11,1,2,1,'324234324'),(1,'Testt','Test','Test','USA',2012,'2012-11-07',1,'ab 6 Jahre',11,1,2,1,'4343534'),(1,'Tester','Tatja','3242342','Indien',2008,'2012-11-13',1,'ab 16 Jahre',11,1,2,1,'903824093284'),(1,'Tewr','Natash','Horror','Russland',2010,'2012-11-08',120,'ab 16 Jahre',14,2,2,2,'9834092834098');
+INSERT INTO `dvd` VALUES (1,'Iojerowjer','jkoerwpwüeojrowj','90832409823','USA',2012,'2012-11-08',1,'ab 0 Jahre',11,1,2,1,'09438092834'),(1,'fggretert','fwerwerwer','werwer','USA',2012,'2012-11-08',1,'ab 0 Jahre',11,1,2,1,'2341323'),(1,'werwerwer','wdwerwere','werwerwer','USA',2012,'2012-11-08',1,'ab 0 Jahre',11,1,2,1,'234234234'),(1,'treoijertlöj','lkjpwjerlkjwer','pkjwelkjrwjr','USA',2012,'2012-11-08',1,'ab 0 Jahre',11,1,2,1,'32894902384'),(1,'ALköfjrölfj','ölksjdföklsdfj','ölkjaösfjdsf','USA',2012,'2012-11-15',1,'ab 0 Jahre',11,1,2,1,'490284'),(1,'Blabla','Blablub','w3234','USA',2012,'2012-11-07',1,'ab 0 Jahre',11,1,2,1,'90348902384'),(1,'Test','Test','Horror','USA',2012,'2012-11-08',1,'ab 0 Jahre',11,1,2,1,'908324324'),(1,'0uweroiwjerüj','jwepjwpeojr','pojwerpojwr','USA',2012,'2012-11-08',1,'ab 0 Jahre',11,1,2,1,'90834098234'),(1,'Test','Test','Horror','USA',2012,'2012-11-07',1,'ab 0 Jahre',11,1,2,1,'98324230984');
 /*!40000 ALTER TABLE `dvd` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -120,8 +120,8 @@ DROP TABLE IF EXISTS `production`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `production` (
   `Production_ID` int(11) NOT NULL AUTO_INCREMENT,
-  `FirstName` varchar(45) DEFAULT NULL,
-  `LastName` varchar(45) DEFAULT NULL,
+  `FirstName` text,
+  `LastName` text,
   PRIMARY KEY (`Production_ID`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -170,4 +170,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2012-11-08 12:22:18
+-- Dump completed on 2012-11-08 23:36:33
