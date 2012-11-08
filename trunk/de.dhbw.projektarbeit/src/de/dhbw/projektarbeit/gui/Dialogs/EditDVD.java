@@ -42,6 +42,10 @@ import de.dhbw.projektarbeit.db.request.Delete;
 import de.dhbw.projektarbeit.db.request.Filling;
 import de.dhbw.projektarbeit.db.request.Update;
 import de.dhbw.projektarbeit.gui.MainFrame;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeEvent;
 
 public class EditDVD extends JDialog {
 
@@ -58,7 +62,7 @@ public class EditDVD extends JDialog {
 	private Date releaseDate;
 	private SimpleDateFormat sdf;
 	private JXDatePicker dpReleaseDate;
-	private JButton btnUpdate;
+	private JButton btnUpdate, btnDelete;
 	private JButton cancelButton;
 	private JTable tbDVD;
 	private Object[][] dvdData;
@@ -186,6 +190,12 @@ public class EditDVD extends JDialog {
 				JLabel label_6 = new JLabel("Genre");
 				JLabel label_7 = new JLabel("EAN Code");
 				txtEANCode = new JTextField();
+				txtEANCode.addKeyListener(new KeyAdapter() {
+					@Override
+					public void keyReleased(KeyEvent arg0) {
+						txtEANCodeKeyReleased(arg0);
+					}
+				});
 				txtEANCode.setColumns(22);
 				JLabel label_8 = new JLabel("Produktionsjahr");
 				spProductionYear = new JSpinner();
@@ -217,6 +227,7 @@ public class EditDVD extends JDialog {
 				});
 				JLabel lblDauerInMin = new JLabel("Dauer in Min.");
 				spDuration = new JSpinner();
+				spDuration.setToolTipText("Max. 1000 Minuten");
 				spDuration.setModel(new SpinnerNumberModel(1, 1, 1000, 1));
 
 				JLabel lblAnzahl = new JLabel("Anzahl von DVDs");
@@ -666,7 +677,7 @@ public class EditDVD extends JDialog {
 			JPanel buttonPane = new JPanel();
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
-				cancelButton = new JButton("Cancel");
+				cancelButton = new JButton("Abbrechen");
 				cancelButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent arg0) {
 						dispose();
@@ -675,7 +686,8 @@ public class EditDVD extends JDialog {
 				cancelButton.setActionCommand("Cancel");
 			}
 
-			JButton btnDelete = new JButton("L\u00F6schen");
+			btnDelete = new JButton("Loeschen");
+			btnDelete.setEnabled(false);
 			btnDelete.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
 					btnDeleteActionPerformed(arg0);
@@ -722,6 +734,28 @@ public class EditDVD extends JDialog {
 									Short.MAX_VALUE)));
 			buttonPane.setLayout(gl_buttonPane);
 		}
+	}
+
+	protected void txtEANCodeKeyReleased(KeyEvent arg0) {
+		// Prüfung ob eine Zahl oder anderes Zeichen eingegeben wurde oder
+				// länger als 11 Zeichen ist
+				String text = txtEANCode.getText();
+				if (txtEANCode.getText().matches("[0-9]*")) {
+
+				} else {
+					JOptionPane.showMessageDialog(null,
+							"Ein EAN Code besteht nur aus Zahlen!", "EAN Code",
+							JOptionPane.ERROR_MESSAGE);
+					txtEANCode.setText(text.substring(0, text.length() - 1));
+				}
+
+				if (text.length() > 13) {
+					txtEANCode.setText(text.substring(0, text.length() - 1));
+					JOptionPane.showMessageDialog(null,
+							"Der EAN Code darf maximal 13 Stellen haben!", "EAN Code",
+							JOptionPane.ERROR_MESSAGE);
+
+				}
 	}
 
 	/**
@@ -783,6 +817,7 @@ public class EditDVD extends JDialog {
 			oldEAN = txtEANCode.getText();
 			if (txtEANCode != null) {
 				btnUpdate.setEnabled(true);
+				btnDelete.setEnabled(true);
 			}
 		} catch (Exception a) {
 			// TODO: handle exception

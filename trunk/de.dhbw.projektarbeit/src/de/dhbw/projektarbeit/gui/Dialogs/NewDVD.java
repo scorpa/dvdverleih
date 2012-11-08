@@ -295,6 +295,7 @@ public class NewDVD extends JDialog {
 		});
 
 		spDuration = new JSpinner();
+		spDuration.setToolTipText("Max. 1000 Min");
 		// SpinnerNumberModel smDuration setzen
 		smDuration = new SpinnerNumberModel(1, 1, 1000, 1);
 		spDuration.setModel(smDuration);
@@ -834,6 +835,9 @@ public class NewDVD extends JDialog {
 		if (txtEancode.getText().matches("[0-9]*")) {
 
 		} else {
+			JOptionPane.showMessageDialog(null,
+					"Ein EAN Code besteht nur aus Zahlen!", "EAN Code",
+					JOptionPane.ERROR_MESSAGE);
 			txtEancode.setText(text.substring(0, text.length() - 1));
 		}
 
