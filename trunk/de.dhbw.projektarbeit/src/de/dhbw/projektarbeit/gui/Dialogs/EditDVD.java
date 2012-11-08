@@ -217,6 +217,7 @@ public class EditDVD extends JDialog {
 				});
 				JLabel lblDauerInMin = new JLabel("Dauer in Min.");
 				spDuration = new JSpinner();
+				spDuration.setModel(new SpinnerNumberModel(1, 1, 1000, 1));
 
 				JLabel lblAnzahl = new JLabel("Anzahl von DVDs");
 
