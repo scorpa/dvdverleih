@@ -317,10 +317,20 @@ public class EditRegisseur extends JDialog {
 	}
 	
 	private void btnDeleteActionPerformed(ActionEvent arg0) throws Exception {
+		this.setVisible(false);
 		MysqlAccess mysql = new MysqlAccess();
 		// Aufruf der Deletemethode
 		Delete delete = new Delete("dvd_verleih",  mysql.getConnection());
-		delete.deleteEdits(selectedID, txtFirstName.getText(), txtLastName.getText(), "author", "Author_ID");
+		delete.deleteEdits(selectedID, txtFirstName.getText(), txtLastName.getText(), "regisseur", "Regie_ID");
+		
+		try {
+			this.dispose();
+			// Neues, leeres Erstellungsfenster instantiieren
+			EditRegisseur dialog = new EditRegisseur();
+			dialog.setVisible(true);
 
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 }

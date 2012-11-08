@@ -250,6 +250,8 @@ public class NewAuthor extends JDialog {
 						insert.insertAuthor(newDVD, this, firstName, lastName);
 					} else if (editDVD != null) {
 						insert.insertAuthor(editDVD, this, firstName, lastName);
+					}else{
+						insert.insertAuthor(this, firstName, lastName);
 					}
 				} catch (InvalidParameterException e) {
 					// Fehlercode 002

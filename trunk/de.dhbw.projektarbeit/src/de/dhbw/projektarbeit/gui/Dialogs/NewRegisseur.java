@@ -247,6 +247,8 @@ public class NewRegisseur extends JDialog {
 					insert.insertRegisseur(newDVD,this,firstName, lastName);}
 					else if (editDVD != null){
 						insert.insertRegisseur(editDVD,this,firstName, lastName);
+					}else{
+						insert.insertRegisseur(this, firstName, lastName);
 					}
 				} catch (InvalidParameterException e) {
 					// Fehlercode 002

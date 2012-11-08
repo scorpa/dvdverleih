@@ -249,6 +249,8 @@ public class NewCamera extends JDialog {
 						insert.insertCamera(newDVD, this, firstName, lastName);
 					} else if (editDVD != null) {
 						insert.insertCamera(editDVD, this, firstName, lastName);
+					}else{
+						insert.insertCamera(this, firstName, lastName);
 					}
 
 				} catch (InvalidParameterException e) {

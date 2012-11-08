@@ -9,6 +9,7 @@ import javax.swing.JOptionPane;
 
 import de.dhbw.projektarbeit.db.mysql.MysqlAccess;
 import de.dhbw.projektarbeit.gui.Dialogs.EditDVD;
+import de.dhbw.projektarbeit.gui.Dialogs.EditRegisseur;
 
 /**
  * Mit Hilfe dieser Klasse lassen sich Datensaetze loeschen.
@@ -23,6 +24,7 @@ public class Delete {
 	private Connection con;
 	private Statement stmt;
 	private MysqlAccess mysql = new MysqlAccess();
+	private EditRegisseur er;
 
 	/**
 	 * Constructor, initialisiert das Objekt, es wird ein DB-Schema und ein
@@ -47,9 +49,12 @@ public class Delete {
 			stmt = con.createStatement();
 			StringBuffer buffer = new StringBuffer();
 
-			buffer.append("SELECT COUNT(");
-			buffer.append(field + ")");
-			buffer.append(" FROM DVD");
+			buffer.append("SELECT ");
+			buffer.append(field);
+			buffer.append(" FROM DVD WHERE ");
+			buffer.append(field);
+			buffer.append("=");
+			buffer.append(id);
 
 			rset = stmt.executeQuery(buffer.toString());
 			int count = 0;
@@ -75,13 +80,13 @@ public class Delete {
 
 				// Bei erfolgreichem Löschen Nachricht bringen
 				JOptionPane.showMessageDialog(null, ("Der Eintrag " + firstname
-						+ " " + lastname + " wurde erfolgreich gelöscht!"),
+						+ " " + lastname + " wurde erfolgreich geloescht!"),
 						"Vorgang erfolgreich", JOptionPane.INFORMATION_MESSAGE);
 			} else {
 				JOptionPane
 						.showMessageDialog(
 								null,
-								("Der Eintrag konnte nicht gelöcht werden, da dieser noch benutzt wird!"),
+								("Der Eintrag konnte nicht geloescht werden, da dieser noch benutzt wird!"),
 								"Vorgang abgebrochen",
 								JOptionPane.WARNING_MESSAGE);
 			}
@@ -91,7 +96,7 @@ public class Delete {
 			con.setAutoCommit(true);
 			e.printStackTrace();
 			throw new Exception(
-					"Fehler beim Löschen der Zeile aus der Datenbank! Fehlercode 007");
+					"Fehler beim Loeschen der Zeile aus der Datenbank! Fehlercode 007");
 		}
 	}
 
@@ -144,11 +149,11 @@ public class Delete {
 				mysql.closeConnection();
 				// Bei erfolgreichem Lšschen Nachricht bringen
 				JOptionPane.showMessageDialog(null,
-						("Die DVD mit dem EAN Code " + code + " wurde erfolgreich gelöcht!"),
+						("Die DVD mit dem EAN Code " + code + " wurde erfolgreich geloescht!"),
 						"Vorgang erfolgreich", JOptionPane.INFORMATION_MESSAGE);
 			} else {
 				JOptionPane.showMessageDialog(null,
-						("Die DVD mit dem EAN Code " + code + " konnte nicht gelöcht werden!"),
+						("Die DVD mit dem EAN Code " + code + " konnte nicht geloescht werden!"),
 						"Vorgang abgebrochen", JOptionPane.WARNING_MESSAGE);
 			}
 
@@ -158,7 +163,7 @@ public class Delete {
 			con.setAutoCommit(true);
 			e.printStackTrace();
 			throw new Exception(
-					"Fehler beim Lšschen der Zeile aus der Datenbank! Fehlercode 007");
+					"Fehler beim Loeschen der Zeile aus der Datenbank! Fehlercode 007");
 		}
 		try {
 			ed.dvdDeleted();

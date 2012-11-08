@@ -27,6 +27,7 @@ import de.dhbw.projektarbeit.db.mysql.MysqlAccess;
 import de.dhbw.projektarbeit.db.request.Delete;
 import de.dhbw.projektarbeit.db.request.Filling;
 import de.dhbw.projektarbeit.db.request.Update;
+import de.dhbw.projektarbeit.gui.MainFrame;
 
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -65,6 +66,7 @@ public class EditAuthor extends JDialog {
 	public EditAuthor() {
 		setWindow();
 	}
+	
 
 	/**
 	 * Standardkonsturktor
@@ -353,14 +355,25 @@ public class EditAuthor extends JDialog {
 
 	private void btnDeleteActionPerformed(ActionEvent e) throws Exception {
 		try {
+			this.setVisible(false);
 			MysqlAccess mysql = new MysqlAccess();
 			// Aufruf der Deletemethode
 			Delete delete = new Delete("dvd_verleih", mysql.getConnection());
 			delete.deleteEdits(selectedID, txtFirstName.getText(), txtLastName.getText(), "author", "Author_ID");
+
+			try {
+				this.dispose();
+				// Neues, leeres Erstellungsfenster instantiieren
+				EditAuthor dialog = new EditAuthor();
+				dialog.setVisible(true);
+
+			} catch (Exception ex) {
+				ex.printStackTrace();
+			}
 		} catch (Exception e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-
 	}
+	
 }

@@ -241,6 +241,8 @@ public class NewProducer extends JDialog {
 					} else if (editDVD != null) {
 						insert.insertProducer(editDVD, this, firstName,
 								lastName);
+					}else{
+						insert.insertProducer(this, firstName, lastName);
 					}
 
 				} catch (InvalidParameterException e) {
