@@ -28,6 +28,10 @@ import de.dhbw.projektarbeit.gui.Dialogs.JTableNotEditable;
  * 
  */
 public class MainFrame extends javax.swing.JFrame {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 264907685120418858L;
 	private MenuBar menuBar;
 	private TopPanel topPanel;
 	private JPanel CardPanel, panelMain;
