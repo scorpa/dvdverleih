@@ -24,6 +24,7 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 import org.jdesktop.swingx.JXTable;
 
 import de.dhbw.projektarbeit.db.mysql.MysqlAccess;
+import de.dhbw.projektarbeit.db.request.Delete;
 import de.dhbw.projektarbeit.db.request.Filling;
 import de.dhbw.projektarbeit.db.request.Update;
 
@@ -203,6 +204,16 @@ public class EditCamera extends JDialog {
 			}
 
 			btnDelete = new JButton("L\u00F6schen");
+			btnDelete.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					try {
+						btnDeleteActionPerformed(e);
+					} catch (Exception e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+				}
+			});
 			btnDelete.setEnabled(false);
 
 			btnUpdate = new JButton("Speichern");
@@ -242,6 +253,23 @@ public class EditCamera extends JDialog {
 			buttonPane.setLayout(gl_buttonPane);
 		}
 	}
+	protected void btnDeleteActionPerformed(ActionEvent e) throws Exception {
+		this.setVisible(false);
+		MysqlAccess mysql = new MysqlAccess();
+		// Aufruf der Deletemethode
+		Delete delete = new Delete("dvd_verleih",  mysql.getConnection());
+		delete.deleteEdits(selectedID, txtFirstName.getText(), txtLastName.getText(), "camera", "Camera_ID");
+		try {
+			this.dispose();
+			// Neues, leeres Erstellungsfenster instantiieren
+			EditCamera dialog = new EditCamera();
+			dialog.setVisible(true);
+
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+	}
+
 	/**
 	 * Bei Klick auf die Tabelle wird die angeklickte Zeile ausgelesen
 	 * 

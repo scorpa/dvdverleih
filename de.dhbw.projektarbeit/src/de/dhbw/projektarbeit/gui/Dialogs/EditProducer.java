@@ -22,6 +22,7 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 import org.jdesktop.swingx.JXTable;
 
 import de.dhbw.projektarbeit.db.mysql.MysqlAccess;
+import de.dhbw.projektarbeit.db.request.Delete;
 import de.dhbw.projektarbeit.db.request.Filling;
 import de.dhbw.projektarbeit.db.request.Update;
 
@@ -202,6 +203,16 @@ public class EditProducer extends JDialog {
 			}
 
 			btnDelete = new JButton("L\u00F6schen");
+			btnDelete.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent arg0) {
+					try {
+						btnDeleteActionPerformed(arg0);
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+			});
 			btnDelete.setEnabled(false);
 
 			btnUpdate = new JButton("Speichern");
@@ -240,6 +251,25 @@ public class EditProducer extends JDialog {
 						.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
 			);
 			buttonPane.setLayout(gl_buttonPane);
+		}
+	}
+
+	protected void btnDeleteActionPerformed(ActionEvent arg0) throws Exception {
+		this.setVisible(false);
+		MysqlAccess mysql = new MysqlAccess();
+		// Aufruf der Deletemethode
+		Delete delete = new Delete("dvd_verleih",  mysql.getConnection());
+		delete.deleteEdits(selectedID, txtFirstName.getText(), txtLastName.getText(), "production", "Production_ID");
+		
+		
+		try {
+			this.dispose();
+			// Neues, leeres Erstellungsfenster instantiieren
+			EditProducer dialog = new EditProducer();
+			dialog.setVisible(true);
+
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
 
