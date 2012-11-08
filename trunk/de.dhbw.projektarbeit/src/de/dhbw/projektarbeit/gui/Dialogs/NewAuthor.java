@@ -88,7 +88,7 @@ public class NewAuthor extends JDialog {
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		setModal(true);
 		setResizable(false);
-		setTitle("Neuen Kameramann anlegen");
+		setTitle("Neuen Autor anlegen");
 		setBounds(100, 100, 610, 155);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
