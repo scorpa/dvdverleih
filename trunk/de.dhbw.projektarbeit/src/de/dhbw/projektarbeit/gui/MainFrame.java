@@ -2,21 +2,23 @@ package de.dhbw.projektarbeit.gui;
 
 import java.awt.CardLayout;
 import java.awt.Dimension;
-import java.awt.GraphicsEnvironment;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.util.regex.PatternSyntaxException;
 
+import javax.swing.DefaultRowSorter;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.LayoutStyle.ComponentPlacement;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.ListSelectionModel;
-import javax.swing.UIManager;
-import javax.swing.JTabbedPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.ListSelectionModel;
+import javax.swing.RowFilter;
+import javax.swing.RowSorter;
+import javax.swing.UIManager;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
 
 import de.dhbw.projektarbeit.db.request.Filling;
 import de.dhbw.projektarbeit.gui.Dialogs.JTableNotEditable;
@@ -38,6 +40,7 @@ public class MainFrame extends javax.swing.JFrame {
 	private Object[][] dvdData;
 	private Filling fill;
 	private JTableNotEditable jTable;
+	private RowSorter<TableModel> sorter;
 
 	public MainFrame() {
 		super();
@@ -102,14 +105,16 @@ public class MainFrame extends javax.swing.JFrame {
 									795, Short.MAX_VALUE)));
 
 			// Zuweisung des JTable Models, der Daten und der
-			// Spaltenüberschriften
+			// Spaltenüberschriften, sowie des Rowsorters
 			model = new DefaultTableModel(dvdData, columnNames);
 			tbDVD = new JTableNotEditable(model, columnNames);
 			tbDVD.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 			tbDVD.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 			tbDVD.setFocusable(false);
 			tbDVD.setModel(model);
-			
+			sorter = new TableRowSorter<TableModel>(model);
+			tbDVD.setRowSorter(sorter);
+
 			// Tabelleneigenschaften setzen
 			jTable = new JTableNotEditable();
 			tbDVD = jTable.setColumnSize(tbDVD);
@@ -157,4 +162,24 @@ public class MainFrame extends javax.swing.JFrame {
 		tbDVD = jTable.setColumnSize(tbDVD);
 	}
 
+	/**
+	 * Filtermethode für den jTable Inhalt, wird vom TopPanel aufgerufen
+	 * 
+	 * @param filterText
+	 *            --> Filtertext aus dem TopPabel
+	 */
+	public void filterText(String filterText) {
+		String txt;
+		txt = filterText;
+		if (txt.length() == 0) {
+			((DefaultRowSorter<TableModel, Integer>) sorter).setRowFilter(null);
+		} else {
+			try {
+				((DefaultRowSorter<TableModel, Integer>) sorter)
+						.setRowFilter(RowFilter.regexFilter(txt));
+			} catch (PatternSyntaxException pse) {
+				System.err.println("Falscher Filterbegriff");
+			}
+		}
+	}
 }

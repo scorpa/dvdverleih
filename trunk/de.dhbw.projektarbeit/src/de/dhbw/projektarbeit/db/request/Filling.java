@@ -1,11 +1,11 @@
 package de.dhbw.projektarbeit.db.request;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Vector;
 
@@ -24,6 +24,7 @@ public class Filling {
 	private ResultSetMetaData rsmd;
 	private Object[][] listing, dvdData;;
 	private MysqlAccess mysql;
+	private SimpleDateFormat sdf;
 
 	/**
 	 * Stellt die Verbindung mit dem SQL Server über die Methode "getConnection"
@@ -110,7 +111,6 @@ public class Filling {
 	 *             --> Exceptionhandling
 	 */
 	public Object[][] getTable(String tabelle) throws Exception {
-
 		// Verbindung zum SQL Server aufbauen
 		try {
 			getConnection();
@@ -162,6 +162,15 @@ public class Filling {
 			listing = new Object[results.size()][rsmd.getColumnCount()];
 			for (int i = 0; i < results.size(); i++)
 				listing[i] = results.get(i);
+			
+			// Festlegung des Formats für das Date Feld
+			sdf = new SimpleDateFormat();
+			sdf.applyPattern("dd.MM.yyyy");
+			for (int i = 0; i <results.size(); i++){
+				String date;
+				date = sdf.format(listing[i][6]);
+				listing[i][6] = date;
+			}
 
 			return listing;
 		} catch (SQLException e) {

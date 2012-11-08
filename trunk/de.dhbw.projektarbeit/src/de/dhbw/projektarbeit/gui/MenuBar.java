@@ -25,8 +25,25 @@ import de.dhbw.projektarbeit.gui.Dialogs.NewRegisseur;
 public class MenuBar extends JMenuBar {
 	private MainFrame mf;
 
+	/**
+	 * Standardkonstruktor
+	 */
+	public MenuBar() {
+		setWindow();
+	}
+
+	/**
+	 * Konstruktor aus dem MainFrame mit Übergabe der Klassenparameter
+	 * 
+	 * @param mf
+	 *            --> Klassenparameter aus der MainFrameklasse
+	 */
 	public MenuBar(MainFrame mf) {
 		this.mf = mf;
+		setWindow();
+	}
+
+	private void setWindow() {
 		JMenu mnDatei = new JMenu("Datei");
 		add(mnDatei);
 

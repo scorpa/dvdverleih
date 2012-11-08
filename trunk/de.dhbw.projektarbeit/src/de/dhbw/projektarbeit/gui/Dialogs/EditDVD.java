@@ -26,11 +26,14 @@ import javax.swing.JSpinner;
 import javax.swing.JSplitPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.RowSorter;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.ListSelectionModel;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
 
 import org.jdesktop.swingx.JXDatePicker;
 
@@ -73,32 +76,29 @@ public class EditDVD extends JDialog {
 	private MainFrame mf;
 	private JTableNotEditable jTable;
 
-/*	*//**
+	/*	*//**
 	 * Launch the application.
-	 *//*
-	public static void main(String[] args) {
-		try {
-			EditDVD dialog = new EditDVD();
-			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-			dialog.setVisible(true);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}*/
+	 */
+	/*
+	 * public static void main(String[] args) { try { EditDVD dialog = new
+	 * EditDVD(); dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+	 * dialog.setVisible(true); } catch (Exception e) { e.printStackTrace(); } }
+	 */
 
 	/**
 	 * Standardkonstruktor
 	 * 
 	 * @throws Exception
-	 *//*
-	public EditDVD() throws Exception {
-		loadTable();
-		setWindow();
-	}*/
-	
+	 */
+	/*
+	 * public EditDVD() throws Exception { loadTable(); setWindow(); }
+	 */
+
 	/**
-	 * Konstruktor für die Übergabe der MainFrame Klasse 
-	 * @param mf --> Klasseninformationen der MainFrame Klasse
+	 * Konstruktor für die Übergabe der MainFrame Klasse
+	 * 
+	 * @param mf
+	 *            --> Klasseninformationen der MainFrame Klasse
 	 */
 	public EditDVD(MainFrame mf) {
 		this.mf = mf;
@@ -649,6 +649,8 @@ public class EditDVD extends JDialog {
 			tbDVD.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 			tbDVD.setFocusable(false);
 			tbDVD.setModel(model);
+			RowSorter<TableModel> sorter = new TableRowSorter<TableModel>(model);
+			tbDVD.setRowSorter(sorter);
 
 			// Tabelleneigenschaften setzen
 			jTable = new JTableNotEditable();
@@ -747,6 +749,9 @@ public class EditDVD extends JDialog {
 	 */
 	private void tbDVDMouseClicked(MouseEvent e) {
 		try {
+			// SimpleDateFormat für das Parsen von String in java.util.Date
+			sdf = new SimpleDateFormat("dd.MM.yyyy");
+
 			spCountDVD.setValue(tbDVD.getValueAt(tbDVD.getSelectedRow(), 0));
 			txtTitle.setText((String) tbDVD.getValueAt(tbDVD.getSelectedRow(),
 					1));
@@ -758,8 +763,8 @@ public class EditDVD extends JDialog {
 					tbDVD.getSelectedRow(), 4));
 			spProductionYear.setValue(tbDVD.getValueAt(tbDVD.getSelectedRow(),
 					5));
-			dpReleaseDate.setDate(((java.util.Date) tbDVD.getValueAt(
-					tbDVD.getSelectedRow(), 6)));
+			dpReleaseDate.setDate((java.util.Date) sdf.parse((String) (tbDVD
+					.getValueAt(tbDVD.getSelectedRow(), 6))));
 			spDuration.setValue(tbDVD.getValueAt(tbDVD.getSelectedRow(), 7));
 			cbFSK.setSelectedItem(tbDVD.getValueAt(tbDVD.getSelectedRow(), 8));
 			cbRegisseur.setSelectedItem(tbDVD.getValueAt(

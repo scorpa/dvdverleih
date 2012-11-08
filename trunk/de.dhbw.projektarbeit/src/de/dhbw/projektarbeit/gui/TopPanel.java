@@ -3,11 +3,15 @@ package de.dhbw.projektarbeit.gui;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
 
 import de.dhbw.projektarbeit.gui.Dialogs.EditDVD;
@@ -19,6 +23,7 @@ import de.dhbw.projektarbeit.gui.Dialogs.NewDVD;
  */
 public class TopPanel extends JPanel {
 	private MainFrame mf;
+	private JTextField txtFilter;
 
 	/**
 	 * Standardkonstruktor
@@ -62,6 +67,16 @@ public class TopPanel extends JPanel {
 				btnDvdBearbeitenActionPerformed(e);
 			}
 		});
+
+		txtFilter = new JTextField();
+		txtFilter.addKeyListener(new KeyAdapter() {
+			public void keyReleased(KeyEvent arg0) {
+				txtFilterKeyReleased(arg0);
+			}
+		});
+		txtFilter.setColumns(10);
+
+		JLabel lblFilter = new JLabel("Filter:");
 		GroupLayout groupLayout = new GroupLayout(this);
 		groupLayout.setHorizontalGroup(groupLayout.createParallelGroup(
 				Alignment.LEADING).addGroup(
@@ -73,7 +88,13 @@ public class TopPanel extends JPanel {
 						.addComponent(btnDvdBearbeiten,
 								GroupLayout.PREFERRED_SIZE, 134,
 								GroupLayout.PREFERRED_SIZE)
-						.addContainerGap(561, Short.MAX_VALUE)));
+						.addPreferredGap(ComponentPlacement.RELATED, 278,
+								Short.MAX_VALUE)
+						.addComponent(lblFilter)
+						.addPreferredGap(ComponentPlacement.UNRELATED)
+						.addComponent(txtFilter, GroupLayout.PREFERRED_SIZE,
+								235, GroupLayout.PREFERRED_SIZE)
+						.addContainerGap()));
 		groupLayout
 				.setVerticalGroup(groupLayout
 						.createParallelGroup(Alignment.LEADING)
@@ -87,7 +108,13 @@ public class TopPanel extends JPanel {
 														.addComponent(
 																btnNeueDvd)
 														.addComponent(
-																btnDvdBearbeiten))
+																btnDvdBearbeiten)
+														.addComponent(
+																txtFilter,
+																GroupLayout.PREFERRED_SIZE,
+																GroupLayout.DEFAULT_SIZE,
+																GroupLayout.PREFERRED_SIZE)
+														.addComponent(lblFilter))
 										.addContainerGap(
 												GroupLayout.DEFAULT_SIZE,
 												Short.MAX_VALUE)));
@@ -156,5 +183,15 @@ public class TopPanel extends JPanel {
 		NewDVD dialog = new NewDVD();
 		dialog.setVisible(true);
 
+	}
+
+	/**
+	 * Methode, die den Filtertext an die MainFrame Klasse weitergibt
+	 * 
+	 * @param arg0
+	 *            --> Keyevenet Handling
+	 */
+	private void txtFilterKeyReleased(KeyEvent arg0) {
+		mf.filterText(txtFilter.getText());
 	}
 }
