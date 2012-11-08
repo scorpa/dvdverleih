@@ -1,0 +1,173 @@
+CREATE DATABASE  IF NOT EXISTS `dvd_verleih` /*!40100 DEFAULT CHARACTER SET utf8 */;
+USE `dvd_verleih`;
+-- MySQL dump 10.13  Distrib 5.5.16, for Win32 (x86)
+--
+-- Host: localhost    Database: dvd_verleih
+-- ------------------------------------------------------
+-- Server version	5.5.8
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Table structure for table `author`
+--
+
+DROP TABLE IF EXISTS `author`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `author` (
+  `Author_ID` int(11) NOT NULL AUTO_INCREMENT,
+  `FirstName` varchar(45) DEFAULT NULL,
+  `LastName` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`Author_ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `author`
+--
+
+LOCK TABLES `author` WRITE;
+/*!40000 ALTER TABLE `author` DISABLE KEYS */;
+INSERT INTO `author` VALUES (1,'Test','Test'),(2,'Schniedel','Wutzi'),(3,'Bla','Bla'),(4,'Schnick','Schnack');
+/*!40000 ALTER TABLE `author` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `camera`
+--
+
+DROP TABLE IF EXISTS `camera`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `camera` (
+  `Camera_ID` int(11) NOT NULL AUTO_INCREMENT,
+  `FirstName` varchar(45) DEFAULT NULL,
+  `LastName` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`Camera_ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `camera`
+--
+
+LOCK TABLES `camera` WRITE;
+/*!40000 ALTER TABLE `camera` DISABLE KEYS */;
+INSERT INTO `camera` VALUES (1,'Camera','Mann'),(2,'Tes','Test');
+/*!40000 ALTER TABLE `camera` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `dvd`
+--
+
+DROP TABLE IF EXISTS `dvd`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `dvd` (
+  `Quantity` tinyint(4) DEFAULT NULL,
+  `Title` varchar(45) DEFAULT NULL,
+  `Original_Title` varchar(45) DEFAULT NULL,
+  `Genre` varchar(45) DEFAULT NULL,
+  `Prod_Country` varchar(40) DEFAULT NULL,
+  `Prod_Year` int(4) DEFAULT NULL,
+  `Rel_Date` date DEFAULT NULL,
+  `Duration` int(4) DEFAULT NULL,
+  `FSK` varchar(20) DEFAULT NULL,
+  `Regie_ID` int(11) NOT NULL,
+  `Author_ID` int(11) NOT NULL,
+  `Production_ID` int(11) NOT NULL,
+  `Camera_ID` int(11) NOT NULL,
+  `Barcode` varchar(13) NOT NULL,
+  PRIMARY KEY (`Barcode`),
+  KEY `fk_dvd_author_idx` (`Author_ID`),
+  KEY `fk_dvd_camera_idx` (`Camera_ID`),
+  KEY `fk_dvd_production_idx` (`Production_ID`),
+  KEY `fk_dvd_regiseur_idx` (`Regie_ID`),
+  CONSTRAINT `fk_dvd_author` FOREIGN KEY (`Author_ID`) REFERENCES `author` (`Author_ID`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_dvd_camera` FOREIGN KEY (`Camera_ID`) REFERENCES `camera` (`Camera_ID`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_dvd_production` FOREIGN KEY (`Production_ID`) REFERENCES `production` (`Production_ID`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_dvd_regiseur` FOREIGN KEY (`Regie_ID`) REFERENCES `regisseur` (`Regie_ID`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 PACK_KEYS=1 COMMENT='DVD Information';
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `dvd`
+--
+
+LOCK TABLES `dvd` WRITE;
+/*!40000 ALTER TABLE `dvd` DISABLE KEYS */;
+INSERT INTO `dvd` VALUES (1,'Title','OriginalTitle','Genre','USA',2012,'2012-10-25',1,'ab 0 Jahre',11,1,2,1,'123123'),(1,'Title','Qweqwe','Genre','USA',2012,'2012-10-25',1,'ab 0 Jahre',15,1,2,2,'123456789'),(1,'Sex and the City 3','OriginalTitle','Genre','USA',2012,'2012-10-25',1,'ab 0 Jahre',11,1,2,1,'1312312312'),(1,'Biatch','Biatchig','324','USA',2012,'2012-11-13',1,'ab 0 Jahre',11,1,2,1,'324234324'),(1,'Testt','Test','Test','USA',2012,'2012-11-07',1,'ab 6 Jahre',11,1,2,1,'4343534'),(1,'Tester','Tatja','3242342','Indien',2008,'2012-11-13',1,'ab 16 Jahre',11,1,2,1,'903824093284'),(1,'Tewr','Natash','Horror','Russland',2010,'2012-11-08',120,'ab 16 Jahre',14,2,2,2,'9834092834098');
+/*!40000 ALTER TABLE `dvd` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `production`
+--
+
+DROP TABLE IF EXISTS `production`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `production` (
+  `Production_ID` int(11) NOT NULL AUTO_INCREMENT,
+  `FirstName` varchar(45) DEFAULT NULL,
+  `LastName` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`Production_ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `production`
+--
+
+LOCK TABLES `production` WRITE;
+/*!40000 ALTER TABLE `production` DISABLE KEYS */;
+INSERT INTO `production` VALUES (2,'James','Cameron'),(3,'Jon','Landau'),(4,'Test','tzes');
+/*!40000 ALTER TABLE `production` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `regisseur`
+--
+
+DROP TABLE IF EXISTS `regisseur`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `regisseur` (
+  `Regie_ID` int(11) NOT NULL AUTO_INCREMENT,
+  `FirstName` text,
+  `LastName` text,
+  PRIMARY KEY (`Regie_ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `regisseur`
+--
+
+LOCK TABLES `regisseur` WRITE;
+/*!40000 ALTER TABLE `regisseur` DISABLE KEYS */;
+INSERT INTO `regisseur` VALUES (11,'Steven ','Spielberg'),(12,'Barty','Marthy'),(13,'Test','Test'),(14,'Tante','Emma'),(15,'Rhababer','Balaber'),(16,'erwer','werwer'),(17,'ewwe','qweqwe'),(18,'Lu','Lu'),(19,'Trala','la');
+/*!40000 ALTER TABLE `regisseur` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2012-11-08 12:22:18
