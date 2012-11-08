@@ -42,7 +42,8 @@ public class MainFrame extends javax.swing.JFrame {
 	private Filling fill;
 	private JTableNotEditable jTable;
 	private RowSorter<TableModel> sorter;
-
+	private JScrollPane scrollPane;
+	
 	public MainFrame() {
 		super();
 		setMinimumSize(new Dimension(1024, 768));
@@ -120,7 +121,7 @@ public class MainFrame extends javax.swing.JFrame {
 			jTable = new JTableNotEditable();
 			tbDVD = jTable.setColumnSize(tbDVD);
 
-			JScrollPane scrollPane = new JScrollPane(tbDVD);
+			scrollPane = new JScrollPane(tbDVD);
 			panelMain.add(scrollPane, "name_45280400366220");
 			scrollPane.setViewportView(tbDVD);
 			getContentPane().setLayout(groupLayout);
@@ -161,6 +162,7 @@ public class MainFrame extends javax.swing.JFrame {
 		
 		// Tabelleneigenschaften setzen
 		tbDVD = jTable.setColumnSize(tbDVD);
+		scrollPane.setViewportView(tbDVD);
 	}
 
 	/**
