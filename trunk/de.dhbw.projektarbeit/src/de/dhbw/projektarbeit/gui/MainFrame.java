@@ -158,7 +158,6 @@ public class MainFrame extends javax.swing.JFrame {
 		model = new DefaultTableModel(dvdData, columnNames);
 		tbDVD.setModel(model);
 		// Tabelleneigenschaften setzen
-		tbDVD = new JTableNotEditable(model, columnNames);
 		tbDVD = jTable.setColumnSize(tbDVD);
 	}
 
