@@ -20,6 +20,7 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.border.EmptyBorder;
 
 import de.dhbw.projektarbeit.db.mysql.MysqlAccess;
+import de.dhbw.projektarbeit.db.request.Check;
 import de.dhbw.projektarbeit.db.request.Insert;
 
 public class NewCamera extends JDialog {
@@ -29,11 +30,12 @@ public class NewCamera extends JDialog {
 	private JTextField txtLastname;
 	private JButton addButton;
 	private JButton cancelButton;
-	private boolean fromNewDVD = false;
+	private boolean fromNewDVD = false, vorhanden = false;
 	private Insert insert;
 	private Connection con;
 	private NewDVD newDVD = null;
 	private EditDVD editDVD = null;
+	private Check check;
 
 	/**
 	 * Launch the application.
@@ -227,39 +229,64 @@ public class NewCamera extends JDialog {
 			go = false;
 		}
 
+		// Wenn Leerzeichen im Vornamen eingegeben wurden, werden diese gelöscht
+		while (firstName.indexOf(" ") == 0) {
+			firstName = firstName.substring(1);
+		}
+
+		// Wenn Leerzeichen im Nachnamen eingegeben wurden, werden diese
+		// gelöscht
+		while (lastName.indexOf(" ") == 0) {
+			lastName = lastName.substring(1);
+		}
+
 		// Aufrufen der Methode CreateRegisseur
 		if (go == true) {
 			MysqlAccess mysql = new MysqlAccess();
-			insert = new Insert("dvd_verleih", mysql.getConnection());
+			check = new Check("dvd_verleih", mysql.getConnection());
 
-			// Auf Aufruf aus dem NewDVD oder EditDVD Dialog prŸfen
-			if (fromNewDVD = false) {
+			// Check durchführen, ob Name des Autors schon vorhanden
+			vorhanden = check.check("camera", "Camera_ID", firstName, lastName);
 
-				try {
-					insert.insertCamera(this, firstName, lastName);
-				} catch (InvalidParameterException e) {
-					// Fehlercode 002
-					e.printStackTrace();
-					throw new Exception(
-							"Bei der Uebertragung der Parameter ist ein Fehler aufgetreten! Fehlercode: 002");
-				}
-			} else if (fromNewDVD = true) {
-				try {
-					if (newDVD != null) {
-						insert.insertCamera(newDVD, this, firstName, lastName);
-					} else if (editDVD != null) {
-						insert.insertCamera(editDVD, this, firstName, lastName);
-					}else{
+			if (vorhanden == false) {
+				insert = new Insert("dvd_verleih", mysql.getConnection());
+				// Auf Aufruf aus dem NewDVD oder EditDVD Dialog prŸfen
+				if (fromNewDVD == false) {
+
+					try {
 						insert.insertCamera(this, firstName, lastName);
+					} catch (InvalidParameterException e) {
+						// Fehlercode 002
+						e.printStackTrace();
+						throw new Exception(
+								"Bei der Uebertragung der Parameter ist ein Fehler aufgetreten! Fehlercode: 002");
 					}
+				} else if (fromNewDVD == true) {
+					try {
+						if (newDVD != null) {
+							insert.insertCamera(newDVD, this, firstName,
+									lastName);
+						} else if (editDVD != null) {
+							insert.insertCamera(editDVD, this, firstName,
+									lastName);
+						} else {
+							insert.insertCamera(this, firstName, lastName);
+						}
 
-				} catch (InvalidParameterException e) {
-					// Fehlercode 002
-					e.printStackTrace();
-					throw new Exception(
-							"Bei der Uebertragung der Parameter ist ein Fehler aufgetreten! Fehlercode: 002");
+					} catch (InvalidParameterException e) {
+						// Fehlercode 002
+						e.printStackTrace();
+						throw new Exception(
+								"Bei der Uebertragung der Parameter ist ein Fehler aufgetreten! Fehlercode: 002");
+					}
 				}
+			} else {
+				JOptionPane.showMessageDialog(null, "Der Kameramann \""
+						+ firstName + " " + lastName
+						+ "\" ist bereits vorhanden!",
+						"Neuen Kameramann anlegen", JOptionPane.ERROR_MESSAGE);
 			}
+
 		} else {
 			JOptionPane
 					.showMessageDialog(
@@ -268,7 +295,6 @@ public class NewCamera extends JDialog {
 							"Regisseurerstellung", JOptionPane.ERROR_MESSAGE);
 
 		}
-
 	}
 
 	public void cameraAdded(String firstName, String lastName) {

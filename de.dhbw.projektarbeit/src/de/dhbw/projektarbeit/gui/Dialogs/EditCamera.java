@@ -70,7 +70,7 @@ public class EditCamera extends JDialog {
 	 * Standardkonsturktor
 	 */
 	private void setWindow() {
-		
+
 		// Spaltenüberschriften
 		String[] columnNames = { "ID", "Vorname", "Nachname" };
 
@@ -87,7 +87,7 @@ public class EditCamera extends JDialog {
 
 		DefaultTableModel model = new DefaultTableModel(productionData,
 				columnNames);
-		
+
 		setModal(true);
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		setAlwaysOnTop(true);
@@ -229,36 +229,45 @@ public class EditCamera extends JDialog {
 			});
 			btnUpdate.setEnabled(false);
 			GroupLayout gl_buttonPane = new GroupLayout(buttonPane);
-			gl_buttonPane.setHorizontalGroup(
-				gl_buttonPane.createParallelGroup(Alignment.TRAILING)
-					.addGroup(gl_buttonPane.createSequentialGroup()
-						.addContainerGap()
-						.addComponent(btnDelete, GroupLayout.PREFERRED_SIZE, 96, GroupLayout.PREFERRED_SIZE)
-						.addGap(6)
-						.addComponent(btnUpdate, GroupLayout.PREFERRED_SIZE, 102, GroupLayout.PREFERRED_SIZE)
-						.addPreferredGap(ComponentPlacement.RELATED, 315, Short.MAX_VALUE)
-						.addComponent(cancelButton)
-						.addContainerGap())
-			);
-			gl_buttonPane.setVerticalGroup(
-				gl_buttonPane.createParallelGroup(Alignment.LEADING)
-					.addGroup(gl_buttonPane.createSequentialGroup()
-						.addGap(5)
-						.addGroup(gl_buttonPane.createParallelGroup(Alignment.LEADING)
-							.addComponent(btnDelete)
-							.addComponent(btnUpdate)
-							.addComponent(cancelButton))
-						.addContainerGap())
-			);
+			gl_buttonPane.setHorizontalGroup(gl_buttonPane.createParallelGroup(
+					Alignment.TRAILING).addGroup(
+					gl_buttonPane
+							.createSequentialGroup()
+							.addContainerGap()
+							.addComponent(btnDelete,
+									GroupLayout.PREFERRED_SIZE, 96,
+									GroupLayout.PREFERRED_SIZE)
+							.addGap(6)
+							.addComponent(btnUpdate,
+									GroupLayout.PREFERRED_SIZE, 102,
+									GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED, 315,
+									Short.MAX_VALUE).addComponent(cancelButton)
+							.addContainerGap()));
+			gl_buttonPane.setVerticalGroup(gl_buttonPane.createParallelGroup(
+					Alignment.LEADING).addGroup(
+					gl_buttonPane
+							.createSequentialGroup()
+							.addGap(5)
+							.addGroup(
+									gl_buttonPane
+											.createParallelGroup(
+													Alignment.LEADING)
+											.addComponent(btnDelete)
+											.addComponent(btnUpdate)
+											.addComponent(cancelButton))
+							.addContainerGap()));
 			buttonPane.setLayout(gl_buttonPane);
 		}
 	}
+
 	protected void btnDeleteActionPerformed(ActionEvent e) throws Exception {
 		this.setVisible(false);
 		MysqlAccess mysql = new MysqlAccess();
 		// Aufruf der Deletemethode
-		Delete delete = new Delete("dvd_verleih",  mysql.getConnection());
-		delete.deleteEdits(selectedID, txtFirstName.getText(), txtLastName.getText(), "camera", "Camera_ID");
+		Delete delete = new Delete("dvd_verleih", mysql.getConnection());
+		delete.deleteEdits(selectedID, txtFirstName.getText(),
+				txtLastName.getText(), "camera", "Camera_ID");
 		try {
 			this.dispose();
 			// Neues, leeres Erstellungsfenster instantiieren
@@ -293,7 +302,7 @@ public class EditCamera extends JDialog {
 			e2.printStackTrace();
 		}
 	}
-	
+
 	/**
 	 * Übergabemethode der Werte aus der ausgelesenen Zeile an den Updateaufruf
 	 * 
@@ -303,11 +312,23 @@ public class EditCamera extends JDialog {
 	 *             --> Exceptionhandling
 	 */
 	protected void btnUpdateActionPerformed(ActionEvent e) throws Exception {
-		updateCamera(selectedID, txtFirstName.getText(),
-				txtLastName.getText(), "camera");
+		String firstName = txtFirstName.getText(), lastName = txtLastName
+				.getText();
+
+		// Wenn Leerzeichen im Vornamen eingegeben wurden, werden diese gelöscht
+		while (firstName.indexOf(" ") == 0) {
+			firstName = firstName.substring(1);
+		}
+
+		// Wenn Leerzeichen im Nachnamen eingegeben wurden, werden diese
+		// gelöscht
+		while (lastName.indexOf(" ") == 0) {
+			lastName = lastName.substring(1);
+		}
+		updateCamera(selectedID, firstName, lastName, "camera");
 
 	}
-	
+
 	/**
 	 * Die Updatefunktion wird mit den übergebenen Parametern aufgerufen
 	 * 

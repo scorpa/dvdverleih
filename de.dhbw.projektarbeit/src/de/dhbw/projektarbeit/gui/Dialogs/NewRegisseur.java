@@ -20,6 +20,7 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.border.EmptyBorder;
 
 import de.dhbw.projektarbeit.db.mysql.MysqlAccess;
+import de.dhbw.projektarbeit.db.request.Check;
 import de.dhbw.projektarbeit.db.request.Insert;
 
 public class NewRegisseur extends JDialog {
@@ -29,11 +30,12 @@ public class NewRegisseur extends JDialog {
 	private JTextField txtLastname;
 	private JButton addButton;
 	private JButton cancelButton;
-	private boolean fromNewDVD = false;
+	private boolean fromNewDVD = false, vorhanden = false;
 	private Insert insert;
 	private Connection con;
 	private NewDVD newDVD = null;
 	private EditDVD editDVD = null;
+	private Check check;
 
 	/**
 	 * Launch the application.
@@ -57,17 +59,21 @@ public class NewRegisseur extends JDialog {
 
 	/**
 	 * Konstruktor für den Aufruf aus dem newDVD Dialog
-	 * @param newDVD --> Klasseninformationen
+	 * 
+	 * @param newDVD
+	 *            --> Klasseninformationen
 	 */
 	public NewRegisseur(NewDVD newDVD) {
 		this.newDVD = newDVD;
 		fromNewDVD = true;
 		setWindow();
 	}
-	
+
 	/**
 	 * Konstruktor für den Aufruf aus dem editDVD Dialog
-	 * @param editDVD --> Klasseninformationen
+	 * 
+	 * @param editDVD
+	 *            --> Klasseninformationen
 	 */
 	public NewRegisseur(EditDVD editDVD) {
 		this.editDVD = editDVD;
@@ -222,40 +228,67 @@ public class NewRegisseur extends JDialog {
 		} else if (lastName.replaceAll(" ", "").equals("")) {
 			go = false;
 		}
-		
+
+		// Wenn Leerzeichen im Vornamen eingegeben wurden, werden diese gelöscht
+		while (firstName.indexOf(" ") == 0) {
+			firstName = firstName.substring(1);
+		}
+
+		// Wenn Leerzeichen im Nachnamen eingegeben wurden, werden diese
+		// gelöscht
+		while (lastName.indexOf(" ") == 0) {
+			lastName = lastName.substring(1);
+		}
+
 		// Aufrufen der Methode CreateRegisseur
 		if (go == true) {
 			MysqlAccess mysql = new MysqlAccess();
-			insert = new Insert("dvd_verleih",mysql.getConnection());
-			
-			// Auf Aufruf aus dem NewDVD oder EditDVD Dialog pruefen
-			if (fromNewDVD = false){
-			try {
-				//Regisseur INSERT aufrufen
-				insert.insertRegisseur(this, firstName, lastName);
-			} catch (InvalidParameterException e) {
-				// Fehlercode 002
-				e.printStackTrace();
-				throw new Exception(
-						"Bei der Uebertragung der Parameter ist ein Fehler aufgetreten! Fehlercode: 002");
-			}
-			}
-			else if (fromNewDVD = true){
-				try {
-					//Regisseur INSERT aufrufen
-					if(newDVD != null){
-					insert.insertRegisseur(newDVD,this,firstName, lastName);}
-					else if (editDVD != null){
-						insert.insertRegisseur(editDVD,this,firstName, lastName);
-					}else{
+			check = new Check("dvd_verleih", mysql.getConnection());
+
+			// Check durchführen, ob Name des Autors schon vorhanden
+			vorhanden = check.check("regisseur", "Regie_ID", firstName,
+					lastName);
+
+			if (vorhanden == false) {
+
+				insert = new Insert("dvd_verleih", mysql.getConnection());
+
+				// Auf Aufruf aus dem NewDVD oder EditDVD Dialog pruefen
+				if (fromNewDVD = false) {
+					try {
+						// Regisseur INSERT aufrufen
 						insert.insertRegisseur(this, firstName, lastName);
+					} catch (InvalidParameterException e) {
+						// Fehlercode 002
+						e.printStackTrace();
+						throw new Exception(
+								"Bei der Uebertragung der Parameter ist ein Fehler aufgetreten! Fehlercode: 002");
 					}
-				} catch (InvalidParameterException e) {
-					// Fehlercode 002
-					e.printStackTrace();
-					throw new Exception(
-							"Bei der Uebertragung der Parameter ist ein Fehler aufgetreten! Fehlercode: 002");
+				} else if (fromNewDVD = true) {
+					try {
+						// Regisseur INSERT aufrufen
+						if (newDVD != null) {
+							insert.insertRegisseur(newDVD, this, firstName,
+									lastName);
+						} else if (editDVD != null) {
+							insert.insertRegisseur(editDVD, this, firstName,
+									lastName);
+						} else {
+							insert.insertRegisseur(this, firstName, lastName);
+						}
+					} catch (InvalidParameterException e) {
+						// Fehlercode 002
+						e.printStackTrace();
+						throw new Exception(
+								"Bei der Uebertragung der Parameter ist ein Fehler aufgetreten! Fehlercode: 002");
+					}
 				}
+
+			} else {
+				JOptionPane.showMessageDialog(null, "Der Produzent \""
+						+ firstName + " " + lastName
+						+ "\" ist bereits vorhanden!",
+						"Neuen Produzenten anlegen", JOptionPane.ERROR_MESSAGE);
 			}
 		} else {
 			JOptionPane
@@ -264,13 +297,14 @@ public class NewRegisseur extends JDialog {
 							"Sie haben ein Pflichtfeld nicht ausgefüllt! Bitte überprüfen Sie ihre Angaben in den Feldern",
 							"Regisseurerstellung", JOptionPane.ERROR_MESSAGE);
 		}
+
 	}
 
 	public void regisseurAdded(String firstName, String lastName) {
 		// Wenn Benutzer erfolgreich hinzu gefügt wurde, die mitteilen und
 		// neues, leeres Eingabefenster öffnen.
-		JOptionPane.showMessageDialog(null, ("Der Regisseur \"" + firstName + " "
-				+ lastName + "\" wurde erfolgreich angelegt!"),
+		JOptionPane.showMessageDialog(null, ("Der Regisseur \"" + firstName
+				+ " " + lastName + "\" wurde erfolgreich angelegt!"),
 				"Vorgang erfolgreich", JOptionPane.INFORMATION_MESSAGE);
 		this.setVisible(false);
 		this.dispose();

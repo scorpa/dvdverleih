@@ -20,6 +20,7 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.border.EmptyBorder;
 
 import de.dhbw.projektarbeit.db.mysql.MysqlAccess;
+import de.dhbw.projektarbeit.db.request.Check;
 import de.dhbw.projektarbeit.db.request.Insert;
 
 public class NewProducer extends JDialog {
@@ -31,7 +32,8 @@ public class NewProducer extends JDialog {
 	private Connection con;
 	private NewDVD newDVD = null;
 	private EditDVD editDVD = null;
-	private boolean fromNewDVD = false;
+	private boolean fromNewDVD = false, vorhanden = false;
+	private Check check;
 
 	/**
 	 * Launch the application.
@@ -217,61 +219,81 @@ public class NewProducer extends JDialog {
 			go = false;
 		}
 
+		// Wenn Leerzeichen im Vornamen eingegeben wurden, werden diese gelöscht
+		while (firstName.indexOf(" ") == 0) {
+			firstName = firstName.substring(1);
+		}
+
+		// Wenn Leerzeichen im Nachnamen eingegeben wurden, werden diese
+		// gelöscht
+		while (lastName.indexOf(" ") == 0) {
+			lastName = lastName.substring(1);
+		}
+
 		// Aufrufen der Methode CreateRegisseur
 		if (go == true) {
 			// Verbindung zum SQL Server aufbauen
 			MysqlAccess mysql = new MysqlAccess();
-			insert = new Insert("dvd_verleih", mysql.getConnection());
+			check = new Check("dvd_verleih", mysql.getConnection());
+			// Check durchführen, ob Name des Autors schon vorhanden
+			vorhanden = check.check("production", "Production_ID", firstName,
+					lastName);
 
-			// Auf Aufruf aus dem NewDVD oder EditDVD Dialog prüfen
-			if (fromNewDVD = false) {
-				try {
-					insert.insertProducer(this, firstName, lastName);
+			if (vorhanden == false) {
+				insert = new Insert("dvd_verleih", mysql.getConnection());
 
-				} catch (InvalidParameterException e) {
-					// Fehlercode 002
-					e.printStackTrace();
-					throw new Exception(
-							"Bei der Uebertragung der Parameter ist ein Fehler aufgetreten! Fehlercode: 002");
-				}
-			} else if (fromNewDVD = true) {
-				try {
-					if (newDVD != null) {
-						insert.insertProducer(newDVD, this, firstName, lastName);
-					} else if (editDVD != null) {
-						insert.insertProducer(editDVD, this, firstName,
-								lastName);
-					}else{
+				// Auf Aufruf aus dem NewDVD oder EditDVD Dialog prüfen
+				if (fromNewDVD = false) {
+					try {
 						insert.insertProducer(this, firstName, lastName);
+
+					} catch (InvalidParameterException e) {
+						// Fehlercode 002
+						e.printStackTrace();
+						throw new Exception(
+								"Bei der Uebertragung der Parameter ist ein Fehler aufgetreten! Fehlercode: 002");
 					}
+				} else if (fromNewDVD = true) {
+					try {
+						if (newDVD != null) {
+							insert.insertProducer(newDVD, this, firstName,
+									lastName);
+						} else if (editDVD != null) {
+							insert.insertProducer(editDVD, this, firstName,
+									lastName);
+						} else {
+							insert.insertProducer(this, firstName, lastName);
+						}
 
-				} catch (InvalidParameterException e) {
-					// Fehlercode 002
-					e.printStackTrace();
-					throw new Exception(
-							"Bei der Uebertragung der Parameter ist ein Fehler aufgetreten! Fehlercode: 002");
+					} catch (InvalidParameterException e) {
+						// Fehlercode 002
+						e.printStackTrace();
+						throw new Exception(
+								"Bei der Uebertragung der Parameter ist ein Fehler aufgetreten! Fehlercode: 002");
+					}
 				}
-			}
 
-			else {
-				JOptionPane
-						.showMessageDialog(
-								null,
-								"Sie haben ein Pflichtfeld nicht ausgefüllt! Bitte überprüfen Sie ihre Angaben in den Feldern",
-								"Regisseurerstellung",
-								JOptionPane.ERROR_MESSAGE);
+			} else {
+				JOptionPane.showMessageDialog(null, "Der Produzent \""
+						+ firstName + " " + lastName
+						+ "\" ist bereits vorhanden!",
+						"Neuen Produzenten anlegen", JOptionPane.ERROR_MESSAGE);
 			}
-
+		} else {
+			JOptionPane
+					.showMessageDialog(
+							null,
+							"Sie haben ein Pflichtfeld nicht ausgefüllt! Bitte überprüfen Sie ihre Angaben in den Feldern",
+							"Regisseurerstellung", JOptionPane.ERROR_MESSAGE);
 		}
-
 	}
 
 	public void productionAdded(String firstName, String lastName) {
 		// Wenn Benutzer erfolgreich hinzu gefügt wurde, die mitteilen und
 		// neues, leeres Eingabefenster öffnen.
 
-		JOptionPane.showMessageDialog(null, ("Der Produzent \"" + firstName + " "
-				+ lastName + "\" wurde erfolgreich angelegt!"),
+		JOptionPane.showMessageDialog(null, ("Der Produzent \"" + firstName
+				+ " " + lastName + "\" wurde erfolgreich angelegt!"),
 				"Vorgang erfolgreich", JOptionPane.INFORMATION_MESSAGE);
 		this.setVisible(false);
 		this.dispose();
