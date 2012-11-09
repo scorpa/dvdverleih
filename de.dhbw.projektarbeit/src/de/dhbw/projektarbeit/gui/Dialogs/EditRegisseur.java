@@ -285,7 +285,7 @@ public class EditRegisseur extends JDialog {
 				btnUpdate.setEnabled(true);
 				btnDelete.setEnabled(true);
 				txtFirstName.setEnabled(true);
-				txtLastName.setEditable(true);
+				txtLastName.setEnabled(true);
 			}
 		} catch (Exception e2) {
 			e2.printStackTrace();
