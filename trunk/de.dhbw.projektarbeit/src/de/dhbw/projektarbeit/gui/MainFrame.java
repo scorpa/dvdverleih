@@ -163,7 +163,6 @@ public class MainFrame extends javax.swing.JFrame {
 		loadTable();
 		model = new DefaultTableModel(dvdData, columnNames);
 		tbDVD.setModel(model);
-		((AbstractTableModel) tbDVD.getModel()).fireTableDataChanged();
 
 		// Tabelleneigenschaften setzen
 		tbDVD = jTable.setColumnSize(tbDVD);
