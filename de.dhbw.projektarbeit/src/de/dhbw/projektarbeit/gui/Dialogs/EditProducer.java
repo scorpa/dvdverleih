@@ -113,10 +113,12 @@ public class EditProducer extends JDialog {
 				panel.setBorder(new EmptyBorder(5, 5, 5, 5));
 				splitPane.setRightComponent(panel);
 				txtFirstName = new JTextField();
+				txtFirstName.setEnabled(false);
 				txtFirstName.setColumns(22);
 				JLabel label = new JLabel("Vorname");
 				JLabel label_1 = new JLabel("Nachname");
 				txtLastName = new JTextField();
+				txtLastName.setEnabled(false);
 				txtLastName.setColumns(22);
 				GroupLayout gl_panel = new GroupLayout(panel);
 				gl_panel.setHorizontalGroup(gl_panel
@@ -313,6 +315,8 @@ public class EditProducer extends JDialog {
 			if (selectedID > 0) {
 				btnUpdate.setEnabled(true);
 				btnDelete.setEnabled(true);
+				txtFirstName.setEnabled(true);
+				txtLastName.setEditable(true);
 			}
 		} catch (Exception e2) {
 			e2.printStackTrace();
