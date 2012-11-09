@@ -47,6 +47,13 @@ import java.awt.event.KeyEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeEvent;
 
+/**
+ * Klasse, die das Abändern von DVDs ermöglicht
+ * 
+ * @author Brunner
+ * 
+ */
+
 public class EditDVD extends JDialog {
 
 	private final JPanel contentPanel = new JPanel();
@@ -79,15 +86,6 @@ public class EditDVD extends JDialog {
 	private Vector<String> dbAuthor = new Vector();
 	private MainFrame mf;
 	private JTableNotEditable jTable;
-
-	/*	*//**
-	 * Launch the application.
-	 */
-	/*
-	 * public static void main(String[] args) { try { EditDVD dialog = new
-	 * EditDVD(); dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-	 * dialog.setVisible(true); } catch (Exception e) { e.printStackTrace(); } }
-	 */
 
 	/**
 	 * Standardkonstruktor
@@ -736,26 +734,33 @@ public class EditDVD extends JDialog {
 		}
 	}
 
+	/**
+	 * Methode zur Zeichenkürzung ab 13 Stellen im EAN Code um einen Overflow
+	 * beim Update zu verhindern
+	 * 
+	 * @param arg0
+	 *            --> Eventhandling
+	 */
 	protected void txtEANCodeKeyReleased(KeyEvent arg0) {
 		// Prüfung ob eine Zahl oder anderes Zeichen eingegeben wurde oder
-				// länger als 11 Zeichen ist
-				String text = txtEANCode.getText();
-				if (txtEANCode.getText().matches("[0-9]*")) {
+		// länger als 11 Zeichen ist
+		String text = txtEANCode.getText();
+		if (txtEANCode.getText().matches("[0-9]*")) {
 
-				} else {
-					JOptionPane.showMessageDialog(null,
-							"Ein EAN Code besteht nur aus Zahlen!", "EAN Code",
-							JOptionPane.ERROR_MESSAGE);
-					txtEANCode.setText(text.substring(0, text.length() - 1));
-				}
+		} else {
+			JOptionPane.showMessageDialog(null,
+					"Ein EAN Code besteht nur aus Zahlen!", "EAN Code",
+					JOptionPane.ERROR_MESSAGE);
+			txtEANCode.setText(text.substring(0, text.length() - 1));
+		}
 
-				if (text.length() > 13) {
-					txtEANCode.setText(text.substring(0, text.length() - 1));
-					JOptionPane.showMessageDialog(null,
-							"Der EAN Code darf maximal 13 Stellen haben!", "EAN Code",
-							JOptionPane.ERROR_MESSAGE);
+		if (text.length() > 13) {
+			txtEANCode.setText(text.substring(0, text.length() - 1));
+			JOptionPane.showMessageDialog(null,
+					"Der EAN Code darf maximal 13 Stellen haben!", "EAN Code",
+					JOptionPane.ERROR_MESSAGE);
 
-				}
+		}
 	}
 
 	/**

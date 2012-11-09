@@ -36,6 +36,13 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import javax.swing.JScrollPane;
 
+/**
+ * Klasse, die das Abändern des Produzenten ermöglicht
+ * 
+ * @author Brunner
+ * 
+ */
+
 public class EditProducer extends JDialog {
 
 	private final JPanel contentPanel = new JPanel();
@@ -49,19 +56,6 @@ public class EditProducer extends JDialog {
 	private JTable tbProduction;
 	private boolean vorhanden = false;
 	private Check check;
-
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		try {
-			EditProducer dialog = new EditProducer();
-			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-			dialog.setVisible(true);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
 
 	/**
 	 * Standardkonstruktor
@@ -274,6 +268,14 @@ public class EditProducer extends JDialog {
 		}
 	}
 
+	/**
+	 * Löschen-Button wurde gedrückt
+	 * 
+	 * @param arg0
+	 *            --> Eventhandling
+	 * @throws Exception
+	 *             --> Exceptionhandling
+	 */
 	protected void btnDeleteActionPerformed(ActionEvent arg0) throws Exception {
 		this.setVisible(false);
 		MysqlAccess mysql = new MysqlAccess();

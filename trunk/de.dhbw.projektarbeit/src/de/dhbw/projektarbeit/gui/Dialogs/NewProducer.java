@@ -23,6 +23,11 @@ import de.dhbw.projektarbeit.db.mysql.MysqlAccess;
 import de.dhbw.projektarbeit.db.request.Check;
 import de.dhbw.projektarbeit.db.request.Insert;
 
+/**
+ * Methode zum Anlegen eines neuen Produzenten
+ * @author Brunner
+ *
+ */
 public class NewProducer extends JDialog {
 	private JTextField txtFirstName;
 	private JTextField txtLastName;
@@ -34,19 +39,6 @@ public class NewProducer extends JDialog {
 	private EditDVD editDVD = null;
 	private boolean fromNewDVD = false, vorhanden = false;
 	private Check check;
-
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		try {
-			NewProducer dialog = new NewProducer();
-			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-			dialog.setVisible(true);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
 
 	/**
 	 * Standardkonstruktor
@@ -204,7 +196,11 @@ public class NewProducer extends JDialog {
 								.addContainerGap(32, Short.MAX_VALUE)));
 		panel.setLayout(gl_panel);
 	}
-
+	/**
+	 * Hinzufügen-Button wurde gedrückt
+	 * @param arg0 --> Eventhandling
+	 * @throws Exception --> Exceptionhandling
+	 */
 	private void addButtonActionPerformed(ActionEvent arg0) throws Exception {
 		// Hinzufuegen Button gedrueckt
 		String firstName, lastName;
@@ -287,7 +283,11 @@ public class NewProducer extends JDialog {
 							"Regisseurerstellung", JOptionPane.ERROR_MESSAGE);
 		}
 	}
-
+	/**
+	 * Methode zur Rückmeldung, wenn der Produzent erfolgreich hinzugefügt wurde
+	 * @param firstName --> Vorname
+	 * @param lastName --> Nachname
+	 */
 	public void productionAdded(String firstName, String lastName) {
 		// Wenn Benutzer erfolgreich hinzu gefügt wurde, die mitteilen und
 		// neues, leeres Eingabefenster öffnen.

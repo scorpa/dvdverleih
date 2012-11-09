@@ -37,6 +37,13 @@ import java.awt.event.MouseEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
+/**
+ * Klasse, die das Abändern des Kameramanns erlaubt
+ * 
+ * @author Juli
+ * 
+ */
+
 public class EditCamera extends JDialog {
 
 	private final JPanel contentPanel = new JPanel();
@@ -49,19 +56,6 @@ public class EditCamera extends JDialog {
 	private Update update;
 	private boolean vorhanden = false;
 	private Check check;
-
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		try {
-			EditCamera dialog = new EditCamera();
-			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-			dialog.setVisible(true);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
 
 	/**
 	 * Standardkonstruktor
@@ -265,6 +259,14 @@ public class EditCamera extends JDialog {
 		}
 	}
 
+	/**
+	 * Löschen-Button gedrückt
+	 * 
+	 * @param e
+	 *            --> Eventhandling
+	 * @throws Exception
+	 *             --> Exceptionhandling
+	 */
 	protected void btnDeleteActionPerformed(ActionEvent e) throws Exception {
 		this.setVisible(false);
 		MysqlAccess mysql = new MysqlAccess();

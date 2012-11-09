@@ -23,6 +23,12 @@ import de.dhbw.projektarbeit.db.mysql.MysqlAccess;
 import de.dhbw.projektarbeit.db.request.Check;
 import de.dhbw.projektarbeit.db.request.Insert;
 
+/**
+ * Klasse zur Erstellung eines Autors
+ * 
+ * @author Juli
+ * 
+ */
 public class NewAuthor extends JDialog {
 
 	private final JPanel contentPanel = new JPanel();
@@ -36,19 +42,6 @@ public class NewAuthor extends JDialog {
 	private NewDVD newDVD = null;
 	private EditDVD editDVD = null;
 	private Check check;
-
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		try {
-			NewAuthor dialog = new NewAuthor();
-			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-			dialog.setVisible(true);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
 
 	/**
 	 * Standardkonstruktor
@@ -215,6 +208,14 @@ public class NewAuthor extends JDialog {
 		}
 	}
 
+	/**
+	 * Hinzufügen-Button wurde gedrückt
+	 * 
+	 * @param arg0
+	 *            --> Eventhandling
+	 * @throws Exception
+	 *             --> Exceptionhandling
+	 */
 	private void addButtonActionPerforemd(ActionEvent arg0) throws Exception {
 		// Hinzufügen-Button gedrückt
 		String firstName, lastName;
@@ -294,6 +295,14 @@ public class NewAuthor extends JDialog {
 		}
 	}
 
+	/**
+	 * Methode zur Rückmeldung, wenn der Autor erfolgreich hinzugefügt wurde
+	 * 
+	 * @param firstName
+	 *            --> Vorname
+	 * @param lastName
+	 *            --> Nachname
+	 */
 	public void authorAdded(String firstName, String lastName) {
 		// Wenn Benutzer erfolgreich hinzu gefügt wurde, die mitteilen und
 		// neues, leeres Eingabefenster öffnen.

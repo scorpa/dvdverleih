@@ -44,7 +44,7 @@ import java.awt.event.KeyEvent;
 /**
  * JDialog zum Einpflegen neuer DVDs
  * 
- * @author Julian Brunner
+ * @author Brunner
  */
 
 public class NewDVD extends JDialog {

@@ -10,7 +10,7 @@ import de.dhbw.projektarbeit.db.mysql.MysqlAccess;
 /**
  * Klasse überprüft das Vorhandensein von Einträgen
  * 
- * @author Juli
+ * @author Brunner
  * 
  */
 
@@ -37,13 +37,20 @@ public class Check {
 		this.schema = schema;
 		this.con = con;
 	}
-	
+
 	/**
-	 * Methode zum Überprüfen ob ein Autor, Kameramann, Regisseur oder Produzent schon in der DB vorhanden ist
-	 * @param table --> Tabelle, die Überprüft werden soll
-	 * @param fieldID --> Spaltenbezeichnung in der DB, die die ID des Regisseurs enthält
-	 * @param firstName --> Vorname 
-	 * @param lastName --> Nachname
+	 * Methode zum Überprüfen ob ein Autor, Kameramann, Regisseur oder Produzent
+	 * schon in der DB vorhanden ist
+	 * 
+	 * @param table
+	 *            --> Tabelle, die Überprüft werden soll
+	 * @param fieldID
+	 *            --> Spaltenbezeichnung in der DB, die die ID des Regisseurs
+	 *            enthält
+	 * @param firstName
+	 *            --> Vorname
+	 * @param lastName
+	 *            --> Nachname
 	 * @return --> return-Wert (true = vorhanden; false = nicht vorhanden)
 	 */
 	public Boolean check(String table, String fieldID, String firstName,
@@ -74,13 +81,13 @@ public class Check {
 			rset = stmt.executeQuery(checkRegisseur.toString());
 			int counter = 0;
 			// Prüfen, ob Abfrage ein Ergebnis ergab
-			while (rset.next()){
+			while (rset.next()) {
 				counter++;
 			}
-			if (counter > 0){
+			if (counter > 0) {
 				vorhanden = true;
 			}
-			
+
 			try {
 				mysql.closeConnection();
 			} catch (Exception e) {

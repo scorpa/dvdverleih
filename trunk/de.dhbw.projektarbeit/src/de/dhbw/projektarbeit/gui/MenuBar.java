@@ -19,7 +19,10 @@ import de.dhbw.projektarbeit.gui.Dialogs.NewProducer;
 import de.dhbw.projektarbeit.gui.Dialogs.NewRegisseur;
 
 /**
+ * Klasse für die Menübar
+ * 
  * @author Eisen
+ * @author Brunner
  * 
  */
 public class MenuBar extends JMenuBar {

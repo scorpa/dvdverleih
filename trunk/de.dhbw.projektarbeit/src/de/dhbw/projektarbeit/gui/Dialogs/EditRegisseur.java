@@ -346,7 +346,11 @@ public class EditRegisseur extends JDialog {
 					"Neuen Regisseur anlegen", JOptionPane.ERROR_MESSAGE);
 		}
 	}
-	
+	/**
+	 * Löschen-Button wurde gedrückt
+	 * @param arg0 --> Eventhandling
+	 * @throws Exception --> Exceptionhandling
+	 */
 	private void btnDeleteActionPerformed(ActionEvent arg0) throws Exception {
 		this.setVisible(false);
 		MysqlAccess mysql = new MysqlAccess();

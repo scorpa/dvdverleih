@@ -16,6 +16,8 @@ public class Filling {
 	/**
 	 * Klasse für die Methoden zum Füllen von Komboboxen, Tabellen und deren
 	 * Hilfsmethoden
+	 * 
+	 * @author Brunner
 	 */
 	private String schema = "dvd_verleih";
 	private Connection con;
@@ -162,16 +164,16 @@ public class Filling {
 			listing = new Object[results.size()][rsmd.getColumnCount()];
 			for (int i = 0; i < results.size(); i++)
 				listing[i] = results.get(i);
-			
-			if((String) tabelle == "dvd"){
-			// Festlegung des Formats für das Date Feld
-			sdf = new SimpleDateFormat();
-			sdf.applyPattern("dd.MM.yyyy");
-			for (int i = 0; i <results.size(); i++){
-				String date;
-				date = sdf.format(listing[i][6]);
-				listing[i][6] = date;
-			}
+
+			if ((String) tabelle == "dvd") {
+				// Festlegung des Formats für das Date Feld
+				sdf = new SimpleDateFormat();
+				sdf.applyPattern("dd.MM.yyyy");
+				for (int i = 0; i < results.size(); i++) {
+					String date;
+					date = sdf.format(listing[i][6]);
+					listing[i][6] = date;
+				}
 			}
 			mysql.closeConnection();
 			return listing;

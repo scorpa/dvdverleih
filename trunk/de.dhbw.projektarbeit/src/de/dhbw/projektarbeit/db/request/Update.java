@@ -1,19 +1,19 @@
 package de.dhbw.projektarbeit.db.request;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 
-import de.dhbw.projektarbeit.db.db.Request;
 import de.dhbw.projektarbeit.db.mysql.MysqlAccess;
 
 /**
- * @author BrunEis
+ * Methode, die Updatefunktionen für Einträge in der SQL DB zur Verfügung stellt
+ * 
+ * @author Brunner
+ * @author Eisen
  * 
  */
 public class Update {
@@ -39,6 +39,23 @@ public class Update {
 		this.con = con;
 	}
 
+	/**
+	 * Update-Methode zum Ändern der Einträge Regisseur, Autor, Produzent und
+	 * Kamermann
+	 * 
+	 * @param id
+	 *            --> ID des DB Eintrags
+	 * @param firstname
+	 *            --> Vorname
+	 * @param lastname
+	 *            --> Nachname
+	 * @param form
+	 *            --> Tabelle, in der geändert werden soll
+	 * @param field
+	 *            --> Spaltebezeichnung
+	 * @throws Exception
+	 *             --> Exceptionhandling
+	 */
 	public void updateEdits(int id, String firstname, String lastname,
 			String form, String field) throws Exception {
 		try {

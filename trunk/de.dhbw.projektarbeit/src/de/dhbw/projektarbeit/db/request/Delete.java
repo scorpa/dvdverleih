@@ -14,7 +14,8 @@ import de.dhbw.projektarbeit.gui.Dialogs.EditRegisseur;
 /**
  * Mit Hilfe dieser Klasse lassen sich Datensaetze loeschen.
  * 
- * @author BrunEis
+ * @author Brunner
+ * @author Eisen
  * 
  */
 public class Delete {
@@ -42,6 +43,22 @@ public class Delete {
 		this.con = con;
 	}
 
+	/**
+	 * Methode, um Regisseur, Autor, Produzent oder Kamermann zu löschen
+	 * 
+	 * @param id
+	 *            --> ID des Tabelleneintrags
+	 * @param firstname
+	 *            --> Vorname
+	 * @param lastname
+	 *            --> Nachname
+	 * @param form
+	 *            --> Tabelle, aus der gelöscht werden soll
+	 * @param field
+	 *            --> Spaltenbezeichnung
+	 * @throws Exception
+	 *             --> Exceptionhandling
+	 */
 	public void deleteEdits(int id, String firstname, String lastname,
 			String form, String field) throws Exception {
 		try {
@@ -149,15 +166,12 @@ public class Delete {
 				mysql.closeConnection();
 				// Bei erfolgreichem Lšschen Nachricht bringen
 				JOptionPane.showMessageDialog(ed, ("Die DVD mit dem EAN Code "
-								+ code + " wurde erfolgreich geloescht!"),
-								"Vorgang erfolgreich",
-								JOptionPane.INFORMATION_MESSAGE);
+						+ code + " wurde erfolgreich geloescht!"),
+						"Vorgang erfolgreich", JOptionPane.INFORMATION_MESSAGE);
 			} else {
-				JOptionPane
-						.showMessageDialog(ed, ("Die DVD mit dem EAN Code "
-								+ code + " konnte nicht geloescht werden!"),
-								"Vorgang abgebrochen",
-								JOptionPane.WARNING_MESSAGE);
+				JOptionPane.showMessageDialog(ed, ("Die DVD mit dem EAN Code "
+						+ code + " konnte nicht geloescht werden!"),
+						"Vorgang abgebrochen", JOptionPane.WARNING_MESSAGE);
 			}
 
 		} catch (SQLException e) {

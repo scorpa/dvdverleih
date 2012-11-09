@@ -23,6 +23,12 @@ import de.dhbw.projektarbeit.db.mysql.MysqlAccess;
 import de.dhbw.projektarbeit.db.request.Check;
 import de.dhbw.projektarbeit.db.request.Insert;
 
+/**
+ * Methode zur Erstellung von Kameramännern
+ * 
+ * @author Juli
+ * 
+ */
 public class NewCamera extends JDialog {
 
 	private final JPanel contentPanel = new JPanel();
@@ -36,19 +42,6 @@ public class NewCamera extends JDialog {
 	private NewDVD newDVD = null;
 	private EditDVD editDVD = null;
 	private Check check;
-
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		try {
-			NewCamera dialog = new NewCamera();
-			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-			dialog.setVisible(true);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
 
 	/**
 	 * Standardkonstruktor
@@ -215,6 +208,14 @@ public class NewCamera extends JDialog {
 		}
 	}
 
+	/**
+	 * Hinzufügen-Button wurde gedrückt
+	 * 
+	 * @param arg0
+	 *            --> Eventhandling
+	 * @throws Exception
+	 *             --> Exceptionhandling
+	 */
 	private void addButtonActionPerforemd(ActionEvent arg0) throws Exception {
 		// HinzufŸgen-Button gedrŸckt
 		String firstName, lastName;
@@ -297,6 +298,15 @@ public class NewCamera extends JDialog {
 		}
 	}
 
+	/**
+	 * Methode zur RÜckmeldung, wenn ein Kamermann erfolgreich hinzu gefügt
+	 * wurde
+	 * 
+	 * @param firstName
+	 *            --> Vorname
+	 * @param lastName
+	 *            --> Nachname
+	 */
 	public void cameraAdded(String firstName, String lastName) {
 		// Wenn Benutzer erfolgreich hinzu gefügt wurde, die mitteilen und
 		// neues, leeres Eingabefenster öffnen.

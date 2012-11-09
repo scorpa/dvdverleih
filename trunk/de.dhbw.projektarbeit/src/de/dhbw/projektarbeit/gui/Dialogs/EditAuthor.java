@@ -39,6 +39,12 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.ActionListener;
 
+/**
+ * Klasse, die das Ändern des Autors erlaubt
+ * 
+ * @author Brunner
+ * 
+ */
 public class EditAuthor extends JDialog {
 
 	private final JPanel contentPanel = new JPanel();
@@ -51,19 +57,6 @@ public class EditAuthor extends JDialog {
 	private boolean vorhanden = false;
 	private Check check;
 	private String firstName, lastName;
-
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		try {
-			EditAuthor dialog = new EditAuthor();
-			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-			dialog.setVisible(true);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
 
 	/**
 	 * Standardkonstrutor
@@ -378,6 +371,14 @@ public class EditAuthor extends JDialog {
 		}
 	}
 
+	/**
+	 * Löschen-Button gedrückt
+	 * 
+	 * @param e
+	 *            --> Eventhandling
+	 * @throws Exception
+	 *             --> Exceptionhandling
+	 */
 	private void btnDeleteActionPerformed(ActionEvent e) throws Exception {
 		try {
 			this.setVisible(false);
