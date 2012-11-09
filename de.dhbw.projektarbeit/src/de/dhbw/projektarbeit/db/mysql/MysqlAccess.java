@@ -8,7 +8,8 @@ import java.sql.SQLException;
  * Die Klasse DBAccess dient zur Verwaltung der DB-Verbindung. Sie stellt hierzu
  * Methoden zum Aufbau und Trennen, sowie Abfragen der Verbindung bereit.
  * 
- * @author BrunEis
+ * @author Brunner
+ * @author Eisen
  */
 public class MysqlAccess {
 
@@ -20,16 +21,17 @@ public class MysqlAccess {
 	/**
 	 * Die URL und Credentials mit denen die DB-Verbindung aufgebaut wird.
 	 */
-	private String dbUrl="localhost/dvd_verleih", user="root", password="";
-		
+	private String dbUrl = "localhost/dvd_verleih", user = "root",
+			password = "";
+
 	/**
 	 * Setzt die URL, mit deren Hilfe die Verbindung zur Datenbank aufgebaut
 	 * wird.
 	 * 
 	 * @param dbUrl
-	 *            String enthält die URL zu der Datenbank mit der die Verbindung
-	 *            aufgebaut werden soll in der Form: hostname/dbname z.B.
-	 *            localhost/dvd_verleih
+	 *            String enthält die URL zu der Datenbank mit der die
+	 *            Verbindung aufgebaut werden soll in der Form: hostname/dbname
+	 *            z.B. localhost/dvd_verleih
 	 */
 	public void setDbUrl(String dbUrl) {
 		this.dbUrl = "jdbc:mysql://" + dbUrl;
@@ -77,11 +79,13 @@ public class MysqlAccess {
 			DriverManager.setLoginTimeout(10);
 
 			// DB-Verbindungsobjekt erzeugen
-			con = DriverManager.getConnection("jdbc:mysql://localhost/dvd_verleih?user=root");
+			con = DriverManager
+					.getConnection("jdbc:mysql://localhost/dvd_verleih?user=root");
 
 		} catch (SQLException e) {
 			e.printStackTrace();
-			throw new Exception("Verbindung zum SQL Server fehlgeschlagen. Fehlercode 005");
+			throw new Exception(
+					"Verbindung zum SQL Server fehlgeschlagen. Fehlercode 005");
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 			throw new Exception(

@@ -214,7 +214,11 @@ public class NewRegisseur extends JDialog {
 			buttonPane.setLayout(gl_buttonPane);
 		}
 	}
-
+	/**
+	 * Hinzufügen-Button wurde gedrückt
+	 * @param arg0 --> Eventhandling
+	 * @throws Exception --> Exceptionhandling
+	 */
 	private void addButtonActionPerforemd(ActionEvent arg0) throws Exception {
 		// Hinzufuegen-Button gedrueckt
 		String firstName, lastName;
@@ -299,7 +303,11 @@ public class NewRegisseur extends JDialog {
 		}
 
 	}
-
+	/**
+	 * Rückmeldung der Insert-Methode, dass der Eintrag erfolgreich hinzu gefügt wurde
+	 * @param firstName --> Vorname des Eintrags
+	 * @param lastName --> Nachname des Eintrags
+	 */
 	public void regisseurAdded(String firstName, String lastName) {
 		// Wenn Benutzer erfolgreich hinzu gefügt wurde, die mitteilen und
 		// neues, leeres Eingabefenster öffnen.

@@ -18,7 +18,10 @@ import de.dhbw.projektarbeit.gui.Dialogs.EditDVD;
 import de.dhbw.projektarbeit.gui.Dialogs.NewDVD;
 
 /**
+ * Klasse für das TopPanel
+ * 
  * @author Eisen
+ * @author Brunner
  * 
  */
 public class TopPanel extends JPanel {

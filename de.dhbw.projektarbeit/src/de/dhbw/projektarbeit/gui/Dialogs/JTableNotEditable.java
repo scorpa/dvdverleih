@@ -4,25 +4,24 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 /**
- * Ableitung der Klasse JTable, die verwendet wird, um eine nicht
- * editierbare Tabelle zu erstellen.
+ * Ableitung der Klasse JTable, die verwendet wird, um eine nicht editierbare
+ * Tabelle zu erstellen.
  * 
  * 
  */
 
 public class JTableNotEditable extends JTable {
-	
+
 	/**
 	 * Standardkonstruktor
 	 */
-	public JTableNotEditable(){
+	public JTableNotEditable() {
 
 	}
-	
+
 	/**
 	 * @param accountListing
-	 *            Objectarray mit den aus der Tabelle abgefragten
-	 *            Datensätzen
+	 *            Objectarray mit den aus der Tabelle abgefragten Datensätzen
 	 * @param strings
 	 *            Stringarray mit den Titeln der Tabellenspalten
 	 */
@@ -38,13 +37,15 @@ public class JTableNotEditable extends JTable {
 	public boolean isCellEditable(int row, int col) {
 		return false;
 	}
-	
+
 	/**
 	 * Methode zur Festlegung der Spaltenbreite
-	 * @param table --> JTable, deren Spalten festgelegt werden soll
+	 * 
+	 * @param table
+	 *            --> JTable, deren Spalten festgelegt werden soll
 	 * @return --> Angepasste JTable
 	 */
-	public JTable setColumnSize(JTable table){
+	public JTable setColumnSize(JTable table) {
 		// Spaltenbreiten setzen
 		table.getColumn("Menge").setPreferredWidth(45);
 		table.getColumn("Titel").setPreferredWidth(300);
@@ -61,7 +62,7 @@ public class JTableNotEditable extends JTable {
 		table.getColumn("Kamera").setPreferredWidth(200);
 		table.getColumn("EAN Code").setPreferredWidth(100);
 		table.getTableHeader().setReorderingAllowed(false);
-		
+
 		return table;
 	}
 }

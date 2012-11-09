@@ -26,7 +26,10 @@ import de.dhbw.projektarbeit.db.request.Filling;
 import de.dhbw.projektarbeit.gui.Dialogs.JTableNotEditable;
 
 /**
+ * Mainframe Klasse
+ * 
  * @author Eisen
+ * @author Brunner
  * 
  */
 public class MainFrame extends javax.swing.JFrame {
@@ -44,7 +47,7 @@ public class MainFrame extends javax.swing.JFrame {
 	private JTableNotEditable jTable;
 	private RowSorter<TableModel> sorter;
 	private JScrollPane scrollPane;
-	
+
 	public MainFrame() {
 		super();
 		setMinimumSize(new Dimension(1024, 768));
@@ -161,12 +164,12 @@ public class MainFrame extends javax.swing.JFrame {
 		model = new DefaultTableModel(dvdData, columnNames);
 		tbDVD.setModel(model);
 		((AbstractTableModel) tbDVD.getModel()).fireTableDataChanged();
-		
+
 		// Tabelleneigenschaften setzen
 		tbDVD = jTable.setColumnSize(tbDVD);
 		scrollPane.setViewportView(tbDVD);
 	}
-	
+
 	/**
 	 * Filtermethode für den jTable Inhalt, wird vom TopPanel aufgerufen
 	 * 
