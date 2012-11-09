@@ -20,6 +20,7 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.border.EmptyBorder;
 
 import de.dhbw.projektarbeit.db.mysql.MysqlAccess;
+import de.dhbw.projektarbeit.db.request.Check;
 import de.dhbw.projektarbeit.db.request.Insert;
 
 public class NewAuthor extends JDialog {
@@ -34,6 +35,7 @@ public class NewAuthor extends JDialog {
 	private Connection con;
 	private NewDVD newDVD = null;
 	private EditDVD editDVD = null;
+	private Check check;
 
 	/**
 	 * Launch the application.
@@ -216,7 +218,7 @@ public class NewAuthor extends JDialog {
 	private void addButtonActionPerforemd(ActionEvent arg0) throws Exception {
 		// Hinzufügen-Button gedrückt
 		String firstName, lastName;
-		boolean go = true;
+		boolean go = true, vorhanden = false;
 		firstName = txtFirstname.getText();
 		lastName = txtLastname.getText();
 
@@ -227,38 +229,60 @@ public class NewAuthor extends JDialog {
 			go = false;
 		}
 
-		// Aufrufen der Methode CreateRegisseur
+		// Wenn Leerzeichen im Vornamen eingegeben wurden, werden diese gelöscht
+		while (firstName.indexOf(" ") == 0) {
+			firstName = firstName.substring(1);
+		}
+
+		// Wenn Leerzeichen im Nachnamen eingegeben wurden, werden diese
+		// gelöscht
+		while (lastName.indexOf(" ") == 0) {
+			lastName = lastName.substring(1);
+		}
+
+		// Aufrufen der Methode Check und CreateRegisseur
 		if (go == true) {
 			MysqlAccess mysql = new MysqlAccess();
-			insert = new Insert("dvd_verleih",mysql.getConnection());
+			check = new Check("dvd_verleih", mysql.getConnection());
 
-			// Auf Aufruf aus dem NewDVD oder EditDVD Dialog pruefen
-			if (fromNewDVD = false) {
+			// Check durchführen, ob Name des Autors schon vorhanden
+			vorhanden = check.check("author", "Author_ID", firstName, lastName);
+			if (vorhanden == false) {
+				insert = new Insert("dvd_verleih", mysql.getConnection());
+				// Auf Aufruf aus dem NewDVD oder EditDVD Dialog pruefen
+				if (fromNewDVD == false) {
 
-				try {
-					insert.insertAuthor(this, firstName, lastName);
-
-				} catch (InvalidParameterException e) {
-					// Fehlercode 002
-					e.printStackTrace();
-					throw new Exception(
-							"Bei der Uebertragung der Parameter ist ein Fehler aufgetreten! Fehlercode: 002");
-				}
-			} else if (fromNewDVD = true) {
-				try {
-					if (newDVD != null) {
-						insert.insertAuthor(newDVD, this, firstName, lastName);
-					} else if (editDVD != null) {
-						insert.insertAuthor(editDVD, this, firstName, lastName);
-					}else{
+					try {
 						insert.insertAuthor(this, firstName, lastName);
+
+					} catch (InvalidParameterException e) {
+						// Fehlercode 002
+						e.printStackTrace();
+						throw new Exception(
+								"Bei der Uebertragung der Parameter ist ein Fehler aufgetreten! Fehlercode: 002");
 					}
-				} catch (InvalidParameterException e) {
-					// Fehlercode 002
-					e.printStackTrace();
-					throw new Exception(
-							"Bei der Uebertragung der Parameter ist ein Fehler aufgetreten! Fehlercode: 002");
+				} else if (fromNewDVD == true) {
+					try {
+						if (newDVD != null) {
+							insert.insertAuthor(newDVD, this, firstName,
+									lastName);
+						} else if (editDVD != null) {
+							insert.insertAuthor(editDVD, this, firstName,
+									lastName);
+						} else {
+							insert.insertAuthor(this, firstName, lastName);
+						}
+					} catch (InvalidParameterException e) {
+						// Fehlercode 002
+						e.printStackTrace();
+						throw new Exception(
+								"Bei der Uebertragung der Parameter ist ein Fehler aufgetreten! Fehlercode: 002");
+					}
 				}
+			} else {
+				JOptionPane.showMessageDialog(null, "Der Autor \"" + firstName
+						+ " " + lastName + "\" ist bereits vorhanden!",
+						"Neuen Autor anlegen", JOptionPane.ERROR_MESSAGE);
 			}
 		} else {
 			JOptionPane

@@ -16,6 +16,7 @@ import javax.swing.ListSelectionModel;
 import javax.swing.RowFilter;
 import javax.swing.RowSorter;
 import javax.swing.UIManager;
+import javax.swing.event.TableModelEvent;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
@@ -159,12 +160,13 @@ public class MainFrame extends javax.swing.JFrame {
 		loadTable();
 		model = new DefaultTableModel(dvdData, columnNames);
 		tbDVD.setModel(model);
+		((AbstractTableModel) tbDVD.getModel()).fireTableDataChanged();
 		
 		// Tabelleneigenschaften setzen
 		tbDVD = jTable.setColumnSize(tbDVD);
 		scrollPane.setViewportView(tbDVD);
 	}
-
+	
 	/**
 	 * Filtermethode für den jTable Inhalt, wird vom TopPanel aufgerufen
 	 * 

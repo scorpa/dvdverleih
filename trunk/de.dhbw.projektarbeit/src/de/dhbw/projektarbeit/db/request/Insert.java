@@ -17,6 +17,9 @@ import de.dhbw.projektarbeit.gui.Dialogs.NewProducer;
 import de.dhbw.projektarbeit.gui.Dialogs.NewRegisseur;
 
 /**
+ * Klasse stellt Insert-Methoden und Hilfsmethoden zum Erstellen von
+ * Datebankeinträgen bereit
+ * 
  * @author Brunner
  * 
  */
@@ -990,11 +993,16 @@ public class Insert {
 		}
 
 	}
+
 	/**
-	 * Methode zur Überprüfunf, ob bei der Neuanlage der DVD diese schon vorhanden ist
-	 * @param eanCode --> Barcode der DVD
+	 * Methode zur Überprüfunf, ob bei der Neuanlage der DVD diese schon
+	 * vorhanden ist
+	 * 
+	 * @param eanCode
+	 *            --> Barcode der DVD
 	 * @return --> gibt den gesuchten Barcode zurück, falls er vorhanden ist
-	 * @throws SQLException --> SQL Exceptionhandling
+	 * @throws SQLException
+	 *             --> SQL Exceptionhandling
 	 */
 	private String checkNewDVD(String eanCode) throws SQLException {
 
@@ -1008,7 +1016,7 @@ public class Insert {
 
 			stmt = con.createStatement();
 			StringBuffer checkNewDVD = new StringBuffer();
-			
+
 			/*
 			 * Nach DVD EAN Code suchen, um festzustellen, ob es sie schon gibt
 			 * "Select Barcode FROM dvd_verleih.dvd WHERE Barcode = <eanCode>";
@@ -1052,16 +1060,14 @@ public class Insert {
 	 */
 	public int getID(String schema, String table, String field,
 			String searchContent) throws SQLException {
-		String searchString, firstName = null, lastName = null, FieldID = null;
+		String searchString, firstName = null, lastName = null, FieldID = null, lastNameClone = null;
 		searchString = searchContent;
 		int ID = 0;
 
 		// Trennen des Vornamen und Nachnamen
-		if (searchString.contains(" ")) {
-			firstName = searchString.substring(0, searchString.indexOf(" "));
-			lastName = searchString.substring(searchString.indexOf(" ") + 1);
-			lastName = lastName.replaceAll(" ", "");
-		}
+		firstName = searchString.substring(0, searchString.indexOf(" "));
+		lastName = searchString.substring(searchString.indexOf(" ") + 1);
+		// lastName = lastName.replaceAll(" ", "");
 
 		// Alle Operationen sollen als eine Transaktion und mittels
 		// Stringbuffer ausgefuehrt
@@ -1088,6 +1094,41 @@ public class Insert {
 		while (rset.next()) {
 			ID = Integer.valueOf(rset.getString(field));
 		}
+
+		while (ID == 0) {
+			firstName = firstName.concat(" "
+					+ lastName.substring(0, searchString.indexOf(" ")));
+			lastNameClone = lastName.substring(searchString.indexOf(" ") + 1);
+			lastNameClone = lastNameClone.replaceAll(" ", "");
+			lastName = lastNameClone;
+
+			// Alle Operationen sollen als eine Transaktion und mittels
+			// Stringbuffer ausgefuehrt
+			// werden.
+			con.setAutoCommit(false);
+
+			stmt = con.createStatement();
+
+			StringBuffer searchIDagain = new StringBuffer();
+
+			searchIDagain.append("SELECT ");
+			searchIDagain.append(field);
+			searchIDagain.append(" FROM ");
+			searchIDagain.append(schema + "." + table);
+			searchIDagain.append(" WHERE FirstName = \"");
+			searchIDagain.append(firstName + "\" AND LastName = \"");
+			searchIDagain.append(lastName);
+			searchIDagain.append("\"");
+
+			// Abfrage ausführen
+			rset = stmt.executeQuery(searchIDagain.toString());
+
+			// Returnwert auffangen
+			while (rset.next()) {
+				ID = Integer.valueOf(rset.getString(field));
+			}
+		}
+
 		try {
 			mysql.closeConnection();
 		} catch (Exception e) {

@@ -258,7 +258,20 @@ public class EditRegisseur extends JDialog {
 	 *            --> Eventhandling
 	 */
 	protected void btnUpdateActionPerformed(ActionEvent e) throws Exception {
-		updateRegisseur(selectedID, txtFirstName.getText(), txtLastName.getText(), "regisseur");
+		String firstName = txtFirstName.getText(), lastName = txtLastName
+				.getText();
+
+		// Wenn Leerzeichen im Vornamen eingegeben wurden, werden diese gelöscht
+		while (firstName.indexOf(" ") == 0) {
+			firstName = firstName.substring(1);
+		}
+
+		// Wenn Leerzeichen im Nachnamen eingegeben wurden, werden diese
+		// gelöscht
+		while (lastName.indexOf(" ") == 0) {
+			lastName = lastName.substring(1);
+		}
+				updateRegisseur(selectedID, firstName, lastName, "regisseur");
 		
 	}
 	/**

@@ -228,28 +228,45 @@ public class EditProducer extends JDialog {
 			});
 			btnUpdate.setEnabled(false);
 			GroupLayout gl_buttonPane = new GroupLayout(buttonPane);
-			gl_buttonPane.setHorizontalGroup(
-				gl_buttonPane.createParallelGroup(Alignment.LEADING)
-					.addGroup(gl_buttonPane.createSequentialGroup()
-						.addContainerGap()
-						.addComponent(btnDelete, GroupLayout.PREFERRED_SIZE, 96, GroupLayout.PREFERRED_SIZE)
-						.addPreferredGap(ComponentPlacement.RELATED)
-						.addComponent(btnUpdate, GroupLayout.PREFERRED_SIZE, 103, GroupLayout.PREFERRED_SIZE)
-						.addPreferredGap(ComponentPlacement.RELATED, 314, Short.MAX_VALUE)
-						.addComponent(cancelButton)
-						.addContainerGap())
-			);
-			gl_buttonPane.setVerticalGroup(
-				gl_buttonPane.createParallelGroup(Alignment.LEADING)
-					.addGroup(gl_buttonPane.createSequentialGroup()
-						.addGap(5)
-						.addGroup(gl_buttonPane.createParallelGroup(Alignment.LEADING)
-							.addGroup(gl_buttonPane.createParallelGroup(Alignment.BASELINE)
-								.addComponent(btnUpdate)
-								.addComponent(cancelButton))
-							.addComponent(btnDelete))
-						.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-			);
+			gl_buttonPane.setHorizontalGroup(gl_buttonPane.createParallelGroup(
+					Alignment.LEADING).addGroup(
+					gl_buttonPane
+							.createSequentialGroup()
+							.addContainerGap()
+							.addComponent(btnDelete,
+									GroupLayout.PREFERRED_SIZE, 96,
+									GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(btnUpdate,
+									GroupLayout.PREFERRED_SIZE, 103,
+									GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED, 314,
+									Short.MAX_VALUE).addComponent(cancelButton)
+							.addContainerGap()));
+			gl_buttonPane
+					.setVerticalGroup(gl_buttonPane
+							.createParallelGroup(Alignment.LEADING)
+							.addGroup(
+									gl_buttonPane
+											.createSequentialGroup()
+											.addGap(5)
+											.addGroup(
+													gl_buttonPane
+															.createParallelGroup(
+																	Alignment.LEADING)
+															.addGroup(
+																	gl_buttonPane
+																			.createParallelGroup(
+																					Alignment.BASELINE)
+																			.addComponent(
+																					btnUpdate)
+																			.addComponent(
+																					cancelButton))
+															.addComponent(
+																	btnDelete))
+											.addContainerGap(
+													GroupLayout.DEFAULT_SIZE,
+													Short.MAX_VALUE)));
 			buttonPane.setLayout(gl_buttonPane);
 		}
 	}
@@ -258,10 +275,10 @@ public class EditProducer extends JDialog {
 		this.setVisible(false);
 		MysqlAccess mysql = new MysqlAccess();
 		// Aufruf der Deletemethode
-		Delete delete = new Delete("dvd_verleih",  mysql.getConnection());
-		delete.deleteEdits(selectedID, txtFirstName.getText(), txtLastName.getText(), "production", "Production_ID");
-		
-		
+		Delete delete = new Delete("dvd_verleih", mysql.getConnection());
+		delete.deleteEdits(selectedID, txtFirstName.getText(),
+				txtLastName.getText(), "production", "Production_ID");
+
 		try {
 			this.dispose();
 			// Neues, leeres Erstellungsfenster instantiieren
@@ -307,8 +324,20 @@ public class EditProducer extends JDialog {
 	 *             --> Exceptionhandling
 	 */
 	protected void btnUpdateActionPerformed(ActionEvent e) throws Exception {
-		updateProduction(selectedID, txtFirstName.getText(),
-				txtLastName.getText(), "production");
+		String firstName = txtFirstName.getText(), lastName = txtLastName
+				.getText();
+
+		// Wenn Leerzeichen im Vornamen eingegeben wurden, werden diese gelöscht
+		while (firstName.indexOf(" ") == 0) {
+			firstName = firstName.substring(1);
+		}
+
+		// Wenn Leerzeichen im Nachnamen eingegeben wurden, werden diese
+		// gelöscht
+		while (lastName.indexOf(" ") == 0) {
+			lastName = lastName.substring(1);
+		}
+		updateProduction(selectedID, firstName, lastName, "production");
 
 	}
 
@@ -331,7 +360,7 @@ public class EditProducer extends JDialog {
 		MysqlAccess mysql = new MysqlAccess();
 		// Update des Produzenten
 		try {
-						// Aufruf der Updatefunktion mit der speziellen Weitergabe des
+			// Aufruf der Updatefunktion mit der speziellen Weitergabe des
 			// Tabellenfelds Production_ID
 			update = new Update("dvd_verleih", mysql.getConnection());
 			update.updateEdits(id, firstname, lastname, form, "Production_ID");

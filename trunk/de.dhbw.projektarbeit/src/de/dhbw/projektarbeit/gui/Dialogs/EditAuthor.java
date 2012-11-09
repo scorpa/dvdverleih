@@ -66,7 +66,6 @@ public class EditAuthor extends JDialog {
 	public EditAuthor() {
 		setWindow();
 	}
-	
 
 	/**
 	 * Standardkonsturktor
@@ -88,7 +87,7 @@ public class EditAuthor extends JDialog {
 		;
 
 		DefaultTableModel model = new DefaultTableModel(authorData, columnNames);
-		
+
 		setModal(true);
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		setAlwaysOnTop(true);
@@ -312,8 +311,20 @@ public class EditAuthor extends JDialog {
 	 *             --> Exceptionhandling
 	 */
 	protected void btnUpdateActionPerformed(ActionEvent e) throws Exception {
-		updateAuthor(selectedID, txtFirstName.getText(), txtLastName.getText(),
-				"author");
+		String firstName = txtFirstName.getText(), lastName = txtLastName
+				.getText();
+
+		// Wenn Leerzeichen im Vornamen eingegeben wurden, werden diese gelöscht
+		while (firstName.indexOf(" ") == 0) {
+			firstName = firstName.substring(1);
+		}
+
+		// Wenn Leerzeichen im Nachnamen eingegeben wurden, werden diese
+		// gelöscht
+		while (lastName.indexOf(" ") == 0) {
+			lastName = lastName.substring(1);
+		}
+		updateAuthor(selectedID, firstName, lastName, "author");
 
 	}
 
@@ -336,7 +347,7 @@ public class EditAuthor extends JDialog {
 		// Update des Produzenten
 		try {
 			MysqlAccess mysql = new MysqlAccess();
-			//con = mysql.getConnection();
+			// con = mysql.getConnection();
 			// Aufruf der Updatefunktion mit der speziellen Weitergabe des
 			// Tabellenfelds Production_ID
 			update = new Update("dvd_verleih", mysql.getConnection());
@@ -359,7 +370,8 @@ public class EditAuthor extends JDialog {
 			MysqlAccess mysql = new MysqlAccess();
 			// Aufruf der Deletemethode
 			Delete delete = new Delete("dvd_verleih", mysql.getConnection());
-			delete.deleteEdits(selectedID, txtFirstName.getText(), txtLastName.getText(), "author", "Author_ID");
+			delete.deleteEdits(selectedID, txtFirstName.getText(),
+					txtLastName.getText(), "author", "Author_ID");
 
 			try {
 				this.dispose();
@@ -375,5 +387,5 @@ public class EditAuthor extends JDialog {
 			e1.printStackTrace();
 		}
 	}
-	
+
 }
