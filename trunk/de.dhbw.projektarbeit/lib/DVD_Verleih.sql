@@ -1,78 +1,80 @@
-CREATE DATABASE  IF NOT EXISTS `dvd_verleih` /*!40100 DEFAULT CHARACTER SET utf8 */;
-USE `dvd_verleih`;
--- MySQL dump 10.13  Distrib 5.5.16, for Win32 (x86)
+-- phpMyAdmin SQL Dump
+-- version 3.5.2
+-- http://www.phpmyadmin.net
 --
--- Host: localhost    Database: dvd_verleih
--- ------------------------------------------------------
--- Server version	5.5.8
+-- Host: localhost
+-- Generation Time: Nov 09, 2012 at 12:20 PM
+-- Server version: 5.5.25a
+-- PHP Version: 5.4.4
+
+SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
+SET time_zone = "+00:00";
+
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
 /*!40101 SET NAMES utf8 */;
-/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
-/*!40103 SET TIME_ZONE='+00:00' */;
-/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
-/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
-/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
-/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Database: `dvd_verleih`
+--
+
+-- --------------------------------------------------------
 
 --
 -- Table structure for table `author`
 --
 
-DROP TABLE IF EXISTS `author`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `author` (
+CREATE TABLE IF NOT EXISTS `author` (
   `Author_ID` int(11) NOT NULL AUTO_INCREMENT,
   `FirstName` text,
   `LastName` text,
   PRIMARY KEY (`Author_ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=6 ;
 
 --
 -- Dumping data for table `author`
 --
 
-LOCK TABLES `author` WRITE;
-/*!40000 ALTER TABLE `author` DISABLE KEYS */;
-/*!40000 ALTER TABLE `author` ENABLE KEYS */;
-UNLOCK TABLES;
+INSERT INTO `author` (`Author_ID`, `FirstName`, `LastName`) VALUES
+(1, 'David', 'Latt'),
+(2, 'Jonah', 'Hill'),
+(3, 'Drew', 'Goddard'),
+(4, 'Patrick', 'Marber'),
+(5, 'Rolland', 'Emmerich');
+
+-- --------------------------------------------------------
 
 --
 -- Table structure for table `camera`
 --
 
-DROP TABLE IF EXISTS `camera`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `camera` (
+CREATE TABLE IF NOT EXISTS `camera` (
   `Camera_ID` int(11) NOT NULL AUTO_INCREMENT,
   `FirstName` text,
   `LastName` text,
   PRIMARY KEY (`Camera_ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=6 ;
 
 --
 -- Dumping data for table `camera`
 --
 
-LOCK TABLES `camera` WRITE;
-/*!40000 ALTER TABLE `camera` DISABLE KEYS */;
-/*!40000 ALTER TABLE `camera` ENABLE KEYS */;
-UNLOCK TABLES;
+INSERT INTO `camera` (`Camera_ID`, `FirstName`, `LastName`) VALUES
+(1, 'Adam', 'Silver'),
+(2, 'Barry', 'Peterson'),
+(3, 'Peter', 'Deming'),
+(4, 'Roger', 'Deakins'),
+(5, 'Dean', 'Semler');
+
+-- --------------------------------------------------------
 
 --
 -- Table structure for table `dvd`
 --
 
-DROP TABLE IF EXISTS `dvd`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `dvd` (
+CREATE TABLE IF NOT EXISTS `dvd` (
   `Quantity` tinyint(4) DEFAULT NULL,
   `Title` text,
   `Original_Title` text,
@@ -91,82 +93,81 @@ CREATE TABLE `dvd` (
   KEY `fk_dvd_author_idx` (`Author_ID`),
   KEY `fk_dvd_camera_idx` (`Camera_ID`),
   KEY `fk_dvd_production_idx` (`Production_ID`),
-  KEY `fk_dvd_regiseur_idx` (`Regie_ID`),
-  CONSTRAINT `fk_dvd_author` FOREIGN KEY (`Author_ID`) REFERENCES `author` (`Author_ID`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_dvd_camera` FOREIGN KEY (`Camera_ID`) REFERENCES `camera` (`Camera_ID`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_dvd_production` FOREIGN KEY (`Production_ID`) REFERENCES `production` (`Production_ID`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_dvd_regiseur` FOREIGN KEY (`Regie_ID`) REFERENCES `regisseur` (`Regie_ID`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  KEY `fk_dvd_regiseur_idx` (`Regie_ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 PACK_KEYS=1 COMMENT='DVD Information';
-/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `dvd`
 --
 
-LOCK TABLES `dvd` WRITE;
-/*!40000 ALTER TABLE `dvd` DISABLE KEYS */;
-/*!40000 ALTER TABLE `dvd` ENABLE KEYS */;
-UNLOCK TABLES;
+INSERT INTO `dvd` (`Quantity`, `Title`, `Original_Title`, `Genre`, `Prod_Country`, `Prod_Year`, `Rel_Date`, `Duration`, `FSK`, `Regie_ID`, `Author_ID`, `Production_ID`, `Camera_ID`, `Barcode`) VALUES
+(1, 'James Bond 007: Skyfall', 'Skyfall', 'Thriller, Action', 'USA', 2012, '2012-10-31', 143, 'ab 12 Jahre', 4, 4, 4, 4, '1245678354456'),
+(2, '2012', '2012', 'Science Fiction', 'USA', 2012, '2009-11-13', 158, 'ab 16 Jahre', 5, 5, 5, 5, '145276387245'),
+(3, 'The Cabin in the Woods', 'The Cabin in the Woods', 'horror', 'USA', 2012, '2012-04-13', 95, 'ab 16 Jahre', 3, 3, 3, 3, '1863542345634'),
+(1, '21 Jump Street', '21 Jump Street (USA 2012)', 'Action,Komödie', 'USA', 2012, '2012-09-13', 105, 'ab 12 Jahre', 2, 2, 2, 2, '4030521727021'),
+(1, 'Armageddon', 'The Apocalypse', 'Action', 'USA', 2011, '2011-09-22', 90, 'ab 16 Jahre', 1, 1, 1, 1, '40512380048');
+
+-- --------------------------------------------------------
 
 --
 -- Table structure for table `production`
 --
 
-DROP TABLE IF EXISTS `production`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `production` (
+CREATE TABLE IF NOT EXISTS `production` (
   `Production_ID` int(11) NOT NULL AUTO_INCREMENT,
   `FirstName` text,
   `LastName` text,
   PRIMARY KEY (`Production_ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=6 ;
 
 --
 -- Dumping data for table `production`
 --
 
-LOCK TABLES `production` WRITE;
-/*!40000 ALTER TABLE `production` DISABLE KEYS */;
-/*!40000 ALTER TABLE `production` ENABLE KEYS */;
-UNLOCK TABLES;
+INSERT INTO `production` (`Production_ID`, `FirstName`, `LastName`) VALUES
+(1, 'Paul', 'Bales'),
+(2, 'Jonah', 'Hill'),
+(3, 'Jason', 'Clark'),
+(4, 'Callum', 'McDougall'),
+(5, 'Harald', 'Kloser');
+
+-- --------------------------------------------------------
 
 --
 -- Table structure for table `regisseur`
 --
 
-DROP TABLE IF EXISTS `regisseur`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `regisseur` (
+CREATE TABLE IF NOT EXISTS `regisseur` (
   `Regie_ID` int(11) NOT NULL AUTO_INCREMENT,
   `FirstName` text,
   `LastName` text,
   PRIMARY KEY (`Regie_ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=6 ;
 
 --
 -- Dumping data for table `regisseur`
 --
 
-LOCK TABLES `regisseur` WRITE;
-/*!40000 ALTER TABLE `regisseur` DISABLE KEYS */;
-/*!40000 ALTER TABLE `regisseur` ENABLE KEYS */;
-UNLOCK TABLES;
+INSERT INTO `regisseur` (`Regie_ID`, `FirstName`, `LastName`) VALUES
+(1, 'Justin', 'Jones'),
+(2, 'Chris', 'Miller'),
+(3, 'Drew', 'Goddard'),
+(4, 'Sam', 'Mendes'),
+(5, 'Roland', 'Emmerich');
 
 --
--- Dumping routines for database 'dvd_verleih'
+-- Constraints for dumped tables
 --
-/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
-/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
-/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
-/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+--
+-- Constraints for table `dvd`
+--
+ALTER TABLE `dvd`
+  ADD CONSTRAINT `fk_dvd_author` FOREIGN KEY (`Author_ID`) REFERENCES `author` (`Author_ID`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_dvd_camera` FOREIGN KEY (`Camera_ID`) REFERENCES `camera` (`Camera_ID`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_dvd_production` FOREIGN KEY (`Production_ID`) REFERENCES `production` (`Production_ID`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_dvd_regiseur` FOREIGN KEY (`Regie_ID`) REFERENCES `regisseur` (`Regie_ID`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
-/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
-
--- Dump completed on 2012-11-09 10:53:29
