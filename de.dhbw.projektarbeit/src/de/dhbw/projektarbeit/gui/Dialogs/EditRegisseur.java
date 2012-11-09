@@ -104,8 +104,10 @@ public class EditRegisseur extends JDialog {
 				splitPane.setRightComponent(panel);
 				JLabel label = new JLabel("Vorname");
 				txtFirstName = new JTextField();
+				txtFirstName.setEnabled(false);
 				txtFirstName.setColumns(22);
 				txtLastName = new JTextField();
+				txtLastName.setEnabled(false);
 				txtLastName.setColumns(22);
 				JLabel label_1 = new JLabel("Nachname");
 				GroupLayout gl_panel = new GroupLayout(panel);
@@ -282,6 +284,8 @@ public class EditRegisseur extends JDialog {
 			if(selectedID > 0){
 				btnUpdate.setEnabled(true);
 				btnDelete.setEnabled(true);
+				txtFirstName.setEnabled(true);
+				txtLastName.setEditable(true);
 			}
 		} catch (Exception e2) {
 			e2.printStackTrace();
