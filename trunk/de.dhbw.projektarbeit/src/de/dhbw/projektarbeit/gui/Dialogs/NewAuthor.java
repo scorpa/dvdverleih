@@ -26,7 +26,7 @@ import de.dhbw.projektarbeit.db.request.Insert;
 /**
  * Klasse zur Erstellung eines Autors
  * 
- * @author Juli
+ * @author Brunner
  * 
  */
 public class NewAuthor extends JDialog {

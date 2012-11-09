@@ -40,7 +40,7 @@ import java.awt.event.ActionEvent;
 /**
  * Klasse, die das Abändern des Kameramanns erlaubt
  * 
- * @author Juli
+ * @author Brunner
  * 
  */
 

@@ -46,19 +46,6 @@ public class EditRegisseur extends JDialog {
 	private Check check;
 	
 	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		try {
-			EditRegisseur dialog = new EditRegisseur();
-			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-			dialog.setVisible(true);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-
-	/**
 	 * Standardkonsturktor
 	 */
 	public EditRegisseur() {

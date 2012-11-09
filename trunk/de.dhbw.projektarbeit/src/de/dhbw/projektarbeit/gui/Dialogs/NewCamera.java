@@ -26,7 +26,7 @@ import de.dhbw.projektarbeit.db.request.Insert;
 /**
  * Methode zur Erstellung von Kameramännern
  * 
- * @author Juli
+ * @author Brunner
  * 
  */
 public class NewCamera extends JDialog {
