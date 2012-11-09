@@ -148,13 +148,16 @@ public class Delete {
 				con.setAutoCommit(true);
 				mysql.closeConnection();
 				// Bei erfolgreichem Lšschen Nachricht bringen
-				JOptionPane.showMessageDialog(null,
-						("Die DVD mit dem EAN Code " + code + " wurde erfolgreich geloescht!"),
-						"Vorgang erfolgreich", JOptionPane.INFORMATION_MESSAGE);
+				JOptionPane.showMessageDialog(ed, ("Die DVD mit dem EAN Code "
+								+ code + " wurde erfolgreich geloescht!"),
+								"Vorgang erfolgreich",
+								JOptionPane.INFORMATION_MESSAGE);
 			} else {
-				JOptionPane.showMessageDialog(null,
-						("Die DVD mit dem EAN Code " + code + " konnte nicht geloescht werden!"),
-						"Vorgang abgebrochen", JOptionPane.WARNING_MESSAGE);
+				JOptionPane
+						.showMessageDialog(ed, ("Die DVD mit dem EAN Code "
+								+ code + " konnte nicht geloescht werden!"),
+								"Vorgang abgebrochen",
+								JOptionPane.WARNING_MESSAGE);
 			}
 
 		} catch (SQLException e) {

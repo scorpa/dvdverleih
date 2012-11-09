@@ -16,6 +16,7 @@ import javax.swing.GroupLayout.Alignment;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
@@ -27,6 +28,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
 import de.dhbw.projektarbeit.db.mysql.MysqlAccess;
+import de.dhbw.projektarbeit.db.request.Check;
 import de.dhbw.projektarbeit.db.request.Delete;
 import de.dhbw.projektarbeit.db.request.Filling;
 import de.dhbw.projektarbeit.db.request.Update;
@@ -40,6 +42,8 @@ public class EditRegisseur extends JDialog {
 	private JTable tbRegisseur;
 	private Integer selectedID;
 	private Update update;
+	private boolean vorhanden = false;
+	private Check check;
 	
 	/**
 	 * Launch the application.
@@ -314,6 +318,14 @@ public class EditRegisseur extends JDialog {
 	private void updateRegisseur(int id, String firstname, String lastname, String form )throws Exception{
 		// Update des Regisseurs
 		MysqlAccess mysql = new MysqlAccess();
+		check = new Check("dvd_verleih", mysql.getConnection());
+
+		// Check durchführen, ob Name des Autors schon vorhanden
+		vorhanden = check.check("regisseur", "Regie_ID", firstname,
+				lastname);
+
+		if (vorhanden == false) {
+
 				try {
 					// Aufruf der Updatefunktion
 					update = new Update("dvd_verleih", mysql.getConnection());
@@ -327,6 +339,12 @@ public class EditRegisseur extends JDialog {
 					throw new Exception(
 							"Bei der Uebertragung der Parameter ist ein Fehler aufgetreten! Fehlercode: 002");
 				}
+		} else {
+			JOptionPane.showMessageDialog(this, "Der Regisseur \""
+					+ firstname + " " + lastname
+					+ "\" ist bereits vorhanden!",
+					"Neuen Regisseur anlegen", JOptionPane.ERROR_MESSAGE);
+		}
 	}
 	
 	private void btnDeleteActionPerformed(ActionEvent arg0) throws Exception {

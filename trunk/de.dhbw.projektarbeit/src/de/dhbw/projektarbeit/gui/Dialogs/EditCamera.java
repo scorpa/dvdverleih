@@ -5,6 +5,7 @@ import java.awt.FlowLayout;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
@@ -24,6 +25,7 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 import org.jdesktop.swingx.JXTable;
 
 import de.dhbw.projektarbeit.db.mysql.MysqlAccess;
+import de.dhbw.projektarbeit.db.request.Check;
 import de.dhbw.projektarbeit.db.request.Delete;
 import de.dhbw.projektarbeit.db.request.Filling;
 import de.dhbw.projektarbeit.db.request.Update;
@@ -45,6 +47,8 @@ public class EditCamera extends JDialog {
 	private JTable tbCamera;
 	private Integer selectedID;
 	private Update update;
+	private boolean vorhanden = false;
+	private Check check;
 
 	/**
 	 * Launch the application.
@@ -346,21 +350,32 @@ public class EditCamera extends JDialog {
 	private void updateCamera(int id, String firstname, String lastname,
 			String form) throws Exception {
 		MysqlAccess mysql = new MysqlAccess();
-		// Update des Produzenten
-		try {
-			// Aufruf der Updatefunktion mit der speziellen Weitergabe des
-			// Tabellenfelds Production_ID
-			update = new Update("dvd_verleih", mysql.getConnection());
-			update.updateEdits(id, firstname, lastname, form, "Camera_ID");
-			tbCamera.setValueAt(txtFirstName.getText(),
-					tbCamera.getSelectedRow(), 1);
-			tbCamera.setValueAt(txtLastName.getText(),
-					tbCamera.getSelectedRow(), 2);
+		check = new Check("dvd_verleih", mysql.getConnection());
 
-		} catch (Exception e2) {
-			e2.printStackTrace();
-			throw new Exception(
-					"Bei der Uebertragung der Parameter ist ein Fehler aufgetreten! Fehlercode: 002");
+		// Check durchführen, ob Name des Autors schon vorhanden
+		vorhanden = check.check("camera", "Camera_ID", firstname, lastname);
+
+		if (vorhanden == false) {
+			// Update des Produzenten
+			try {
+				// Aufruf der Updatefunktion mit der speziellen Weitergabe des
+				// Tabellenfelds Production_ID
+				update = new Update("dvd_verleih", mysql.getConnection());
+				update.updateEdits(id, firstname, lastname, form, "Camera_ID");
+				tbCamera.setValueAt(txtFirstName.getText(),
+						tbCamera.getSelectedRow(), 1);
+				tbCamera.setValueAt(txtLastName.getText(),
+						tbCamera.getSelectedRow(), 2);
+
+			} catch (Exception e2) {
+				e2.printStackTrace();
+				throw new Exception(
+						"Bei der Uebertragung der Parameter ist ein Fehler aufgetreten! Fehlercode: 002");
+			}
+		} else {
+			JOptionPane.showMessageDialog(this, "Der Kameramann \"" + firstname
+					+ " " + lastname + "\" ist bereits vorhanden!",
+					"Neuen Kameramann anlegen", JOptionPane.ERROR_MESSAGE);
 		}
 	}
 }

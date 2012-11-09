@@ -281,7 +281,7 @@ public class NewCamera extends JDialog {
 					}
 				}
 			} else {
-				JOptionPane.showMessageDialog(null, "Der Kameramann \""
+				JOptionPane.showMessageDialog(this, "Der Kameramann \""
 						+ firstName + " " + lastName
 						+ "\" ist bereits vorhanden!",
 						"Neuen Kameramann anlegen", JOptionPane.ERROR_MESSAGE);
@@ -290,7 +290,7 @@ public class NewCamera extends JDialog {
 		} else {
 			JOptionPane
 					.showMessageDialog(
-							null,
+							this,
 							"Sie haben ein Pflichtfeld nicht ausgefüllt! Bitte überprüfen Sie ihre Angaben in den Feldern",
 							"Regisseurerstellung", JOptionPane.ERROR_MESSAGE);
 
@@ -301,7 +301,7 @@ public class NewCamera extends JDialog {
 		// Wenn Benutzer erfolgreich hinzu gefügt wurde, die mitteilen und
 		// neues, leeres Eingabefenster öffnen.
 
-		JOptionPane.showMessageDialog(null, ("Der Kameramann \"" + firstName
+		JOptionPane.showMessageDialog(this, ("Der Kameramann \"" + firstName
 				+ " " + lastName + "\" wurde erfolgreich angelegt!"),
 				"Vorgang erfolgreich", JOptionPane.INFORMATION_MESSAGE);
 		this.setVisible(false);

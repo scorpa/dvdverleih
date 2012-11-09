@@ -906,7 +906,7 @@ public class Insert {
 			if (checkID.equals(eanCode)) {
 				JOptionPane
 						.showMessageDialog(
-								null,
+								dvd,
 								"Die DVD mit dem EAN Code "
 										+ eanCode
 										+ " existiert bereits! Neue DVD kann nicht angelegt werden",

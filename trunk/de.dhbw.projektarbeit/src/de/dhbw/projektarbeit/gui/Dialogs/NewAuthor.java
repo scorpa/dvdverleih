@@ -280,14 +280,14 @@ public class NewAuthor extends JDialog {
 					}
 				}
 			} else {
-				JOptionPane.showMessageDialog(null, "Der Autor \"" + firstName
+				JOptionPane.showMessageDialog(this, "Der Autor \"" + firstName
 						+ " " + lastName + "\" ist bereits vorhanden!",
 						"Neuen Autor anlegen", JOptionPane.ERROR_MESSAGE);
 			}
 		} else {
 			JOptionPane
 					.showMessageDialog(
-							null,
+							this,
 							"Sie haben ein Pflichtfeld nicht ausgefüllt! Bitte überprüfen Sie ihre Angaben in den Feldern",
 							"Regisseurerstellung", JOptionPane.ERROR_MESSAGE);
 
@@ -298,7 +298,7 @@ public class NewAuthor extends JDialog {
 		// Wenn Benutzer erfolgreich hinzu gefügt wurde, die mitteilen und
 		// neues, leeres Eingabefenster öffnen.
 
-		JOptionPane.showMessageDialog(null, ("Der Autor \"" + firstName + " "
+		JOptionPane.showMessageDialog(this, ("Der Autor \"" + firstName + " "
 				+ lastName + "\" wurde erfolgreich angelegt!"),
 				"Vorgang erfolgreich", JOptionPane.INFORMATION_MESSAGE);
 		this.setVisible(false);

@@ -274,7 +274,7 @@ public class NewProducer extends JDialog {
 				}
 
 			} else {
-				JOptionPane.showMessageDialog(null, "Der Produzent \""
+				JOptionPane.showMessageDialog(this, "Der Produzent \""
 						+ firstName + " " + lastName
 						+ "\" ist bereits vorhanden!",
 						"Neuen Produzenten anlegen", JOptionPane.ERROR_MESSAGE);
@@ -282,7 +282,7 @@ public class NewProducer extends JDialog {
 		} else {
 			JOptionPane
 					.showMessageDialog(
-							null,
+							this,
 							"Sie haben ein Pflichtfeld nicht ausgefüllt! Bitte überprüfen Sie ihre Angaben in den Feldern",
 							"Regisseurerstellung", JOptionPane.ERROR_MESSAGE);
 		}
@@ -292,7 +292,7 @@ public class NewProducer extends JDialog {
 		// Wenn Benutzer erfolgreich hinzu gefügt wurde, die mitteilen und
 		// neues, leeres Eingabefenster öffnen.
 
-		JOptionPane.showMessageDialog(null, ("Der Produzent \"" + firstName
+		JOptionPane.showMessageDialog(this, ("Der Produzent \"" + firstName
 				+ " " + lastName + "\" wurde erfolgreich angelegt!"),
 				"Vorgang erfolgreich", JOptionPane.INFORMATION_MESSAGE);
 		this.setVisible(false);
