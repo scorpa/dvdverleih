@@ -22,6 +22,7 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 import org.jdesktop.swingx.JXTable;
 
 import de.dhbw.projektarbeit.db.mysql.MysqlAccess;
+import de.dhbw.projektarbeit.db.request.Check;
 import de.dhbw.projektarbeit.db.request.Delete;
 import de.dhbw.projektarbeit.db.request.Filling;
 import de.dhbw.projektarbeit.db.request.Update;
@@ -46,6 +47,8 @@ public class EditProducer extends JDialog {
 	private Update update;
 	private JScrollPane scrollPane;
 	private JTable tbProduction;
+	private boolean vorhanden = false;
+	private Check check;
 
 	/**
 	 * Launch the application.
@@ -358,21 +361,34 @@ public class EditProducer extends JDialog {
 	private void updateProduction(int id, String firstname, String lastname,
 			String form) throws Exception {
 		MysqlAccess mysql = new MysqlAccess();
-		// Update des Produzenten
-		try {
-			// Aufruf der Updatefunktion mit der speziellen Weitergabe des
-			// Tabellenfelds Production_ID
-			update = new Update("dvd_verleih", mysql.getConnection());
-			update.updateEdits(id, firstname, lastname, form, "Production_ID");
-			tbProduction.setValueAt(txtFirstName.getText(),
-					tbProduction.getSelectedRow(), 1);
-			tbProduction.setValueAt(txtLastName.getText(),
-					tbProduction.getSelectedRow(), 2);
+		check = new Check("dvd_verleih", mysql.getConnection());
+		// Check durchführen, ob Name des Autors schon vorhanden
+		vorhanden = check.check("production", "Production_ID", firstname,
+				lastname);
 
-		} catch (Exception e2) {
-			e2.printStackTrace();
-			throw new Exception(
-					"Bei der Uebertragung der Parameter ist ein Fehler aufgetreten! Fehlercode: 002");
+		if (vorhanden == false) {
+
+			// Update des Produzenten
+			try {
+				// Aufruf der Updatefunktion mit der speziellen Weitergabe des
+				// Tabellenfelds Production_ID
+				update = new Update("dvd_verleih", mysql.getConnection());
+				update.updateEdits(id, firstname, lastname, form,
+						"Production_ID");
+				tbProduction.setValueAt(txtFirstName.getText(),
+						tbProduction.getSelectedRow(), 1);
+				tbProduction.setValueAt(txtLastName.getText(),
+						tbProduction.getSelectedRow(), 2);
+
+			} catch (Exception e2) {
+				e2.printStackTrace();
+				throw new Exception(
+						"Bei der Uebertragung der Parameter ist ein Fehler aufgetreten! Fehlercode: 002");
+			}
+		} else {
+			JOptionPane.showMessageDialog(this, "Der Produzent \"" + firstname
+					+ " " + lastname + "\" ist bereits vorhanden!",
+					"Neuen Produzenten anlegen", JOptionPane.ERROR_MESSAGE);
 		}
 	}
 

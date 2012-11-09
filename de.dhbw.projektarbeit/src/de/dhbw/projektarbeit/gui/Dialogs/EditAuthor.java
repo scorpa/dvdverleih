@@ -5,6 +5,7 @@ import java.awt.FlowLayout;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
@@ -24,6 +25,7 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 import org.jdesktop.swingx.JXTable;
 
 import de.dhbw.projektarbeit.db.mysql.MysqlAccess;
+import de.dhbw.projektarbeit.db.request.Check;
 import de.dhbw.projektarbeit.db.request.Delete;
 import de.dhbw.projektarbeit.db.request.Filling;
 import de.dhbw.projektarbeit.db.request.Update;
@@ -46,6 +48,9 @@ public class EditAuthor extends JDialog {
 	private JTable tbAuthor;
 	private Integer selectedID;
 	private Update update;
+	private boolean vorhanden = false;
+	private Check check;
+	private String firstName, lastName;
 
 	/**
 	 * Launch the application.
@@ -311,8 +316,8 @@ public class EditAuthor extends JDialog {
 	 *             --> Exceptionhandling
 	 */
 	protected void btnUpdateActionPerformed(ActionEvent e) throws Exception {
-		String firstName = txtFirstName.getText(), lastName = txtLastName
-				.getText();
+		firstName = txtFirstName.getText();
+		lastName = txtLastName.getText();
 
 		// Wenn Leerzeichen im Vornamen eingegeben wurden, werden diese gelöscht
 		while (firstName.indexOf(" ") == 0) {
@@ -347,16 +352,25 @@ public class EditAuthor extends JDialog {
 		// Update des Produzenten
 		try {
 			MysqlAccess mysql = new MysqlAccess();
-			// con = mysql.getConnection();
-			// Aufruf der Updatefunktion mit der speziellen Weitergabe des
-			// Tabellenfelds Production_ID
-			update = new Update("dvd_verleih", mysql.getConnection());
-			update.updateEdits(id, firstname, lastname, form, "Author_ID");
-			tbAuthor.setValueAt(txtFirstName.getText(),
-					tbAuthor.getSelectedRow(), 1);
-			tbAuthor.setValueAt(txtLastName.getText(),
-					tbAuthor.getSelectedRow(), 2);
+			check = new Check("dvd_verleih", mysql.getConnection());
+			// Check durchführen, ob Name des Autors schon vorhanden
+			vorhanden = check.check("author", "Author_ID", firstname, lastname);
 
+			if (vorhanden == false) {
+				// con = mysql.getConnection();
+				// Aufruf der Updatefunktion mit der speziellen Weitergabe des
+				// Tabellenfelds Production_ID
+				update = new Update("dvd_verleih", mysql.getConnection());
+				update.updateEdits(id, firstname, lastname, form, "Author_ID");
+				tbAuthor.setValueAt(txtFirstName.getText(),
+						tbAuthor.getSelectedRow(), 1);
+				tbAuthor.setValueAt(txtLastName.getText(),
+						tbAuthor.getSelectedRow(), 2);
+			} else {
+				JOptionPane.showMessageDialog(this, "Der Autor \"" + firstName
+						+ " " + lastName + "\" ist bereits vorhanden!",
+						"Autor bearbeiten", JOptionPane.ERROR_MESSAGE);
+			}
 		} catch (Exception e2) {
 			e2.printStackTrace();
 			throw new Exception(
