@@ -235,6 +235,14 @@ public class NewAuthor extends JDialog {
 			firstName = firstName.substring(1);
 		}
 
+		// Wenn Leerzeichen dem Vornamen nachgestellt eingegeben wurden werden
+		// diese gelöscht
+		if (firstName.contains(" ")) {
+			while (firstName.indexOf(" ", firstName.length()-1) == firstName.length() - 1) {
+				firstName = firstName.substring(0, firstName.length() - 1);
+			}
+		}
+
 		// Wenn Leerzeichen im Nachnamen eingegeben wurden, werden diese
 		// gelöscht
 		while (lastName.indexOf(" ") == 0) {
