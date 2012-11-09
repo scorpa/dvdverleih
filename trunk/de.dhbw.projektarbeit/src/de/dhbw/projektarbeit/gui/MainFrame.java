@@ -161,12 +161,18 @@ public class MainFrame extends javax.swing.JFrame {
 	 */
 	public void refreshTable() {
 		loadTable();
-		model = new DefaultTableModel(dvdData, columnNames);
-		tbDVD.setModel(model);
-
+		DefaultTableModel model1 = new DefaultTableModel(dvdData, columnNames);
+		tbDVD.setModel(model1);
+		tbDVD.revalidate();
+		
 		// Tabelleneigenschaften setzen
 		tbDVD = jTable.setColumnSize(tbDVD);
-		scrollPane.setViewportView(tbDVD);
+		
+		MainFrame mf1 = new MainFrame();
+		this.setVisible(false);
+		mf1.setVisible(true);
+		this.dispose();
+		
 	}
 
 	/**
