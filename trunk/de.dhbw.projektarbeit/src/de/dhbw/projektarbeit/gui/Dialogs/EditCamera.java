@@ -118,6 +118,7 @@ public class EditCamera extends JDialog {
 				txtFirstName = new JTextField();
 				txtFirstName.setColumns(22);
 				txtLastName = new JTextField();
+				txtLastName.setEnabled(false);
 				txtLastName.setColumns(22);
 				JLabel label_1 = new JLabel("Nachname");
 				GroupLayout gl_panel = new GroupLayout(panel);
@@ -303,6 +304,8 @@ public class EditCamera extends JDialog {
 			if (selectedID > 0) {
 				btnUpdate.setEnabled(true);
 				btnDelete.setEnabled(true);
+				txtFirstName.setEnabled(true);
+				txtLastName.setEnabled(true);
 			}
 		} catch (Exception e2) {
 			e2.printStackTrace();
