@@ -116,6 +116,7 @@ public class EditCamera extends JDialog {
 				splitPane.setRightComponent(panel);
 				JLabel label = new JLabel("Vorname");
 				txtFirstName = new JTextField();
+				txtFirstName.setEnabled(false);
 				txtFirstName.setColumns(22);
 				txtLastName = new JTextField();
 				txtLastName.setEnabled(false);
