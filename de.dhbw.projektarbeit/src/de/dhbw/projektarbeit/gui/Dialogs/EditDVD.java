@@ -148,8 +148,10 @@ public class EditDVD extends JDialog {
 				panel.setBorder(new EmptyBorder(5, 5, 5, 5));
 				splitPane.setRightComponent(panel);
 				txtTitle = new JTextField();
+				txtTitle.setEnabled(false);
 				txtTitle.setColumns(22);
 				txtOriginalTitle = new JTextField();
+				txtOriginalTitle.setEnabled(false);
 				txtOriginalTitle.setColumns(22);
 				JLabel label = new JLabel("Titel");
 				JLabel label_1 = new JLabel("Originaltitel");
@@ -163,6 +165,7 @@ public class EditDVD extends JDialog {
 				}
 				cAuswahlRegisseur = new DefaultComboBoxModel(dbRegisseur);
 				cbRegisseur = new JComboBox();
+				cbRegisseur.setEnabled(false);
 				cbRegisseur.setModel(cAuswahlRegisseur);
 				JButton btnNewRegisseur = new JButton("+");
 				btnNewRegisseur.addActionListener(new ActionListener() {
@@ -171,12 +174,14 @@ public class EditDVD extends JDialog {
 					}
 				});
 				cbFSK = new JComboBox();
+				cbFSK.setEnabled(false);
 				cbFSK.setModel(new DefaultComboBoxModel(new String[] {
 						"ab 0 Jahre", "ab 6 Jahre", "ab 12 Jahre",
 						"ab 16 Jahre", "ab 18 Jahre", "indiziert" }));
 				JLabel label_2 = new JLabel("Altersbeschr\u00E4nkung");
 				JLabel label_3 = new JLabel("Herstellungsland");
 				cbProdCountry = new JComboBox();
+				cbProdCountry.setEnabled(false);
 				cbProdCountry.setModel(new DefaultComboBoxModel(new String[] {
 						"Australien", "Deutschland", "Frankreich",
 						"Gro\u00DFbritannien", "Hong Kong", "Indien",
@@ -188,6 +193,7 @@ public class EditDVD extends JDialog {
 				JLabel label_6 = new JLabel("Genre");
 				JLabel label_7 = new JLabel("EAN Code");
 				txtEANCode = new JTextField();
+				txtEANCode.setEnabled(false);
 				txtEANCode.addKeyListener(new KeyAdapter() {
 					@Override
 					public void keyReleased(KeyEvent arg0) {
@@ -197,15 +203,18 @@ public class EditDVD extends JDialog {
 				txtEANCode.setColumns(22);
 				JLabel label_8 = new JLabel("Produktionsjahr");
 				spProductionYear = new JSpinner();
+				spProductionYear.setEnabled(false);
 				spProductionYear.setPreferredSize(new Dimension(40, 28));
 				spProductionYear.setModel(new SpinnerNumberModel(1920, 1920,
 						2020, 1));
 				spProductionYear.setEditor(new JSpinner.NumberEditor(
 						spProductionYear, "0"));
 				dpReleaseDate = new JXDatePicker();
+				dpReleaseDate.setEnabled(false);
 				dpReleaseDate.setFormats(new String[] { "dd.MM.yyyy" });
 				JLabel label_9 = new JLabel("Ver\u00F6ffentlichungsdatum");
 				txtGenre = new JTextField();
+				txtGenre.setEnabled(false);
 				txtGenre.setColumns(22);
 				// Instantiierung von Combofield Variablen
 				// ArrayList mit DB Daten von Regisseuren füllen
@@ -216,6 +225,7 @@ public class EditDVD extends JDialog {
 				}
 				cAuswahlProduction = new DefaultComboBoxModel(dbProduction);
 				cbProducent = new JComboBox();
+				cbProducent.setEnabled(false);
 				cbProducent.setModel(cAuswahlProduction);
 				JButton btnNewProducer = new JButton("+");
 				btnNewProducer.addActionListener(new ActionListener() {
@@ -225,12 +235,14 @@ public class EditDVD extends JDialog {
 				});
 				JLabel lblDauerInMin = new JLabel("Dauer in Min.");
 				spDuration = new JSpinner();
+				spDuration.setEnabled(false);
 				spDuration.setToolTipText("Max. 1000 Minuten");
 				spDuration.setModel(new SpinnerNumberModel(1, 1, 1000, 1));
 
 				JLabel lblAnzahl = new JLabel("Anzahl von DVDs");
 
 				spCountDVD = new JSpinner();
+				spCountDVD.setEnabled(false);
 				spCountDVD.setPreferredSize(new Dimension(40, 28));
 				spCountDVD.setModel(new javax.swing.SpinnerNumberModel(1, 1,
 						1000, 1));
@@ -248,6 +260,7 @@ public class EditDVD extends JDialog {
 				}
 				cAuswahlCamera = new DefaultComboBoxModel(dbCamera);
 				cbCamera = new JComboBox();
+				cbCamera.setEnabled(false);
 				cbCamera.setModel(cAuswahlCamera);
 
 				JButton btnNewCamera = new JButton("+");
@@ -268,6 +281,7 @@ public class EditDVD extends JDialog {
 				}
 				cAuswahlAuthor = new DefaultComboBoxModel(dbAuthor);
 				cbAuthor = new JComboBox();
+				cbAuthor.setEnabled(false);
 				cbAuthor.setModel(cAuswahlAuthor);
 
 				JButton btnNewAuthor = new JButton("+");
@@ -823,6 +837,20 @@ public class EditDVD extends JDialog {
 			if (txtEANCode != null) {
 				btnUpdate.setEnabled(true);
 				btnDelete.setEnabled(true);
+				txtEANCode.setEnabled(true);
+				txtGenre.setEnabled(true);
+				txtOriginalTitle.setEnabled(true);
+				txtTitle.setEnabled(true);
+				cbAuthor.setEnabled(true);
+				cbCamera.setEnabled(true);
+				cbFSK.setEnabled(true);
+				cbProdCountry.setEnabled(true);
+				cbProducent.setEnabled(true);
+				cbRegisseur.setEnabled(true);
+				spCountDVD.setEnabled(true);
+				spDuration.setEnabled(true);
+				spProductionYear.setEnabled(true);
+				dpReleaseDate.setEnabled(true);
 			}
 		} catch (Exception a) {
 			// TODO: handle exception
