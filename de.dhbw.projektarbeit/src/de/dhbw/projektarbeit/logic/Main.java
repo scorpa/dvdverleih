@@ -2,7 +2,13 @@ package de.dhbw.projektarbeit.logic;
 
 import de.dhbw.projektarbeit.gui.MainFrame;
 
-
+/**
+ * Mainklasse zur Initiierung des MainFrames und der Applikation
+ * 
+ * @author Eisen
+ * @author Brunner
+ * 
+ */
 public class Main {
 
 	/**

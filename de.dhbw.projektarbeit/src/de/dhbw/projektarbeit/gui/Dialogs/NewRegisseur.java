@@ -23,6 +23,12 @@ import de.dhbw.projektarbeit.db.mysql.MysqlAccess;
 import de.dhbw.projektarbeit.db.request.Check;
 import de.dhbw.projektarbeit.db.request.Insert;
 
+/**
+ * Klasse, die das Erstellen eines Regisseurs ermöglicht
+ * 
+ * @author Brunner
+ * 
+ */
 public class NewRegisseur extends JDialog {
 
 	private final JPanel contentPanel = new JPanel();
@@ -36,19 +42,6 @@ public class NewRegisseur extends JDialog {
 	private NewDVD newDVD = null;
 	private EditDVD editDVD = null;
 	private Check check;
-
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		try {
-			NewRegisseur dialog = new NewRegisseur();
-			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-			dialog.setVisible(true);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
 
 	/**
 	 * Standardkonstruktor
@@ -214,10 +207,14 @@ public class NewRegisseur extends JDialog {
 			buttonPane.setLayout(gl_buttonPane);
 		}
 	}
+
 	/**
 	 * Hinzufügen-Button wurde gedrückt
-	 * @param arg0 --> Eventhandling
-	 * @throws Exception --> Exceptionhandling
+	 * 
+	 * @param arg0
+	 *            --> Eventhandling
+	 * @throws Exception
+	 *             --> Exceptionhandling
 	 */
 	private void addButtonActionPerforemd(ActionEvent arg0) throws Exception {
 		// Hinzufuegen-Button gedrueckt
@@ -303,10 +300,15 @@ public class NewRegisseur extends JDialog {
 		}
 
 	}
+
 	/**
-	 * Rückmeldung der Insert-Methode, dass der Eintrag erfolgreich hinzu gefügt wurde
-	 * @param firstName --> Vorname des Eintrags
-	 * @param lastName --> Nachname des Eintrags
+	 * Rückmeldung der Insert-Methode, dass der Eintrag erfolgreich hinzu gefügt
+	 * wurde
+	 * 
+	 * @param firstName
+	 *            --> Vorname des Eintrags
+	 * @param lastName
+	 *            --> Nachname des Eintrags
 	 */
 	public void regisseurAdded(String firstName, String lastName) {
 		// Wenn Benutzer erfolgreich hinzu gefügt wurde, die mitteilen und
